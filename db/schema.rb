@@ -13,16 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20120417211559) do
 
-  create_table "campaigns", :force => true do |t|
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "id_client"
-    t.integer  "id_soc_net"
-    t.integer  "fan_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "clients", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -35,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20120417211559) do
     t.date     "end_date"
     t.text     "actions"
     t.integer  "new_fans"
+    t.integer  "total_fans"
     t.integer  "goal_fans"
     t.integer  "prints"
     t.integer  "total_interactions"
@@ -50,17 +41,6 @@ ActiveRecord::Schema.define(:version => 20120417211559) do
     t.float    "ctr_anno"
     t.float    "cpm_anno"
     t.float    "cpc_anno"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "total_fans"
-  end
-
-  create_table "fans", :force => true do |t|
-    t.integer  "new"
-    t.integer  "total"
-    t.integer  "goal"
-    t.integer  "id_soc_net"
-    t.integer  "id_client"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
