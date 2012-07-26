@@ -19,30 +19,16 @@
       = f.submit "Entrar", :class => "button_sing_in"
 
 - else
-
-  div
-    #contentFlow.ContentFlow
-      .loadIndicator
-        .indicator
-      .flow
+  | Pagina Principal
+  #contentFlow.ContentFlow
+    .flow
+      - @clients = Client.all
+      - @clients.each do |client|
+        - @imagen = ("<img class='content' src='/assets/images/" +client.image+"' href='http://www.pernix.cr'>").html_safe
         .item
-          img.content src="/assets/images/logo.png" href="http://www.pernix.cr"
+          = @imagen
           .caption
-            | Texto Imagen 0: Descripcion
-        .item
-          img.content src="/assets/images/Facebook.png" href="http://www.facebook.com"
-          .caption
-            | Texto Imagen 1: Descripcion
-        .item
-          img.content src="/assets/images/starbucks.png" href="http://www.starbucks.com"
-          .caption
-            | Texto Imagen 2: Descripcion
-      .globalCaption
-      .scrollbar
-        .slider
-          .position
-
-
-
-
-
+            = client.name
+            |: 
+            = client.description
+    .globalCaption

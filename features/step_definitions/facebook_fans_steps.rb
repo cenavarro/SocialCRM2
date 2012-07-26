@@ -13,7 +13,7 @@ Given /^no campaign exist for client (\d+)$/ do |n|
   FacebookDatum.find(:first, :conditions => { :client_id => n}).should be_nil
 end
 
-When /^I go to 'facebook data page'$/ do |/facebook_data|
+When /^I go to 'facebook data page'$/ do |facebook_data|
 end
 
 Then /^I should see new facebook datum$/ do

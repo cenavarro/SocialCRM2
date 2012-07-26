@@ -15,7 +15,7 @@ Feature: Sign up
         | Contraseña              | please          |
         | Confirmación de Contraseña | please          |
       And I press "Sign up"
-      Then I should see "Crear Comentario"
+      Then I should see "Pagina Principal"
       And I should see "Desconectar" 
       
     Scenario: User signs up with invalid email

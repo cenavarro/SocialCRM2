@@ -7,7 +7,15 @@
           li= msg
 
   .field
-    = f.label :name
+    = f.label :Nombre
     = f.text_field :name
+    br
+    br
+    = f.label :Descripcion
+    = f.text_field :description
+    br
+    br
+    = f.label :Imagen
+    = f.text_field :image
   .actions
     = f.submit 'Save'

@@ -5,8 +5,8 @@ Feature: Facebook Fans
 
     Scenario: Client has no data
       Given no campaign exist for client 2
-      When I go to facebook data page
-      Then I should see "new facebook datum"
+      When I go to the facebook data page
+      Then I should see "Nueva Entrada de Datos"
 
     Scenario: Client has campaings
       Given Client enters new campaign
