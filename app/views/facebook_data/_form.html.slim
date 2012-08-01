@@ -5,72 +5,65 @@
       ul
         - @facebook_datum.errors.full_messages.each do |msg|
           li= msg
-
-  .field
+  .form-horizontal
     = f.label :client_id
-    = f.number_field :client_id
-  .field
+    = f.number_field :client_id, :class => 'span2'
+
     = f.label :start_date
-    = f.date_select :start_date
-  .field
+    = f.date_select :start_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
+
     = f.label :end_date
-    = f.date_select :end_date
-  .field
+    = f.date_select :end_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
+
     = f.label :actions
     = f.text_area :actions
-  .field
+
     = f.label :new_fans
     = f.number_field :new_fans
 
-  .field
     = f.label :goal_fans
     = f.number_field :goal_fans
 
-  .field
     = f.label :prints
     = f.number_field :prints
 
-  .field
     = f.label :total_interactions
     = f.number_field :total_interactions
-  .field
+
     = f.label :total_reach
     = f.number_field :total_reach
-  .field
+
     = f.label :potential_reach
     = f.number_field :potential_reach
-  .field
+
     = f.label :total_prints_per_anno
     = f.text_field :total_prints_per_anno
-  .field
+
     = f.label :total_prints
     = f.number_field :total_prints
-  .field
+
     = f.label :total_clicks_anno
     = f.number_field :total_clicks_anno
-  .field
+
     = f.label :fans_through_anno
     = f.number_field :fans_through_anno
-  .field
+
     = f.label :agency_investment
     = f.text_field :agency_investment
-  .field
+
     = f.label :new_stock_investment
     = f.text_field :new_stock_investment
-  .field
+
     = f.label :anno_investment
     = f.text_field :anno_investment
 
-
-  .field
     = f.label :ctr_anno
     = f.text_field :ctr_anno
-  .field
+
     = f.label :cpm_anno
     = f.text_field :cpm_anno
-  .field
+
     = f.label :cpc_anno
     = f.text_field :cpc_anno
-
-  .actions
-    = f.submit 'Save'
+    br
+    = f.submit 'Save', {:class => "btn btn-primary"}

@@ -7,10 +7,11 @@ html
     = csrf_meta_tags
     
   body
-    = render 'layouts/header'
-    #contentWrapper
-      = yield
-    = render 'layouts/footer'
+    .container
+      = render 'layouts/header'
+      #contentWrapper.well
+        = yield
+      = render 'layouts/footer'
 
 
 javascript:

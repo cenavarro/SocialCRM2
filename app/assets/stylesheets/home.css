@@ -35,7 +35,7 @@ a:hover {
 	background-image: url('/assets/images/skyline.gif');
 	height: 65px;
 	overflow: hidden;
-	margin: -1px 22px 0px 22px;
+	margin: -1px 0px 0px 0px;
 }
 
 #inner_header {
@@ -43,7 +43,7 @@ a:hover {
 	padding: 0px;
 	border-bottom: 13px red solid;
 	overflow: hidden;
-	margin: -1px 22px 0px 22px;
+	margin: -1px 0px 0px 0px;
 }
 
 .textHeader {
@@ -211,7 +211,7 @@ a:hover {
 	color: #fff;
 	height: 100px;
 	overflow: hidden;
-	margin: 0px 22px 0px 22px;
+	margin: 0px 0px 0px 0px;
 }
 
 #footerContent {
