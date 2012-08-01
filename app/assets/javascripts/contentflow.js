@@ -733,15 +733,12 @@ ContentFlow.prototype = {
 
             
             if (url = item.content.getAttribute('href')) {
-                alert('evento click - El item tiene el atributo href1, redirecciona!');
                 target = item.content.getAttribute('target');
             }
             else if (url = item.element.getAttribute('href')) {
-                alert('evento click - El item tiene el atributo href2, redirecciona!');
                 target = item.element.getAttribute('target');
             }
             else if (url = item.content.getAttribute('src')) {
-                alert('evento click - El item tiene el atributo src');
                 target = item.content.getAttribute('target');
             }
 

@@ -2,16 +2,23 @@ class FacebookDataController < ApplicationController
   # GET /facebook_data
   # GET /facebook_data.json
   def index
-    @facebook_data = FacebookDatum.all
-    @dates = ""
-    @facebook_data.each do |facebook_datum|
-      @dates = @dates + facebook_datum.start_date.mday().to_s + " al " + facebook_datum.end_date.mday().to_s + " de " + facebook_datum.end_date.strftime('%B') + ","
-    end
+    if params.has_key?(:id)  
+      @facebook_data = FacebookDatum.find(:all, :conditions => {:client_id => params[:id]})
+      if @facebook_data.empty?
+        redirect_to :controller => 'home', :action => 'index'
+      else
+        @dates = ""
+        @facebook_data.each do |facebook_datum|
+          @dates = @dates + facebook_datum.start_date.mday().to_s + " al " + facebook_datum.end_date.mday().to_s + " de " + facebook_datum.end_date.strftime('%B') + ","
+        end
     
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @facebook_data }
+        respond_to do |format|
+          format.html # index.html.erb
+          format.json { render json: @facebook_data }
+        end
+      end
+    else
+      redirect_to :controller => 'home', :action => 'index'
     end
   end
 

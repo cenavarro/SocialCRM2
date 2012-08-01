@@ -22,9 +22,8 @@
   | Pagina Principal
   #contentFlow.ContentFlow
     .flow
-      - @clients = Client.all
       - @clients.each do |client|
-        - @imagen = ("<img class='content' src='/assets/images/" +client.image+"' href='http://www.pernix.cr'>").html_safe
+        - @imagen = ("<img class='content' src='/assets/images/"+client.image+"' href='clients/social_networks?id="+client.id.to_s()+"'>").html_safe
         .item
           = @imagen
           .caption

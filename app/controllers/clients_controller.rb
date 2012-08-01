@@ -1,4 +1,5 @@
 class ClientsController < ApplicationController
+
   # GET /clients
   # GET /clients.json
   def index
@@ -80,4 +81,17 @@ class ClientsController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def social_networks
+    if params.has_key?(:id)
+      @client = Client.find(params[:id])
+      respond_to do|format|
+        format.html
+        format.json { render json: @client }
+      end
+    else
+      redirect_to :controller => 'home', :action => 'index'
+    end
+  end
+
 end

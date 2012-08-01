@@ -3,7 +3,11 @@ p#notice = notice
 p
   b Name:
   = @client.name
+  br
+  br
   b Imagen:
+  - @image = ("<img class='content' src='/assets/images/"+@client.image+"' height='100' width='100'>").html_safe
+  = @image
 
 = link_to 'Edit', edit_client_path(@client)
 '|

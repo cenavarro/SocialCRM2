@@ -7,10 +7,18 @@
           li= msg
 
   .field
-    = f.label :name
+    = f.label "Name:  "
     = f.text_field :name
-  .field
-    = f.label :client_id
-    = f.number_field :client_id
+    br
+    br
+    = f.label "Client:  "
+    - @clients = Client.all
+    = f.select :client_id, options_for_select(@clients.collect{|p|[p.name, p.id]})
+    - #= f.number_field :client_id
+    br
+    br
+    = f.label "Social Networks:  "
+    - @info_social_networks = InfoSocialNetwork.all
+    = f.select :info_social_network_id, options_for_select(@info_social_networks.collect{|p|[p.name, p.id]})
   .actions
     = f.submit 'Save'

@@ -4,7 +4,9 @@
 
 br
 div.estilo_div_facebook
-  img src="assets/images/imageFacebook.png" alt="Facebook Logo" height=100 width=300
+  - @facebook_info = InfoSocialNetwork.find(1)
+  - @image = ("<img class='content' src='/assets/images/"+@facebook_info.image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
+  = @image
 br
 div.newFacebookDatum
   = link_to 'Nueva Entrada de Datos', new_facebook_datum_path

@@ -1,11 +1,16 @@
 p#notice = notice
 
 p
-  b Name:
+  b Name:   
   = @social_network.name
 p
-  b Client:
-  = @social_network.client_id
+  b Client:   
+  - @client = Client.find(@social_network.client_id)
+  = @client.name
+p
+  b Social Network:   
+  - @info_social_network = InfoSocialNetwork.find(@social_network.info_social_network_id)
+  = @info_social_network.name
 
 = link_to 'Edit', edit_social_network_path(@social_network)
 '|

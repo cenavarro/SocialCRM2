@@ -1,5 +1,5 @@
 = render 'layouts/menu'
-  
+  20120731215641
   table.resultadosComentarios
     tr
       th
@@ -24,7 +24,6 @@
           = link_to 'Editar', edit_revision_path(revision) 
         td
           = link_to 'Destruir', revision, confirm: 'Está seguro?', method: :delete
-
-          .scrollbar
-        .slider
+    .scrollbar
+      .slider
           .position

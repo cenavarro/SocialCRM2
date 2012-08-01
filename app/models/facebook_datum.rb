@@ -35,5 +35,4 @@ class FacebookDatum < ActiveRecord::Base
   def self.get_fan_cost(datum)
     (datum.agency_investment.to_f+datum.new_stock_investment.to_f+datum.anno_investment.to_f)/datum.new_fans.to_f
   end
-
 end

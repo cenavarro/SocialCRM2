@@ -1,0 +1,15 @@
+p#notice = notice
+
+p
+  b Name:
+  = @info_social_network.name
+p
+  b Description:
+  = @info_social_network.description
+p
+  b Image:
+  = @info_social_network.image
+
+= link_to 'Edit', edit_info_social_network_path(@info_social_network)
+'|
+= link_to 'Back', info_social_networks_path

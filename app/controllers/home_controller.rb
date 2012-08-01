@@ -2,8 +2,7 @@ class HomeController < ApplicationController
   before_filter :prepare_login_form
   
   def index
-  	@users = User.all
-  	@revisions = Revision.all
+    @clients = Client.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @revisions }

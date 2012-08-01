@@ -1,0 +1,25 @@
+- if !user_signed_in?
+  | <script type="text/javascript">
+  |   window.location.href="/"
+  | </script>
+- else
+  br
+  - if @client.nil? || @client.social_networks.empty?
+    br
+    br
+    | Este cliente no tiene redes sociales asociadas!
+  - else
+    #contentFlow.ContentFlow
+      .flow
+        - @client.social_networks.each do |social_network|
+          - @info = InfoSocialNetwork.find(social_network.info_social_network_id)
+          - @path = "/"+InfoSocialNetwork.get_name_social_network(social_network.info_social_network_id)+"?id="+@client.id.to_s()
+          - @imagen = ("<img class='content' src='/assets/images/"+@info.image+"' href='"+@path+"'>").html_safe
+          .item
+            = @imagen
+            .caption
+              = social_network.name
+      .globalCaption
+        .scrollbar
+          .slider
+            .position

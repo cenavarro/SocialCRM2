@@ -1,9 +1,12 @@
 DemoComentarios::Application.routes.draw do
 
+  resources :info_social_networks
+
   resources :social_networks
 
   resources :facebook_data
-
+  
+  match 'clients/social_networks', :controller => 'clients', :action => 'social_networks', :conditions => { :method => :get }
   resources :clients
 
   resources :rols
