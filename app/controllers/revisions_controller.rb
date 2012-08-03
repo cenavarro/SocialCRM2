@@ -1,4 +1,5 @@
 class RevisionsController < ApplicationController
+  before_filter :authenticate_user!
   # GET /revisions
   # GET /revisions.json
   def index

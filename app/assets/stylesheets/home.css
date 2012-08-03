@@ -5,6 +5,10 @@ body {
 	font-size: 14px;
 }
 
+.estilo_links_log{
+	float: right;
+}
+
 h1, h2, h3, input {
 	margin: 0px;
 	padding: 0px;
@@ -63,7 +67,12 @@ a:hover {
 }
 
 .log_out_link {
-	color: #ccc;
+	float: none;
+	padding: 9px 10px 11px;
+	line-height: 19px;
+	color: #999;
+	text-decoration: none;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 }
 
 .logoHydra {
@@ -73,7 +82,7 @@ a:hover {
 
 #homePage {
 	max-width: 300px;
-	margin: 150px auto;
+	margin: 100px auto;
 	overflow: hidden;
 }
 

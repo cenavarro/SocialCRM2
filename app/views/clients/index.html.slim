@@ -13,10 +13,10 @@ table.table.table-bordered
       td= client.description
       - @image = ("<img class='content' src='/assets/images/"+client.image+"' height='100' width='100'>").html_safe
       td = @image
-      td= link_to 'Ver datos', client
-      td= link_to 'Editar Cliente', edit_client_path(client)
-      td= link_to 'Eliminar Datos', client, :confirm => 'Estas seguro?', :method => :delete
+      - #td link_to 'Ver datos', client
+      td= link_to 'Edit', edit_client_path(client)
+      td= link_to 'Delete', client, :confirm => 'Are you sure?', :method => :delete
 
 br
 
-= link_to 'Agregar nuevo cliente', new_client_path
+= link_to 'Add New Client', new_client_path

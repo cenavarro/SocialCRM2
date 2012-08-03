@@ -1,4 +1,5 @@
 class InfoSocialNetworksController < ApplicationController
+  before_filter :authenticate_user!
   # GET /info_social_networks
   # GET /info_social_networks.json
   def index

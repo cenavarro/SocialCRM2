@@ -1,4 +1,5 @@
 class FacebookDataController < ApplicationController
+  before_filter :authenticate_user!
   # GET /facebook_data
   # GET /facebook_data.json
   def index

@@ -1,7 +1,7 @@
 doctype html
 html
   head
-    title Administrador de Revisiones
+    title Hydra Social Media
     = stylesheet_link_tag    "application"
     = javascript_include_tag "application"
     = csrf_meta_tags
@@ -9,17 +9,7 @@ html
   body
     .container
       = render 'layouts/header'
+      = render 'layouts/menuAdmin'
       #contentWrapper.well
         = yield
       = render 'layouts/footer'
-
-
-javascript:
-  $(document).ready(function() {
-    var windows_height = $(window).height()-65-120-68;
-    $('#contentWrapper').attr("style", 'min-height:' + windows_height + 'px');
-  });
-  $(window).resize(function() {
-    var windows_height = $(window).height()-65-120-68;
-    $('#contentWrapper').attr("style", 'min-height:' + windows_height + 'px');
-  });

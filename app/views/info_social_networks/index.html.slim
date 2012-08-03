@@ -13,10 +13,8 @@ table.table.table-bordered
       td= info_social_network.description
       - @image = ("<img class='content' src='/assets/images/"+info_social_network.image+"' height='100' width='100'>").html_safe
       td = @image
-      td= link_to 'Show', info_social_network
       td= link_to 'Edit', edit_info_social_network_path(info_social_network)
-      td= link_to 'Destroy', info_social_network, :confirm => 'Are you sure?', :method => :delete
 
 br
 
-= link_to 'New Info social network', new_info_social_network_path
+- #= link_to 'New Info social network', new_info_social_network_path

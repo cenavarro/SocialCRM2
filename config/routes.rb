@@ -12,6 +12,7 @@ DemoComentarios::Application.routes.draw do
   resources :rols
 
   root :to => "home#index"
+  
   devise_for :users
   resources :users, :only => :show
   

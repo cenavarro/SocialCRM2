@@ -1,33 +1,12 @@
-- if !user_signed_in?
-  #homePage
-    h3.signInLabel
-      | Inicia tu sesion
-
-    = form_for(@login_resource, :as => "user", :url => session_path("user")) do |f|
-      = f.label :email, :class => 'email_label'
-      br
-      = f.email_field :email, :class => 'email_input'
-      br
-      = f.label :password, :class => 'pass_label'
-      br
-      = f.password_field :password, :class => 'pass_input'
-      br 
-      br
-      .links
-        = link_to "Olvidaste tu contraseña?", new_password_path(@login_resource), :class => 'olvidate_contrasena'
-        = link_to 'Registrate', new_user_registration_path, :class => 'olvidate_contrasena'
-      = f.submit "Entrar", :class => "button_sing_in"
-
-- else
-  | Pagina Principal
-  #contentFlow.ContentFlow
-    .flow
-      - @clients.each do |client|
-        - @imagen = ("<img class='content' src='/assets/images/"+client.image+"' href='clients/social_networks?id="+client.id.to_s()+"'>").html_safe
-        .item
-          = @imagen
-          .caption
-            = client.name
-            |: 
-            = client.description
-    .globalCaption
+| Pagina Principal
+#contentFlow.ContentFlow
+  .flow
+    - @clients.each do |client|
+      - @imagen = ("<img class='content' src='/assets/images/"+client.image+"' href='clients/social_networks?id="+client.id.to_s()+"'>").html_safe
+      .item
+        = @imagen
+        .caption
+          = client.name
+          |: 
+          = client.description
+  .globalCaption

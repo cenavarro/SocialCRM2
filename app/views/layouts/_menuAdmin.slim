@@ -1,0 +1,39 @@
+.navbar
+  .navbar-inner
+    .container
+      ul.nav
+        li
+          a href="/"
+            |Home
+        li.dropdown
+          a.dropdown-toggle data-toggle="dropdown"
+            |Clients
+            b.caret
+          ul.dropdown-menu
+            li
+              a href="/"
+            li
+              a href="/clients/new"
+                | New Client
+            li
+              a href="/clients"
+                | Edit/Del Clients
+        li.dropdown
+          a.dropdown-toggle data-toggle="dropdown"
+            |Social Networks
+            b.caret
+          ul.dropdown-menu
+            li
+              a href="/social_networks"
+                |List Social Networks
+            li
+              a href="/social_networks/new"
+                |Add Social Network to Client
+            li
+              a href="/info_social_networks"
+                |Edit Info Social Network
+        li.estilo_links_log
+          = render 'devise/menu/login_items'
+        li.estilo_links_log
+          a href="/users/edit"
+            |Edit Account
