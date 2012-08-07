@@ -27,3 +27,9 @@
     .scrollbar
       .slider
           .position
+
+    <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
+  <%= link_to "Registrate", new_registration_path(resource_name), :class => 'olvidate_contrasena' %><br />
+<% end -%>
+
+- @cliente = Client.joins(:social_networks).where('social_networks.info_social_network_id = 1').all

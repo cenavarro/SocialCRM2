@@ -6,7 +6,7 @@ class FacebookDataController < ApplicationController
     if params.has_key?(:id)  
       @facebook_data = FacebookDatum.find(:all, :conditions => {:client_id => params[:id]})
       if @facebook_data.empty?
-        redirect_to :controller => 'home', :action => 'index'
+        # redirect_to :controller => 'home', :action => 'index'
       else
         @dates = ""
         @facebook_data.each do |facebook_datum|
@@ -37,11 +37,14 @@ class FacebookDataController < ApplicationController
   # GET /facebook_data/new
   # GET /facebook_data/new.json
   def new
-    @facebook_datum = FacebookDatum.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @facebook_datum }
+    if params.has_key?(:id) 
+      @facebook_datum = FacebookDatum.new
+      respond_to do |format|
+        format.html # new.html.erb
+        format.json { render json: @facebook_datum }
+      end
+    else
+      redirect_to :controller => 'home', :action => 'index'
     end
   end
 

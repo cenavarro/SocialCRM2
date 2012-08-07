@@ -1,5 +1,6 @@
 class FacebookDatum < ActiveRecord::Base
   belongs_to :client
+  
   def self.get_fan_growth_percentage(datum)
     (datum.new_fans.to_f/(datum.total_fans-datum.new_fans).to_f)*100
   end

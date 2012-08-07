@@ -3,13 +3,17 @@
 = javascript_include_tag "http://code.highcharts.com/modules/exporting.js"
 
 br
+- @facebook_info = InfoSocialNetwork.find(1)
+- @socialNetwork = SocialNetwork.where(:client_id => params[:id], :info_social_network_id => 1).all
+= @socialNetwork[0].name
+br
 div.estilo_div_facebook
-  - @facebook_info = InfoSocialNetwork.find(1)
+  
   - @image = ("<img class='content' src='/assets/images/"+@facebook_info.image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
   = @image
 br
 div.newFacebookDatum
-  = link_to 'Nueva Entrada de Datos', new_facebook_datum_path
+  = link_to 'Nueva Entrada de Datos', new_facebook_datum_path+"?id="+params[:id]
 br
 
 script 

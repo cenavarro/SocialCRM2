@@ -9,7 +9,13 @@ html
   body
     .container
       = render 'layouts/header'
-      = render 'layouts/menuAdmin'
+      - if user_signed_in?
+        - if current_user.rol_id == 1
+          = render 'layouts/menuAdmin'
+        - else
+          = render 'layouts/menuClient'
+      - else
+        = render 'layouts/menuVisit'
       #contentWrapper.well
         = yield
       = render 'layouts/footer'
