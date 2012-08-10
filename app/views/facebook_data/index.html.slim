@@ -1,20 +1,43 @@
-  
-= javascript_include_tag "http://code.highcharts.com/highcharts.js"
-= javascript_include_tag "http://code.highcharts.com/modules/exporting.js"
-
-br
 - @facebook_info = InfoSocialNetwork.find(1)
 - @socialNetwork = SocialNetwork.where(:client_id => params[:id], :info_social_network_id => 1).all
-= @socialNetwork[0].name
-br
-div.estilo_div_facebook
-  
+
+div.margin
+  h1
+    = @socialNetwork[0].name
+  br
   - @image = ("<img class='content' src='/assets/images/"+@facebook_info.image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
   = @image
 br
-div.newFacebookDatum
-  = link_to 'Nueva Entrada de Datos', new_facebook_datum_path+"?id="+params[:id]
+div.margin
+  button.btn.btn-info onclick="show('formInfo')" id="btnShow"
+    |Nueva Entrada de Datos
+
 br
+
+div.styleBoxInformation id="formInfo"
+  button.close onclick="hide('formInfo')"
+    |x
+  form action="facebook_data/new"
+    |Access Token:
+    br
+    input type="text" name="access_token"
+    br
+    br
+    |Start Date: 
+    br
+    = date_select("start_date", "fd", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+    br
+    br
+    |End Date: 
+    br
+    = date_select("end_date", "fd", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+    br
+    input type="hidden" name="id" value=params[:id]
+    input type="hidden" name="object_id" value=@socialNetwork[0].name
+    br
+    input.btn.btn-primary type="submit" value="Enviar"
+    br
+    br
 
 script 
   | $(function () { var chart; var date = "#{@dates}"; $(document).ready(function() { chart = new Highcharts.Chart({

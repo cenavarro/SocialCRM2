@@ -1,5 +1,9 @@
 DemoComentarios::Application.routes.draw do
 
+  get "errors/new"
+
+  get "errors/error_404"
+
   resources :info_social_networks
 
   resources :social_networks

@@ -5,66 +5,114 @@
       ul
         - @facebook_datum.errors.full_messages.each do |msg|
           li= msg
-  .form-horizontal
-    = f.label :client_id
-    - @cliente = Client.find(params[:id])
-    = f.select :client_id, options_for_select([[@cliente.name,@cliente.id]])
-
-    = f.label :start_date
-    = f.date_select :start_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
-
-    = f.label :end_date
-    = f.date_select :end_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
-
-    = f.label :actions
-    = f.text_area :actions
-
-    = f.label :new_fans
-    = f.number_field :new_fans
-
-    = f.label :goal_fans
-    = f.number_field :goal_fans
-
-    = f.label :prints
-    = f.number_field :prints
-
-    = f.label :total_interactions
-    = f.number_field :total_interactions
-
-    = f.label :total_reach
-    = f.number_field :total_reach
-
-    = f.label :potential_reach
-    = f.number_field :potential_reach
-
-    = f.label :total_prints_per_anno
-    = f.text_field :total_prints_per_anno
-
-    = f.label :total_prints
-    = f.number_field :total_prints
-
-    = f.label :total_clicks_anno
-    = f.number_field :total_clicks_anno
-
-    = f.label :fans_through_anno
-    = f.number_field :fans_through_anno
-
-    = f.label :agency_investment
-    = f.text_field :agency_investment
-
-    = f.label :new_stock_investment
-    = f.text_field :new_stock_investment
-
-    = f.label :anno_investment
-    = f.text_field :anno_investment
-
-    = f.label :ctr_anno
-    = f.text_field :ctr_anno
-
-    = f.label :cpm_anno
-    = f.text_field :cpm_anno
-
-    = f.label :cpc_anno
-    = f.text_field :cpc_anno
+  .form-horizontal style="height:1150px;"
     br
-    = f.submit 'Save', {:class => "btn btn-primary"}
+    br
+    .box.informacion
+      | Informacion
+      br
+      br
+      = f.label :client_id
+      - @cliente = Client.find(params[:id])
+      = f.select :client_id, options_for_select([[@cliente.name,@cliente.id]])
+      br
+      br
+      = f.label :start_date
+      = f.date_select :start_date, {:use_short_month => 1, :order => [:day, :month, :year], :default => {:day => params[:start_date]['fd(3i)'], :month => params[:start_date]['fd(2i)'], :year => params[:start_date]['fd(1i)'].to_i}, :disabled => true}, {:class => "span1"}
+      br
+      br
+      = f.label :end_date
+      = f.date_select :end_date, {:use_short_month => 1, :order => [:day, :month, :year], :default => {:day => params[:end_date]['fd(3i)'], :month => params[:end_date]['fd(2i)'], :year => params[:end_date]['fd(1i)'].to_i}, :disabled => true}, {:class => "span1"}
+      br
+      br
+      = f.label :actions
+      = f.text_field :actions
+    br
+    br
+    .box.fans
+      | Fans
+      br
+      br
+      = f.label :new_fans
+      = f.number_field :new_fans, :value => @page_fan_adds - @page_fan_removes
+      br
+      br
+      = f.label :total_fans
+      = f.number_field :total_fans
+      br
+      br
+      = f.label :goal_fans
+      = f.number_field :goal_fans
+    br
+    br
+    .box.interactividad
+      |Interactividad
+      br
+      br
+      = f.label :prints
+      = f.number_field :prints, :value => @page_impressions_org
+      br
+      br
+      = f.label :total_interactions
+      = f.number_field :total_interactions, :value => @page_story_teller + @page_impressions_organic_u + @page_consumptions_u
+      br
+      br
+      = f.label :total_reach
+      = f.number_field :total_reach, :value => @page_impressions_u
+      br
+      br
+      = f.label :potential_reach
+      = f.number_field :potential_reach, :value => @page_friends_of_fan
+      br
+      br
+      = f.label :total_prints_per_anno
+      = f.text_field :total_prints_per_anno
+      br
+      br
+      = f.label :total_prints
+      = f.number_field :total_prints, :value => @page_impression
+      br
+      br
+      = f.label :total_clicks_anno
+      = f.number_field :total_clicks_anno
+      br
+      br
+      = f.label :fans_through_anno
+      = f.number_field :fans_through_anno
+    br
+    br
+    .box.inversion
+      | Inversion
+      br
+      br
+      = f.label :agency_investment
+      = f.text_field :agency_investment
+      br
+      br
+      = f.label :new_stock_investment
+      = f.text_field :new_stock_investment
+      br
+      br
+      = f.label :anno_investment
+      = f.text_field :anno_investment
+    br
+    br
+    .box.costes
+      | Costes
+      br
+      br
+      = f.label :ctr_anno
+      = f.text_field :ctr_anno
+      br
+      br
+      = f.label :cpm_anno
+      = f.text_field :cpm_anno
+      br
+      br
+      = f.label :cpc_anno
+      = f.text_field :cpc_anno
+    br
+    br
+    = f.submit 'Save', {:class => "btn btn-success save"}
+    |     
+    = link_to 'Back', facebook_data_path+"?id="+params[:id], :class => "btn btn-inverse back"

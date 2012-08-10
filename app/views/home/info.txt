@@ -33,3 +33,8 @@
 <% end -%>
 
 - @cliente = Client.joins(:social_networks).where('social_networks.info_social_network_id = 1').all
+
+https://graph.facebook.com/oauth/authorize?client_id=407206796003796&redirect_uri=http://127.0.0.0.:3000/callback&scope=user_photos,user_videos,publish_stream
+
+407206796003796
+12:25 1a7067eb345d54848c7fca3e7af4843a

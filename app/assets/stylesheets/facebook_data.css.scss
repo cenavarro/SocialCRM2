@@ -5,6 +5,9 @@
 $green: #04B404;
 $red: #FF0000; 
 $textSize: 90%;
+$top_position: 700px;
+$left_position: 280px;
+$space: 400px;
 
 .sectionInformation{
 	max-width: 1080px;
@@ -32,7 +35,7 @@ $textSize: 90%;
 	background-color: #688A08;
 }
 
-.newFacebookDatum{
+.margin{
 	margin: 0px 20px 0px 50px;
 }
 
@@ -61,6 +64,72 @@ $textSize: 90%;
 	margin: 50px 42px 0px 42px;
 }
 
-.estilo_div_facebook{
-	margin: 0px 20px 0px 50px;
+.informacion{
+	position:absolute;
+	left:$left_position;
+}
+
+.fans{
+	position:absolute;
+	left: $left_position+$space;
+}
+
+.interactividad{
+	position:absolute;
+	top: $top_position;
+	left:$left_position;
+}
+
+.inversion{
+	position:absolute;
+	top: $top_position+20;
+	left:$left_position+$space;
+
+}
+
+.costes{
+	position:absolute;
+	top: $top_position+335;
+	left:$left_position+$space;
+}
+
+.save{
+	position:absolute;
+	top: 1400px;
+	left: 500px;
+}
+
+.back{
+	position:absolute;
+	top: 1400px;
+	left:700px;
+}
+.box
+{
+	width: 250px;
+	padding: 30px;
+	border:2px solid;
+	border-radius:25px;
+	border-color: #BDBAB3;
+	-moz-border-radius:25px; /* Firefox 3.6 and earlier */
+	-moz-box-shadow: 10px 10px 5px #888888; /* Firefox 3.6 and earlier */
+	box-shadow: 10px 10px 5px #888888;
+}
+
+.styleBoxInformation{
+	width: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	display: none;
+	visibility: hidden;
+	border-radius:25px;
+	border:2px solid;
+	border-color: #BDBAB3;
+	-moz-border-radius:15px; /* Firefox 3.6 and earlier */
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 20px;
+	margin-bottom: 25px;
+	display: none;
+	visibility: hidden;
 }
