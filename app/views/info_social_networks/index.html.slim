@@ -1,19 +1,34 @@
-h1 Listing info_social_networks
+
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+center
+  h1 Informacion Redes Sociales
+br
 br
 table.table.table-bordered
   tr
-    th Name
-    th Description
-    th Image
+    th Nombre
+    th Descripcion
+    th Imagen
     th
 
   - @info_social_networks.each do |info_social_network|
     tr
-      td= info_social_network.name
-      td= info_social_network.description
+      td
+        = info_social_network.name
+      td
+        = info_social_network.description
       - @image = ("<img class='content' src='/assets/images/"+info_social_network.image+"' height='100' width='100'>").html_safe
-      td = @image
-      td= link_to 'Edit', edit_info_social_network_path(info_social_network)
+      td
+        = @image
+      td
+        a.btn.btn-info href=edit_info_social_network_path(info_social_network)
+          i.icon-pencil.icon-white
+          |  Editar
 
 br
 

@@ -24,7 +24,7 @@ describe ClientsController do
   # Client. As you add validations to Client, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    client = Client.create! {:name => "Test", :email=> "user@test.com", :password => "please", :password_confirmation => "please", :rol_id => 1}
   end
 
   describe "GET index" do

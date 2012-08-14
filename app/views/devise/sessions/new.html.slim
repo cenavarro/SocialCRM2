@@ -1,17 +1,21 @@
 #homePage
   h2
-    | Iniciar Sesión
-  = form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+    | Iniciar Sesion
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "well form-inline formLogIn"}) do |f|
     = f.label :email, :class => 'email_label'
-    = f.email_field :email, :class => 'email_input'
-    = f.label :password, :class => 'pass_label'
-    = f.password_field :password, :class => 'pass_input'
+    .input-prepend
+      span.add-on
+        |@
+      = f.email_field :email
+    br
+    br
+    = f.label :contraseña, :class => 'pass_label'
+    .input-prepend
+      span.add-on
+        i.icon-lock
+      = f.password_field :password, :class => 'pass_input'
+    br
+    br
     .links
       = render :partial => "devise/shared/links"
-    = f.submit "Iniciar", :class => "button_sing_in"
-    
-
-
-    
-
-    
+    = f.submit "Iniciar Sesion", :class => "btn btn-primary button_sing_in"

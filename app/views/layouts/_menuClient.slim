@@ -4,28 +4,25 @@
       ul.nav
         li
           a href="/"
-            |Home
+            i.icon-white.icon-home
+            |  Home
         li.dropdown
           a.dropdown-toggle data-toggle="dropdown"
-            |Social Networks
+            i.icon-folder-close.icon-white
+            |  Redes Sociales
             b.caret
           ul.dropdown-menu
             li
               a href="/social_networks"
-                |List Social Networks
-            li
-              a href="/social_networks/new"
-                |Add Social Network to Client
-            li
-              a href="/info_social_networks"
-                |Edit Info Social Network
+                |Listar Redes Sociales
         li style="float: right"
           = render 'devise/menu/login_items'
         li.dropdown style="float: right"
           a.dropdown-toggle data-toggle="dropdown"
-            |Settings
+            i.icon-cog.icon-white
+            |  Configuracion
             b.caret
           ul.dropdown-menu
             li
               a href="/users/edit"
-                |Edit Account  
+                |Editar Cuenta

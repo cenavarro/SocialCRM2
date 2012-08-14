@@ -1,22 +1,41 @@
-h1 Listing social_networks
+
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+center
+  h1 Redes Sociales
+br
 br
 table.table.table-bordered
   tr
-    th Name
-    th Client
-    th Social Network
+    th Nombre
+    th Cliente
+    th Red Social Asociada
     th
 
   - @social_networks.each do |social_network|
     tr
-      td= social_network.name
+      td
+        = social_network.name
       - @client = Client.find(social_network.client_id)
-      td= @client.name
+      td
+        = @client.name
       - @info_social_network = InfoSocialNetwork.find(social_network.info_social_network_id)
-      td= @info_social_network.name
-      td= link_to 'Edit', edit_social_network_path(social_network)
-      td= link_to 'Destroy', social_network, :confirm => 'Are you sure?', :method => :delete
-
+      td
+        = @info_social_network.name
+      td
+        a.btn.btn-info href=edit_social_network_path(social_network)
+          i.icon-pencil.icon-white
+          |  Editar
+      td
+        - red_social = "social_networks/"+social_network.id.to_s
+        a.btn.btn-danger href=red_social data-confirm="Esta seguro que desea eliminar esta Red Social?" data-method="delete" rel="nofollow"
+          i.icon-trash.icon-white
+          |  Eliminar
 br
-
-= link_to 'New Social network', new_social_network_path
+a.btn.btn-primary href=new_social_network_path
+  i.icon-plus-sign.icon-white
+  |  Agregar Red Social a Cliente

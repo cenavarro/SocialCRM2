@@ -45,8 +45,8 @@ class SocialNetworksController < ApplicationController
 
     respond_to do |format|
       if @social_network.save
-        format.html { redirect_to @social_network, notice: 'Social network was successfully created.' }
-        format.json { render json: @social_network, status: :created, location: @social_network }
+        format.html { redirect_to social_networks_path, notice: 'La Red Social "'+@social_network.name+'" se creo satisfactoriamente.' }
+        # format.json { render json: @social_network, status: :created, location: @social_network }
       else
         format.html { render action: "new" }
         format.json { render json: @social_network.errors, status: :unprocessable_entity }
@@ -61,7 +61,7 @@ class SocialNetworksController < ApplicationController
 
     respond_to do |format|
       if @social_network.update_attributes(params[:social_network])
-        format.html { redirect_to @social_network, notice: 'Social network was successfully updated.' }
+        format.html { redirect_to social_networks_path, notice: 'La Red Social se actualizo correctamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -77,7 +77,7 @@ class SocialNetworksController < ApplicationController
     @social_network.destroy
 
     respond_to do |format|
-      format.html { redirect_to social_networks_url }
+      format.html { redirect_to social_networks_url, notice: 'La Red Social "'+@social_network.name+'" fue eliminada correctamente.' }
       format.json { head :ok }
     end
   end

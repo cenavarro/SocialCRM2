@@ -105,9 +105,7 @@ a:hover {
 }
 
 .pass_input {
-	width: 295px;
 	height: 20px;
-	margin: 20px 0px;
 }
 
 .olvidate_contrasena {
@@ -117,11 +115,7 @@ a:hover {
 }
 
 .button_sing_in {
-	width: 75px;
 	float: right;
-	font-family: Arial;
-	line-height: 18px;
-	margin-top: 8px;
 }
 
 .links {
@@ -209,6 +203,11 @@ a:hover {
 .resultadosComentarios tr td {
 	height: 200px;
 	margin: -10px;
+}
+
+.formLogIn{
+	margin-top: 10px;
+	height: 180px;
 }
 
 #footerWrapper {

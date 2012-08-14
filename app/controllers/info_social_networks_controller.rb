@@ -61,7 +61,7 @@ class InfoSocialNetworksController < ApplicationController
 
     respond_to do |format|
       if @info_social_network.update_attributes(params[:info_social_network])
-        format.html { redirect_to @info_social_network, notice: 'Info social network was successfully updated.' }
+        format.html { redirect_to info_social_networks_url, notice: 'La Inforacion de la Red Social se actualizo correctamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

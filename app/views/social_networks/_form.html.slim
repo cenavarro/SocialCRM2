@@ -1,24 +1,47 @@
-= form_for @social_network do |f|
+javascript:
+
+    jQuery(document).ready(function(){
+      // binds form submission and fields to the validation engine
+      jQuery("#new_social_network").validationEngine();
+    });
+
+= form_for @social_network, :html => {:class => "well form-inline nuevoCliente"} do |f|
   -if @social_network.errors.any?
     #error_explanation
       h2 = "#{pluralize(@social_network.errors.count, "error")} prohibited this social_network from being saved:"
       ul
         - @social_network.errors.full_messages.each do |msg|
           li= msg
-
-  .field
-    = f.label "Name(ID):  "
-    = f.text_field :name
-    br
-    br
-    = f.label "Client:  "
-    - @clients = Client.all
-    = f.select :client_id, options_for_select(@clients.collect{|p|[p.name, p.id]},@social_network.client_id)
-    - #= f.number_field :client_id
-    br
-    br
-    = f.label "Social Networks:  "
-    - @info_social_networks = InfoSocialNetwork.all
-    = f.select :info_social_network_id, options_for_select(@info_social_networks.collect{|p|[p.name, p.id]},@social_network.info_social_network_id)
-  .actions
-    = f.submit 'Save'
+  = f.label "Nombre(ID):  "
+  br
+  = f.text_field :name, :class => "validate[required] text-input"
+  p.simbolo
+    span style="font-size: 16pt"
+      |* 
+  br
+  br
+  = f.label "Cliente:  "
+  br
+  - @clients = Client.all
+  = f.select :client_id, options_for_select(@clients.collect{|p|[p.name, p.id]},@social_network.client_id)
+  br
+  br
+  = f.label "Red Social:  "
+  - @info_social_networks = InfoSocialNetwork.all
+  = f.select :info_social_network_id, options_for_select(@info_social_networks.collect{|p|[p.name, p.id]},@social_network.info_social_network_id)
+  br
+  br
+  center
+    button.btn.btn-success type="submit" name="commit"
+      i.icon-check.icon-white
+      |  Guardar Cambios
+  br
+  a.btn.btn-inverse href=social_networks_path
+    i.icon-circle-arrow-left.icon-white
+    |  Atras
+  br
+  br
+  p.leyenda
+    span style="font-size: 16pt"
+      |* 
+    |  Campos Obligatorios 

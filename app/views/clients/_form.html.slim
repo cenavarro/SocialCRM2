@@ -1,20 +1,53 @@
-= form_for @client do |f|
+javascript:
+
+    jQuery(document).ready(function(){
+      // binds form submission and fields to the validation engine
+      jQuery("#new_client").validationEngine();
+    });
+
+
+= form_for @client, :html => {:class => "well form-inline nuevoCliente"} do |f|
   -if @client.errors.any?
     #error_explanation
       h2 = "#{pluralize(@client.errors.count, "error")} prohibited this client from being saved:"
       ul
         - @client.errors.full_messages.each do |msg|
           li= msg
-  .field
-    = f.label :Nombre
-    = f.text_field :name
-    br
-    br
-    = f.label :Descripcion
-    = f.text_field :description
-    br
-    br
-    = f.label :Imagen
-    = f.text_field :image
-  .actions
-    = f.submit 'Save'
+  = f.label :Nombre
+  br
+  = f.text_field :name, :class => "validate[required] text-input"
+  p.simbolo
+    span style="font-size: 16pt"
+      |* 
+  br
+  br
+  = f.label :Descripcion
+  br
+  = f.text_field :description, :class => "validate[required] text-input"
+  p.simbolo
+    span style="font-size: 16pt"
+      | * 
+  br
+  br
+  = f.label :Imagen
+  br
+  = f.text_field :image, :class => "validate[required] text-input"
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |* 
+  br
+  br
+  center
+    button.btn.btn-success type="submit" name="commit"
+      i.icon-check.icon-white
+      |  Guardar Cambios
+  br
+  a.btn.btn-inverse href=clients_path
+    i.icon-circle-arrow-left.icon-white
+    |  Atras
+  br
+  br
+  p.leyenda
+    span style="font-size: 16pt"
+      |* 
+    |  Campos Obligatorios 

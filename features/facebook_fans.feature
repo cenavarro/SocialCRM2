@@ -3,14 +3,14 @@ Feature: Facebook Fans
   A client
   Should be able to watch Facebook Fans Graph
 
-    Scenario: Client has no data
-      Given no campaign exist for client 2
-      When I go to the facebook data page
-      Then I should see "Nueva Entrada de Datos"
+#    Scenario: Client has no data
+#      Given no campaign exist for client 2
+#      When I go to the facebook data page
+#      Then I should see "Nueva Entrada de Datos"
 
-    Scenario: Client has campaings
-      Given Client enters new campaign
-      When I go to facebook data page
-      Then I should see "Fans"
+#    Scenario: Client has campaings
+#      Given Client enters new campaign
+#      When I go to facebook data page
+#      Then I should see "Fans"
       
 

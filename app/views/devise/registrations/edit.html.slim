@@ -1,48 +1,73 @@
-h2
-  | Edit
+javascript:
 
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f|
+    jQuery(document).ready(function(){
+      // binds form submission and fields to the validation engine
+      jQuery("#user_edit").validationEngine();
+    });
+
+br
+center
+  h2
+    | Editar Informacion
+br
+br
+
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class=> "well form-inline editarUsuario" }) do |f|
 
   = devise_error_messages!
 
-  p
-    = f.label :name
-    = f.text_field :name
-
-  div
-    = f.label :email
-    = f.email_field :email
-
-  div
-    = f.label :password
-    = f.password_field :password
-    i 
-      |  (leave blank if you don't want to change it)
-  div
-    = f.label :password_confirmation
-    = f.password_field :password_confirmation
-
-  div
-    = f.label :current_password
-    = f.password_field :current_password
-    i
-      |   (we need your current password to confirm your changes)
+  = f.label :nombre
+  br
+  = f.text_field :name, :class => "validate[required] text-input"
+  br
+  br
+  = f.label :email
+  br
+  = f.email_field :email, :class => "validate[required] text-input"
+  br
+  br
+  = f.label :contraseña
+  br
+  = f.password_field :password
+  br
+  i 
+    |  (dejar en blanco si no quiere cambiarla)
+  br
+  br
+  = f.label :confirmar_contraseña
+  br
+  = f.password_field :password_confirmation
+  br
+  br
+  = f.label :contraseña_actual
+  br
+  = f.password_field :current_password, :class => "validate[required] text-input"
+  br
+  i
+    |   (se necesita su contraseña actual para confirmar los cambios)
+  br
+  br
   - if current_user.rol_id == 1
     div
-      = f.label :user_type
+      = f.label :tipo_usuario
       - @rols = Rol.all
+      br
       = f.select :rol_id, options_for_select(@rols.collect{|p|[p.name,p.id]},current_user.rol_id)
   - else
     p
-      |User Type: Client
-  div
-    = f.submit "Update"
+      |Tipo Usuario: Cliente
+  br
+  br
+  center
+    button.btn.btn-success type="submit" name="commit"
+      i.icon-check.icon-white
+      |  Guardar Cambios
 end
 
 h3 
-  |Cancel my account
+  |Cancelar mi cuenta
 
 p
   |Unhappy? 
-  = link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete
+  = link_to "Cancelar mi cuenta", registration_path(resource_name), :confirm => "Estas seguro?", :method => :delete
   |.

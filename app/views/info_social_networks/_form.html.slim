@@ -1,19 +1,52 @@
-= form_for @info_social_network do |f|
+javascript:
+
+    jQuery(document).ready(function(){
+      // binds form submission and fields to the validation engine
+      jQuery("#new_info_social_network").validationEngine();
+    });
+
+= form_for @info_social_network, :html => {:class => "well form-inline nuevoCliente"} do |f|
   -if @info_social_network.errors.any?
     #error_explanation
       h2 = "#{pluralize(@info_social_network.errors.count, "error")} prohibited this info_social_network from being saved:"
       ul
         - @info_social_network.errors.full_messages.each do |msg|
           li= msg
-
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :description
-    = f.text_area :description
-  .field
-    = f.label :image
-    = f.text_field :image
-  .actions
-    = f.submit 'Save'
+  = f.label :nombre
+  br
+  = f.text_field :name, :class => "validate[required] text-input"
+  p.simbolo
+    span style="font-size: 16pt"
+      |* 
+  br
+  br
+  = f.label :descripcion
+  br
+  = f.text_area :description, :class => "validate[required] text-input", :size => "5x5"
+  p.simbolo
+    span style="font-size: 16pt"
+      |* 
+  br
+  br
+  = f.label :imagen
+  br
+  = f.text_field :image, :class => "validate[required] text-input"
+  p.simbolo
+    span style="font-size: 16pt"
+      |* 
+  br
+  br
+  center
+    button.btn.btn-success type="submit" name="commit"
+      i.icon-check.icon-white
+      |  Guardar Cambios
+  br
+  a.btn.btn-inverse href=info_social_networks_path
+    i.icon-circle-arrow-left.icon-white
+    |  Atras
+  br
+  br
+  p.leyenda
+    span style="font-size: 16pt"
+      |* 
+    |  Campos Obligatorios 

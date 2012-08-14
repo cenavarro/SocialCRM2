@@ -1,22 +1,45 @@
-h1 Listado de clientes
+
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+center
+  h1 Listado de Clientes
+br
+br
 
 table.table.table-bordered
   tr
-    th Nombre
-    th Descripcion
-    th Imagen
+    th 
+      |Nombre
+    th 
+      |Descripcion
+    th 
+      |Imagen
     th
 
   - @clients.each do |client|
     tr
-      td= client.name
-      td= client.description
+      td
+        = client.name
+      td
+        = client.description
       - @image = ("<img class='content' src='/assets/images/"+client.image+"' height='100' width='100'>").html_safe
-      td = @image
+      td 
+        = @image
       - #td link_to 'Ver datos', client
-      td= link_to 'Edit', edit_client_path(client)
-      td= link_to 'Delete', client, :confirm => 'Are you sure?', :method => :delete
-
+      td
+        a.btn.btn-info href=edit_client_path(client)
+          i.icon-pencil.icon-white
+          |  Editar
+      - cliente = "clients/"+client.id.to_s
+      td
+        a.btn.btn-danger href=cliente data-confirm="Esta seguro que desea eliminar este cliente?" data-method="delete" rel="nofollow"
+          i.icon-trash.icon-white
+          |  Eliminar
 br
-
-= link_to 'Add New Client', new_client_path
+a.btn.btn-primary href=new_client_path
+  i.icon-plus-sign.icon-white
+  |  Agregar Nuevo Cliente

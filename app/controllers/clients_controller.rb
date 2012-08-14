@@ -46,8 +46,8 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
-        format.html { redirect_to @client, notice: 'Client was successfully created.' }
-        format.json { render json: @client, status: :created, location: @client }
+        format.html { redirect_to clients_path, notice: 'Cliente "'+@client.name+'"se creo exitosamente!'}
+        #format.json { render json: @client, status: :created, location: @client }
       else
         format.html { render action: "new" }
         format.json { render json: @client.errors, status: :unprocessable_entity }
@@ -62,7 +62,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.update_attributes(params[:client])
-        format.html { redirect_to @client, notice: 'Client was successfully updated.' }
+        format.html { redirect_to clients_path, notice: 'El Cliente fue actualizado correctamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -78,7 +78,7 @@ class ClientsController < ApplicationController
     @client.destroy
 
     respond_to do |format|
-      format.html { redirect_to clients_url }
+      format.html { redirect_to clients_url, notice: 'Cliente "'+@client.name+'" se elimino correctamente!'}
       format.json { head :ok }
     end
   end

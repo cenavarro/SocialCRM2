@@ -1,36 +1,36 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.0'
-
+gem 'rails', "= 3.1.8"
+ 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 gem "therubyracer", :require => 'v8'
-gem 'activesupport', '3.1.0'
-gem 'mysql2'
+gem 'mysql2', "= 0.3.11"
 #gem 'pg'
 
-gem 'slim'
-
-gem 'heroku'
+gem 'slim', "= 1.2.2"
+gem 'rake', ">= 0.9.2.2"
+gem 'heroku', "= 2.30.2"
+gem "escape_utils", "= 0.2.4"
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
   gem 'sass-rails', "  ~> 3.1.0"
   gem 'coffee-rails', "~> 3.1.0"
-  gem 'uglifier'
+  gem 'uglifier', "= 1.2.4"
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', "= 1.0.19"
 
-gem "rspec-rails", ">= 2.6.1", :group => [:development, :test]
-gem "factory_girl_rails", ">= 1.1.0", :group => :test
-gem "cucumber-rails", ">= 1.0.2", :group => :test
+gem "rspec-rails", "= 2.11.0", :group => [:development, :test]
+gem "factory_girl_rails", "= 4.0.0", :group => :test
+gem "cucumber-rails", "= 1.3.0", :group => :test
 gem "capybara", ">= 1.0.1", :group => :test
 gem "database_cleaner", ">= 0.6.7", :group => :test
 #gem "launchy", ">= 2.0.5", :group => :test
 gem "devise", ">= 1.4.4"
-gem "slim-rails"
+gem "slim-rails", "= 1.0.3"
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -39,15 +39,16 @@ gem "slim-rails"
 # gem 'capistrano'
 
 group :development do
-  gem 'sqlite3'
-  gem 'guard'
+  gem 'sqlite3', "= 1.3.6"
+  gem 'guard', "= 1.3.0"
   #gem 'rb-fsevent'
   #gem 'growl_notify'
-  gem 'guard-livereload'
+  gem 'guard-livereload', "= 1.0.0"
   #gem 'ruby-debug19', :require => 'ruby-debug'
 end
 
 group :test do
   # Pretty printed test output
-  gem 'turn', :require => false
+  gem 'minitest', "= 3.3.0"
+  gem 'turn', "= 0.9.6", :require => false
 end

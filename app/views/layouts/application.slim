@@ -12,8 +12,11 @@ html
       - if user_signed_in?
         - if current_user.rol_id == 1
           = render 'layouts/menuAdmin'
-        - else
+        - elsif current_user.rol_id == 2
           = render 'layouts/menuClient'
+        - else
+          javascript: 
+            window.location.href="users/sign_out"
       - else
         = render 'layouts/menuVisit'
       #contentWrapper.well

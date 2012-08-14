@@ -11,14 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803210737) do
+ActiveRecord::Schema.define(:version => 20120814161454) do
 
   create_table "clients", :force => true do |t|
-    t.string   "name"
+    t.string   "name",        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "description"
-    t.string   "image"
+    t.string   "description", :null => false
+    t.string   "image",       :null => false
   end
 
   create_table "facebook_data", :force => true do |t|
