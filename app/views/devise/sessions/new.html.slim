@@ -1,6 +1,5 @@
 #homePage
-  h2
-    | Iniciar Sesion
+  h2 Iniciar Sesion
   = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "well form-inline formLogIn"}) do |f|
     = f.label :email, :class => 'email_label'
     .input-prepend

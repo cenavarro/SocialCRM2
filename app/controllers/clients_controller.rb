@@ -59,6 +59,9 @@ class ClientsController < ApplicationController
   # PUT /clients/1.json
   def update
     @client = Client.find(params[:id])
+    @user = User.find(User.select(:id).where(:client_id => @client.id))
+    @user.name = @client.name
+    @user.save
 
     respond_to do |format|
       if @client.update_attributes(params[:client])
@@ -75,6 +78,8 @@ class ClientsController < ApplicationController
   # DELETE /clients/1.json
   def destroy
     @client = Client.find(params[:id])
+    @user = User.find(User.select(:id).where(:client_id => @client.id))
+    @user.destroy
     @client.destroy
 
     respond_to do |format|

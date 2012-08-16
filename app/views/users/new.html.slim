@@ -1,0 +1,82 @@
+javascript:
+
+    jQuery(document).ready(function(){
+      // binds form submission and fields to the validation engine
+      jQuery("#form_new").validationEngine();
+    });
+
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+center
+  - if params[:option].to_i == 1
+    h1 Nuevo Usuario Administrador
+  - else
+    h1 Nuevo Cliente
+br
+br
+= form_tag({:controller => "users", :action => "create"}, :method => "post", :class => "well form-inline nuevoCliente", :id =>"form_new", :onsubmit => "confirm('Esta seguro que desea agregar este usuario?')") do
+
+  = label_tag :name, "Nombre:"
+  = text_field_tag :name, nil, {:class => "validate[required] text-input"}
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :email, "Email:"
+  = email_field :email, :address, :class => "validate[required, custom[email]]"
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :password, "Contraseña:"
+  = password_field_tag :password, nil, {:class => "validate[required]"}
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :password_confirmation, "Confirmación de Contraseña:"
+  = password_field_tag :password_confirmation, nil, {:class => "validate[required,equals[password]]"}
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  - if params[:option].to_i == 1
+      = label_tag :user_type, "Tipo Usuario:"
+      = select_tag :user_type, '<option value="1">Administrador</option>'.html_safe
+      br
+      br
+      center
+        button.btn.btn-success type="submit" name="commit"
+          i.icon-check.icon-white
+          |  Crear Usuario
+  - else
+      = label_tag :user_type, "Tipo Usuario:"
+      = select_tag :user_type, '<option value="2">Cliente</option>'.html_safe
+      br
+      br
+      = label_tag :description, "Descripcion Cliente:"
+      = text_field_tag :description
+      br
+      br
+      = label_tag :image, "Imagen Cliente:"
+      = text_field_tag :image
+      br
+      br
+      center
+        button.btn.btn-success type="submit" name="commit"
+          i.icon-check.icon-white
+          |  Crear Cliente
+  br
+  br
+  p.leyenda
+    span style="font-size: 16pt"
+      |* 
+    |Campos Requeridos

@@ -1,16 +1,16 @@
 DemoComentarios::Application.routes.draw do
 
-  get "errors/new"
-
-  get "errors/error_404"
+  get "users/new"
 
   resources :info_social_networks
 
   resources :social_networks
 
   resources :facebook_data
-  
-  match 'clients/social_networks', :controller => 'clients', :action => 'social_networks', :conditions => { :method => :get }
+
+  get 'clients/social_networks'
+
+  #match 'clients/social_networks', :controller => 'clients', :action => 'social_networks', :conditions => { :method => :get }
   resources :clients
 
   resources :rols
@@ -18,6 +18,11 @@ DemoComentarios::Application.routes.draw do
   root :to => "home#index"
   
   devise_for :users
+
+  get 'users/delete'
+  put 'users/destroy'
+  post 'users/create'
+
   resources :users, :only => :show
   
   resources :revisions

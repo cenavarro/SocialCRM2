@@ -5,7 +5,7 @@ javascript:
       jQuery("#new_info_social_network").validationEngine();
     });
 
-= form_for @info_social_network, :html => {:class => "well form-inline nuevoCliente"} do |f|
+= form_for @info_social_network, :html => {:class => "well form-inline nuevoCliente", :onsubmit => "confirm('Estas seguro?')"} do |f|
   -if @info_social_network.errors.any?
     #error_explanation
       h2 = "#{pluralize(@info_social_network.errors.count, "error")} prohibited this info_social_network from being saved:"

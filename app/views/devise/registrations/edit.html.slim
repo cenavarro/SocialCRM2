@@ -12,62 +12,65 @@ center
 br
 br
 
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class=> "well form-inline editarUsuario" }) do |f|
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class=> "well form-inline editarUsuario", :onsubmit => "confirm('Esta seguro que desea guardar los cambios?')"}) do |f|
 
   = devise_error_messages!
-
-  = f.label :nombre
-  br
-  = f.text_field :name, :class => "validate[required] text-input"
-  br
-  br
-  = f.label :email
-  br
-  = f.email_field :email, :class => "validate[required] text-input"
-  br
-  br
-  = f.label :contraseña
-  br
-  = f.password_field :password
-  br
-  i 
-    |  (dejar en blanco si no quiere cambiarla)
-  br
-  br
-  = f.label :confirmar_contraseña
-  br
-  = f.password_field :password_confirmation
-  br
-  br
-  = f.label :contraseña_actual
-  br
-  = f.password_field :current_password, :class => "validate[required] text-input"
-  br
-  i
-    |   (se necesita su contraseña actual para confirmar los cambios)
-  br
-  br
-  - if current_user.rol_id == 1
-    div
-      = f.label :tipo_usuario
-      - @rols = Rol.all
-      br
-      = f.select :rol_id, options_for_select(@rols.collect{|p|[p.name,p.id]},current_user.rol_id)
-  - else
-    p
-      |Tipo Usuario: Cliente
-  br
-  br
-  center
-    button.btn.btn-success type="submit" name="commit"
-      i.icon-check.icon-white
-      |  Guardar Cambios
+  div style="margin-left:40px"
+    = f.label :nombre
+    br
+    - if current_user.rol_id == 2
+      = f.text_field :name, :class => "validate[required] text-input", :readonly => true
+    - else
+      = f.text_field :name, :class => "validate[required] text-input"
+    br
+    br
+    = f.label :email
+    br
+    - if current_user.rol_id == 2
+      = f.email_field :email, :class => "validate[required] text-input", :readonly => true
+    - else
+      = f.email_field :email, :class => "validate[required] text-input"
+    br
+    br
+    = f.label :contraseña
+    br
+    = f.password_field :password
+    br
+    i 
+      |  (dejar en blanco si no quiere cambiarla)
+    br
+    br
+    = f.label :confirmar_contraseña
+    br
+    = f.password_field :password_confirmation
+    br
+    br
+    = f.label :contraseña_actual
+    br
+    = f.password_field :current_password, :class => "validate[required] text-input"
+    br
+    i
+      |   (se necesita su contraseña actual para confirmar los cambios)
+    br
+    br
+    = f.label :tipo_usuario
+    - @rols = Rol.all
+    - if current_user.rol_id == 1
+        = f.select :rol_id, options_for_select([["Administrador",1]])
+    - else
+        = f.select :rol_id, options_for_select([["Cliente",2]])
+    br
+    br
+    center
+      button.btn.btn-success type="submit" name="commit"
+        i.icon-check.icon-white
+        |  Guardar Cambios
 end
 
-h3 
-  |Cancelar mi cuenta
+-# h3 
+-#  |Cancelar mi cuenta
 
-p
-  |Unhappy? 
-  = link_to "Cancelar mi cuenta", registration_path(resource_name), :confirm => "Estas seguro?", :method => :delete
-  |.
+-# p
+-#  |Unhappy? 
+-#  = link_to "Cancelar mi cuenta", registration_path(resource_name), :confirm => "Estas seguro que desea eliminar este usuario?", :method => :delete
+-#  |.

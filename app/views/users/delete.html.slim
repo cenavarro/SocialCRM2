@@ -1,0 +1,27 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+div style="height: 400px"
+	br
+	center
+	  h2 style="margin-top:20px"
+	    |Eliminar Usuarios
+	br
+	br
+	= form_tag({:controller => "users", :action => "destroy"}, :method=> "put", :class => "well form-inline nuevoCliente", :onsubmit => "return confirm('Esta seguro que desea eliminar este cliente?')") do
+	  .form-horizontal
+	    | Usuario:
+	    br
+	    br
+	    - @users = User.where(:rol_id => 1)
+	    = select_tag :id, options_for_select(@users.collect{|p|[p.name, p.id]})
+	    br
+	    br
+	    center
+	      button.btn.btn-danger type="submit" name="commit"
+	        i.icon-trash.icon-white
+	        |  Eliminar
+
+

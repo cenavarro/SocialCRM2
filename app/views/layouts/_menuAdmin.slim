@@ -7,25 +7,26 @@
             i.icon-white.icon-home
             |  Home
         li.dropdown
-          a.dropdown-toggle data-toggle="dropdown"
+          a.dropdown-toggle href="#" data-toggle="dropdown"
             i.icon-user.icon-white
             |  Clientes
             b.caret
           ul.dropdown-menu
             li
-              a href="/"
-            li
-              a href="/clients/new"
+              a href="/users/new?option=2"
                 | Crear Cliente
             li
               a href="/clients"
                 | Editar/Borrar
         li.dropdown
-          a.dropdown-toggle data-toggle="dropdown"
+          a.dropdown-toggle href="#" data-toggle="dropdown"
             i.icon-folder-close.icon-white
             |  Redes Sociales
             b.caret
           ul.dropdown-menu
+            li
+              a href="/"
+                | Agregar Nueva Entrada Datos
             li
               a href="/social_networks"
                 |Listar Redes Sociales
@@ -38,14 +39,17 @@
         li style="float: right"
           = render 'devise/menu/login_items'
         li.dropdown style="float: right"
-          a.dropdown-toggle data-toggle="dropdown"
+          a.dropdown-toggle href="#" data-toggle="dropdown"
             i.icon-cog.icon-white
             |  Configuracion
             b.caret
           ul.dropdown-menu
             li
-              a href="/users/new"
+              a href="/users/new?option=1"
                 |Nuevo Usuario
             li
               a href="/users/edit"
                 |Editar Cuenta
+            li
+              a href=users_delete_path
+                |Eliminar Usuarios

@@ -61,15 +61,15 @@ class FacebookDataController < ApplicationController
       #calcular_datos()
 
       @page_fan_adds = 0
-    @page_fan_removes = 0
-    @page_impressions_org = 0
-    @page_story_teller = 0
-    @page_impressions_organic_u = 0
-    @page_consumptions_u = 0
-    @page_impressions_u = 0
-    @page_impression = 0
+      @page_fan_removes = 0
+      @page_impressions_org = 0
+      @page_story_teller = 0
+      @page_impressions_organic_u = 0
+      @page_consumptions_u = 0
+      @page_impressions_u = 0
+      @page_impression = 0
 
-    @page_friends_of_fan = 0
+      @page_friends_of_fan = 0
 
       @facebook_datum = FacebookDatum.new
       respond_to do |format|
