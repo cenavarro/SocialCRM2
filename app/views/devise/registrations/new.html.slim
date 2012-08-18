@@ -25,6 +25,10 @@
 
     .links
       = render :partial => "devise/shared/links"
-    = f.submit "Sign up", :class => "button_sing_in"
+
+    center
+        button.btn.btn-success type="submit" name="commit"
+          i.icon-share.icon-white
+          |  Sign Up
 
     

@@ -1,11 +1,22 @@
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#user_new").validationEngine();
+    });
+
 #homePage
+  - if !flash.empty?
+    .alert.alert-danger
+      ul
+        - flash.each do |name, msg|
+          li = msg 
   h2 Iniciar Sesion
   = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "well form-inline formLogIn"}) do |f|
+    br
     = f.label :email, :class => 'email_label'
     .input-prepend
       span.add-on
         |@
-      = f.email_field :email
+      = f.text_field :email, :class => "validate[required,custom[email]]"
     br
     br
     = f.label :contraseña, :class => 'pass_label'

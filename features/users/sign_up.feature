@@ -11,7 +11,7 @@ Feature: Sign up
 
     @SignUpValid
     Scenario: User signs up with valid data
-      And I fill in the following:
+      When I fill in the following:
         | Nombre                  | Testy McUserton |
         | Email                 | user@test.com   |
         | Contraseña              | please          |

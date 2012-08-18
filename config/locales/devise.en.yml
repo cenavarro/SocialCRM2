@@ -17,16 +17,16 @@ en:
       unauthenticated: 'You need to sign in or sign up before continuing.'
       unconfirmed: 'You have to confirm your account before continuing.'
       locked: 'Your account is locked.'
-      invalid: 'Invalid email or password.'
+      invalid: 'Email o Contraseña no son correctos.'
       invalid_token: 'Invalid authentication token.'
       timeout: 'Your session expired, please sign in again to continue.'
       inactive: 'Your account was not activated yet.'
     sessions:
-      signed_in: 'Signed in successfully.'
-      signed_out: 'Signed out successfully.'
+      signed_in: 'Se ha iniciado sesión correctamente.'
+      signed_out: 'Se ha cerrado la sesión correctamente.'
     passwords:
-      send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.'
-      updated: 'Your password was changed successfully. You are now signed in.'
+      send_instructions: 'Usted recibirá un correo con las instrucciones sobre como restablecer su contraseña en pocos minutos.'
+      updated: 'Tu contraseña fue cambiada exitosamente. Ahora usted esta con la sesión iniciada.'
       send_paranoid_instructions: "If your e-mail exists on our database, you will receive a password recovery link on your e-mail"
     confirmations:
       send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.'
@@ -35,12 +35,12 @@ en:
     registrations:
       signed_up: 'Welcome! You have signed up successfully.'
       inactive_signed_up: 'You have signed up successfully. However, we could not sign you in because your account is %{reason}.'
-      updated: 'You updated your account successfully.'
+      updated: 'La actualización de su cuenta fue exitosa.'
       destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
       reasons:
-        inactive: 'inactive'
-        unconfirmed: 'unconfirmed'
-        locked: 'locked'
+        inactive: 'inactivo'
+        unconfirmed: 'sin confirmar'
+        locked: 'bloqueada'
     unlocks:
       send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.'
       unlocked: 'Your account was successfully unlocked. You are now signed in.'
@@ -50,8 +50,8 @@ en:
       failure: 'Could not authorize you from %{kind} because "%{reason}".'
     mailer:
       confirmation_instructions:
-        subject: 'Confirmation instructions'
+        subject: 'Instrucciones de confirmación'
       reset_password_instructions:
-        subject: 'Reset password instructions'
+        subject: 'Instruccion para reesblacer su contraseña'
       unlock_instructions:
-        subject: 'Unlock Instructions'
+        subject: 'Instrucciones para desbloquear'

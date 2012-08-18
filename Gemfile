@@ -12,6 +12,7 @@ gem 'slim', "= 1.2.2"
 gem 'rake', ">= 0.9.2.2"
 gem 'heroku', "= 2.30.2"
 gem "escape_utils", "= 0.2.4"
+gem 'simplecov', :require => false, :group => :test
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -25,7 +26,6 @@ gem 'jquery-rails', "= 1.0.19"
 
 gem "rspec-rails", "= 2.11.0", :group => [:development, :test]
 gem "factory_girl_rails", "= 4.0.0", :group => :test
-gem "cucumber-rails", "= 1.3.0", :group => :test
 gem "capybara", ">= 1.0.1", :group => :test
 gem "database_cleaner", ">= 0.6.7", :group => :test
 #gem "launchy", ">= 2.0.5", :group => :test
@@ -51,4 +51,5 @@ group :test do
   # Pretty printed test output
   gem 'minitest', "= 3.3.0"
   gem 'turn', "= 0.9.6", :require => false
+  gem "cucumber-rails", "= 1.3.0"
 end

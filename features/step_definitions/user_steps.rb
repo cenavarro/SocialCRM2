@@ -4,32 +4,28 @@ Given /^no user exists with an email of "(.*)"$/ do |email|
   User.find(:first, :conditions => { :email => email }).should be_nil
 end
 
-Given /^I am a valid user$/ do
-  FactoryGirl.create(:user)
+Given /^Exist a Admin User with data, name "([^\"]*)" and email "([^\"]*)" and password "([^\"]*)"$/ do |name, email, password|
+  User.new(:name => name,
+    :email => email,
+    :password => password,
+    :rol_id => 1,
+    :password_confirmation => password).save!
 end
 
-Given /^I am a user named "([^\"]*)" with an email "([^\"]*)" and password "([^\"]*)" and rolID "([^\"]*)"$/ do |name, email, password, rol|
-  u = User.new(:name => name,
-            :email => email,
-            :password => password,
-            :rol_id => rol,
-            :password_confirmation => password)
-  u.save!
+Given /^Exist a User with data, name "([^\"]*)" with an email "([^\"]*)" and password "([^\"]*)"$/ do |name, email, password|
+  User.new(:name => name,
+    :email => email,
+    :password => password,
+    :rol_id => 2,
+    :password_confirmation => password).save!
 end
 
 Then /^I should be already signed in$/ do
   step 'I should see "Salir"'
 end
 
-Given /^I am signed up as "(.*)\/(.*)"$/ do |email, password|
-  step 'I am not logged in'
-  step 'I go to the sign up page'
-  step 'I fill in "Email" with "#{email}"'
-  step 'I fill in "Password" with "#{password}"'
-  step 'I fill in "Password confirmation" with "#{password}"'
-  step 'I press "Sign up"'
-  step 'I should see "You have signed up successfully. If enabled, a confirmation was sent to your e-mail."'
-  step 'I am logout'
+Given /^I am logged in as "(.*)\/(.*)"$/ do |email, password|
+  step %{I sign in as "#{email}/#{password}"}
 end
 
 Then /^I sign out$/ do
@@ -45,8 +41,9 @@ Given /^I am not logged in$/ do
 end
 
 When /^I sign in as "(.*)\/(.*)"$/ do |email, password|
-  step 'I fill in "Email" with "#{email}"'
-  step 'I fill in "user_password" with "#{password}"'
+  step 'I go to the sign in page'
+  step %{I fill in "Email" with "#{email}"}
+  step %{I fill in "user_password" with "#{password}"}
   step 'I press "Iniciar Sesion"'
 end
 
@@ -59,7 +56,16 @@ When /^I return next time$/ do
   step 'I go to the home page'
 end
 
-Then /^I should be signed out$/ do
+Then /^I should be logged out$/ do
+  step 'I should see "Email"'
+  step 'I should see "Contraseña"'
   step 'I should see "Iniciar Sesion"'
   step 'I should not see "Salir"'
+end
+
+Then /^I should be logged in as an Admin User$/ do
+  step 'I should see "Home"'
+  step 'I should see "Clientes"'
+  step 'I should see "Redes Sociales"'
+  step 'I should see "Salir"'
 end

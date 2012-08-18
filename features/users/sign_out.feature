@@ -5,9 +5,9 @@ Feature: Sign out
 
     @userSignOut
     Scenario: User signs out
-      Given I am a user named "foo" with an email "user@test.com" and password "please" and rolID "1"
+      Given I am a user named "user" with an email "user@test.com" and password "123456" and rolID "1"
       And I go to the sign in page
-      When I sign in as "user@test.com/please"
+      When I sign in as "user@test.com/123456"
       And I sign out
       Then I should see "Iniciar Sesion"
       When I return next time

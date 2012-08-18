@@ -46,7 +46,7 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
-        format.html { redirect_to clients_path, notice: 'Cliente "'+@client.name+'"se creo exitosamente!'}
+        format.html { redirect_to clients_path, notice: 'Cliente se creo exitosamente!'}
         #format.json { render json: @client, status: :created, location: @client }
       else
         format.html { render action: "new" }
@@ -83,7 +83,7 @@ class ClientsController < ApplicationController
     @client.destroy
 
     respond_to do |format|
-      format.html { redirect_to clients_url, notice: 'Cliente "'+@client.name+'" se elimino correctamente!'}
+      format.html { redirect_to clients_url, notice: 'Cliente se elimino correctamente!'}
       format.json { head :ok }
     end
   end
