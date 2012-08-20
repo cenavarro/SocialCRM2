@@ -49,3 +49,28 @@ Feature: Manage Clients
       | Imagen Cliente:				| image.png			|
     When I press "Crear Cliente"
     Then I should see "El Cliente NO se ha ingresado correctamente."
+
+
+  @edit_client
+  Scenario: Edit Information of a exist client
+    Given I should see "Editar/Borrar"
+    And Exist a Client User with data, name "Client1" with an email "client1@test.com" and password "123456"
+    When I follow "Editar/Borrar"
+    Then I should see "Listado de Clientes"
+    And I should see "Client1"
+    When I follow "edit_1"
+    Then I should see "Editar Cliente"
+    And I fill in "client_description" with "Description Client 1"
+    And I press "Guardar Cambios"
+    Then I should see "El Cliente fue actualizado correctamente."
+    And I should see "Description Client 1"
+  
+  @delete_client
+  Scenario: Delete client
+    Given I should see "Editar/Borrar"
+    And Exist a Client User with data, name "Client1" with an email "client1@test.com" and password "123456"
+    When I follow "Editar/Borrar"
+    Then I should see "Listado de Clientes"
+    And I should see "Client1"
+    When I follow "delete_1"
+    Then I should see "Cliente se elimino correctamente."

@@ -39,7 +39,7 @@ gem "slim-rails", "= 1.0.3"
 # gem 'capistrano'
 
 group :development do
-  gem 'sqlite3', "= 1.3.6"
+  gem 'pg'
   gem 'guard', "= 1.3.0"
   #gem 'rb-fsevent'
   #gem 'growl_notify'

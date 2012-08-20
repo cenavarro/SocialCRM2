@@ -26,7 +26,8 @@ table.table.table-bordered
       td
         = @image
       td
-        a.btn.btn-info href=edit_info_social_network_path(info_social_network)
+        - edit_id = "edit_info_" + info_social_network.id.to_s
+        a.btn.btn-info href=edit_info_social_network_path(info_social_network) id=edit_id
           i.icon-pencil.icon-white
           |  Editar
 

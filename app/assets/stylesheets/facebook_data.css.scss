@@ -5,12 +5,13 @@
 $green: #04B404;
 $red: #FF0000; 
 $textSize: 90%;
-$top_position: 700px;
-$left_position: 280px;
+$top_position: 450px;
+$left_position: 80px;
 $space: 400px;
 
 .sectionInformation{
 	max-width: 1080px;
+	position: relative;
 }
 
 .sectionTable{
@@ -95,14 +96,14 @@ $space: 400px;
 
 .save{
 	position:absolute;
-	top: 1400px;
-	left: 500px;
+	top: 1125px;
+	left: 300px;
 }
 
 .back{
 	position:absolute;
-	top: 1400px;
-	left:700px;
+	top: 1125px;
+	left:500px;
 }
 .box
 {

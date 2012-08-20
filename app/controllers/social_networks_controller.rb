@@ -13,14 +13,14 @@ class SocialNetworksController < ApplicationController
 
   # GET /social_networks/1
   # GET /social_networks/1.json
-  def show
-    @social_network = SocialNetwork.find(params[:id])
+#  def show
+#    @social_network = SocialNetwork.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @social_network }
-    end
-  end
+#    respond_to do |format|
+#      format.html # show.html.erb
+#      format.json { render json: @social_network }
+#    end
+#  end
 
   # GET /social_networks/new
   # GET /social_networks/new.json
@@ -45,7 +45,7 @@ class SocialNetworksController < ApplicationController
 
     respond_to do |format|
       if @social_network.save
-        format.html { redirect_to social_networks_path, notice: 'La Red Social "'+@social_network.name+'" se creo satisfactoriamente.' }
+        format.html { redirect_to social_networks_path, notice: 'La Red Social se creo satisfactoriamente.' }
         # format.json { render json: @social_network, status: :created, location: @social_network }
       else
         format.html { render action: "new" }
@@ -77,7 +77,7 @@ class SocialNetworksController < ApplicationController
     @social_network.destroy
 
     respond_to do |format|
-      format.html { redirect_to social_networks_url, notice: 'La Red Social "'+@social_network.name+'" fue eliminada correctamente.' }
+      format.html { redirect_to social_networks_url, notice: 'La Red Social fue eliminada correctamente.' }
       format.json { head :ok }
     end
   end
