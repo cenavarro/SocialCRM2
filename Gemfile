@@ -31,6 +31,8 @@ gem "database_cleaner", ">= 0.6.7", :group => :test
 #gem "launchy", ">= 2.0.5", :group => :test
 gem "devise", ">= 1.4.4"
 gem "slim-rails", "= 1.0.3"
+gem "pg"
+gem "activerecord-postgresql-adapter"
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -39,7 +41,7 @@ gem "slim-rails", "= 1.0.3"
 # gem 'capistrano'
 
 group :development do
-  gem 'pg'
+#  gem 'sqlite3', "= 1.3.6"
   gem 'guard', "= 1.3.0"
   #gem 'rb-fsevent'
   #gem 'growl_notify'
