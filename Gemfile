@@ -5,8 +5,7 @@ gem 'rails', "= 3.1.8"
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 gem "therubyracer", :require => 'v8'
-gem 'mysql2', "= 0.3.11"
-#gem 'pg'
+#gem 'mysql2', "= 0.3.11"
 
 gem 'slim', "= 1.2.2"
 gem 'rake', ">= 0.9.2.2"
@@ -31,8 +30,8 @@ gem "database_cleaner", ">= 0.6.7", :group => :test
 #gem "launchy", ">= 2.0.5", :group => :test
 gem "devise", ">= 1.4.4"
 gem "slim-rails", "= 1.0.3"
-gem "pg"
-gem "activerecord-postgresql-adapter"
+gem 'pg'
+#gem 'activerecord-postgresql-adapter'
 
 # Use unicorn as the web server
 # gem 'unicorn'
