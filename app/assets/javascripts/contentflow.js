@@ -53,11 +53,6 @@ var ContentFlowGlobal = {
         return '';
     },
 
-    getScriptPath: function (scriptElement, scriptName) {
-        var regex = new RegExp(scriptName+".*");
-        return scriptElement.src.replace(regex, '');
-    },
-
     addScript: function  (path) {
         if (this.Browser.IE || this.Browser.WebKit || this.Browser.Konqueror) {
             document.write('<script type="text/javascript" src="'+path+'"><\/script>');
@@ -96,39 +91,13 @@ var ContentFlowGlobal = {
     },
 
     initPath: function () {
-        /* get / set basic values */
-        this.scriptElement = this.getScriptElement(this.scriptName);
-        if (!this.scriptElement) {
-            this.scriptName = 'contentflow_src.js';
-            this.scriptElement = this.getScriptElement(this.scriptName);
-        }
-
-        this.BaseDir = this.getScriptPath(this.scriptElement, this.scriptName) ;
-        if (!this.AddOnBaseDir) this.AddOnBaseDir = this.BaseDir;
+        this.BaseDir = document.URL + "assets/";
         if (!this.CSSBaseDir) this.CSSBaseDir = this.BaseDir;
     },
 
     init: function () {
         /* add default stylesheets */
         this.addStylesheet(this.CSSBaseDir+'contentflow.css');
-        /*this.addStylesheet(this.CSSBaseDir+'mycontentflow.css');    // FF2: without adding a css-file FF2 hangs on a reload.
-                                                                    //      I don't have the slidest idea why
-                                                                    //      Could be timing problem
-        */
-        this.loadAddOns = new Array();
-        /* add AddOns scripts */
-        if (this.scriptElement.getAttribute('load')) {
-            var AddOns = this.loadAddOns = this.scriptElement.getAttribute('load').replace(/\ +/g,' ').split(' ');
-            for (var i=0; i<AddOns.length; i++) {
-                if (AddOns[i] == '') continue;
-                //if (AddOns[i] == 'myStyle') {
-                    //this.addStylesheet(this.BaseDir+'mycontentflow.css');
-                    //continue;
-                //}
-                this.addScript(this.AddOnBaseDir+'ContentFlowAddOn_'+AddOns[i]+'.js');
-            }
-        }
-
         /* ========== ContentFlow auto initialization on document load ==========
          * thanks to Dean Edwards
          * http://dean.edwards.name/weblog/2005/02/order-of-events/
@@ -170,14 +139,6 @@ var ContentFlowGlobal = {
     onloadInit: function () {
         // quit if this function has already been called
         if (arguments.callee.done) return;
-        for (var i=0; i< ContentFlowGlobal.loadAddOns.length; i++) {
-            var a = ContentFlowGlobal.loadAddOns[i];
-            if (!ContentFlowGlobal.AddOns[a]) {
-                var CFG = ContentFlowGlobal;
-                window.setTimeout( CFG.onloadInit, 10);
-                return;
-            }
-        }
         // flag this function so we don't do the same thing twice
         arguments.callee.done = true;
         

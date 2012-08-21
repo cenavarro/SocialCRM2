@@ -54,7 +54,7 @@ var ContentFlowGlobal = {
     },
 
     getScriptPath: function (scriptElement, scriptName) {
-        var regex = new RegExp(scriptName+".*");
+        var regex = new RegExp(scriptName + ".*");
         return scriptElement.src.replace(regex, '');
     },
 
@@ -97,37 +97,25 @@ var ContentFlowGlobal = {
 
     initPath: function () {
         /* get / set basic values */
-        this.scriptElement = this.getScriptElement(this.scriptName);
-        if (!this.scriptElement) {
-            this.scriptName = 'contentflow_src.js';
-            this.scriptElement = this.getScriptElement(this.scriptName);
-        }
+        // this.scriptElement = this.getScriptElement(this.scriptName);
 
-        this.BaseDir = this.getScriptPath(this.scriptElement, this.scriptName) ;
-        if (!this.AddOnBaseDir) this.AddOnBaseDir = this.BaseDir;
-        if (!this.CSSBaseDir) this.CSSBaseDir = this.BaseDir;
+        // if (!this.scriptElement) {
+        //     this.scriptName = 'contentflow_src.js';
+        //     this.scriptElement = this.getScriptElement(this.scriptName);
+        // }
+
+        // this.BaseDir = this.getScriptPath(this.scriptElement, this.scriptName) ;
+        // if (!this.AddOnBaseDir) this.AddOnBaseDir = this.BaseDir;
+        // if (!this.CSSBaseDir) this.CSSBaseDir = this.BaseDir;
+        this.BaseDir = "/assets/";
+        this.AddOnBaseDir = "/assets/";
+        this.CSSBaseDir = "/assets/";
     },
 
     init: function () {
         /* add default stylesheets */
-        this.addStylesheet(this.CSSBaseDir+'contentflow.css');
-        this.addStylesheet(this.CSSBaseDir+'mycontentflow.css');    // FF2: without adding a css-file FF2 hangs on a reload.
-                                                                    //      I don't have the slidest idea why
+        this.addStylesheet(this.CSSBaseDir + 'contentflow.css');
                                                                     //      Could be timing problem
-        this.loadAddOns = new Array();
-        /* add AddOns scripts */
-        if (this.scriptElement.getAttribute('load')) {
-            var AddOns = this.loadAddOns = this.scriptElement.getAttribute('load').replace(/\ +/g,' ').split(' ');
-            for (var i=0; i<AddOns.length; i++) {
-                if (AddOns[i] == '') continue;
-                //if (AddOns[i] == 'myStyle') {
-                    //this.addStylesheet(this.BaseDir+'mycontentflow.css');
-                    //continue;
-                //}
-                this.addScript(this.AddOnBaseDir+'ContentFlowAddOn_'+AddOns[i]+'.js');
-            }
-        }
-
         /* ========== ContentFlow auto initialization on document load ==========
          * thanks to Dean Edwards
          * http://dean.edwards.name/weblog/2005/02/order-of-events/
@@ -138,7 +126,7 @@ var ContentFlowGlobal = {
         if (document.addEventListener) {
             /* for Safari */
             if (this.Browser.WebKit) {
-                var _timer = setInterval(function() {
+                var _timer = setIntervl(function() {
                     if (/loaded|complete/.test(document.readyState)) {
                         clearInterval(_timer);
                         CFG.onloadInit(); // call the onload handler
