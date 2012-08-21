@@ -3,8 +3,6 @@ class FacebookDataController < ApplicationController
 
   require 'open-uri'
 
-  # GET /facebook_data
-  # GET /facebook_data.json
   def index
     if params.has_key?(:id)  
       @facebook_data = FacebookDatum.find(:all, :conditions => {:client_id => params[:id]})
@@ -12,9 +10,9 @@ class FacebookDataController < ApplicationController
       @facebook_data.each do |facebook_datum|
         @dates = @dates + facebook_datum.start_date.mday().to_s + " al " + facebook_datum.end_date.mday().to_s + " de " + facebook_datum.end_date.strftime('%B') + ","
       end
-    
+
       respond_to do |format|
-        format.html # index.html.erb
+        format.html
         format.json { render json: @facebook_data }
       end
     else
@@ -39,8 +37,6 @@ class FacebookDataController < ApplicationController
     json_object = JSON.parse(open(result).read)
   end
 
-  # GET /facebook_data/new
-  # GET /facebook_data/new.json
   def new
     if params.has_key?(:id)
       access_token = params[:access_token]

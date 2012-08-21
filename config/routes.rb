@@ -13,8 +13,6 @@ DemoComentarios::Application.routes.draw do
   #match 'clients/social_networks', :controller => 'clients', :action => 'social_networks', :conditions => { :method => :get }
   resources :clients
 
-  resources :rols
-
   root :to => "home#index"
   
   devise_for :users

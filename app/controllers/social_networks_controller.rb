@@ -1,7 +1,6 @@
 class SocialNetworksController < ApplicationController
   before_filter :authenticate_user!
-  # GET /social_networks
-  # GET /social_networks.json
+
   def index
     @social_networks = SocialNetwork.all
 
@@ -11,19 +10,6 @@ class SocialNetworksController < ApplicationController
     end
   end
 
-  # GET /social_networks/1
-  # GET /social_networks/1.json
-#  def show
-#    @social_network = SocialNetwork.find(params[:id])
-
-#    respond_to do |format|
-#      format.html # show.html.erb
-#      format.json { render json: @social_network }
-#    end
-#  end
-
-  # GET /social_networks/new
-  # GET /social_networks/new.json
   def new
     @social_network = SocialNetwork.new
 
@@ -33,13 +19,10 @@ class SocialNetworksController < ApplicationController
     end
   end
 
-  # GET /social_networks/1/edit
   def edit
     @social_network = SocialNetwork.find(params[:id])
   end
 
-  # POST /social_networks
-  # POST /social_networks.json
   def create
     @social_network = SocialNetwork.new(params[:social_network])
 
@@ -54,8 +37,6 @@ class SocialNetworksController < ApplicationController
     end
   end
 
-  # PUT /social_networks/1
-  # PUT /social_networks/1.json
   def update
     @social_network = SocialNetwork.find(params[:id])
 
@@ -70,8 +51,6 @@ class SocialNetworksController < ApplicationController
     end
   end
 
-  # DELETE /social_networks/1
-  # DELETE /social_networks/1.json
   def destroy
     @social_network = SocialNetwork.find(params[:id])
     @social_network.destroy
