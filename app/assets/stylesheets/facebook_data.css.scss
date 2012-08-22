@@ -122,7 +122,6 @@ $space: 400px;
 	margin-left: auto;
 	margin-right: auto;
 	display: none;
-	visibility: hidden;
 	border-radius:25px;
 	border:2px solid;
 	border-color: #BDBAB3;
@@ -133,4 +132,21 @@ $space: 400px;
 	margin-bottom: 25px;
 	display: none;
 	visibility: hidden;
+}
+
+.estiloRangoFechas{
+	width: 250px;
+	margin-left: auto;
+	margin-right: auto;
+	border-radius:25px;
+	border:2px solid;
+	border-color: #BDBAB3;
+	-moz-border-radius:15px; /* Firefox 3.6 and earlier */
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-right: 20px;
+	margin-bottom: 25px;
+	visibility: hidden;
+	display: none;
+
 }

@@ -80,7 +80,7 @@ var ContentFlowGlobal = {
             document.getElementsByTagName('head')[0].appendChild(link);
         }
         else {
-            document.write('<link rel="stylesheet" href="'+path+'" type="text/css" media="screen" />');
+            document.write('<link rel="stylesheet" href="/assets/contentflow.css" type="text/css" media="screen" />');
         }
 
     },

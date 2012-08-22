@@ -5,6 +5,28 @@
       ul
         - @facebook_datum.errors.full_messages.each do |msg|
           li= msg
+
+  div.styleBoxInformation id="formInfo"
+    button.close onclick="hide('formInfo','btnNuevaEntrada')"
+      |x
+    form action="facebook_data/new"
+      |Access Token:
+      br
+      input type="text" name="access_token"
+      br
+      br
+      |Fecha Inicio: 
+      br
+      = date_select("fi", "fi", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+      br
+      br
+      |Fecha Final: 
+      br
+      = date_select("ff", "ff", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+      br
+      input.btn.btn-primary type="submit" value="Enviar"
+      br
+      br
   .form-horizontal.sectionInformation style="height:1150px;"
     br
     br
@@ -18,11 +40,11 @@
       br
       br
       = f.label :start_date
-      = f.date_select :start_date, {:use_short_month => 1, :order => [:day, :month, :year], :default => {:day => params[:start_date]['fd(3i)'], :month => params[:start_date]['fd(2i)'], :year => params[:start_date]['fd(1i)'].to_i}, :disabled => true}, {:class => "span1"}
+      = f.date_select :start_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
       br
       br
       = f.label :end_date
-      = f.date_select :end_date, {:use_short_month => 1, :order => [:day, :month, :year], :default => {:day => params[:end_date]['fd(3i)'], :month => params[:end_date]['fd(2i)'], :year => params[:end_date]['fd(1i)'].to_i}, :disabled => true}, {:class => "span1"}
+      = f.date_select :end_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
       br
       br
       = f.label :actions
@@ -34,7 +56,7 @@
       br
       br
       = f.label :new_fans
-      = f.number_field :new_fans, :value => @page_fan_adds - @page_fan_removes
+      = f.number_field :new_fans, :value => @page_fan_adds-@page_fan_removes
       br
       br
       = f.label :total_fans
@@ -115,4 +137,4 @@
     br
     = f.submit 'Save', {:class => "btn btn-success save"}
     |     
-    = link_to 'Back', facebook_data_path + "?id=#{params[:id]}", :class => "btn btn-inverse back"
+    = link_to 'Back', facebook_data_path + "?id=#{params[:id]}&opcion=1", :class => "btn btn-inverse back"

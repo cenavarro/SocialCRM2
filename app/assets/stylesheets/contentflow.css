@@ -44,7 +44,7 @@
         }
         * html .ContentFlow .flow .item .caption {
             background-image: none;
-            filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='/assets/1x1_0.5_black.png');
+            filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=scale, src='/assets/images/1x1_0.5_black.png');
         }
             .ContentFlow .flow .item .caption a,
             .ContentFlow .flow .item .caption a:link,
@@ -84,7 +84,7 @@
         /* only for IE <= 6 and a alphatransparent slider image */
         * html .ContentFlow .scrollbar .slider { background-image: none; }
         * html .ContentFlow .scrollbar .slider .virtualSlider {
-            filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src='/assets/slider_white.png');
+            filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(enabled=true, sizingMethod=crop, src='/assets/images/slider_white.png');
         }
             .ContentFlow .scrollbar .slider .position {
                 top: 120%;

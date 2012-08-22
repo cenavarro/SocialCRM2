@@ -1,42 +1,54 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
 - @facebook_info = InfoSocialNetwork.find(1)
 - @socialNetwork = SocialNetwork.where(:client_id => params[:id], :info_social_network_id => 1).all
 
 div.margin
-  h1
-    = @socialNetwork[0].name
-  br
-  - @image = ("<img class='content' src='/assets/images/"+@facebook_info.image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
-  = @image
+  center
+    h1
+      = @socialNetwork[0].name
+    br
+    - @image = ("<img class='content' src='/assets/images/"+@facebook_info.image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
+    = @image
 br
 div.margin
-  button.btn.btn-info onclick="show('formInfo')" id="btnShow"
+  a.btn.btn-info href=%{/facebook_data/new?id=#{params[:id]}&opcion=2}
     |Nueva Entrada de Datos
-
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos"
+    | Seleccionar Rango de Fecha
+  
 br
-
-div.styleBoxInformation id="formInfo"
-  button.close onclick="hide('formInfo')"
+br
+div.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
-  form action="facebook_data/new"
-    |Access Token:
-    br
-    input type="text" name="access_token"
-    br
-    br
-    |Start Date: 
-    br
-    = date_select("start_date", "fd", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+  form action="facebook_data"
+    center
+      | Seleccione el rango de fechas
     br
     br
-    |End Date: 
+    |Fecha Inicio: 
     br
-    = date_select("end_date", "fd", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+    br
+    = date_select("fi", "fi", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+    br
+    br
+    |Fecha Final: 
+    br
+    br
+    = date_select("ff", "ff", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
     br
     input type="hidden" name="id" value=params[:id]
-    input type="hidden" name="object_id" value=@socialNetwork[0].name
+    input type="hidden" name="opcion" value=2
     br
-    input.btn.btn-primary type="submit" value="Enviar"
-    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
     br
 
 script 
@@ -161,9 +173,9 @@ script
   | });});});
 
 
-section.sectionInformation
+section.sectionInformation 
   section.sectionTable
-    table.table.table-bordered
+    table.table.table-bordered id="tablaInformacion" style="overflow: auto"
       thead
         tr.headerTable
           td.hideCell
@@ -364,7 +376,7 @@ section.sectionInformation
             td
               = FacebookDatum.get_fan_cost(facebook_datum).round(2)
 
-  section.sectionGraphics
+  section.sectionGraphics id="seccionGraficos"
     div.estilo_graficos
       #container_fans
     div.estilo_graficos
@@ -373,5 +385,17 @@ section.sectionInformation
       #container_investment_growth
     div.estilo_graficos
       #container_costs
+  javascript:
+    var options = {
+      currPage : 1,
+      optionsForRows : [5,10,15],
+      rowsPerPage : 5,
+      firstArrow : (new Image()).src="/assets/images/first.gif",
+      prevArrow : (new Image()).src="/assets/images/prev.gif",
+      lastArrow : (new Image()).src="/assets/images/last.gif",
+      nextArrow : (new Image()).src="/assets/images/next.gif",
+      topNav : true
+    }
+    //$('#tablaInformacion').tablePagination(options);
   br
   br
