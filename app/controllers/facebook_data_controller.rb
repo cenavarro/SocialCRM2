@@ -106,11 +106,8 @@ class FacebookDataController < ApplicationController
     
     respond_to do |format|
       if @facebook_datum.save
-        p facebook_data_url
-        p @facebook_datum.client_id.to_s
         @path = %{/facebook_data?id=#{@facebook_datum.client_id.to_i}&opcion=1}
-        p @path
-        format.html { redirect_to @path, notice: 'El dato de Facebook se creo satisfactoriamente.' }
+        format.html { redirect_to @path, notice: 'La Nueva Entrada de Datos se creo satisfactoriamente.' }
       else
         format.html { render action: "new" }
         format.json { render json: @facebook_datum.errors, status: :unprocessable_entity }
