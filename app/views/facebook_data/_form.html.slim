@@ -1,26 +1,11 @@
-div.styleBoxInformation id="formInfo"
-  button.close onclick="hide('formInfo','btnNuevaEntrada')"
-    |x
-  form action="facebook_data/new"
-    |Access Token:
-    br
-    input type="text" name="access_token"
-    br
-    br
-    |Fecha Inicio: 
-    br
-    = date_select("fi", "fi", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
-    br
-    br
-    |Fecha Final: 
-    br
-    = date_select("ff", "ff", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
-    br
-    input.btn.btn-primary type="submit" value="Enviar"
-    br
-    br
+javascript:
+    jQuery(document).ready(function(){
+      // binds form submission and fields to the validation engine
+      jQuery("#formEntradaDatos").validationEngine();
+    });
 
-= form_for @facebook_datum do |f|
+
+= form_for @facebook_datum, :html => {:class => "formEntradaDatos"} do |f|
   -if @facebook_datum.errors.any?
     #error_explanation
       h2 = "#{pluralize(@facebook_datum.errors.count, "error")} prohibited this facebook_datum from being saved:"
@@ -135,6 +120,6 @@ div.styleBoxInformation id="formInfo"
       = f.text_field :cpc_anno
     br
     br
-    = f.submit 'Save', {:class => "btn btn-success save"}
+    = f.submit 'Guardar Datos', {:class => "btn btn-success save"}
     |     
-    = link_to 'Back', facebook_data_path + "?id=#{params[:id]}&opcion=1", :class => "btn btn-inverse back"
+    = link_to 'Regresar', facebook_data_path + "?id=#{params[:id]}&opcion=1", :class => "btn btn-inverse back"
