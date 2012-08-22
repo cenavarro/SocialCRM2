@@ -1,3 +1,25 @@
+div.styleBoxInformation id="formInfo"
+  button.close onclick="hide('formInfo','btnNuevaEntrada')"
+    |x
+  form action="facebook_data/new"
+    |Access Token:
+    br
+    input type="text" name="access_token"
+    br
+    br
+    |Fecha Inicio: 
+    br
+    = date_select("fi", "fi", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+    br
+    br
+    |Fecha Final: 
+    br
+    = date_select("ff", "ff", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+    br
+    input.btn.btn-primary type="submit" value="Enviar"
+    br
+    br
+
 = form_for @facebook_datum do |f|
   -if @facebook_datum.errors.any?
     #error_explanation
@@ -5,28 +27,6 @@
       ul
         - @facebook_datum.errors.full_messages.each do |msg|
           li= msg
-
-  div.styleBoxInformation id="formInfo"
-    button.close onclick="hide('formInfo','btnNuevaEntrada')"
-      |x
-    form action="facebook_data/new"
-      |Access Token:
-      br
-      input type="text" name="access_token"
-      br
-      br
-      |Fecha Inicio: 
-      br
-      = date_select("fi", "fi", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
-      br
-      br
-      |Fecha Final: 
-      br
-      = date_select("ff", "ff", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
-      br
-      input.btn.btn-primary type="submit" value="Enviar"
-      br
-      br
   .form-horizontal.sectionInformation style="height:1150px;"
     br
     br
