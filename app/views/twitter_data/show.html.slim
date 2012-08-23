@@ -1,0 +1,51 @@
+p#notice = notice
+
+p
+  strong Client:
+  = @twitter_datum.client_id
+p
+  strong Start date:
+  = @twitter_datum.start_date
+p
+  strong End date:
+  = @twitter_datum.end_date
+p
+  strong Global goal:
+  = @twitter_datum.global_goal
+p
+  strong New followers:
+  = @twitter_datum.new_followers
+p
+  strong Total followers:
+  = @twitter_datum.total_followers
+p
+  strong Goal followers:
+  = @twitter_datum.goal_followers
+p
+  strong Amount tweets:
+  = @twitter_datum.amount_tweets
+p
+  strong Total tweets:
+  = @twitter_datum.total_tweets
+p
+  strong Total mentions:
+  = @twitter_datum.total_mentions
+p
+  strong Ret tweets:
+  = @twitter_datum.ret_tweets
+p
+  strong Total clicks:
+  = @twitter_datum.total_clicks
+p
+  strong Total integereractions:
+  = @twitter_datum.total_integereractions
+p
+  strong Agency investment:
+  = @twitter_datum.agency_investment
+p
+  strong Cost follower:
+  = @twitter_datum.cost_follower
+
+= link_to 'Edit', edit_twitter_datum_path(@twitter_datum)
+'|
+= link_to 'Back', twitter_data_path

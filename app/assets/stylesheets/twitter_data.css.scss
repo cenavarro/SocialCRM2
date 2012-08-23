@@ -1,0 +1,53 @@
+// Place all the styles related to the TwitterData controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$top_position: 390px;
+$left_position: 80px;
+$space: 400px;
+
+.estiloCelda{
+	width: 200px;
+}
+
+.informacionTwitter{
+	position:absolute;
+	left:$left_position;
+}
+
+.seguidoresTwitter{
+	position:absolute;
+	left: $left_position+$space;
+	top: -10px;
+}
+
+.interactividadTwitter{
+	position:absolute;
+	top: ($top_position);
+	left:$left_position;
+}
+
+.inversionTwitter{
+	position:absolute;
+	top: $top_position+50;
+	left:$left_position+$space;
+
+}
+
+.costesTwitter{
+	position:absolute;
+	top: $top_position+225;
+	left:$left_position+$space;
+}
+
+.save{
+	position:absolute;
+	top: 800px;
+	left: 300px;
+}
+
+.back{
+	position:absolute;
+	top: 800px;
+	left:500px;
+}

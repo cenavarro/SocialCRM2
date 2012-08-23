@@ -10,7 +10,7 @@ class FacebookDataController < ApplicationController
       else
         fechaInicio = Date.new(params[:fi]['fi(1i)'].to_i,params[:fi]['fi(2i)'].to_i,params[:fi]['fi(3i)'].to_i)
         fechaFinal = Date.new(params[:ff]['ff(1i)'].to_i,params[:ff]['ff(2i)'].to_i,params[:ff]['ff(3i)'].to_i)
-        @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,5])
+        @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,params[:id].to_i])
         @dates = ""
         @facebook_data.each do |facebook_datum|
           @dates = @dates + facebook_datum.start_date.mday().to_s + " al " + facebook_datum.end_date.mday().to_s + " de " + facebook_datum.end_date.strftime('%B') + ","

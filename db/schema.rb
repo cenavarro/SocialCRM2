@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120816162801) do
+ActiveRecord::Schema.define(:version => 20120823172051) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",        :null => false
@@ -75,6 +75,26 @@ ActiveRecord::Schema.define(:version => 20120816162801) do
     t.integer  "client_id"
     t.integer  "info_social_network_id"
     t.integer  "social_network_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "twitter_data", :force => true do |t|
+    t.integer  "client_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "global_goal"
+    t.integer  "new_followers"
+    t.integer  "total_followers"
+    t.integer  "goal_followers"
+    t.integer  "amount_tweets"
+    t.integer  "total_tweets"
+    t.integer  "total_mentions"
+    t.integer  "ret_tweets"
+    t.integer  "total_clicks"
+    t.integer  "total_interactions"
+    t.float    "agency_investment"
+    t.float    "cost_follower"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

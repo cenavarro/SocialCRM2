@@ -1,5 +1,7 @@
 DemoComentarios::Application.routes.draw do
 
+  resources :twitter_data
+
   get "users/new"
 
   resources :info_social_networks

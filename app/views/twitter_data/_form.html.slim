@@ -1,0 +1,92 @@
+javascript:
+    jQuery(document).ready(function(){
+      // binds form submission and fields to the validation engine
+      jQuery("#formEntradaDatos").validationEngine();
+    });
+
+= form_for @twitter_datum, :html => {:class => "formNuevoDatoTwitter"} do |f|
+  - if @twitter_datum.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@twitter_datum.errors.count, "error")} prohibited this twitter_datum from being saved:"
+      ul
+        - @twitter_datum.errors.full_messages.each do |message|
+          li = message
+  .form-horizontal.sectionInformation style="height: 850px;"
+    br
+    br
+    .box.informacionTwitter
+      | Informacion
+      br
+      br
+      = f.label :client_id
+      - @cliente = Client.find(params[:id])
+      = f.select :client_id, options_for_select([[@cliente.name,@cliente.id]])
+      br
+      br
+      = f.label :start_date
+      = f.date_select :start_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
+      br
+      br
+      = f.label :end_date
+      = f.date_select :end_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
+      br
+      br
+    .box.seguidoresTwitter
+      | Seguidores
+      br
+      br
+      = f.label :new_followers
+      = f.number_field :new_followers
+      br
+      br
+      = f.label :total_followers
+      = f.number_field :total_followers
+      br
+      br
+      = f.label :goal_followers
+      = f.number_field :goal_followers
+      br
+      br
+      = f.label :amount_tweets
+      = f.number_field :amount_tweets
+      br
+      br
+      = f.label :total_tweets
+      = f.number_field :total_tweets
+    .box.interactividadTwitter
+      | Interactividad
+      br
+      br
+      = f.label :total_mentions
+      = f.number_field :total_mentions
+      br
+      br
+      = f.label :ret_tweets
+      = f.number_field :ret_tweets
+      br
+      br
+      = f.label :total_clicks
+      = f.number_field :total_clicks
+      br
+      br
+      = f.label :total_interactions
+      = f.number_field :total_interactions
+      br
+      br
+    .box.inversionTwitter
+      |Inversiones
+      br
+      br
+      = f.label :agency_investment
+      = f.text_field :agency_investment
+    .box.costesTwitter
+      | Costes
+      br
+      br
+      = f.label :cost_follower
+      = f.text_field :cost_follower
+    br
+    br
+    = f.submit 'Guardar Datos', {:class => "btn btn-success save"}
+    |     
+    = link_to 'Back', twitter_data_path + "?id=#{params[:id]}&opcion=1", :class => "btn btn-inverse back"
