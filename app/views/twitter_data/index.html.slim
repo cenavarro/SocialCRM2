@@ -244,7 +244,7 @@ section.sectionInformation
             | % Crecimiento Seguidores
           - @twitter_data.each do |twitter_datum|
             td
-              | Crecimiento Seguidores
+              | #
         tr
           td
             | # tweets durante periodo
@@ -271,7 +271,7 @@ section.sectionInformation
             | % diferencia
           - @twitter_data.each do |twitter_datum|
             td
-              | % Diff Menciones 
+              | %
         tr
           td
             | # retweets
@@ -283,7 +283,7 @@ section.sectionInformation
             | % diferencia
           - @twitter_data.each do |twitter_datum|
             td
-              | % Diferencia ReT
+              | %
         tr
           td
             | Clicks enlaces
@@ -295,7 +295,7 @@ section.sectionInformation
             | % diferencia
           - @twitter_data.each do |twitter_datum|
             td
-              | % Diff Clicks
+              | %
         tr
           td
             | Interacciones Total
@@ -307,7 +307,7 @@ section.sectionInformation
             | % diferencia
           - @twitter_data.each do |twitter_datum|
             td
-              | % Diff Interacciones
+              | %
         tr.titlesRows
           td colspan=100
             | Inversion
@@ -333,7 +333,7 @@ section.sectionInformation
             td
               a.btn.btn-info href=%{/twitter_data/#{twitter_datum.id}/edit/#{params[:idc]}} id=%{edit_#{twitter_datum.id}}
                 i.icon-pencil.icon-white
-              |   
+              br
               a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{twitter_datum.id}} href=%{/twitter_data/#{twitter_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
                 i.icon-trash.icon-white
 
