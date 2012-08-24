@@ -4,7 +4,7 @@ javascript:
       jQuery("#new_social_network").validationEngine();
     });
 
-= form_for @social_network, :html => {:class => "well form-inline nuevoCliente", :onsubmit => "confirm('Esta seguro que desea agregar asociar esta red social?')"} do |f|
+= form_for @social_network, :html => {:class => "well form-inline nuevoCliente"} do |f|
   -if @social_network.errors.any?
     #error_explanation
       h2 = "#{pluralize(@social_network.errors.count, "error")} prohibited this social_network from being saved:"
@@ -31,7 +31,7 @@ javascript:
   br
   br
   center
-    button.btn.btn-success type="submit" name="commit"
+    button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro?"
       i.icon-check.icon-white
       |  Guardar Cambios
   br

@@ -2,7 +2,11 @@ DemoComentarios::Application.routes.draw do
 
   resources :twitter_data
 
-  get "users/new"
+  get "twitter_data/:idc/:opcion" => "twitter_data#index"
+  get "twitter_data/new/:idc/:opcion" => "twitter_data#new"
+  get "twitter_data/:id/edit/:idc" => "twitter_data#edit"
+
+  get "users/new/:option" => "users#new"
 
   resources :info_social_networks
 
@@ -10,7 +14,11 @@ DemoComentarios::Application.routes.draw do
 
   resources :facebook_data
 
-  get 'clients/social_networks'
+  get "facebook_data/:idc/:opcion" => "facebook_data#index"
+  get "facebook_data/new/:idc/:opcion" => "facebook_data#new"
+  get "facebook_data/:id/edit/:idc" => "facebook_data#edit"
+
+  get 'clients/social_networks/:idc' => 'clients#social_networks'
 
   #match 'clients/social_networks', :controller => 'clients', :action => 'social_networks', :conditions => { :method => :get }
   resources :clients

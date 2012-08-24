@@ -5,7 +5,7 @@
           = notice
 br
 - @facebook_info = InfoSocialNetwork.find(1)
-- @socialNetwork = SocialNetwork.where(:client_id => params[:id], :info_social_network_id => 1).all
+- @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 1).all
 
 div.margin
   center
@@ -16,7 +16,7 @@ div.margin
     = @image
 br
 div.margin
-  a.btn.btn-info href=%{/facebook_data/new?id=#{params[:id]}&opcion=2}
+  a.btn.btn-info href=%{/facebook_data/new/#{params[:idc]}/2}
     |Nueva Entrada de Datos
   br
   br
@@ -28,7 +28,7 @@ br
 div.estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
-  form action="facebook_data"
+  form action=%{/facebook_data/#{params[:idc]}/2/}
     center
       | Seleccione el rango de fechas
     br
@@ -43,9 +43,6 @@ div.estiloRangoFechas id="formSelectRangeDate"
     br
     br
     = date_select("ff", "ff", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
-    br
-    input type="hidden" name="id" value=params[:id]
-    input type="hidden" name="opcion" value=2
     br
     center
       input.btn.btn-primary type="submit" value="Obtener Datos"
@@ -70,16 +67,25 @@ script
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
   | series: [{name: 'Nuevos Fans', data: [
   - @facebook_data.each do |facebook_datum|
-    = facebook_datum.new_fans
-    | ,
+    - if !facebook_datum.new_fans.nil?
+      = facebook_datum.new_fans
+      | ,
+    - else
+      |null,
   | ]}, {name: 'Fans Reales',data: [
   - @facebook_data.each do |facebook_datum|
-    = facebook_datum.total_fans
-    | ,
+    - if !facebook_datum.total_fans.nil?
+      = facebook_datum.total_fans
+      | ,
+    - else
+      |null,
   | ]}, {name: 'Objetivo Fans',data: [
   - @facebook_data.each do |facebook_datum|
-    = facebook_datum.goal_fans
-    | ,
+    - if !facebook_datum.goal_fans.nil?
+      = facebook_datum.goal_fans
+      | ,
+    - else
+      |null,
   | ]}]
   | });});});
 
@@ -101,16 +107,25 @@ script
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
   | series: [{name: '# impresiones', data: [
   - @facebook_data.each do |facebook_datum|
-    = facebook_datum.prints
-    | ,
+    - if !facebook_datum.prints.nil?
+      = facebook_datum.prints
+      | ,
+    - else
+      |null,
   | ]}, {name: '# interacciones',data: [
   - @facebook_data.each do |facebook_datum|
-    = facebook_datum.total_interactions
-    | ,
+    - if !facebook_datum.total_interactions.nil?
+      = facebook_datum.total_interactions
+      | ,
+    - else
+      |null,
   | ]}, {name: '# impresiones anuncios (por cien)',data: [
   - @facebook_data.each do |facebook_datum|
-    = facebook_datum.total_prints_per_anno
-    | ,
+    - if !facebook_datum.total_prints_per_anno.nil?
+      = facebook_datum.total_prints_per_anno
+      | ,
+    - else
+      |null,
   | ]}]
   | });});});
 
@@ -132,12 +147,18 @@ script
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
   | series: [{name: '# fans reales', data: [
   - @facebook_data.each do |facebook_datum|
-    = facebook_datum.total_fans
-    | ,
+    - if !facebook_datum.total_fans.nil?
+      = facebook_datum.total_fans
+      | ,
+    - else
+      |null,
   | ]}, {name: 'Inversion total',data: [
   - @facebook_data.each do |facebook_datum|
-    = FacebookDatum.get_total_investment(facebook_datum)	
-    | ,
+    - if !FacebookDatum.get_total_investment(facebook_datum).nil?
+      = FacebookDatum.get_total_investment(facebook_datum)	
+      | ,
+    - else
+      |null,
   | ]}]
   | });});});
 
@@ -159,16 +180,25 @@ script
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
   | series: [{name: 'CPM impresion/interaccion', data: [
   - @facebook_data.each do |facebook_datum|
-    = FacebookDatum.get_cpm(facebook_datum)
-    | ,
+    - if !FacebookDatum.get_cpm(facebook_datum).nil?
+      = FacebookDatum.get_cpm(facebook_datum)
+      | ,
+    - else
+      |null,
   | ]}, {name: 'CTR anuncios',data: [
   - @facebook_data.each do |facebook_datum|
-    = facebook_datum.ctr_anno	
-    | ,
+    - if !facebook_datum.ctr_anno.nil?
+      = facebook_datum.ctr_anno	
+      | ,
+    - else
+      |null,
   | ]}, {name: 'CPM anuncios',data: [
   - @facebook_data.each do |facebook_datum|
-    = facebook_datum.cpm_anno	
-    | ,
+    - if !facebook_datum.cpm_anno.nil?
+      = facebook_datum.cpm_anno	
+      | ,
+    - else
+      |null,
   | ]}]
   | });});});
 
@@ -375,6 +405,16 @@ section.sectionInformation
           - @facebook_data.each do |facebook_datum|
             td
               = FacebookDatum.get_fan_cost(facebook_datum).round(2)
+        tr
+          td.nilValue
+            |Opciones
+          -@facebook_data.each do |facebook_datum|
+            td
+              a.btn.btn-info href=%{/facebook_data/#{facebook_datum.id}/edit/#{params[:idc]}} id=%{edit_#{facebook_datum.id}}
+                i.icon-pencil.icon-white
+              br  
+              a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{facebook_datum.id}} href=%{/facebook_data/#{facebook_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
+                i.icon-trash.icon-white
 
   section.sectionGraphics id="seccionGraficos"
     div.estilo_graficos

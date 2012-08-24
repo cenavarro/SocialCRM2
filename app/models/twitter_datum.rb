@@ -1,7 +1,8 @@
 class TwitterDatum < ActiveRecord::Base
 	belongs_to :client
 	def self.get_followers_growth(datum)
-		(datum.new_followers.to_f/(datum.total_followers-datum.new_followers).to_f)*100
+		diff_followers = esCero(datum.total_followers-datum.new_followers)
+		(datum.new_followers.to_f/diff_followers.to_f)*100
 	end
 
 	def self.get_diff_mentions(datum)
@@ -12,16 +13,24 @@ class TwitterDatum < ActiveRecord::Base
 			if prevDataMentions == 0
 				100.0
 			else
-				((datum.total_mentions-prevDataMentions).to_f/datum.total_mentions.to_f)*100
+				totalMentions = esCero(datum.total_mentions)
+				((datum.total_mentions-prevDataMentions).to_f/totalMentions.to_f)*100
 			end
 		end
 	end
 
-	def self.get_diff_rettweets(datum)
+	def esCero(valor)
+		if valor == 0 
+			return 1
+		end
+		return valor
+	end
+
+	def self.get_diff_retweets(datum)
 		if datum.id == all.first.id
-			0
+			nil
 		else
-			prevDataMentions = TwitterDatum.where('id < ?',datum.id).first.total_mentions
+			prevDataRetweets = TwitterDatum.where('id < ?',datum.id).first.total_mentions
 		end
 	end
 

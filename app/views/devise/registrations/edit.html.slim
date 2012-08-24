@@ -12,7 +12,7 @@ center
 br
 br
 
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class=> "well form-inline editarUsuario", :onsubmit => "confirm('Esta seguro que desea guardar los cambios?')"}) do |f|
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class=> "well form-inline editarUsuario"}) do |f|
 
   = devise_error_messages!
   div style="margin-left:40px"
@@ -62,7 +62,7 @@ br
     br
     br
     center
-      button.btn.btn-success type="submit" name="commit"
+      button.btn.btn-success type="submit" name="commit" data-confirm="Esta seguro que desea guardar los cambios?"
         i.icon-check.icon-white
         |  Guardar Cambios
 end

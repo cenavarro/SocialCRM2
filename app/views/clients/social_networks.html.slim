@@ -13,7 +13,7 @@
       .flow
         - @client.social_networks.each do |social_network|
           - @info = InfoSocialNetwork.find(social_network.info_social_network_id)
-          - @path = "/"+InfoSocialNetwork.get_name_social_network(social_network.info_social_network_id)+"?id="+@client.id.to_s()+"&opcion=1"
+          - @path = %{/#{InfoSocialNetwork.get_name_social_network(social_network.info_social_network_id)}/#{@client.id.to_s()}/1}
           - @imagen = ("<img class='content' src='/assets/images/"+@info.image+"' href='"+@path+"'>").html_safe
           .item
             = @imagen

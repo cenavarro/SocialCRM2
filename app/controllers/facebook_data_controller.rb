@@ -4,13 +4,13 @@ class FacebookDataController < ApplicationController
   require 'open-uri'
 
   def index
-    if params.has_key?(:id)
+    if params.has_key?(:idc)
       if params[:opcion].to_i == 1
         @facebook_data = FacebookDatum.all
       else
         fechaInicio = Date.new(params[:fi]['fi(1i)'].to_i,params[:fi]['fi(2i)'].to_i,params[:fi]['fi(3i)'].to_i)
         fechaFinal = Date.new(params[:ff]['ff(1i)'].to_i,params[:ff]['ff(2i)'].to_i,params[:ff]['ff(3i)'].to_i)
-        @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,params[:id].to_i])
+        @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,params[:idc].to_i])
         @dates = ""
         @facebook_data.each do |facebook_datum|
           @dates = @dates + facebook_datum.start_date.mday().to_s + " al " + facebook_datum.end_date.mday().to_s + " de " + facebook_datum.end_date.strftime('%B') + ","
@@ -25,15 +25,6 @@ class FacebookDataController < ApplicationController
       redirect_to :controller => 'home', :action => 'index'
     end
   end
-
-  def show
-    @facebook_datum = FacebookDatum.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @facebook_datum }
-    end
-  end
   
   def http_get(object_id,command,start_date,end_date,access_token)
     uri = 'https://graph.facebook.com/'+object_id+'/insights/'+command+'/day/?since='+start_date.to_s+'&until='+end_date.to_s+'&access_token='+access_token
@@ -42,7 +33,7 @@ class FacebookDataController < ApplicationController
   end
 
   def new
-    if params.has_key?(:id)
+    if params.has_key?(:idc)
       @page_fan_adds = 0
       @page_fan_removes = 0
       @page_impressions_org = 0
@@ -88,16 +79,13 @@ class FacebookDataController < ApplicationController
     end
   end
 
-  # GET /facebook_data/1/edit
   def edit
     @facebook_datum = FacebookDatum.find(params[:id])
   end
 
-  # POST /facebook_data
-  # POST /facebook_data.json
   def create
     @facebook_datum = FacebookDatum.new(params[:facebook_datum])
-    p params[:facebook_datum]
+
     if FacebookDatum.all.first == nil
       @facebook_datum.total_fans = 151261
     else
@@ -106,7 +94,7 @@ class FacebookDataController < ApplicationController
     
     respond_to do |format|
       if @facebook_datum.save
-        @path = %{/facebook_data?id=#{@facebook_datum.client_id.to_i}&opcion=1}
+        @path = %{/facebook_data/#{@facebook_datum.client_id.to_i}/1}
         format.html { redirect_to @path, notice: 'La Nueva Entrada de Datos se creo satisfactoriamente.' }
       else
         format.html { render action: "new" }
@@ -120,7 +108,7 @@ class FacebookDataController < ApplicationController
 
     respond_to do |format|
       if @facebook_datum.update_attributes(params[:facebook_datum])
-        format.html { redirect_to @facebook_datum, notice: 'Facebook datum was successfully updated.' }
+        format.html { redirect_to %{/facebook_data/#{@facebook_datum.client_id}/1}, notice: 'La informacion ha sido actualizada con exitosamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -131,10 +119,11 @@ class FacebookDataController < ApplicationController
 
   def destroy
     @facebook_datum = FacebookDatum.find(params[:id])
+    @client_id = @facebook_datum.client_id
     @facebook_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to facebook_data_url }
+      format.html { redirect_to %{/facebook_data/#{@client_id}/1}, notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end
