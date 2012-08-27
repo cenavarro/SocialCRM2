@@ -49,6 +49,10 @@ When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
 end
 
+When /^(?:|I )visit the path "([^\"]*)"$/ do |path|
+  visit(path)
+end
+
 When /^(?:|I )press "([^\"]*)"$/ do |button|
   click_button(button)
 end

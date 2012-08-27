@@ -202,7 +202,7 @@ script
 
 section.sectionInformation
   section.sectionTable
-    table.table.table-bordered id="tablaInformacion" style="overflow: auto;"
+    table.table.table-bordered id="tablaInformacion"
       thead
         tr.headerTable
           td.hideCell
@@ -243,8 +243,16 @@ section.sectionInformation
           td
             | % Crecimiento Seguidores
           - @twitter_data.each do |twitter_datum|
-            td
-              | #
+            - percentFollowers = TwitterDatum.get_followers_growth(twitter_datum)
+            - if !percentFollowers.nil?
+              - if percentFollowers >= 0.0 
+                td.positiveValue
+                  = %{#{percentFollowers.round(2)}%}
+              - else
+                td.negativeValue
+                  = %{#{percentFollowers.round(2)}%}
+            - else
+              td.nilValue
         tr
           td
             | # tweets durante periodo
@@ -270,8 +278,16 @@ section.sectionInformation
           td
             | % diferencia
           - @twitter_data.each do |twitter_datum|
-            td
-              | %
+            - percentMentions = TwitterDatum.get_diff_mentions(twitter_datum)
+            - if !percentMentions.nil?
+              - if percentMentions >= 0.0 
+                td.positiveValue
+                  = %{#{percentMentions.round(2)}%}
+              - else
+                td.negativeValue
+                  = %{#{percentMentions.round(2)}%}
+            - else
+              td.nilValue
         tr
           td
             | # retweets
@@ -282,8 +298,16 @@ section.sectionInformation
           td
             | % diferencia
           - @twitter_data.each do |twitter_datum|
-            td
-              | %
+            - percentRetweets = TwitterDatum.get_diff_retweets(twitter_datum)
+            - if !percentRetweets.nil?
+              - if percentRetweets >= 0.0 
+                td.positiveValue
+                  = %{#{percentRetweets.round(2)}%}
+              - else
+                td.negativeValue
+                  = %{#{percentRetweets.round(2)}%}
+            - else
+              td.nilValue
         tr
           td
             | Clicks enlaces
@@ -294,8 +318,16 @@ section.sectionInformation
           td
             | % diferencia
           - @twitter_data.each do |twitter_datum|
-            td
-              | %
+            - percentClicks = TwitterDatum.get_diff_clicks(twitter_datum)
+            - if !percentClicks.nil?
+              - if percentClicks >= 0.0 
+                td.positiveValue
+                  = %{#{percentClicks.round(2)}%}
+              - else
+                td.negativeValue
+                  = %{#{percentClicks.round(2)}%}
+            - else
+              td.nilValue
         tr
           td
             | Interacciones Total
@@ -306,8 +338,16 @@ section.sectionInformation
           td
             | % diferencia
           - @twitter_data.each do |twitter_datum|
-            td
-              | %
+            - percentIteractions = TwitterDatum.get_diff_total_iteractions(twitter_datum)
+            - if !percentIteractions.nil?
+              - if percentIteractions >= 0.0 
+                td.positiveValue
+                  = %{#{percentIteractions.round(2)}%}
+              - else
+                td.negativeValue
+                  = %{#{percentIteractions.round(2)}%}
+            - else
+              td.nilValue
         tr.titlesRows
           td colspan=100
             | Inversion
@@ -325,15 +365,15 @@ section.sectionInformation
             | Costes por follower
           - @twitter_data.each do |twitter_datum|
             td
-              = twitter_datum.cost_follower
+              = twitter_datum.cost_follower.round(2)
         tr
           td.nilValue
             |Opciones
           -@twitter_data.each do |twitter_datum|
-            td
+            td.celdaOpciones
               a.btn.btn-info href=%{/twitter_data/#{twitter_datum.id}/edit/#{params[:idc]}} id=%{edit_#{twitter_datum.id}}
                 i.icon-pencil.icon-white
-              br
+              |  
               a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{twitter_datum.id}} href=%{/twitter_data/#{twitter_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
                 i.icon-trash.icon-white
 

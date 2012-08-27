@@ -15,7 +15,12 @@ $space: 400px;
 }
 
 .sectionTable{
+	overflow: auto;
 	margin: 0px 42px 0px 42px;
+}
+
+.celdaOpciones{
+	background-color: #FFFF66;
 }
 
 .tableStyle{

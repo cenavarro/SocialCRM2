@@ -36,6 +36,26 @@ module NavigationHelpers
       end
     end
   end
+
+  def path_list_socialNetworks(client_name)
+    id = Client.find_by_name(client_name).id
+    %{/clients/social_networks/#{id}}
+  end
+
+  def path_facebook_data_client(client_name)
+    id = Client.find_by_name(client_name).id
+    %{/facebook_data/#{id}/1}
+  end
+
+  def path_twitter_data_client(client_name)
+    id = Client.find_by_name(client_name).id
+    %{/twitter_data/#{id}/1}
+  end
+
+  def path_new_twitter_data_manually(client_name)
+    id = Client.find_by_name(client_name).id
+    %{/twitter_data/new/#{id}/2}
+  end
 end
 
 World(NavigationHelpers)

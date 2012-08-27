@@ -74,3 +74,14 @@ Feature: Manage Clients
     And I should see "Client1"
     When I follow "delete_1"
     Then I should see "Cliente se elimino correctamente."
+
+  @list_socialNetworks
+  Scenario: Show social networks
+    Given Exist a Client User with data, name "Client1" with an email "client1@test.com" and password "123456"
+    And Exist a Social Network named "Facebook" and its description is "Facebook Description"
+    And Exist a Client named "Client1" with a Social Network named "Facebook Client 1" and associated to "Facebook"
+    When I visit the list page of social networks of the client "Client1"
+    Then I should see "Anterior"
+    And I should see "Siguiente"
+    When I visit the facebook data page of the client "Client1"
+    Then I should see "Facebook Client 1"

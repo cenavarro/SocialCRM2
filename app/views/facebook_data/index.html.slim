@@ -205,7 +205,7 @@ script
 
 section.sectionInformation 
   section.sectionTable
-    table.table.table-bordered id="tablaInformacion" style="overflow: auto;"
+    table.table.table-bordered id="tablaInformacion"
       thead
         tr.headerTable
           td.hideCell
@@ -409,10 +409,10 @@ section.sectionInformation
           td.nilValue
             |Opciones
           -@facebook_data.each do |facebook_datum|
-            td
+            td.celdaOpciones
               a.btn.btn-info href=%{/facebook_data/#{facebook_datum.id}/edit/#{params[:idc]}} id=%{edit_#{facebook_datum.id}}
                 i.icon-pencil.icon-white
-              br  
+              |  
               a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{facebook_datum.id}} href=%{/facebook_data/#{facebook_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
                 i.icon-trash.icon-white
 

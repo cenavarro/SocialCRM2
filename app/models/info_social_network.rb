@@ -7,8 +7,6 @@ class InfoSocialNetwork < ActiveRecord::Base
   			@return = "twitter_data"
       when 3
         @return = "tuenti_data"
-  		else
-  			@return = "/"
   	end
   end
 end

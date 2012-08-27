@@ -5,7 +5,7 @@ class SocialNetworksController < ApplicationController
     @social_networks = SocialNetwork.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @social_networks }
     end
   end
@@ -14,7 +14,7 @@ class SocialNetworksController < ApplicationController
     @social_network = SocialNetwork.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @social_network }
     end
   end
@@ -29,7 +29,6 @@ class SocialNetworksController < ApplicationController
     respond_to do |format|
       if @social_network.save
         format.html { redirect_to social_networks_path, notice: 'La Red Social se creo satisfactoriamente.' }
-        # format.json { render json: @social_network, status: :created, location: @social_network }
       else
         format.html { render action: "new" }
         format.json { render json: @social_network.errors, status: :unprocessable_entity }

@@ -1,32 +1,31 @@
-- if !user_signed_in?
-  | <script type="text/javascript">
-  |   window.location.href="/"
-  | </script>
-- else
+- if @client.nil? || @client.social_networks.empty?
   br
-  - if @client.nil? || @client.social_networks.empty?
-    br
-    br
-    | Este cliente no tiene redes sociales asociadas!
-  - else
-    #contentFlow.ContentFlow
-      .flow
-        - @client.social_networks.each do |social_network|
-          - @info = InfoSocialNetwork.find(social_network.info_social_network_id)
-          - @path = %{/#{InfoSocialNetwork.get_name_social_network(social_network.info_social_network_id)}/#{@client.id.to_s()}/1}
-          - @imagen = ("<img class='content' src='/assets/images/"+@info.image+"' href='"+@path+"'>").html_safe
-          .item
-            = @imagen
-            .caption
-              = social_network.name
-      .globalCaption
-      .scrollbar
-        .slider
-          .position
-      .preButton
-        button.btn.btn-info style="float:left; margin: 20px 0  0 300px;"
-          | Anterior
-      .nextButton
-        button.btn.btn-info style="float:right; margin: 20px 300px 0 0;"
-          | Siguiente 
+  br
+  center
+    h2
+      | Este cliente no tiene redes sociales asociadas!
+  br
+  br
+  br
+- else
+  #contentFlow.ContentFlow
+    .flow
+      - @client.social_networks.each do |social_network|
+        - @infoSocialNetwork = InfoSocialNetwork.find(social_network.info_social_network_id)
+        - @path = %{/#{InfoSocialNetwork.get_name_social_network(social_network.info_social_network_id)}/#{@client.id.to_s()}/1}
+        - @imagen = ("<img class='content' src='/assets/images/"+@infoSocialNetwork.image+"' href='"+@path+"'>").html_safe
+        .item
+          = @imagen
+          .caption
+            = social_network.name
+    .globalCaption
+    .scrollbar
+      .slider
+        .position
+    .preButton
+      button.btn.btn-info style="float:left; margin: 20px 0  0 300px; padding: 5px;"
+        | Anterior
+    .nextButton
+      button.btn.btn-info style="float:right; margin: 20px 300px 0 0; padding: 5px;"
+        | Siguiente 
       

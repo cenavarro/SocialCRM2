@@ -5,7 +5,7 @@ Feature: Social Networks Standards
 
   Background: Admin User is logged in and configure previous data
     Given Exist a Admin User with data, name "admin" and email "admin@test.com" and password "adminadmin"
-    And Exist a Social Network named "Facebook" and its description are "Red Social Facebook"
+    And Exist a Social Network named "Facebook" and its description is "Red Social Facebook"
     And I am logged in as "admin@test.com/adminadmin"
     And I am on the home page
 

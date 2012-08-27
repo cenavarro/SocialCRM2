@@ -5,7 +5,7 @@ class ClientsController < ApplicationController
     @clients = Client.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @clients }
     end
   end
@@ -44,14 +44,10 @@ class ClientsController < ApplicationController
   end
 
   def social_networks
-    if params.has_key?(:idc)
-      @client = Client.find(params[:idc])
-      respond_to do|format|
-        format.html
-        format.json { render json: @client }
-      end
-    else
-      redirect_to :controller => 'home', :action => 'index'
+    @client = Client.find(params[:idc])
+    respond_to do|format|
+      format.html
+      format.json { render json: @client }
     end
   end
 
