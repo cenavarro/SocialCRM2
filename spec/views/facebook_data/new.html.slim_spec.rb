@@ -27,9 +27,8 @@ describe "facebook_data/new.html.slim" do
       :cpc_anno => 1.5
     ).as_new_record)
 
-    params[:start_date] = '11/21/1985'
-    params[:end_date] = '12/31/1985'
-    params[:id] = 1
+    params[:opcion] = 1
+    params[:idc] = 1
 
     assign(:page_fan_adds, 0)
     assign(:page_fan_removes, 0)
@@ -49,7 +48,6 @@ describe "facebook_data/new.html.slim" do
       assert_select "select#facebook_datum_client_id", :name => "facebook_datum[client_id]"
       assert_select "input#facebook_datum_actions", :name => "facebook_datum[actions]"
       assert_select "input#facebook_datum_new_fans", :name => "facebook_datum[new_fans]"
-      assert_select "input#facebook_datum_total_fans", :name => "facebook_datum[total_fans]"
       assert_select "input#facebook_datum_goal_fans", :name => "facebook_datum[goal_fans]"
       assert_select "input#facebook_datum_prints", :name => "facebook_datum[prints]"
       assert_select "input#facebook_datum_total_interactions", :name => "facebook_datum[total_interactions]"

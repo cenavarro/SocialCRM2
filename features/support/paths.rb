@@ -47,6 +47,11 @@ module NavigationHelpers
     %{/facebook_data/#{id}/1}
   end
 
+  def path_new_facebook_data_manually(client_name)
+    id = Client.find_by_name(client_name).id
+    %{/facebook_data/new/#{id}/2}
+  end
+
   def path_twitter_data_client(client_name)
     id = Client.find_by_name(client_name).id
     %{/twitter_data/#{id}/1}

@@ -1,6 +1,12 @@
 div style="display: none"
   = notice
+
 | Pagina Principal
+center
+  h1
+    | Clientes
+br
+br
 #contentFlow.ContentFlow
   .flow
     - @clients.each do |client|

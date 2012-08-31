@@ -6,10 +6,10 @@ describe SocialNetworksController do
   end
 
   def valid_attributes
-    {}
+    {:name => "Social Network Name", :client_id => 1, :info_social_network_id => 1}
   end
 
-  describe "GET index" do
+  describe "# index" do
     it "assigns all social_networks as @social_networks" do
       social_network = SocialNetwork.create! valid_attributes
       get :index
@@ -17,14 +17,14 @@ describe SocialNetworksController do
     end
   end
 
-  describe "GET new" do
+  describe "# new" do
     it "assigns a new social_network as @social_network" do
       get :new
       assigns(:social_network).should be_a_new(SocialNetwork)
     end
   end
 
-  describe "GET edit" do
+  describe "# edit" do
     it "assigns the requested social_network as @social_network" do
       social_network = SocialNetwork.create! valid_attributes
       get :edit, :id => social_network.id.to_s
@@ -32,8 +32,8 @@ describe SocialNetworksController do
     end
   end
 
-  describe "POST create" do
-    describe "with valid params" do
+  describe "# create" do
+    context "with valid params" do
       it "creates a new SocialNetwork" do
         expect {
           post :create, :social_network => valid_attributes
@@ -52,16 +52,14 @@ describe SocialNetworksController do
       end
     end
 
-    describe "with invalid params" do
+    context "with invalid params" do
       it "assigns a newly created but unsaved social_network as @social_network" do
-        # Trigger the behavior that occurs when invalid params are submitted
         SocialNetwork.any_instance.stub(:save).and_return(false)
         post :create, :social_network => {}
         assigns(:social_network).should be_a_new(SocialNetwork)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
         SocialNetwork.any_instance.stub(:save).and_return(false)
         post :create, :social_network => {}
         response.should render_template("new")
@@ -69,14 +67,10 @@ describe SocialNetworksController do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
+  describe "# update" do
+    context "with valid params" do
       it "updates the requested social_network" do
         social_network = SocialNetwork.create! valid_attributes
-        # Assuming there are no other social_networks in the database, this
-        # specifies that the SocialNetwork created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         SocialNetwork.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => social_network.id, :social_network => {'these' => 'params'}
       end
@@ -94,10 +88,9 @@ describe SocialNetworksController do
       end
     end
 
-    describe "with invalid params" do
+    context "with invalid params" do
       it "assigns the social_network as @social_network" do
         social_network = SocialNetwork.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         SocialNetwork.any_instance.stub(:save).and_return(false)
         put :update, :id => social_network.id.to_s, :social_network => {}
         assigns(:social_network).should eq(social_network)
@@ -105,7 +98,6 @@ describe SocialNetworksController do
 
       it "re-renders the 'edit' template" do
         social_network = SocialNetwork.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         SocialNetwork.any_instance.stub(:save).and_return(false)
         put :update, :id => social_network.id.to_s, :social_network => {}
         response.should render_template("edit")
@@ -113,7 +105,7 @@ describe SocialNetworksController do
     end
   end
 
-  describe "DELETE destroy" do
+  describe "# destroy" do
     it "destroys the requested social_network" do
       social_network = SocialNetwork.create! valid_attributes
       expect {

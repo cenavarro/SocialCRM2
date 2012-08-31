@@ -6,10 +6,10 @@ describe InfoSocialNetworksController do
   end
 
   def valid_attributes
-    {}
+    {:name => "Facebook"}
   end
 
-  describe "GET index" do
+  describe "# index" do
     it "assigns all info_social_networks as @info_social_networks" do
       info_social_network = InfoSocialNetwork.create! valid_attributes
       get :index
@@ -17,7 +17,7 @@ describe InfoSocialNetworksController do
     end
   end
 
-  describe "GET edit" do
+  describe "# edit" do
     it "assigns the requested info_social_network as @info_social_network" do
       info_social_network = InfoSocialNetwork.create! valid_attributes
       get :edit, :id => info_social_network.id.to_s
@@ -25,8 +25,8 @@ describe InfoSocialNetworksController do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
+  describe "# update" do
+    context "with valid params" do
       it "updates the requested info_social_network" do
         info_social_network = InfoSocialNetwork.create! valid_attributes
         InfoSocialNetwork.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
@@ -46,7 +46,7 @@ describe InfoSocialNetworksController do
       end
     end
 
-    describe "with invalid params" do
+    context "with invalid params" do
       it "assigns the info_social_network as @info_social_network" do
         info_social_network = InfoSocialNetwork.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted

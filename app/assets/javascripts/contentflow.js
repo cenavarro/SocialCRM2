@@ -668,9 +668,9 @@ ContentFlow.prototype = {
         startItem:  "center",
         scrollInFrom: "pre",
 
-        flowSpeedFactor: 0.8,
-        flowDragFriction: 0.8,
-        scrollWheelSpeed: 0.8,
+        flowSpeedFactor: 0.7,
+        flowDragFriction: 0.7,
+        scrollWheelSpeed: 0.7,
         keys: {
             13: function () { this.conf.onclickActiveItem(this._activeItem) },
             37: function () { this.moveTo('pre') }, 
@@ -1901,7 +1901,7 @@ ContentFlow.prototype = {
         
         var delta = 0;
         if (event.wheelDelta) {
-            delta = event.wheelDelta/120; 
+            delta = event.wheelDelta/60; 
         } else if (event.detail) {
             delta = -event.detail/3;
         }

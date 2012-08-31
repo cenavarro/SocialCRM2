@@ -1,5 +1,6 @@
 class TwitterDatum < ActiveRecord::Base
 	belongs_to :client
+	
 	def self.get_followers_growth(datum)
 		diff_followers = isZero(datum.total_followers-datum.new_followers)
 		(datum.new_followers.to_f/diff_followers.to_f)*100

@@ -16,11 +16,11 @@ div.margin
     = @image
 br
 div.margin
-  a.btn.btn-info href=%{/facebook_data/new/#{params[:idc]}/2}
+  a.btn.btn-info href=%{/facebook_data/new/#{params[:idc]}/2} style="width: 168px"
     |Nueva Entrada de Datos
   br
   br
-  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos"
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
   
 br
@@ -247,13 +247,16 @@ section.sectionInformation
           td
             | % crecimiento fans
           - @facebook_data.each do |facebook_datum|
-              - valueGrowthPercent = FacebookDatum.get_fan_growth_percentage(facebook_datum).round(2)
-              - if valueGrowthPercent > 0.0 
-                  td.positiveValue
-                    = valueGrowthPercent
+            - valueGrowthPercent = FacebookDatum.get_fan_growth_percentage(facebook_datum)
+            - if !valueGrowthPercent.nil?
+              - if valueGrowthPercent >= 0.0 
+                td.positiveValue
+                  = %{#{valueGrowthPercent.round(2)}%}
               - else
-                  td.negativeValue
-                    = valueGrowthPercent
+                td.negativeValue
+                  = %{#{valueGrowthPercent.round(2)}%}
+            - else
+              td.nilValue
         tr.titlesRows
           td colspan=100
             |Interactividad
@@ -267,13 +270,16 @@ section.sectionInformation
           td
             | % diferencia
           - @facebook_data.each do |facebook_datum|
-            - valuePrintPercentage = FacebookDatum.get_print_percentage(facebook_datum).round(2)
-            - if valuePrintPercentage > 0.0
+            - valuePrintPercentage = FacebookDatum.get_print_percentage(facebook_datum)
+            - if !valuePrintPercentage.nil?
+              - if valuePrintPercentage >= 0.0 
                 td.positiveValue
-                  = valuePrintPercentage
-            - else
+                  = %{#{valuePrintPercentage.round(2)}%}
+              - else
                 td.negativeValue
-                  = valuePrintPercentage
+                  = %{#{valuePrintPercentage.round(2)}%}
+            - else
+              td.nilValue
         tr
           td
             | # interacciones
@@ -284,13 +290,16 @@ section.sectionInformation
           td
             | % diferencia
           - @facebook_data.each do |facebook_datum|
-            - valueIteractionsPercentage = FacebookDatum.get_interactions_percentage(facebook_datum).round(2)
-            - if valueIteractionsPercentage > 0.0
+            - valueIteractionsPercentage = FacebookDatum.get_interactions_percentage(facebook_datum)
+            - if !valueIteractionsPercentage.nil?
+              - if valueIteractionsPercentage >= 0.0 
                 td.positiveValue
-                  = valueIteractionsPercentage
-            - else
+                  = %{#{valueIteractionsPercentage.round(2)}%}
+              - else
                 td.negativeValue
-                  = valueIteractionsPercentage
+                  = %{#{valueIteractionsPercentage.round(2)}%}
+            - else
+              td.nilValue
         tr
           td
             | Alcance total

@@ -6,7 +6,7 @@ DemoComentarios::Application.routes.draw do
   get "twitter_data/new/:idc/:opcion" => "twitter_data#new"
   get "twitter_data/:id/edit/:idc" => "twitter_data#edit"
 
-  get "users/new/:option" => "users#new"
+  get "users/new/:option" => "users#new", :as => "new_user"
 
   resources :info_social_networks
 

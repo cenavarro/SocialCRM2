@@ -78,6 +78,7 @@ $space: 400px;
 .fans{
 	position:absolute;
 	left: $left_position+$space;
+	top:70px;
 }
 
 .interactividad{
@@ -88,14 +89,14 @@ $space: 400px;
 
 .inversion{
 	position:absolute;
-	top: $top_position+20;
+	top: -80+$top_position;
 	left:$left_position+$space;
 
 }
 
 .costes{
 	position:absolute;
-	top: $top_position+335;
+	top: $top_position+300;
 	left:$left_position+$space;
 }
 

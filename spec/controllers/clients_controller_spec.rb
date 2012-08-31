@@ -19,24 +19,24 @@ describe ClientsController do
     return client
   end
 
-  describe "GET index" do
-    it "assigns all clients as @clients" do
+  describe "# index" do
+    it "verifies @clients has a the correct information" do
       client = create_client_with_user
       get :index
       assigns(:clients).should eq([client])
     end
   end
 
-  describe "GET edit" do
-    it "assigns the requested client as @client" do
+  describe "# edit" do
+    it "verifies @client has the information of a selected client" do
       client = create_client_with_user
       get :edit, :id => client.id.to_s
       assigns(:client).should eq(client)
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
+  describe "# update" do
+    context "with valid params" do
       it "updates the requested client" do
         client = create_client_with_user
         Client.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
@@ -56,7 +56,7 @@ describe ClientsController do
       end
     end
 
-    describe "with invalid params" do
+    context "with invalid params" do
       it "assigns the client as @client" do
         client = create_client_with_user
         Client.any_instance.stub(:save).and_return(false)
@@ -73,7 +73,7 @@ describe ClientsController do
     end
   end
 
-  describe "DELETE destroy" do
+  describe "# destroy" do
     it "destroys the requested client" do
       client = create_client_with_user
 
@@ -89,4 +89,13 @@ describe ClientsController do
       response.should redirect_to(clients_url)
     end
   end
+
+  describe "# social_networks" do
+    it "gets a list of clients" do
+       client = Client.create!(valid_attributes)
+       get :social_networks, :idc => client.id
+       assigns(:client).should eq(client)
+    end
+  end
+
 end

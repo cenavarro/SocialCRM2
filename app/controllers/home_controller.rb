@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   before_filter :prepare_login_form
-  
+
   def index
     if !user_signed_in?
       redirect_to "/users/sign_in"
