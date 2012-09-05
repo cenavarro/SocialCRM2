@@ -227,3 +227,31 @@ a:hover {
 .pernix a {
 	color: #0066CC;
 }
+
+.sx_login-button_medium {
+	width: 22px;
+	height: 22px;
+	
+}
+
+.sp_login-button {
+	background-image: url('/assets/images/fblogo_btn.png');
+	background-repeat: no-repeat;
+	display: inline-block;
+	height: 25px;
+	width: 26px;
+	background-position: -0px -106px;
+	margin-right: -1px;
+}
+
+.btnFB{
+    -moz-user-select: none;
+    background: #2A49A5;
+    border: 1px solid #082783;
+    box-shadow: 0 1px #4C6BC7 inset;
+    color: white;
+    padding: 3px 5px;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 #082783;
+    font: 12px Verdana, sans-serif;
+}

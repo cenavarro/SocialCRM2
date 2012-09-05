@@ -14,12 +14,12 @@ en:
   devise:
     failure:
       already_authenticated: 'You are already signed in.'
-      unauthenticated: 'You need to sign in or sign up before continuing.'
+      unauthenticated: 'Necesitas estar logueado antes de continuar.'
       unconfirmed: 'You have to confirm your account before continuing.'
       locked: 'Your account is locked.'
       invalid: 'Email o Contraseña no son correctos.'
       invalid_token: 'Invalid authentication token.'
-      timeout: 'Your session expired, please sign in again to continue.'
+      timeout: 'Tu sesion ha expirado, por favor ingrese de nuevo para continuar.'
       inactive: 'Your account was not activated yet.'
     sessions:
       signed_in: 'Se ha iniciado sesión correctamente.'
@@ -33,7 +33,7 @@ en:
       send_paranoid_instructions: 'If your e-mail exists on our database, you will receive an email with instructions about how to confirm your account in a few minutes.'
       confirmed: 'Your account was successfully confirmed. You are now signed in.'
     registrations:
-      signed_up: 'Welcome! You have signed up successfully.'
+      signed_up: 'Bienvenido! Usted se ha registrado satisfactoriamente.'
       inactive_signed_up: 'You have signed up successfully. However, we could not sign you in because your account is %{reason}.'
       updated: 'La actualización de su cuenta fue exitosa.'
       destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'

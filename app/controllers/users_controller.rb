@@ -52,6 +52,7 @@ class UsersController < ApplicationController
 		@user.password_confirmation = params[:password_confirmation].to_s
 		@user.rol_id = params[:user_type].to_i
 		@user.client_id = client_id.to_i if client_id != nil
+    @user.fbapp_id = params[:fbapp_id]
   	if @user.save
   		if client_id == nil
   		  @mensaje = 'El Usuario se ha ingresado correctamente.'

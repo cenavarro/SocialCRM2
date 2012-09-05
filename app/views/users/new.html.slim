@@ -52,6 +52,10 @@ br
       = select_tag :user_type, '<option value="1">Administrador</option>'.html_safe
       br
       br
+      = label_tag "ID APP Facebook:"
+      = text_field_tag :fbapp_id
+      br
+      br
       center
         button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro que desea agregar este usuario?"
           i.icon-check.icon-white

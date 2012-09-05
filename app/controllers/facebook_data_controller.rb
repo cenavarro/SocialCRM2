@@ -8,8 +8,8 @@ class FacebookDataController < ApplicationController
       if !getDataDateRange?
         @facebook_data = FacebookDatum.order("start_date ASC")
       else
-        fechaInicio = Date.new(params[:fi]['fi(1i)'].to_i,params[:fi]['fi(2i)'].to_i,params[:fi]['fi(3i)'].to_i)
-        fechaFinal = Date.new(params[:ff]['ff(1i)'].to_i,params[:ff]['ff(2i)'].to_i,params[:ff]['ff(3i)'].to_i)
+        fechaInicio = params[:start_date].to_date
+        fechaFinal = params[:end_date].to_date
         @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,params[:idc].to_i]).order("start_date ASC")
         @dates = ""
         @facebook_data.each do |facebook_datum|
@@ -25,9 +25,28 @@ class FacebookDataController < ApplicationController
       redirect_to :controller => 'home', :action => 'index'
     end
   end
-  
+
+  def callback
+    client_id = "441436639234798"
+    client_secret = "26df47c99d81ecb606fe2eb59669476d"
+    fecha_inicio = params[:start_date]
+    fecha_final = params[:end_date]
+    uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=http://localhost:3000/facebook_data/callback/#{params[:idc]}/#{fecha_inicio}/#{fecha_final}/&code=#{params[:code]}&client_secret=#{client_secret}"
+    result_from_facebook = open(URI.parse(URI.escape(uri))).read
+    access_token = result_from_facebook.split("&")[0].split("=")[1]
+
+    respond_to do |format|
+      @path = %{/facebook_data/new/#{params[:idc]}/1/?start_date=#{params[:start_date]}&end_date=#{params[:end_date]}&access_token=#{access_token}}
+      format.html { redirect_to @path }
+      format.json
+    end
+  end
+
   def http_get(object_id,command,start_date,end_date,access_token)
-    uri = 'https://graph.facebook.com/'+object_id+'/insights/'+command+'/day/?since='+start_date.to_s+'&until='+end_date.to_s+'&access_token='+access_token
+    start_date = start_date.to_time.to_i.to_s
+    end_date = end_date.to_time.to_i.to_s
+    uri = 'https://graph.facebook.com/'+object_id+'/insights/'+command+'/day/?since='+start_date+'&until='+end_date+'&access_token='+access_token
+    p "URI:"+uri.to_s
     result = URI.parse(URI.escape(uri))
     json_object = JSON.parse(open(result).read)
   end
@@ -42,25 +61,29 @@ class FacebookDataController < ApplicationController
       @page_consumptions_u = 0
       @page_impressions_u = 0
       @page_impression = 0
-
       @page_friends_of_fan = 0
       if getDataFromFacebook?
+        facebook_id = SocialNetwork.where("client_id = ? and info_social_network_id = 1",params[:idc])[0].name
+        fecha_inicio = params[:start_date]
+        fecha_final = params[:end_date]
         access_token = params[:access_token]
-        fecha_inicio = DateTime.new(params[:fi]['fi(1i)'].to_i,params[:fi]['fi(2i)'].to_i,params[:fi]['fi(3i)'].to_i,0,0,0).to_time.to_i
-        fecha_final = DateTime.new(params[:ff]['ff(1i)'].to_i,params[:ff]['ff(2i)'].to_i,params[:ff]['ff(3i)'].to_i,23,59,59).to_time.to_i
-        object_id = params[:object_id]
+        @page_fan_adds_unique = http_get(facebook_id,'page_fan_adds_unique',fecha_inicio,fecha_final,access_token)
+        @page_fan_removes_unique = http_get(facebook_id,'page_fan_removes_unique',fecha_inicio,fecha_final,access_token)
+        @page_impressions_organic = http_get(facebook_id,'page_impressions_organic',fecha_inicio,fecha_final,access_token)
+        @page_storytellers = http_get(facebook_id,'page_storytellers',fecha_inicio,fecha_final,access_token)
+        @page_impressions_organic_unique = http_get(facebook_id,'page_impressions_organic_unique',fecha_inicio,fecha_final,access_token)
+        @page_consumptions_unique = http_get(facebook_id,'page_consumptions_unique',fecha_inicio,fecha_final,access_token)
+        @page_impressions_unique = http_get(facebook_id,'page_impressions_unique',fecha_inicio,fecha_final,access_token)
+        @page_friends_of_fans = http_get(facebook_id,'page_friends_of_fans',fecha_inicio,fecha_final,access_token)
+        @page_impressions = http_get(facebook_id,'page_impressions',fecha_inicio,fecha_final,access_token)
 
-        @facebook_datum = FacebookDatum.new
-        respond_to do |format|
-          format.html
-          format.json { render json: @facebook_datum }
-        end
-      else
-        @facebook_datum = FacebookDatum.new
-        respond_to do |format|
-          format.html
-          format.json { render json: @facebook_datum }
-        end
+        calcular_datos()
+
+      end
+      @facebook_datum = FacebookDatum.new
+      respond_to do |format|
+        format.html
+        format.json { render json: @facebook_datum }
       end
     else
       redirect_to :controller => 'home', :action => 'index'
@@ -127,39 +150,59 @@ class FacebookDataController < ApplicationController
     @page_consumptions_u = 0
     @page_impressions_u = 0
     @page_impression = 0
+    @page_friends_of_fan = 0
 
-    @page_friends_of_fan = @page_friends_of_fans['data'][0]['values'].last['value']
-
-    @page_fan_adds_unique['data'][0]['values'].each do |f|
-      @page_fan_adds += f['value'].to_i
+    
+    if !@page_friends_of_fans['data'].empty?
+      @page_friends_of_fan = @page_friends_of_fans['data'][0]['values'].last['value']
     end
 
-    @page_fan_removes_unique['data'][0]['values'].each do |f|
-      @page_fan_removes += f['value'].to_i
+    if !@page_fan_adds_unique['data'].empty?
+      @page_fan_adds_unique['data'][0]['values'].each do |f|
+        @page_fan_adds += f['value'].to_i
+      end
     end
 
-    @page_impressions_organic['data'][0]['values'].each do |f|
-      @page_impressions_org += f['value'].to_i
+    if !@page_fan_removes_unique['data'].empty?
+      @page_fan_removes_unique['data'][0]['values'].each do |f|
+        @page_fan_removes += f['value'].to_i
+      end
     end
 
-    @page_storytellers['data'][0]['values'].each do |f|
-      @page_story_teller += f['value'].to_i
+    if !@page_impressions_organic['data'].empty?
+      @page_impressions_organic['data'][0]['values'].each do |f|
+        @page_impressions_org += f['value'].to_i
+      end
     end
 
-    @page_impressions_organic_unique['data'][0]['values'].each do |f|
-      @page_impressions_organic_u += f['value'].to_i
+    if !@page_storytellers['data'].empty?
+      @page_storytellers['data'][0]['values'].each do |f|
+        @page_story_teller += f['value'].to_i
+      end
     end
 
-    @page_consumptions_unique['data'][0]['values'].each do |f|
-      @page_consumptions_u += f['value'].to_i
+    if !@page_impressions_organic_unique['data'].empty?
+      @page_impressions_organic_unique['data'][0]['values'].each do |f|
+        @page_impressions_organic_u += f['value'].to_i
+      end
     end
 
-    @page_impressions_unique['data'][0]['values'].each do |f|
-      @page_impressions_u += f['value'].to_i
+    if !@page_consumptions_unique['data'].empty?
+      @page_consumptions_unique['data'][0]['values'].each do |f|
+        @page_consumptions_u += f['value'].to_i
+      end
     end
 
-    @page_impressions['data'][0]['values'].each do |f|
-      @page_impression += f['value'].to_i
+    if !@page_impressions_unique['data'].empty?
+      @page_impressions_unique['data'][0]['values'].each do |f|
+        @page_impressions_u += f['value'].to_i
+      end
+    end
+
+    if !@page_impressions['data'].empty?
+      @page_impressions['data'][0]['values'].each do |f|
+        @page_impression += f['value'].to_i
+      end
     end
   end
 

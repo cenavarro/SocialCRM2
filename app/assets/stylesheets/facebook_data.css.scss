@@ -75,28 +75,33 @@ $space: 400px;
 	left:$left_position;
 }
 
+.rangoFechas{
+  position:absolute;
+  left:$left_position+$space;
+}
+
 .fans{
 	position:absolute;
-	left: $left_position+$space;
-	top:70px;
+	left: $left_position;
+	top:300px;
 }
 
 .interactividad{
 	position:absolute;
-	top: $top_position;
+	top: $top_position+100;
 	left:$left_position;
 }
 
 .inversion{
 	position:absolute;
-	top: -80+$top_position;
+	top: -50+$top_position;
 	left:$left_position+$space;
 
 }
 
 .costes{
 	position:absolute;
-	top: $top_position+300;
+	top: $top_position+280;
 	left:$left_position+$space;
 }
 

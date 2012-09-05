@@ -1,3 +1,4 @@
+#fb-root
 javascript:
     jQuery(document).ready(function(){
       jQuery("#user_new").validationEngine();
@@ -26,6 +27,11 @@ javascript:
       = f.password_field :password, :class => 'pass_input'
     br
     br
-    .links
+    .linkst
       = render :partial => "devise/shared/links"
     = f.submit "Iniciar Sesion", :class => "btn btn-primary button_sing_in"
+
+  div
+    img.sp_login-button
+    button.btnFB onclick="loginFacebook()"
+     | Login con Facebook

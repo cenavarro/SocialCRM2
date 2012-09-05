@@ -28,21 +28,23 @@ br
 div.estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
-  form action=%{/facebook_data/#{params[:idc]}/2/}
+  form action=%{/facebook_data/#{params[:idc]}/2/} method="get"
     center
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio: 
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
     br
     br
-    = date_select("fi", "fi", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
-    br
-    br
-    |Fecha Final: 
-    br
-    br
-    = date_select("ff", "ff", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
     br
     center
       input.btn.btn-primary type="submit" value="Obtener Datos"
@@ -436,3 +438,8 @@ section.sectionInformation
       #container_costs
   br
   br
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#start_date_picker").datepicker();
+      jQuery("#end_date_picker").datepicker();
+    });

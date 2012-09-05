@@ -23,18 +23,41 @@ javascript:
       = f.select :client_id, options_for_select([[@cliente.name,@cliente.id]])
       br
       br
+      | ID Facebook
+      br
+      br
+      -socialName = SocialNetwork.where("client_id = ? and info_social_network_id = 1",@cliente.id)[0].name
+      input type="text" readonly="readonly" value=socialName
+    .box.rangoFechas
+      - start_date = "01-01-2012"
+      - end_date = "01-01-2012"
+      - start_date = params[:start_date] if params.has_key?(:start_date)
+      - end_date = params[:end_date] if params.has_key?(:end_date)
       = f.label "Fecha Inicio"
-      = f.date_select :start_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date"
+        = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
+        span.add-on
+          i.icon-th
       br
       br
       = f.label "Fecha Final"
-      = f.date_select :end_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date"
+        = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
+        span.add-on
+          i.icon-th
       br
       br
       = f.label "Acciones durante el periodo"
       = f.text_field :actions
+      br
+      br
+      | Extraer datos desde Facebook
+      br
+      br
+      button.btn.btn-primary type="button" onclick="javascript:connectFacebook(#{@cliente.id},10);"
+        |Conectar
     br
-    br
+    br 
     .box.fans
       | Fans
       br
@@ -45,9 +68,8 @@ javascript:
       br
       = f.label "Objetivo fans"
       = f.number_field :goal_fans
-    br
-    br
-    .box.interactividad
+      br
+      br
       |Interactividad
       br
       br
@@ -118,3 +140,9 @@ javascript:
     = f.submit 'Guardar Datos', {:class => "btn btn-success saveFacebook"}
     |     
     = link_to 'Regresar', %{#{facebook_data_path}/#{params[:idc]}/1}, :class => "btn btn-inverse backFacebook"
+
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#start_date").datepicker();
+      jQuery("#end_date").datepicker();
+    });

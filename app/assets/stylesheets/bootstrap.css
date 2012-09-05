@@ -1512,12 +1512,14 @@ legend + .control-group {
 }
 
 table {
+  min-width:100%;
   background-color: transparent;
   border-collapse: collapse;
   border-spacing: 0;
 }
 
 .table {
+  min-width:100%;
   margin-bottom: 18px;
 }
 
