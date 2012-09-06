@@ -40,6 +40,8 @@ class HomeController < ApplicationController
     p "accesstoken:" + access_token.to_s
     p "uri2:" + uri.to_s
     p "result:" + result.to_s
+    p "email:" + result['email']
+    p "user:" + @user
     @user = User.find_by_email(result['email'])
     if @user.nil?
       respond_to do |format|
