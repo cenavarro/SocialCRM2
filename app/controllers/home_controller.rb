@@ -41,8 +41,8 @@ class HomeController < ApplicationController
     p "uri2:" + uri.to_s
     p "result:" + result.to_s
     p "email:" + result['email']
-    p "user:" + @user
     @user = User.find_by_email(result['email'])
+    p "user:" + @user.to_s
     if @user.nil?
       respond_to do |format|
         format.html { redirect_to new_user_session_path, notice: 'Este usuario de facebook no tiene cuenta asociada.' }
