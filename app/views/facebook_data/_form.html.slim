@@ -1,10 +1,11 @@
 javascript:
+
     jQuery(document).ready(function(){
       jQuery("#formEntradaDatos").validationEngine();
     });
 
 
-= form_for @facebook_datum, :html => {:class => "formEntradaDatos"} do |f|
+= form_for @facebook_datum, :html => {:class => "formEntradaDatos", :id => "formEntradaDatos"} do |f|
   -if @facebook_datum.errors.any?
     #error_explanation
       h2 = "#{pluralize(@facebook_datum.errors.count, "error")} prohibited this facebook_datum from being saved:"
@@ -63,46 +64,46 @@ javascript:
       br
       br
       = f.label "# nuevos fans"
-      = f.number_field :new_fans, :value => @page_fan_adds-@page_fan_removes
+      = f.number_field :new_fans, :value => @page_fan_adds-@page_fan_removes, :class => "validate[required]"
       br
       br
       = f.label "Objetivo fans"
-      = f.number_field :goal_fans
+      = f.number_field :goal_fans, :class => "validate[required]"
       br
       br
       |Interactividad
       br
       br
       = f.label "# impresiones"
-      = f.number_field :prints, :value => @page_impressions_org
+      = f.number_field :prints, :value => @page_impressions_org, :class => "validate[required]"
       br
       br
       = f.label "# interacciones"
-      = f.number_field :total_interactions, :value => @page_story_teller + @page_impressions_organic_u + @page_consumptions_u
+      = f.number_field :total_interactions, :value => @page_story_teller + @page_impressions_organic_u + @page_consumptions_u, :class => "validate[required]"
       br
       br
       = f.label "Alcance total"
-      = f.number_field :total_reach, :value => @page_impressions_u
+      = f.number_field :total_reach, :value => @page_impressions_u, :class => "validate[required]"
       br
       br
       = f.label "Alcance potencial"
-      = f.number_field :potential_reach, :value => @page_friends_of_fan
+      = f.number_field :potential_reach, :value => @page_friends_of_fan, :class => "validate[required]"
       br
       br
       = f.label "# impresiones anuncios(por cien)"
-      = f.text_field :total_prints_per_anno
+      = f.text_field :total_prints_per_anno, :class => "validate[required]"
       br
       br
       = f.label "# impresiones totales"
-      = f.number_field :total_prints, :value => @page_impression
+      = f.number_field :total_prints, :value => @page_impression, :class => "validate[required]"
       br
       br
       = f.label "# clicks anuncios"
-      = f.number_field :total_clicks_anno
+      = f.number_field :total_clicks_anno, :class => "validate[required]"
       br
       br
       = f.label "# fans a traves de anuncios"
-      = f.number_field :fans_through_anno
+      = f.number_field :fans_through_anno, :class => "validate[required]"
     br
     br
     .box.inversion
@@ -110,15 +111,15 @@ javascript:
       br
       br
       = f.label "Inversion agencia"
-      = f.text_field :agency_investment
+      = f.text_field :agency_investment, {:class => "validate[required]"}
       br
       br
       = f.label "Inversion nuevas Acciones"
-      = f.text_field :new_stock_investment
+      = f.text_field :new_stock_investment, {:class => "validate[required]"}
       br
       br
       = f.label "Inversion anuncios"
-      = f.text_field :anno_investment
+      = f.text_field :anno_investment, {:class => "validate[required]"}
     br
     br
     .box.costes
@@ -126,15 +127,15 @@ javascript:
       br
       br
       = f.label "CTR anuncios"
-      = f.text_field :ctr_anno
+      = f.text_field :ctr_anno, {:class => "validate[required]"}
       br
       br
       = f.label "CMP anuncios"
-      = f.text_field :cpm_anno
+      = f.text_field :cpm_anno, {:class => "validate[required]"}
       br
       br
       = f.label "CPC anuncios"
-      = f.text_field :cpc_anno
+      = f.text_field :cpc_anno, {:class => "validate[required]"}
     br
     br
     = f.submit 'Guardar Datos', {:class => "btn btn-success saveFacebook"}
