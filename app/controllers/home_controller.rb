@@ -32,14 +32,14 @@ class HomeController < ApplicationController
     access_token = result_from_facebook.split("&")[0].split("=")[1]
     uri = "https://graph.facebook.com/me?access_token=#{access_token}"
     result = JSON.parse(open(URI.parse(URI.escape(uri))).read)
-    p "Code:" + code
-    p "client_idi:" + client_id
-    p "client_secret:" + client_secret
-    p "hostname:" + hostname
-    p "result_from_facebook:" + result_from_facebook
-    p "accesstoken:" + access_token
-    p "uri2:" + uri
-    p "result:" + result
+    p "Code:" + code.to_s
+    p "client_idi:" + client_id.to_s
+    p "client_secret:" + client_secret.to_s
+    p "hostname:" + hostname.to_s
+    p "result_from_facebook:" + result_from_facebook.to_s
+    p "accesstoken:" + access_token.to_s
+    p "uri2:" + uri.to_s
+    p "result:" + result.to_s
     @user = User.find_by_email(result['email'])
     if @user.nil?
       respond_to do |format|
