@@ -1,3 +1,7 @@
-function loginFacebook(){
-  window.location = encodeURI("https://www.facebook.com/dialog/oauth?client_id=441436639234798&redirect_uri=http://localhost:3000/validate_user/&response_type=code&display=page");
+function loginFacebook(APP_ID){
+  protocol = location.protocol;
+  hostname = location.host;
+  redirect_url = protocol+"//"+hostname+"/validate_user/";
+  url = "https://www.facebook.com/dialog/oauth?client_id="+APP_ID+"&redirect_uri="+redirect_url+"&response_type=code&display=page";
+  window.location = encodeURI(url);
 }

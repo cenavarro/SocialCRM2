@@ -13,11 +13,13 @@ function hide(id,button){
 }
 
 function connectFacebook(IdClient,APP_ID){
-  var redirect_path = "http://localhost:3000/facebook_data/callback/"+IdClient+"/"+document.getElementById('facebook_datum_start_date').value;
-  redirect_path = redirect_path.concat('/'+document.getElementById('facebook_datum_end_date').value+"/?");
-  var appID = 441436639234798;
+  protocol = location.protocol;
+  hostname = location.host;
+  start_date = document.getElementById('facebook_datum_start_date').value;
+  end_date = document.getElementById('facebook_datum_end_date').value;
+  var redirect_path = protocol+"//"+hostname+"/facebook_data/callback/"+IdClient+"/"+start_date+"/"+end_date+"/?";
   var path = 'https://www.facebook.com/dialog/oauth?';
-  var queryParams = ['client_id=' + appID,
+  var queryParams = ['client_id=' + APP_ID,
     'redirect_uri='+redirect_path,
     'response_type=code'];
   var query = queryParams.join('&');

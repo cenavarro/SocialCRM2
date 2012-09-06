@@ -54,7 +54,7 @@ javascript:
       | Extraer datos desde Facebook
       br
       br
-      button.btn.btn-primary type="button" onclick="javascript:connectFacebook(#{@cliente.id},10);"
+      button.btn.btn-primary type="button" onclick="javascript:connectFacebook(#{@cliente.id},#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']});"
         |Conectar
     br
     br 

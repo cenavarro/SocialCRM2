@@ -27,8 +27,8 @@ class FacebookDataController < ApplicationController
   end
 
   def callback
-    client_id = "441436639234798"
-    client_secret = "26df47c99d81ecb606fe2eb59669476d"
+    client_id = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']}"
+    client_secret = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_secret']}"
     fecha_inicio = params[:start_date]
     fecha_final = params[:end_date]
     uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=http://localhost:3000/facebook_data/callback/#{params[:idc]}/#{fecha_inicio}/#{fecha_final}/&code=#{params[:code]}&client_secret=#{client_secret}"
@@ -142,17 +142,6 @@ class FacebookDataController < ApplicationController
 
   def calcular_datos
 
-    @page_fan_adds = 0
-    @page_fan_removes = 0
-    @page_impressions_org = 0
-    @page_story_teller = 0
-    @page_impressions_organic_u = 0
-    @page_consumptions_u = 0
-    @page_impressions_u = 0
-    @page_impression = 0
-    @page_friends_of_fan = 0
-
-    
     if !@page_friends_of_fans['data'].empty?
       @page_friends_of_fan = @page_friends_of_fans['data'][0]['values'].last['value']
     end
