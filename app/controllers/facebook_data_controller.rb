@@ -31,7 +31,8 @@ class FacebookDataController < ApplicationController
     client_secret = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_secret']}"
     fecha_inicio = params[:start_date]
     fecha_final = params[:end_date]
-    uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=http://localhost:3000/facebook_data/callback/#{params[:idc]}/#{fecha_inicio}/#{fecha_final}/&code=#{params[:code]}&client_secret=#{client_secret}"
+    hostname = request.host_with_port
+    uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{request.protocol}#{hostname}/facebook_data/callback/#{params[:idc]}/#{fecha_inicio}/#{fecha_final}/&code=#{params[:code]}&client_secret=#{client_secret}"
     result_from_facebook = open(URI.parse(URI.escape(uri))).read
     access_token = result_from_facebook.split("&")[0].split("=")[1]
 
