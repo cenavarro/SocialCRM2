@@ -27,11 +27,12 @@ javascript:
       = f.password_field :password, :class => 'pass_input'
     br
     br
-    .linkst
+    .links
       = render :partial => "devise/shared/links"
-    = f.submit "Iniciar Sesion", :class => "btn btn-primary button_sing_in"
-
-  div
-    img.sp_login-button
-    button.btnFB onclick="loginFacebook()"
+    br
+    br
+    = f.submit "Iniciar Sesion", :class => "btn btn-primary"
+    |   o    
+    button.btn.btn-primary type="button" onclick="loginFacebook()"
      | Login con Facebook
+    
