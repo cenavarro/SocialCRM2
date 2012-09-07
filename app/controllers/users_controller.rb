@@ -29,9 +29,8 @@ class UsersController < ApplicationController
 
 	def create
 		if params[:user_type].to_i == 2
-		  if params[:name] != ""
-		    @client = Client.new(:name => params[:name],:description => params[:description], :image => params[:image])
-		    @client.save
+		  @client = Client.new(:name => params[:name],:description => params[:description], :image => params[:image]) 
+		  if @client.save
 		  	add_user(@client.id)
 		  else
 		  	respond_to do |format|
