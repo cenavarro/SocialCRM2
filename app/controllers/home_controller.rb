@@ -27,7 +27,6 @@ class HomeController < ApplicationController
     client_secret = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_secret']}"
     hostname = request.host_with_port
     uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{request.protocol}#{hostname}/validate_user/&code=#{code}&client_secret=#{client_secret}"
-    p "uri1:" + uri
     result_from_facebook = open(URI.parse(URI.escape(uri))).read
     access_token = result_from_facebook.split("&")[0].split("=")[1]
     uri = "https://graph.facebook.com/me?access_token=#{access_token}"

@@ -34,6 +34,7 @@ class ClientsController < ApplicationController
   def destroy
     @client = Client.find(params[:id])
     @user = User.find(User.select(:id).where(:client_id => @client.id))
+    @social_networks = SocialNetwork.where(:client_id => @client.id).delete_all
     @user.destroy
     @client.destroy
 

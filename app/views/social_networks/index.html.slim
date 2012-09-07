@@ -19,6 +19,7 @@ table.table.table-bordered
     tr
       td
         = social_network.name
+      - p social_network.client_id
       - @client = Client.find(social_network.client_id)
       td
         = @client.name
