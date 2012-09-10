@@ -2,10 +2,22 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.nuevoCliente{
+.formNuevoCliente{
 	margin-left: auto;
-	margin-right: auto;
-	width: 250px;
+  margin-right: auto;
+  width: 280px;
+}
+
+.formNuevaRedCliente{
+  float:left;
+	margin-left: 100px;
+  width: 280px;
+}
+
+.fan_pages{
+  float:left;
+  margin-left: 40px;
+  width: 250px;
 }
 
 p.simbolo{

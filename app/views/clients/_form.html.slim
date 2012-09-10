@@ -1,53 +1,58 @@
 javascript:
 
     jQuery(document).ready(function(){
-      jQuery("#new_client").validationEngine();
+      jQuery("#form_new").validationEngine();
     });
 
+br
+br
+= form_tag({:controller => "clients", :action => "create"}, :method => "post", :class => "well form-inline formNuevoCliente", :id =>"form_new") do
 
-= form_for @client, :html => {:class => "well form-inline nuevoCliente"} do |f|
-  -if @client.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@client.errors.count, "error")} prohibited this client from being saved:"
-      ul
-        - @client.errors.full_messages.each do |msg|
-          li= msg
-  
-  = f.label :Nombre
+  = label_tag :name, "Nombre:"
   br
-  = f.text_field :name, :class => "validate[required] text-input"
-  p.simbolo
-    span style="font-size: 16pt"
-      |* 
-  br
-  br
-  = f.label :Descripcion
-  br
-  = f.text_field :description, :class => "validate[required] text-input"
-  p.simbolo
-    span style="font-size: 16pt"
-      | * 
-  br
-  br
-  = f.label :Imagen
-  br
-  = f.text_field :image, :class => "validate[required] text-input"
+  = text_field_tag :name, nil, {:class => "validate[required] text-input"}
   p.simbolo
     span style="font-size: 16pt" align=""
-      |* 
+      |*
+  br
+  br
+  = label_tag :email, "Email:"
+  br
+  = text_field_tag :email, nil, :class => "validate[required, custom[email]]"
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :password, "Contraseña:"
+  = password_field_tag :password, nil, {:class => "validate[required]"}
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :password_confirmation, "Confirmación de Contraseña:"
+  = password_field_tag :password_confirmation, nil, {:class => "validate[required,equals[password]]"}
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :description, "Descripcion Cliente:"
+  = text_field_tag :description
+  br
+  br
+  = label_tag :image, "Imagen Cliente:"
+  = text_field_tag :image, "/assets/images/client.png", :readonly => true
   br
   br
   center
-    button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro?"
+    button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro que desea agregar este cliente?"
       i.icon-check.icon-white
-      |  Guardar Cambios
-  br
-  a.btn.btn-inverse href=clients_path
-    i.icon-circle-arrow-left.icon-white
-    |  Atras
+      |  Crear Cliente
   br
   br
   p.leyenda
     span style="font-size: 16pt"
       |* 
-    |  Campos Requeridos 
+    |Campos Requeridos

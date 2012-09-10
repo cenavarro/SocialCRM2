@@ -47,7 +47,7 @@ class FacebookDataController < ApplicationController
     start_date = start_date.to_time.to_i.to_s
     end_date = end_date.to_time.to_i.to_s
     uri = 'https://graph.facebook.com/'+object_id+'/insights/'+command+'/day/?since='+start_date+'&until='+end_date+'&access_token='+access_token
-    p "URI:"+uri.to_s
+    # p "URI:"+uri.to_s
     result = URI.parse(URI.escape(uri))
     json_object = JSON.parse(open(result).read)
   end
@@ -64,7 +64,7 @@ class FacebookDataController < ApplicationController
       @page_impression = 0
       @page_friends_of_fan = 0
       if getDataFromFacebook?
-        facebook_id = SocialNetwork.where("client_id = ? and info_social_network_id = 1",params[:idc])[0].name
+        facebook_id = SocialNetwork.where("client_id = ? and info_social_network_id = 1",params[:idc])[0].id_object.to_s
         fecha_inicio = params[:start_date]
         fecha_final = params[:end_date]
         access_token = params[:access_token]

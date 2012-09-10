@@ -25,7 +25,7 @@ table.table.table-bordered
         = client.name
       td
         = client.description
-      - @image = ("<img class='content' src='/assets/images/"+client.image+"' height='100' width='100'>").html_safe
+      - @image = ("<img class='content' src='"+client.image+"' height='100' width='100'>").html_safe
       td 
         = @image
       - edit_id = "edit_"+client.id.to_s

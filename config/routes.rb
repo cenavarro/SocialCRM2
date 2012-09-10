@@ -15,12 +15,14 @@ DemoComentarios::Application.routes.draw do
   resources :facebook_data
 
   get "facebook_data/callback/:idc/:start_date/:end_date" => "facebook_data#callback"
-  get "facebook_date/callback/:idc" => "facebook#callback"
+  get "facebook_data/callback/:idc" => "facebook#callback"
   get "facebook_data/:idc/:opcion" => "facebook_data#index"
   get "facebook_data/new/:idc/:opcion" => "facebook_data#new"
   get "facebook_data/:id/edit/:idc" => "facebook_data#edit"
 
   get 'clients/social_networks/:idc' => 'clients#social_networks'
+  get 'clients/facebook' => 'clients#facebook', :as => "client_facebook"
+  post 'clients/insert_social_network' => 'clients#insert_social_network'
 
   #match 'clients/social_networks', :controller => 'clients', :action => 'social_networks', :conditions => { :method => :get }
   resources :clients

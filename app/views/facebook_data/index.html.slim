@@ -12,7 +12,7 @@ div.margin
     h1
       = @socialNetwork[0].name
     br
-    - @image = ("<img class='content' src='/assets/images/"+@facebook_info.image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
+    - @image = ("<img class='content' src='"+@socialNetwork[0].image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
     = @image
 br
 div.margin

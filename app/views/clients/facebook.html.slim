@@ -1,0 +1,84 @@
+javascript:
+
+    jQuery(document).ready(function(){
+      jQuery("#form_new").validationEngine();
+    });
+
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+center
+  h1 Asociar Red Social a Cliente
+br
+br
+
+.fan_pages.well
+  h4
+    |Paginas que Administro en Facebook:
+    br
+    br
+  - @pages_array.each do | page, info |
+    -  if info['category'] != 'Application'
+       input type="radio" name="social_network" value=page
+         |  
+         = page
+    br
+    br
+
+.formNuevaRedCliente
+  = form_tag({:controller => "clients", :action => "insert_social_network"}, :method => "post", :class => "well form-inline", :id =>"form_new") do
+
+    = label_tag :name, "Nombre Red Social:"
+    = text_field_tag :name, nil , {:class => "validate[required] text-input"}
+    p.simbolo
+      span style="font-size: 16pt" align=""
+        |*
+    br
+    br
+    = label_tag :client_id, "Cliente:"
+    = select_tag :client_id, options_for_select(Client.all.collect {|c| [c.name, c.id]})
+    p.simbolo
+      span style="font-size: 16pt" align=""
+        |*
+    br
+    br
+    = label_tag :description, "Descripcion Red Social:"
+    = text_field_tag :description
+    br
+    br
+    = label_tag :imagelbl, "Imagen Red Social:"
+    br
+    center
+      = image_tag "/assets/images/client.png", :size => "48x48", :id => "idimage"
+    br
+    br
+    = hidden_field_tag  :info_social, "1"
+    = hidden_field_tag  :object_id, ""
+    = hidden_field_tag  :image, "/assets/images/client.png"
+    center
+      button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro que desea agregar esta red social?"
+        i.icon-check.icon-white
+        |  Guardar Datos
+    br
+    br
+    p.leyenda
+      span style="font-size: 16pt"
+        |* 
+      |Campos Requeridos
+
+javascript:
+
+  jQuery("input[name=social_network]").change(function() {
+    var id = $(this).val();
+    var data = #{@pages_array.to_json.html_safe}
+    console.log(data);
+    document.getElementById('name').value = id;
+    document.getElementById('description').value = data[id]['description'][0];
+    document.getElementById('idimage').src = data[id]['picture'][0];
+    document.getElementById('image').value = data[id]['picture'][0];
+    document.getElementById('object_id').value = data[id]['id'];
+  
+  });

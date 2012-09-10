@@ -393,7 +393,7 @@ var ContentFlowItem  = function (CFobj, element, index) {
             this.image = this.content;
             this.setImageFormat(this.image);
             if ( CFobj.conf.reflectionHeight > 0) {
-                this.addReflection();
+                /* this.addReflection(); */
             }
             this.initClick();
             CFobj._addItemCueProcess(true);

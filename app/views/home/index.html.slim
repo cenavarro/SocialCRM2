@@ -1,5 +1,8 @@
-div style="display: none"
-  = notice
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
 
 | Pagina Principal
 center
@@ -10,7 +13,7 @@ br
 #contentFlow.ContentFlow
   .flow
     - @clients.each do |client|
-      - @imagen = ("<img class='content' src='/assets/images/"+client.image+"' href='clients/social_networks/"+client.id.to_s()+"'>").html_safe
+      - @imagen = ("<img class='content' src='"+client.image+"' href='clients/social_networks/"+client.id.to_s()+"' height='240' >").html_safe
       .item
         = @imagen
         .caption
