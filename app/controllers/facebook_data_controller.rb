@@ -141,6 +141,31 @@ class FacebookDataController < ApplicationController
     end
   end
 
+  def save_comment
+    comment = FacebookComment.where(:social_network_id => params[:social_network].to_i)[0]
+    case params[:id_comment].to_i
+      when 1
+        comment.table = params[:comment]
+      when 2
+        comment.fans = params[:comment]
+      when 3
+        comment.interaction = params[:comment]
+      when 4
+        comment.investment = params[:comment]
+      when 5
+        comment.cost = params[:comment]
+    end
+    if comment.save
+      respond_to do |format|
+        format.json { render json:  "Comentario Guardado!".to_json }
+      end
+    else
+      respond_to do |format|
+        format.json { render json:  "El comentario no se pudo almacenar!".to_json }
+      end
+    end
+  end
+
   def calcular_datos
 
     if !@page_friends_of_fans['data'].empty?

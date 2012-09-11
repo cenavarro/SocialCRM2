@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120910215706) do
+ActiveRecord::Schema.define(:version => 20120911223632) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",        :null => false
@@ -20,6 +20,19 @@ ActiveRecord::Schema.define(:version => 20120910215706) do
     t.string   "description", :null => false
     t.string   "image",       :null => false
   end
+
+  create_table "facebook_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.string   "table"
+    t.string   "fans"
+    t.string   "interaction"
+    t.string   "investment"
+    t.string   "cost"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "facebook_comments", ["social_network_id"], :name => "index_facebook_comments_on_social_network", :unique => true
 
   create_table "facebook_data", :force => true do |t|
     t.integer  "client_id"

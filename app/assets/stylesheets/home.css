@@ -77,7 +77,6 @@ a:hover {
 }
 
 #homePage {
-	max-width: 300px;
 	margin: 100px auto;
 	overflow: hidden;
 }
@@ -205,11 +204,6 @@ a:hover {
 	margin: -10px;
 }
 
-.formLogIn{
-	margin-top: 10px;
-	height: 230px;
-}
-
 #footerWrapper {
 	background-color: #000;
 	color: #fff;
@@ -254,4 +248,39 @@ a:hover {
     text-decoration: none;
     text-shadow: 0 -1px 0 #082783;
     font: 12px Verdana, sans-serif;
+}
+
+.tableLogin{
+  border: 3px inset;
+  width:600px;
+  height: 450px;
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  margin-bottom: 100px;
+  margin-top: 40px;
+}
+
+.loginNormal{
+  width: 300px;
+  float:left;
+  margin-top: 50px;
+  margin-left:120px;
+}
+
+.loginFacebook{
+  width: 400px;
+  float:left;
+}
+
+.titleFacebook{
+  margin-top:100px;
+  margin-left:90px;
+  float:left;
+}
+
+.botonLogin{
+  margin-top: 100px;
+  float:left;
+  margin-left: 150px;
 }

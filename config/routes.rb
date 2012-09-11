@@ -19,6 +19,7 @@ DemoComentarios::Application.routes.draw do
   get "facebook_data/:idc/:opcion" => "facebook_data#index"
   get "facebook_data/new/:idc/:opcion" => "facebook_data#new"
   get "facebook_data/:id/edit/:idc" => "facebook_data#edit"
+  post "facebook_data/save_comment" => "facebook_data#save_comment"
 
   get 'clients/social_networks/:idc' => 'clients#social_networks'
   get 'clients/facebook' => 'clients#facebook', :as => "client_facebook"

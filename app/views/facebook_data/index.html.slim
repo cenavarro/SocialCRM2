@@ -6,6 +6,7 @@
 br
 - @facebook_info = InfoSocialNetwork.find(1)
 - @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 1).all
+- @comments = FacebookComment.where(:social_network_id => @socialNetwork[0].id)[0]
 
 div.margin
   center
@@ -424,18 +425,78 @@ section.sectionInformation
               a.btn.btn-info href=%{/facebook_data/#{facebook_datum.id}/edit/#{params[:idc]}} id=%{edit_#{facebook_datum.id}}
                 i.icon-pencil.icon-white
               |  
+              - idFacebookData = facebook_datum.id
               a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{facebook_datum.id}} href=%{/facebook_data/#{facebook_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
                 i.icon-trash.icon-white
+  .comment
+    .title
+      | Comentario para la Tabla:
+    br
+    form id="table" onsubmit="return saveComment('#table',#{@socialNetwork[0].id},1);"
+      textarea rows=10 id="comment"
+        = p @comments.table
+      br
+      button
+        | Guardar
+      .result
 
   section.sectionGraphics id="seccionGraficos"
-    div.estilo_graficos
+    .estilo_graficos
       #container_fans
-    div.estilo_graficos
+    .comment
+      .title
+        | Comentario Grafico Fans
+      br
+      form  id="fans" onsubmit="return saveComment('#fans',#{@socialNetwork[0].id},2);"
+        textarea rows=10 id="comment"
+          = p @comments.fans
+        br
+        button
+          | Guardar
+        .result
+
+    .estilo_graficos
       #container_interactivity
-    div.estilo_graficos
+    .comment
+      .title
+        | Comentario Grafico Interactividad
+      br
+      form id="interaction" onsubmit="return saveComment('#interaction',#{@socialNetwork[0].id},3);"
+
+        textarea rows=10 id="comment"
+          = p @comments.interaction
+        br
+        button
+          | Guardar
+        .result
+
+    .estilo_graficos
       #container_investment_growth
-    div.estilo_graficos
+    .comment
+      .title
+        | Comentario Grafico Crecimiento Inversion
+      br
+      form id="investment" onsubmit="return saveComment('#investment',#{@socialNetwork[0].id},4);"
+        textarea rows=10 id="comment"
+          = p @comments.investment
+        br
+        button
+          | Guardar
+        .result
+
+    .estilo_graficos
       #container_costs
+    .comment
+      .title
+        | Comentario Grafico Costes
+      br
+      form id="costs" onsubmit="return saveComment('#costs',#{@socialNetwork[0].id},5);"
+        textarea rows=10 id="comment"
+          = p @comments.cost
+        br
+        button
+          | Guardar
+        .result
   br
   br
 javascript:
@@ -443,3 +504,4 @@ javascript:
       jQuery("#start_date_picker").datepicker();
       jQuery("#end_date_picker").datepicker();
     });
+

@@ -4,36 +4,45 @@ javascript:
       jQuery("#user_new").validationEngine();
     });
 
-#homePage
-  - if !flash.empty?
+- if !flash.empty?
+  center
     .alert.alert-danger
       ul
         - flash.each do |name, msg|
-          li = msg 
-  h2 Iniciar Sesion
-  = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "well form-inline formLogIn"}) do |f|
-    br
-    = f.label :email, :class => 'email_label'
-    .input-prepend
-      span.add-on
-        |@
-      = f.text_field :email, :class => "validate[required,custom[email]]"
-    br
-    br
-    = f.label :contraseña, :class => 'pass_label'
-    .input-prepend
-      span.add-on
-        i.icon-lock
-      = f.password_field :password, :class => 'pass_input'
-    br
-    br
-    .links
-      = render :partial => "devise/shared/links"
-    br
-    br
-    = f.submit "Iniciar Sesion", :class => "btn btn-primary"
-    |   o    
-    button.btn.btn-primary type="button" onclick="loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'validate_user')"
-      | Login con Facebook
+          li = msg
 
-- p 
+br
+br
+table.tableLogin
+  tr
+    td.loginNormal
+      h4 Es usted miembro? Ingrese al sistema
+      br
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class => "well form-inline"}) do |f|
+        br
+        = f.label :email, :class => 'email_label'
+        .input-prepend
+          span.add-on
+            |@
+          = f.text_field :email, :class => "validate[required,custom[email]]"
+        br
+        br
+        = f.label :contraseña, :class => 'pass_label'
+        .input-prepend
+          span.add-on
+            i.icon-lock
+          = f.password_field :password, :class => 'pass_input'
+        br
+        br
+        .links
+          = render :partial => "devise/shared/links"
+        br
+        br
+        = f.submit "Iniciar Sesion", :class => "btn btn-primary"
+
+    td.loginFacebook
+      .titleFacebook
+        h4 O inicia sesion con tu cuenta de Facebook
+      .botonLogin
+        button.btn.btn-primary type="button" onclick="loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'validate_user')"
+          | Login con Facebook  
