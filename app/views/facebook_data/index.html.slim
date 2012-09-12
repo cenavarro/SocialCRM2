@@ -206,307 +206,330 @@ script
   | });});});
 
 
-section.sectionInformation 
-  section.sectionTable
-    table.table.table-bordered id="tablaInformacion"
-      thead
-        tr.headerTable
-          td.hideCell
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.start_date.mday()
-              |-
-              = facebook_datum.end_date.mday()
-              |  
-              = facebook_datum.end_date.strftime("%B")
-      tbody
-        tr.titlesRows
-          td
-            | Acciones durante el periodo
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.actions
-        tr
-          td
-            | # nuevos fans
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.new_fans
-        tr
-          td
-            | #fans reales
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.total_fans
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabimagenes" data-toggle="tab"
+          | Imagenes
 
-        tr
-          td
-            | Objetivo fans
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.goal_fans
+  br
+  br
 
-        tr
-          td
-            | % crecimiento fans
-          - @facebook_data.each do |facebook_datum|
-            - valueGrowthPercent = FacebookDatum.get_fan_growth_percentage(facebook_datum)
-            - if !valueGrowthPercent.nil?
-              - if valueGrowthPercent >= 0.0 
-                td.positiveValue
-                  = %{#{valueGrowthPercent.round(2)}%}
-              - else
-                td.negativeValue
-                  = %{#{valueGrowthPercent.round(2)}%}
-            - else
-              td.nilValue
-        tr.titlesRows
-          td colspan=100
-            |Interactividad
-        tr
-          td
-            | # impresiones
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.prints
-        tr
-          td
-            | % diferencia
-          - @facebook_data.each do |facebook_datum|
-            - valuePrintPercentage = FacebookDatum.get_print_percentage(facebook_datum)
-            - if !valuePrintPercentage.nil?
-              - if valuePrintPercentage >= 0.0 
-                td.positiveValue
-                  = %{#{valuePrintPercentage.round(2)}%}
-              - else
-                td.negativeValue
-                  = %{#{valuePrintPercentage.round(2)}%}
-            - else
-              td.nilValue
-        tr
-          td
-            | # interacciones
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.total_interactions
-        tr
-          td
-            | % diferencia
-          - @facebook_data.each do |facebook_datum|
-            - valueIteractionsPercentage = FacebookDatum.get_interactions_percentage(facebook_datum)
-            - if !valueIteractionsPercentage.nil?
-              - if valueIteractionsPercentage >= 0.0 
-                td.positiveValue
-                  = %{#{valueIteractionsPercentage.round(2)}%}
-              - else
-                td.negativeValue
-                  = %{#{valueIteractionsPercentage.round(2)}%}
-            - else
-              td.nilValue
-        tr
-          td
-            | Alcance total
-          - @facebook_data.each do |facebook_datum|
-            -if facebook_datum.total_reach.nil?
-              td.nilValue
-                = facebook_datum.total_reach
-            -else
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.start_date.mday()
+                  |-
+                  = facebook_datum.end_date.mday()
+                  |  
+                  = facebook_datum.end_date.strftime("%B")
+          tbody
+            tr.titlesRows
               td
-                = facebook_datum.total_reach
-        tr
-          td
-            | Alcance potencial
-          - @facebook_data.each do |facebook_datum|
-            -if facebook_datum.potential_reach.nil?
-              td.nilValue
-                = facebook_datum.potential_reach
-            -else
+                | Acciones durante el periodo
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.actions
+            tr
               td
-                = facebook_datum.potential_reach
-        tr
-          td
-            | # impresiones anuncios (por cien)
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.total_prints_per_anno.round(2)
-
-        tr
-          td
-            | # impresiones totales
-          - @facebook_data.each do |facebook_datum|
-            -if facebook_datum.total_prints.nil?
-              td.nilValue
-                = facebook_datum.total_prints
-            -else
+                | # nuevos fans
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.new_fans
+            tr
               td
-                = facebook_datum.total_prints
-        tr
-          td
-            | # clics anuncios
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.total_clicks_anno  
-        tr
-          td
-            | # fans atraves de anuncios
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.fans_through_anno
-        tr.titlesRows
-          td colspan=100
-            |Inversion
-        tr
-          td
-            | Inversion agencia
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.agency_investment.round(2)
+                | #fans reales
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.total_fans
 
-        tr
-          td
-            | Inversion nuevas acciones
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.new_stock_investment.round(2)
+            tr
+              td
+                | Objetivo fans
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.goal_fans
 
-        tr
-          td
-            | Inversion anuncios
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.anno_investment.round(2)
-        tr
-          td
-            | Inversion total
-          - @facebook_data.each do |facebook_datum|
-            td
-              = FacebookDatum.get_total_investment(facebook_datum).round(2)
-        tr.titlesRows
-          td colspan=100
-            |Interactividad
-        tr
-          td
-            | CPM impresion/interaccion
-          - @facebook_data.each do |facebook_datum|
-            td
-              = FacebookDatum.get_cpm(facebook_datum).round(2)
-        tr
-          td
-            | CTR anuncios
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.ctr_anno.round(3)
+            tr
+              td
+                | % crecimiento fans
+              - @facebook_data.each do |facebook_datum|
+                - valueGrowthPercent = FacebookDatum.get_fan_growth_percentage(facebook_datum)
+                - if !valueGrowthPercent.nil?
+                  - if valueGrowthPercent >= 0.0 
+                    td.positiveValue
+                      = %{#{valueGrowthPercent.round(2)}%}
+                  - else
+                    td.negativeValue
+                      = %{#{valueGrowthPercent.round(2)}%}
+                - else
+                  td.nilValue
+            tr.titlesRows
+              td colspan=100
+                |Interactividad
+            tr
+              td
+                | # impresiones
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.prints
+            tr
+              td
+                | % diferencia
+              - @facebook_data.each do |facebook_datum|
+                - valuePrintPercentage = FacebookDatum.get_print_percentage(facebook_datum)
+                - if !valuePrintPercentage.nil?
+                  - if valuePrintPercentage >= 0.0 
+                    td.positiveValue
+                      = %{#{valuePrintPercentage.round(2)}%}
+                  - else
+                    td.negativeValue
+                      = %{#{valuePrintPercentage.round(2)}%}
+                - else
+                  td.nilValue
+            tr
+              td
+                | # interacciones
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.total_interactions
+            tr
+              td
+                | % diferencia
+              - @facebook_data.each do |facebook_datum|
+                - valueIteractionsPercentage = FacebookDatum.get_interactions_percentage(facebook_datum)
+                - if !valueIteractionsPercentage.nil?
+                  - if valueIteractionsPercentage >= 0.0 
+                    td.positiveValue
+                      = %{#{valueIteractionsPercentage.round(2)}%}
+                  - else
+                    td.negativeValue
+                      = %{#{valueIteractionsPercentage.round(2)}%}
+                - else
+                  td.nilValue
+            tr
+              td
+                | Alcance total
+              - @facebook_data.each do |facebook_datum|
+                -if facebook_datum.total_reach.nil?
+                  td.nilValue
+                    = facebook_datum.total_reach
+                -else
+                  td
+                    = facebook_datum.total_reach
+            tr
+              td
+                | Alcance potencial
+              - @facebook_data.each do |facebook_datum|
+                -if facebook_datum.potential_reach.nil?
+                  td.nilValue
+                    = facebook_datum.potential_reach
+                -else
+                  td
+                    = facebook_datum.potential_reach
+            tr
+              td
+                | # impresiones anuncios (por cien)
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.total_prints_per_anno.round(2)
 
-        tr
-          td
-            | CPM anuncios
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.cpm_anno.round(2)
+            tr
+              td
+                | # impresiones totales
+              - @facebook_data.each do |facebook_datum|
+                -if facebook_datum.total_prints.nil?
+                  td.nilValue
+                    = facebook_datum.total_prints
+                -else
+                  td
+                    = facebook_datum.total_prints
+            tr
+              td
+                | # clics anuncios
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.total_clicks_anno  
+            tr
+              td
+                | # fans atraves de anuncios
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.fans_through_anno
+            tr.titlesRows
+              td colspan=100
+                |Inversion
+            tr
+              td
+                | Inversion agencia
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.agency_investment.round(2)
 
-        tr
-          td
-            | CPC anuncios
-          - @facebook_data.each do |facebook_datum|
-            td
-              = facebook_datum.cpc_anno.round(2)
+            tr
+              td
+                | Inversion nuevas acciones
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.new_stock_investment.round(2)
 
-        tr
-          td
-            | Coste fan
-          - @facebook_data.each do |facebook_datum|
-            td
-              = FacebookDatum.get_fan_cost(facebook_datum).round(2)
-        tr
-          td.nilValue
-            |Opciones
-          -@facebook_data.each do |facebook_datum|
-            td.celdaOpciones
-              a.btn.btn-info href=%{/facebook_data/#{facebook_datum.id}/edit/#{params[:idc]}} id=%{edit_#{facebook_datum.id}}
-                i.icon-pencil.icon-white
-              |  
-              - idFacebookData = facebook_datum.id
-              a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{facebook_datum.id}} href=%{/facebook_data/#{facebook_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
-                i.icon-trash.icon-white
-  .comment
-    .title
-      h4
-        | Comentario para la Tabla:
+            tr
+              td
+                | Inversion anuncios
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.anno_investment.round(2)
+            tr
+              td
+                | Inversion total
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = FacebookDatum.get_total_investment(facebook_datum).round(2)
+            tr.titlesRows
+              td colspan=100
+                |Interactividad
+            tr
+              td
+                | CPM impresion/interaccion
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = FacebookDatum.get_cpm(facebook_datum).round(2)
+            tr
+              td
+                | CTR anuncios
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.ctr_anno.round(3)
+
+            tr
+              td
+                | CPM anuncios
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.cpm_anno.round(2)
+
+            tr
+              td
+                | CPC anuncios
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = facebook_datum.cpc_anno.round(2)
+
+            tr
+              td
+                | Coste fan
+              - @facebook_data.each do |facebook_datum|
+                td
+                  = FacebookDatum.get_fan_cost(facebook_datum).round(2)
+            tr
+              td.nilValue
+                |Opciones
+              -@facebook_data.each do |facebook_datum|
+                td.celdaOpciones
+                  a.btn.btn-info href=%{/facebook_data/#{facebook_datum.id}/edit/#{params[:idc]}} id=%{edit_#{facebook_datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  - idFacebookData = facebook_datum.id
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{facebook_datum.id}} href=%{/facebook_data/#{facebook_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        br
+        form id="table" onsubmit="return saveComment('#table',#{@socialNetwork[0].id},1);"
+          textarea id="comment"
+            = p @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+    .tab-pane.fade id="tabcharts"  
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_fans
+        .comment
+          .title
+            h4
+              | Comentario Grafico Fans
+          br
+          form  id="fans" onsubmit="return saveComment('#fans',#{@socialNetwork[0].id},2);"
+            textarea rows=10 id="comment"
+              = p @comments.fans
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+
+        .estilo_graficos
+          #container_interactivity
+        .comment
+          .title
+            h4
+              | Comentario Grafico Interactividad
+          br
+          form id="interaction" onsubmit="return saveComment('#interaction',#{@socialNetwork[0].id},3);"
+
+            textarea rows=10 id="comment"
+              = p @comments.interaction
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+
+        .estilo_graficos
+          #container_investment_growth
+        .comment
+          .title
+            h4
+              | Comentario Grafico Crecimiento Inversion
+          br
+          form id="investment" onsubmit="return saveComment('#investment',#{@socialNetwork[0].id},4);"
+            textarea rows=10 id="comment"
+              = p @comments.investment
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+
+        .estilo_graficos
+          #container_costs
+        .comment
+          .title
+            h4
+              | Comentario Grafico Costes
+          br
+          form id="costs" onsubmit="return saveComment('#costs',#{@socialNetwork[0].id},5);"
+            textarea rows=10 id="comment"
+              = p @comments.cost
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+    .tab-pane.fade id="tabimagenes"
+      | Imagenes
     br
-    form id="table" onsubmit="return saveComment('#table',#{@socialNetwork[0].id},1);"
-      textarea id="comment"
-        = p @comments.table
-      br
-      button.btn.btn-success
-        | Guardar
-      .result
-
-  section.sectionGraphics id="seccionGraficos"
-    .estilo_graficos
-      #container_fans
-    .comment
-      .title
-        h4
-          | Comentario Grafico Fans
-      br
-      form  id="fans" onsubmit="return saveComment('#fans',#{@socialNetwork[0].id},2);"
-        textarea rows=10 id="comment"
-          = p @comments.fans
-        br
-        button.btn.btn-success
-          | Guardar
-        .result
-
-    .estilo_graficos
-      #container_interactivity
-    .comment
-      .title
-        h4
-          | Comentario Grafico Interactividad
-      br
-      form id="interaction" onsubmit="return saveComment('#interaction',#{@socialNetwork[0].id},3);"
-
-        textarea rows=10 id="comment"
-          = p @comments.interaction
-        br
-        button.btn.btn-success
-          | Guardar
-        .result
-
-    .estilo_graficos
-      #container_investment_growth
-    .comment
-      .title
-        h4
-          | Comentario Grafico Crecimiento Inversion
-      br
-      form id="investment" onsubmit="return saveComment('#investment',#{@socialNetwork[0].id},4);"
-        textarea rows=10 id="comment"
-          = p @comments.investment
-        br
-        button.btn.btn-success
-          | Guardar
-        .result
-
-    .estilo_graficos
-      #container_costs
-    .comment
-      .title
-        h4
-          | Comentario Grafico Costes
-      br
-      form id="costs" onsubmit="return saveComment('#costs',#{@socialNetwork[0].id},5);"
-        textarea rows=10 id="comment"
-          = p @comments.cost
-        br
-        button.btn.btn-success
-          | Guardar
-        .result
-  br
-  br
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#start_date_picker").datepicker();
-      jQuery("#end_date_picker").datepicker();
-    });
+    br
+  javascript:
+      jQuery(document).ready(function(){
+        jQuery("#start_date_picker").datepicker();
+        jQuery("#end_date_picker").datepicker();
+      });
 
