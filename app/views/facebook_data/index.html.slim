@@ -5,15 +5,15 @@
           = notice
 br
 - @facebook_info = InfoSocialNetwork.find(1)
-- @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 1).all
-- @comments = FacebookComment.where(:social_network_id => @socialNetwork[0].id)[0]
+- @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 1)[0]
+- @comments = FacebookComment.where(:social_network_id => @socialNetwork.id)[0]
 
 div.margin
   center
     h1
-      = @socialNetwork[0].name
+      = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@socialNetwork[0].image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
+    - @image = ("<img class='content' src='"+@socialNetwork.image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
     = @image
 br
 div.margin
@@ -57,6 +57,7 @@ script
   | title: {text: 'Fans', x: -20 },
   | xAxis: {categories: [
   - @facebook_data.each do |facebook_datum|
+    - p "F:"+@facebook_data.to_json.to_s
     | '
     = facebook_datum.start_date.mday()
     |-
@@ -451,7 +452,7 @@ section.sectionInformation
           h4
             | Comentario para la Tabla:
         br
-        form id="table" onsubmit="return saveComment('#table',#{@socialNetwork[0].id},1);"
+        form id="table" onsubmit="return saveComment('#table',#{@socialNetwork.id},1);"
           textarea id="comment"
             = p @comments.table
           br
@@ -470,7 +471,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Fans
           br
-          form  id="fans" onsubmit="return saveComment('#fans',#{@socialNetwork[0].id},2);"
+          form  id="fans" onsubmit="return saveComment('#fans',#{@socialNetwork.id},2);"
             textarea rows=10 id="comment"
               = p @comments.fans
             br
@@ -485,7 +486,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Interactividad
           br
-          form id="interaction" onsubmit="return saveComment('#interaction',#{@socialNetwork[0].id},3);"
+          form id="interaction" onsubmit="return saveComment('#interaction',#{@socialNetwork.id},3);"
 
             textarea rows=10 id="comment"
               = p @comments.interaction
@@ -501,7 +502,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Crecimiento Inversion
           br
-          form id="investment" onsubmit="return saveComment('#investment',#{@socialNetwork[0].id},4);"
+          form id="investment" onsubmit="return saveComment('#investment',#{@socialNetwork.id},4);"
             textarea rows=10 id="comment"
               = p @comments.investment
             br
@@ -516,7 +517,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Costes
           br
-          form id="costs" onsubmit="return saveComment('#costs',#{@socialNetwork[0].id},5);"
+          form id="costs" onsubmit="return saveComment('#costs',#{@socialNetwork.id},5);"
             textarea rows=10 id="comment"
               = p @comments.cost
             br
@@ -524,7 +525,24 @@ section.sectionInformation
               | Guardar
             .result
     .tab-pane.fade id="tabimagenes"
-      | Imagenes
+
+      = form_for ImagesSocialNetwork.new, :as => :images, :url => '/social_networks/add_image', :html => { :multipart => true} do | f |
+        = f.label "Seleccione la imagen"
+        = f.file_field :attachment, :required => "required"
+        br
+        br
+        = f.label "Comentario Imagen"
+        = f.text_field :comment
+        br
+        br
+        = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
+        = f.submit "Enviar" 
+
+      - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork).all
+      - @images.each do | imagen |
+        - p "Imagen:" + imagen.to_s
+        = imagen.social_network_id
+        img src="#{imagen.attachment.url}"
     br
     br
   javascript:

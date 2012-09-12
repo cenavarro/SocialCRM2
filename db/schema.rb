@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120911223632) do
+ActiveRecord::Schema.define(:version => 20120912204151) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",        :null => false
@@ -56,6 +56,17 @@ ActiveRecord::Schema.define(:version => 20120911223632) do
     t.float    "ctr_anno"
     t.float    "cpm_anno"
     t.float    "cpc_anno"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "images_social_networks", :force => true do |t|
+    t.integer  "social_network_id"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
+    t.string   "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -9,6 +9,7 @@ gem 'slim', "= 1.2.2"
 gem 'rake', ">= 0.9.2.2"
 gem 'heroku', "= 2.30.2"
 gem "escape_utils", "= 0.2.4"
+gem "paperclip"
 gem 'simplecov', :require => false, :group => :test
 
 group :assets do

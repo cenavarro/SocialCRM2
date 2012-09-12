@@ -58,4 +58,20 @@ class SocialNetworksController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def add_image
+    image = ImagesSocialNetwork.new(params[:images])
+    if image.save
+      mensaje = "La imagen se guardo satisfactoriamente!"
+    else
+      mensaje = "La imagen no se pudo almacenar!<br><br> Errores:<br><br>".html_safe 
+      image.errors.each do |type, error|
+        mensaje = mensaje + type.to_s + ": " + error.to_s + "<br>".html_safe
+      end
+    end
+    respond_to do | format |
+      format.html {redirect_to request.referer, notice: mensaje}
+      format.json {head :ok}
+    end
+  end
 end

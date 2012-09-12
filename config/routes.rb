@@ -12,6 +12,8 @@ DemoComentarios::Application.routes.draw do
 
   resources :social_networks
 
+  post "social_networks/add_image" => "social_networks#add_image"
+
   resources :facebook_data
 
   get "facebook_data/callback/:idc/:start_date/:end_date" => "facebook_data#callback"
