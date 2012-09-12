@@ -129,7 +129,6 @@ ActiveRecord::Schema.define(:version => 20120911223632) do
     t.string   "name"
     t.integer  "rol_id"
     t.integer  "client_id"
-    t.string   "fbapp_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

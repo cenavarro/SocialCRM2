@@ -1,5 +1,4 @@
 class InfoSocialNetworksController < ApplicationController
-  before_filter :authenticate_user!
 
   def index
     @info_social_networks = InfoSocialNetwork.all

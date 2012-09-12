@@ -1,5 +1,4 @@
 class ClientsController < ApplicationController
-  before_filter :authenticate_user!
 
   require 'open-uri'
 
@@ -66,9 +65,6 @@ class ClientsController < ApplicationController
 
   def destroy
     @client = Client.find(params[:id])
-    @user = User.find(User.select(:id).where(:client_id => @client.id))
-    @social_networks = SocialNetwork.where(:client_id => @client.id).delete_all
-    @user.destroy
     @client.destroy
 
     respond_to do |format|
@@ -136,10 +132,18 @@ class ClientsController < ApplicationController
 
   def insert_social_network
     social_network = SocialNetwork.new(:name => params[:name], :client_id => params[:client_id], :info_social_network_id => params[:info_social], :image => params[:image], :id_object => params[:object_id])
-    social_network.save
-    respond_to do | format |
-      format.html {redirect_to "/", notice: "La red social se asocio correctamente." }
-      format.json { head :ok }
+    if social_network.save
+      comments = FacebookComment.new(:social_network_id => social_network.id)
+      comments.save
+      respond_to do | format |
+        format.html {redirect_to "/", notice: "La red social se asocio correctamente." }
+        format.json { head :ok }
+      end
+    else
+      respond_to do | format |
+        format.html {redirect_to render.refer, notice: "La red social NO se asocio correctamente." }
+        format.json { head :ok }
+      end
     end
   end
 

@@ -1,5 +1,4 @@
 class FacebookDataController < ApplicationController
-  before_filter :authenticate_user!
 
   require 'open-uri'
 
@@ -132,11 +131,11 @@ class FacebookDataController < ApplicationController
 
   def destroy
     @facebook_datum = FacebookDatum.find(params[:id])
-    @client_id = @facebook_datum.client_id
+    client_id = @facebook_datum.client_id
     @facebook_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to %{/facebook_data/#{@client_id}/1}, notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to %{/facebook_data/#{client_id}/1}, notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

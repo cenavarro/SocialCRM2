@@ -163,9 +163,26 @@ $space: 400px;
 
 }
 
-.comment{
-  
+.comment{ 
+	margin: 30px 42px 100px 42px;
+}
+
+.comment textarea{
+  height: 180px;
+  width: 99%;
+}
+
+.comment button{
+  float:left;
 }
 
 .title{
+}
+
+.result{
+  float:left;
+  margin-top: 7px;
+  margin-left: 30px;
+  color: #FF0000;
+  font-weight: bold;
 }

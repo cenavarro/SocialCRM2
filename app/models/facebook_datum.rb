@@ -1,5 +1,4 @@
 class FacebookDatum < ActiveRecord::Base
-  belongs_to :client
 
   def self.get_real_fans(datum)
     if !isFirstData?(datum)

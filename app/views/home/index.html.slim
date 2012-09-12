@@ -3,21 +3,28 @@
       center
         h4
           = notice
-
-| Pagina Principal
+br
+br
 center
   h1
     | Clientes
 br
 br
 #contentFlow.ContentFlow
-  .flow
-    - @clients.each do |client|
-      - @imagen = ("<img class='content' src='"+client.image+"' href='clients/social_networks/"+client.id.to_s()+"' height='240' >").html_safe
-      .item
-        = @imagen
-        .caption
-          = client.name
-          |: 
-          = client.description
-  .globalCaption
+  - if @clients.empty?
+    br
+    center
+      h3 No se tiene clientes
+    br
+    br
+  - else
+   .flow
+     - @clients.each do |client|
+       - @imagen = ("<img class='content' src='"+client.image+"' href='clients/social_networks/"+client.id.to_s()+"' height='240' >").html_safe
+       .item
+         = @imagen
+         .caption
+           = client.name
+           |: 
+           = client.description
+   .globalCaption

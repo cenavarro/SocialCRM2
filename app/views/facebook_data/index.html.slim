@@ -430,13 +430,14 @@ section.sectionInformation
                 i.icon-trash.icon-white
   .comment
     .title
-      | Comentario para la Tabla:
+      h4
+        | Comentario para la Tabla:
     br
     form id="table" onsubmit="return saveComment('#table',#{@socialNetwork[0].id},1);"
-      textarea rows=10 id="comment"
+      textarea id="comment"
         = p @comments.table
       br
-      button
+      button.btn.btn-success
         | Guardar
       .result
 
@@ -445,13 +446,14 @@ section.sectionInformation
       #container_fans
     .comment
       .title
-        | Comentario Grafico Fans
+        h4
+          | Comentario Grafico Fans
       br
       form  id="fans" onsubmit="return saveComment('#fans',#{@socialNetwork[0].id},2);"
         textarea rows=10 id="comment"
           = p @comments.fans
         br
-        button
+        button.btn.btn-success
           | Guardar
         .result
 
@@ -459,14 +461,15 @@ section.sectionInformation
       #container_interactivity
     .comment
       .title
-        | Comentario Grafico Interactividad
+        h4
+          | Comentario Grafico Interactividad
       br
       form id="interaction" onsubmit="return saveComment('#interaction',#{@socialNetwork[0].id},3);"
 
         textarea rows=10 id="comment"
           = p @comments.interaction
         br
-        button
+        button.btn.btn-success
           | Guardar
         .result
 
@@ -474,13 +477,14 @@ section.sectionInformation
       #container_investment_growth
     .comment
       .title
-        | Comentario Grafico Crecimiento Inversion
+        h4
+          | Comentario Grafico Crecimiento Inversion
       br
       form id="investment" onsubmit="return saveComment('#investment',#{@socialNetwork[0].id},4);"
         textarea rows=10 id="comment"
           = p @comments.investment
         br
-        button
+        button.btn.btn-success
           | Guardar
         .result
 
@@ -488,13 +492,14 @@ section.sectionInformation
       #container_costs
     .comment
       .title
-        | Comentario Grafico Costes
+        h4
+          | Comentario Grafico Costes
       br
       form id="costs" onsubmit="return saveComment('#costs',#{@socialNetwork[0].id},5);"
         textarea rows=10 id="comment"
           = p @comments.cost
         br
-        button
+        button.btn.btn-success
           | Guardar
         .result
   br
