@@ -1,5 +1,6 @@
 class ClientsController < ApplicationController
-
+  before_filter :authenticate_user!
+  
   require 'open-uri'
 
   def index

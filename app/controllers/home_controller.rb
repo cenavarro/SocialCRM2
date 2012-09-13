@@ -37,10 +37,6 @@ class HomeController < ApplicationController
         format.html { redirect_to new_user_session_path, notice: 'Este usuario de facebook no tiene cuenta asociada.' }
       end
     else
-      session[:user] = @user
-      session[:fb_accessToken] = access_token
-      session[:fb_code] = code
-      session[:fb_app_id] = @user.fbapp_id
       respond_to do |format|
         sign_in @user
         format.html { redirect_to "/" }
