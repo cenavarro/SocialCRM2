@@ -3,6 +3,21 @@ class FacebookDataController < ApplicationController
 
   require 'open-uri'
 
+  def createCharData
+    @dates = @facebook_data.collect { |fd| "'" + fd.start_date.mday().to_s + "-" + fd.end_date.mday().to_s + " " + fd.end_date.strftime('%B') + "'" }.join(', ')
+    @newFans = @facebook_data.collect(&:new_fans).join(', ')
+    @realFans = @facebook_data.collect(&:total_fans).join(', ')
+    @goalFans = @facebook_data.collect(&:goal_fans).join(', ')
+    @prints = @facebook_data.collect(&:prints).join(', ')
+    @totalInteractions = @facebook_data.collect(&:total_interactions).join(', ')
+    @totalPrints = @facebook_data.collect(&:total_prints_per_anno).join(', ')
+    @totalFans = @facebook_data.collect(&:total_fans).join(', ')
+    @investment = @facebook_data.collect { |fd| FacebookDatum.get_total_investment(fd) }.join(', ')
+    @cpm = @facebook_data.collect { |fd| FacebookDatum.get_cpm(fd) }.join(', ')
+    @crt_anno = @facebook_data.collect(&:ctr_anno).join(', ')
+    @cpm_anno = @facebook_data.collect(&:cpm_anno).join(', ')
+  end
+
   def index
     if existParamIdClient?
       if !getDataDateRange?
@@ -11,12 +26,10 @@ class FacebookDataController < ApplicationController
         fechaInicio = params[:start_date].to_date
         fechaFinal = params[:end_date].to_date
         @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,params[:idc].to_i]).order("start_date ASC")
-        @dates = ""
-        @facebook_data.each do |facebook_datum|
-          @dates = @dates + facebook_datum.start_date.mday().to_s + " al " + facebook_datum.end_date.mday().to_s + " de " + facebook_datum.end_date.strftime('%B') + ","
-        end
       end
 
+      createCharData
+      
       respond_to do |format|
         format.html
         format.json { render json: @facebook_data }
@@ -47,7 +60,6 @@ class FacebookDataController < ApplicationController
     start_date = start_date.to_time.to_i.to_s
     end_date = end_date.to_time.to_i.to_s
     uri = 'https://graph.facebook.com/'+object_id+'/insights/'+command+'/day/?since='+start_date+'&until='+end_date+'&access_token='+access_token
-    # p "URI:"+uri.to_s
     result = URI.parse(URI.escape(uri))
     json_object = JSON.parse(open(result).read)
   end
@@ -97,12 +109,7 @@ class FacebookDataController < ApplicationController
 
   def create
     @facebook_datum = FacebookDatum.new(params[:facebook_datum])
-
-    if FacebookDatum.all.first == nil
-      @facebook_datum.total_fans = @facebook_datum.new_fans
-    else
-      @facebook_datum.total_fans = FacebookDatum.get_real_fans(@facebook_datum)
-    end
+    @facebook_datum.total_fans = FacebookDatum.get_real_fans(@facebook_datum,true)
     
     respond_to do |format|
       if @facebook_datum.save

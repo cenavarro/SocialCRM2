@@ -1,19 +1,23 @@
 class FacebookDatum < ActiveRecord::Base
 
-  def self.get_real_fans(datum)
-    if !isFirstData?(datum)
-      if !datum.id.nil?
-        prevRealFans = FacebookDatum.where('id < ?', datum.id).last.total_fans
+  def self.get_real_fans(datum,isCreate)
+    if !all.first.nil?
+      if isCreate
+        prevRealFans = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first.total_fans
       else
         prevRealFans = FacebookDatum.last.total_fans
       end
-      (datum.new_fans+prevRealFans)  
+      return (datum.new_fans+prevRealFans)
     end
     return datum.new_fans
   end
-  
+
   def self.get_fan_growth_percentage(datum)
-    (datum.new_fans.to_f/(datum.total_fans-datum.new_fans).to_f)*100
+    diffFans = datum.total_fans-datum.new_fans
+    if diffFans != 0
+      return (datum.new_fans.to_f/(datum.total_fans-datum.new_fans).to_f)*100
+    end
+    return 100
   end
 
   def self.get_print_percentage(datum)
@@ -24,7 +28,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.getPercentagePrints(datum)
-    prevPrintsData = FacebookDatum.where('id < ?', datum.id).last.prints
+    prevPrintsData = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first.prints
     if prevPrintsData != 0
       return ((datum.prints.to_f - prevPrintsData).to_f/prevPrintsData.to_f)*100
     end
@@ -39,7 +43,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.getPercentageIteractions(datum)
-    prevIteractionData = FacebookDatum.where('id < ?', datum.id).last.total_interactions
+    prevIteractionData = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first.total_interactions
     if prevIteractionData != 0
       return ((datum.total_interactions.to_f-prevIteractionData.to_f)/prevIteractionData.to_f)*100
     end
@@ -57,9 +61,12 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.isFirstData?(datum)
-    if(datum.id == all.first.id)
-      return true
+    if(datum.id != all.first.id)
+      data_anterior = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first
+      if !data_anterior.nil?
+        return false
+      end
     end
-    return false
+    return true
   end
 end

@@ -53,16 +53,10 @@ br
       |   (se necesita su contraseña actual para confirmar los cambios)
     br
     br
-    = f.label "Facebook APP ID:"
-    = f.text_field :fbapp_id
-    br
-    br
     = f.label :tipo_usuario
     - @rols = Rol.all
     - if current_user.rol_id == 1
         = f.select :rol_id, options_for_select([["Administrador",1]])
-    - else
-        = f.select :rol_id, options_for_select([["Cliente",2]])
     br
     br
     center

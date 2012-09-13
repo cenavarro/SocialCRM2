@@ -52,158 +52,46 @@ br
     br
 
 script 
-  | $(function () { var chart; var date = "#{@dates}"; $(document).ready(function() { chart = new Highcharts.Chart({
+
+  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
   | chart: {renderTo: 'container_fans', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Fans', x: -20 },
-  | xAxis: {categories: [
-  - @facebook_data.each do |facebook_datum|
-    - p "F:"+@facebook_data.to_json.to_s
-    | '
-    = facebook_datum.start_date.mday()
-    |-
-    = facebook_datum.end_date.mday()
-    |  
-    = facebook_datum.end_date.strftime("%B")
-    |',
-  | ] },
+  | xAxis: {categories: [ #{@dates} ] },
   | yAxis: {title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: 'Nuevos Fans', data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !facebook_datum.new_fans.nil?
-      = facebook_datum.new_fans
-      | ,
-    - else
-      |null,
-  | ]}, {name: 'Fans Reales',data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !facebook_datum.total_fans.nil?
-      = facebook_datum.total_fans
-      | ,
-    - else
-      |null,
-  | ]}, {name: 'Objetivo Fans',data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !facebook_datum.goal_fans.nil?
-      = facebook_datum.goal_fans
-      | ,
-    - else
-      |null,
-  | ]}]
+  | series: [{name: 'Nuevos Fans', data: [ #{@newFans} ]}, {name: 'Fans Reales',data: [ #{@realFans} ]}, {name: 'Objetivo Fans',data: [ #{@goalFans}]}]
   | });});});
 
-  | $(function () { var chart; var date = "#{@dates}"; $(document).ready(function() { chart = new Highcharts.Chart({
+
+  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
   | chart: {renderTo: 'container_interactivity', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Interactividad', x: -20 },
-  | xAxis: {categories: [
-  - @facebook_data.each do |facebook_datum|
-    | '
-    = facebook_datum.start_date.mday()
-    |-
-    = facebook_datum.end_date.mday()
-    |  
-    = facebook_datum.end_date.strftime("%B")
-    |',
-  | ] },
+  | xAxis: {categories: [ #{@dates} ] },
   | yAxis: {title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: '# impresiones', data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !facebook_datum.prints.nil?
-      = facebook_datum.prints
-      | ,
-    - else
-      |null,
-  | ]}, {name: '# interacciones',data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !facebook_datum.total_interactions.nil?
-      = facebook_datum.total_interactions
-      | ,
-    - else
-      |null,
-  | ]}, {name: '# impresiones anuncios (por cien)',data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !facebook_datum.total_prints_per_anno.nil?
-      = facebook_datum.total_prints_per_anno
-      | ,
-    - else
-      |null,
-  | ]}]
+  | series: [{name: '# impresiones', data: [ #{@prints} ]}, {name: '# interacciones',data: [ #{@totalInteractions} ]}, {name: '# impresiones anuncios (por cien)',data: [ #{@totalPrints} ]}]
   | });});});
 
-  | $(function () { var chart; var date = "#{@dates}"; $(document).ready(function() { chart = new Highcharts.Chart({
+  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
   | chart: {renderTo: 'container_investment_growth', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Crecimiento con Inversiones', x: -20 },
-  | xAxis: {categories: [
-  - @facebook_data.each do |facebook_datum|
-    | '
-    = facebook_datum.start_date.mday()
-    |-
-    = facebook_datum.end_date.mday()
-    | 
-    = facebook_datum.end_date.strftime("%B")
-    |',
-  | ] },
+  | xAxis: {categories: [ #{@dates} ] },
   | yAxis: {title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: '# fans reales', data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !facebook_datum.total_fans.nil?
-      = facebook_datum.total_fans
-      | ,
-    - else
-      |null,
-  | ]}, {name: 'Inversion total',data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !FacebookDatum.get_total_investment(facebook_datum).nil?
-      = FacebookDatum.get_total_investment(facebook_datum)	
-      | ,
-    - else
-      |null,
-  | ]}]
+  | series: [{name: '# fans reales', data: [ #{@totalFans} ]}, {name: 'Inversion total',data: [ #{@investment} ]}]
   | });});});
 
-  | $(function () { var chart; var date = "#{@dates}"; $(document).ready(function() { chart = new Highcharts.Chart({
+  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
   | chart: {renderTo: 'container_costs', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Costes', x: -20 },
-  | xAxis: {categories: [
-  - @facebook_data.each do |facebook_datum|
-    | '
-    = facebook_datum.start_date.mday()
-    |-
-    = facebook_datum.end_date.mday()
-    | 
-    = facebook_datum.end_date.strftime("%B")
-    |',
-  | ] },
+  | xAxis: {categories: [ #{@dates} ] },
   | yAxis: {title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: 'CPM impresion/interaccion', data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !FacebookDatum.get_cpm(facebook_datum).nil?
-      = FacebookDatum.get_cpm(facebook_datum)
-      | ,
-    - else
-      |null,
-  | ]}, {name: 'CTR anuncios',data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !facebook_datum.ctr_anno.nil?
-      = facebook_datum.ctr_anno	
-      | ,
-    - else
-      |null,
-  | ]}, {name: 'CPM anuncios',data: [
-  - @facebook_data.each do |facebook_datum|
-    - if !facebook_datum.cpm_anno.nil?
-      = facebook_datum.cpm_anno	
-      | ,
-    - else
-      |null,
-  | ]}]
+  | series: [{name: 'CPM impresion/interaccion', data: [ #{@cpm} ]}, {name: 'CTR anuncios',data: [ #{@crt_anno} ]}, {name: 'CPM anuncios',data: [ #{@cpm_anno} ]}]
   | });});});
 
 
@@ -454,7 +342,7 @@ section.sectionInformation
         br
         form id="table" onsubmit="return saveComment('#table',#{@socialNetwork.id},1);"
           textarea id="comment"
-            = p @comments.table
+            = @comments.table
           br
           button.btn.btn-success
             | Guardar
@@ -473,7 +361,7 @@ section.sectionInformation
           br
           form  id="fans" onsubmit="return saveComment('#fans',#{@socialNetwork.id},2);"
             textarea rows=10 id="comment"
-              = p @comments.fans
+              = @comments.fans
             br
             button.btn.btn-success
               | Guardar
@@ -489,7 +377,7 @@ section.sectionInformation
           form id="interaction" onsubmit="return saveComment('#interaction',#{@socialNetwork.id},3);"
 
             textarea rows=10 id="comment"
-              = p @comments.interaction
+              = @comments.interaction
             br
             button.btn.btn-success
               | Guardar
@@ -504,7 +392,7 @@ section.sectionInformation
           br
           form id="investment" onsubmit="return saveComment('#investment',#{@socialNetwork.id},4);"
             textarea rows=10 id="comment"
-              = p @comments.investment
+              = @comments.investment
             br
             button.btn.btn-success
               | Guardar
@@ -519,7 +407,7 @@ section.sectionInformation
           br
           form id="costs" onsubmit="return saveComment('#costs',#{@socialNetwork.id},5);"
             textarea rows=10 id="comment"
-              = p @comments.cost
+              = @comments.cost
             br
             button.btn.btn-success
               | Guardar
