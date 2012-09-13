@@ -38,7 +38,23 @@ function saveComment(form,social_network,id_comment){
       $(form).find('.result').html(data);
     },
     error: function(data){
-      $(form).find('.result').html("Error:" + data);
+      $(form).find('.result').html(data);
+    }
+  });
+  return false;
+}
+
+function updateImageComment(form, id_image){
+  jQuery.ajax({
+    type: 'POST',
+    url: '/facebook_data/update_comment',
+    data: { comment: $(form).find("#comment").val(), id_image: id_image },
+    dataType: 'json',
+    success: function(data){
+      $(form).find('.result').html(data);
+    },
+    error: function(data){
+      $(form).find('.result').html(data);
     }
   });
   return false;

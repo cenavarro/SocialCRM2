@@ -8,7 +8,7 @@ br
 - @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 1)[0]
 - @comments = FacebookComment.where(:social_network_id => @socialNetwork.id)[0]
 
-div.margin
+.margin
   center
     h1
       = @socialNetwork.name
@@ -16,7 +16,7 @@ div.margin
     - @image = ("<img class='content' src='"+@socialNetwork.image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
     = @image
 br
-div.margin
+.margin
   a.btn.btn-info href=%{/facebook_data/new/#{params[:idc]}/2} style="width: 168px"
     |Nueva Entrada de Datos
   br
@@ -26,7 +26,7 @@ div.margin
   
 br
 br
-div.estiloRangoFechas id="formSelectRangeDate"
+.estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
   form action=%{/facebook_data/#{params[:idc]}/2/} method="get"
@@ -525,24 +525,54 @@ section.sectionInformation
               | Guardar
             .result
     .tab-pane.fade id="tabimagenes"
+      .margin
+        button.btn.btn-info onclick="show('addNewImage','btnAddImages')" id="btnAddImages"
+          | Agregar Imagenes
+    
+      .form_nueva_imagen id="addNewImage"
+        button.close onclick="hide('addNewImage', 'btnAddImages')"
+          |x
+        = form_for ImagesSocialNetwork.new, :as => :images, :url => '/social_networks/add_image', :html => { :multipart => true} do | f |
+          center
+            h3 Agregar Imagen
+          br
+          br
+          = f.label "Seleccione la imagen"
+          = f.file_field :attachment, :required => "required", :accept => "image/*"
+          br
+          br
+          = f.label "Comentario Imagen"
+          = f.text_area :comment 
+          br
+          br
+          = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
+          center
+            = f.submit "Guardar", :class => "btn btn-success" 
 
-      = form_for ImagesSocialNetwork.new, :as => :images, :url => '/social_networks/add_image', :html => { :multipart => true} do | f |
-        = f.label "Seleccione la imagen"
-        = f.file_field :attachment, :required => "required"
-        br
-        br
-        = f.label "Comentario Imagen"
-        = f.text_field :comment
-        br
-        br
-        = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
-        = f.submit "Enviar" 
-
-      - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork).all
-      - @images.each do | imagen |
-        - p "Imagen:" + imagen.to_s
-        = imagen.social_network_id
-        img src="#{imagen.attachment.url}"
+      center
+        h3 Imagenes
+      br
+      br
+      .margin
+        - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork).all
+        - @images.each do | imagen |
+          img src="#{imagen.attachment.url}" height="400px" width="800px"
+          br
+          br
+          h3 Comentario
+          br
+          form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id});"
+            textarea id="comment" style="max-width:790px; width: 100%;" rows="10"
+              = imagen.comment
+            button.btn.btn-success style="float:left;"
+              |Actualizar
+            |      
+            a.btn.btn-danger href="/facebook_data/destroy_comment/#{imagen.id}" style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+              |Eliminar
+            |      
+            .result
+          br
+          br
     br
     br
   javascript:
