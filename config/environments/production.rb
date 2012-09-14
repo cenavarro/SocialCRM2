@@ -58,12 +58,24 @@ DemoComentarios::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => 'yourhost.com' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
-  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { :host => 'http://socialcrm2.herokuapp.com/' }
+  # A dummy setup for development - no deliveries, but logged
   config.action_mailer.perform_deliveries = true
-  config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default :charset => "utf-8"
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default :charset => "utf-8i"
+  
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address                  => "smtp.gmail.com",
+    :port                     => 587,
+    :domain                   => 'http://socialcrm2.herokuapp.com/',
+    :user_name                => 'cnavarro@pernix-solutions.com',
+    :password                 => 'cesar0789',
+    :authentication           => 'plain',
+    :tls                      => true,
+    :enable_starttls_auto     => true
+  }
 
 end
