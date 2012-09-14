@@ -3,13 +3,13 @@ class NotificationsController < ApplicationController
   end
 
 
-  require 'base64'
+  require 'digest'
 
   def create
     p "Parametros:" + params.to_json
     user = User.find_by_email(params[:email])
     if !user.nil?
-      token = Base64::encode64(user.email.to_s)
+      token = Digest::SHA1.hexdigest([Time.now, rand].join)
       user.reset_password_token = token
       user.save
       email = Notifier.gmail_message(user,token)
