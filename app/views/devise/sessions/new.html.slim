@@ -46,5 +46,11 @@ table.tableLogin
       .titleFacebook
         h4 O inicia sesion con tu cuenta de Facebook
       .botonLogin
-        button.btn.btn-primary type="button" onclick="loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'validate_user')"
-          | Login con Facebook  
+        a.btn.btn-primary href=user_omniauth_authorize_path(:facebook)
+          | Login con Facebook
+        br
+        br
+        a.btn.btn-primary href=user_omniauth_authorize_path(:google_oauth2)
+          | Login con Google
+      br
+      br

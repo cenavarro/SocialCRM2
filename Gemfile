@@ -10,6 +10,8 @@ gem 'rake', ">= 0.9.2.2"
 gem 'heroku', "= 2.30.2"
 gem "escape_utils", "= 0.2.4"
 gem "paperclip"
+gem "omniauth-google-oauth2"
+gem "omniauth-facebook"
 gem 'simplecov', :require => false, :group => :test
 
 group :assets do

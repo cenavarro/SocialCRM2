@@ -199,6 +199,15 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
+  
+  require "omniauth-google-oauth2"
+  config.omniauth :google_oauth2, "848367069817.apps.googleusercontent.com", "t76qWgMopz5mqLRIyDIygHrv", { access_type: "offline", approval_prompt: ""}
+
+  SOCIAL_NETWORKS_CONFIG  = YAML.load_file("#{Rails.root}/config/social_networks.yml")
+  require "omniauth-facebook"
+  config.omniauth :facebook, SOCIAL_NETWORKS_CONFIG['facebook']['client_id'], SOCIAL_NETWORKS_CONFIG['facebook']['client_secret'], :strategy_class => OmniAuth::Strategies::Facebook
+  #config.omniauth :facebook, SOCIAL_NETWORKS_CONFIG['facebook']['client_id'], SOCIAL_NETWORKS_CONFIG['facebook']['client_secret'], :strategy_class => OmniAuth::Strategies::Facebook
+
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -210,3 +219,4 @@ Devise.setup do |config|
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
 end
+

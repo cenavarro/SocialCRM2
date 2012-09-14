@@ -42,7 +42,7 @@ DemoComentarios::Application.routes.draw do
   get "validate_user/" => "home#validate_user"
   root :to => "home#index"
   
-  devise_for :users
+  devise_for :users, :controllers => {:omniauth_callbacks => "auth"}
 
   get 'users/delete'
   put 'users/destroy'
