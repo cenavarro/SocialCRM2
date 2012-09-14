@@ -1,0 +1,7 @@
+= "Hola,<br><br>".html_safe
+
+= "Este correo es un prueba para restablecer su contraseña.".html_safe
+
+= "Visite el siguiente link para restablecer su contraseña:".html_safe
+
+= "http://socialcrm2.herokuapp.com/notifications/reset_password/".html_safe + @token.to_s.html_safe

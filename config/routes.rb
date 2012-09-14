@@ -1,5 +1,11 @@
 DemoComentarios::Application.routes.draw do
 
+  get "notifications/index"
+
+  post "notifications/create"
+
+  get "notifications/reset_password/:token" => "notifications#reset_password"
+
   resources :twitter_data
 
   get "twitter_data/:idc/:opcion" => "twitter_data#index"

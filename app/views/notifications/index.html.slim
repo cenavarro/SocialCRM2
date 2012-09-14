@@ -1,0 +1,18 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+br
+form action="/notifications/create" method="post"
+  |Restablecer Contraseña
+  br
+  br
+  |Correo:
+  br
+  input type="text" id="email" name="email"
+  br
+  br
+  button
+    |Enviar

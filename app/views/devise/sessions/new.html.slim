@@ -36,8 +36,8 @@ table.tableLogin
           = f.password_field :password, :class => 'pass_input'
         br
         br
-        .links
-          = render :partial => "devise/shared/links"
+        a href="/notifications/index"
+          |Olvido su contraseña?
         br
         br
         = f.submit "Iniciar Sesion", :class => "btn btn-primary"
