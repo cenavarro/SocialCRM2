@@ -5,14 +5,17 @@
         li
           a href="/"
             i.icon-white.icon-home
-            |  Home
+            |  
+            = t :home, :scope => :menu
         li.dropdown
           a.dropdown-toggle href="#" data-toggle="dropdown"
             i.icon-user.icon-white
-            |  Clientes
+            |  Cliente
+            -#= t :title, :scope => :clients
             b.caret
           ul.dropdown-menu
             li
+              - # a href="/social_networks/new"
               a href="#modalSocialNetwork" data-toggle="modal"
                 | Agregar Red Social
             li
@@ -66,11 +69,30 @@
         | Seleccion la red social
     br
     br
-    input type="radio" checked="true" style="margin-left:100px;"
+    input type="radio" name="social_network" value="facebook" checked="true" style="margin-left:100px;"
       |      
       img src="/assets/images/imageFacebook.png" width="100" height="100"
+    br
+    br
+    input type="radio" name="social_network" value="twitter" style="margin-left:100px;"
+      |     
+      img src="/assets/images/twitter_logo.jpg" width="100" height="100"
   .modal-footer
     button.btn data-dismiss="modal" aria-hidden="true"
       |Cerrar
-    button.btn.btn-primary onclick="loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'clients/facebook')"
+    button.btn.btn-primary id="btnNext"
       |Siguiente
+
+javascript:
+
+  jQuery(document).ready(function () {
+    $("#btnNext").click(function(){
+      var opcion = $("input:radio[name='social_network']:checked").val();
+      switch(opcion){
+        case 'facebook':
+          window.location.href = "/clients/facebook";break;
+        case 'twitter':
+          window.location.href = "/social_networks/new";break;
+      }
+    });
+  });

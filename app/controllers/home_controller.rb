@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   require 'open-uri'
 
   def index
+    p "Idioma:" + I18n.locale.to_s
     if !user_signed_in?
       redirect_to "/users/sign_in"
     else
@@ -27,6 +28,17 @@ class HomeController < ApplicationController
       return true
     end
     return false
+  end
+
+  def change_language(language)
+    if language == 'en'
+      I18n.locale = 'en'
+    else
+      I18n.locale = 'es'
+    end
+    respond_to do | format |
+      format.html { redirect_to request.referer}
+    end
   end
 
 end

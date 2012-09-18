@@ -2,18 +2,15 @@ class NotificationsController < ApplicationController
   def index
   end
 
-
   require 'digest'
 
   def create
-    p "Parametros:" + params.to_json
     user = User.find_by_email(params[:email])
     if !user.nil?
       token = Digest::SHA1.hexdigest([Time.now, rand].join)
       user.reset_password_token = token
       user.save
       email = Notifier.gmail_message(user,token)
-      p email
       email.deliver
       flash[:notice] = "Su correo ha sido enviado."
       redirect_to root_path

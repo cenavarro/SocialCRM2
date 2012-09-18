@@ -2,3 +2,12 @@
 #inner_header
   h2.textHeader
     | Social CRM
+  .language
+    | Idioma
+    br
+    a href='#'
+      |EN
+    |  |  
+    a href='#'
+      |ES    
+    - # select :language, :id, [["English", 'en'], ["Espanol", 'es']], :class=> "select_language"

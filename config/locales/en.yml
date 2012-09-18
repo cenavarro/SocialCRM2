@@ -1,6 +1,22 @@
 # Sample localization file for English. Add more files in this directory for other locales.
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
 en:
-  login: "Iniciar Session"
-
+  menu:
+    home: "Home"
+    client:
+      title: "Clients"
+      add_social_network: "Add Social Network"
+      new: "New Client"
+      edit: "Edit/Delete"
+    social_network:
+      title: "Social Networks"
+      new_entry: "Add New Data Entry"
+      list: "List Social Networks"
+      edit_info: "Edit Info Social Newtwork"
+    login: "Login"
+    logout: "Logout"
+    config:
+      title: "Configuration"
+      new_user: "New User"
+      edit_accout: "Edit Account"
+      delete_user: "Delete User" 

@@ -72,7 +72,7 @@ DemoComentarios::Application.configure do
     :port                     => 587,
     :domain                   => 'http://socialcrm2.herokuapp.com/',
     :user_name                => 'cnavarro@pernix-solutions.com',
-    :password                 => 'cesar0789',
+    :password                 => 'PASSWORD',
     :authentication           => 'plain',
     :tls                      => true,
     :enable_starttls_auto     => true

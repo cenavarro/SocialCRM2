@@ -1,15 +1,31 @@
 class FacebookDatum < ActiveRecord::Base
 
-  def self.get_real_fans(datum,isCreate)
-    if !all.first.nil?
-      if isCreate
-        prevRealFans = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first.total_fans
-      else
-        prevRealFans = FacebookDatum.last.total_fans
-      end
-      return (datum.new_fans+prevRealFans)
+  def self.get_total_interactions(datum)
+    (datum.total_clicks_anno + datum.total_interactions)
+  end
+
+  def self.get_total_prints(datum)
+    (datum.total_prints_per_anno + datum.prints)
+  end
+
+  def self.get_total_investment(datum)
+    datum.agency_investment.to_f+datum.new_stock_investment.to_f+datum.anno_investment.to_f
+  end
+
+  def self.get_fan_cost(datum)
+    if !isFirstData?(datum)
+      total_investment = get_total_investment(datum)
+      (total_investment.to_f/datum.new_fans.to_f)
     end
-    return datum.new_fans
+    return 0
+  end
+
+  def self.get_new_fans(datum)
+    if !isFirstData?(datum)
+      old_data = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first
+      return (datum.total_fans - old_data.total_fans) 
+    end
+    return 0
   end
 
   def self.get_fan_growth_percentage(datum)
@@ -21,9 +37,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.get_print_percentage(datum)
-    if !isFirstData?(datum)
-      return getPercentagePrints(datum)
-    end
+    return getPercentagePrints(datum)  if !isFirstData?(datum)
     return nil
   end
 
@@ -36,9 +50,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.get_interactions_percentage(datum)
-    if !isFirstData?(datum)
-      return getPercentageIteractions(datum)
-    end
+    return getPercentageIteractions(datum) if !isFirstData?(datum)
     return nil
   end
 
@@ -50,23 +62,57 @@ class FacebookDatum < ActiveRecord::Base
     return 100
   end
 
-  def self.get_total_investment(datum)
-    datum.agency_investment.to_f+datum.new_stock_investment.to_f+datum.anno_investment.to_f
+  def self.percentage_total_reach(datum) 
+    return getPercentageTotalReach(datum) if !isFirstData?(datum)
+    return nil
   end
-  def self.get_cpm(datum)
-    (datum.agency_investment.to_f+datum.new_stock_investment.to_f)/(datum.prints.to_f+datum.total_interactions)*1000
+
+  def self.getPercentageTotalReach(datum)
+    prevTotalReach = FacebookDatum.where('end_date < ?',datum.start_date.to_date).first.total_reach
+    if prevTotalReach != 0
+      return ((datum.total_reach - prevTotalReach).to_f/prevTotalReach.to_f) * 100
+    end
+    return nil
   end
-  def self.get_fan_cost(datum)
-    (datum.agency_investment.to_f+datum.new_stock_investment.to_f+datum.anno_investment.to_f)/datum.new_fans.to_f
+
+  def self.percentage_change_interactions(datum) 
+    return getPercentageChangeInteractions(datum) if !isFirstData?(datum)
+    return nil
+  end
+
+  def self.getPercentageChangeInteractions(datum)
+    prevData = FacebookDatum.where('end_date < ?',datum.start_date.to_date).first
+    prevTotalInteractions = get_total_interactions(prevData)
+    total_interactions = get_total_interactions(datum)
+    return ((total_interactions - prevTotalInteractions).to_f / prevTotalInteractions.to_f) * 100
+  end
+
+  def self.percentage_change_prints(datum) 
+    return getPercentageChangePrints(datum) if !isFirstData?(datum)
+    return nil
+  end
+
+  def self.getPercentageChangePrints(datum)
+    prevData = FacebookDatum.where('end_date < ?',datum.start_date.to_date).first
+    prevTotalPrints = get_total_prints(prevData)
+    total_prints = get_total_prints(datum)
+    return ((total_prints - prevTotalPrints).to_f / prevTotalPrints.to_f) * 100
+  end
+
+  def self.get_cpm_general(datum)
+    total_investment = get_total_investment(datum)
+    total_prints = get_total_prints(datum)
+    return (total_investment.to_f/total_prints.to_f)/1000.0
+  end
+
+  def self.get_coste_interaction(datum)
+   total_investment = get_total_investment(datum)
+   total_interaction = get_total_interactions(datum)
+   return (total_investment.to_f/total_interaction.to_f) 
   end
 
   def self.isFirstData?(datum)
-    if(datum.id != all.first.id)
-      data_anterior = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first
-      if !data_anterior.nil?
-        return false
-      end
-    end
-    return true
+    before_data = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first
+    return before_data.nil?
   end
 end

@@ -6,31 +6,30 @@ $top_position: 390px;
 $left_position: 80px;
 $space: 400px;
 
-.informacionTwitter{
+.informationTwitter{
 	position:absolute;
 	left:$left_position;
 }
 
-.seguidoresTwitter{
+.comunityTwitter{
 	position:absolute;
 	left: $left_position+$space;
-	top: 80px;
 }
 
-.interactividadTwitter{
+.interactionTwitter{
 	position:absolute;
-	top: ($top_position);
+	top: -140 + ($top_position);
 	left:$left_position;
 }
 
-.inversionTwitter{
+.investmentTwitter{
 	position:absolute;
-	top: $top_position+150;
+	top: $top_position;
 	left:$left_position+$space;
 
 }
 
-.costesTwitter{
+.costsTwitter{
 	position:absolute;
 	top: $top_position+225;
 	left:$left_position+$space;

@@ -6,3 +6,16 @@
  *= require 'home'
  *= require_tree . 
 */
+
+.language{
+  float: right;
+  color: white;
+}
+
+.language a {
+  color: white;
+}
+
+.language select{
+  width:50px;
+}

@@ -4,7 +4,7 @@ javascript:
       jQuery("#new_social_network").validationEngine();
     });
 
-= form_for @social_network, :html => {:class => "well form-inline nuevoCliente"} do |f|
+= form_for @social_network, :html => {:class => "well form-inline formNuevoCliente"} do |f|
   -if @social_network.errors.any?
     #error_explanation
       h2 = "#{pluralize(@social_network.errors.count, "error")} prohibited this social_network from being saved:"
@@ -28,6 +28,11 @@ javascript:
   = f.label "Red Social:  "
   - @info_social_networks = InfoSocialNetwork.all
   = f.select :info_social_network_id, options_for_select(@info_social_networks.collect{|p|[p.name, p.id]},@social_network.info_social_network_id)
+  br
+  br
+  = f.label "Imagen:"
+  br
+  = f.text_field :image, :value => "/assets/images/client.png", :readonly => "readonly" 
   br
   br
   center

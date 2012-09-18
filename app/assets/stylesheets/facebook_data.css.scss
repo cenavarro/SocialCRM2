@@ -75,21 +75,15 @@ $space: 400px;
 	left:$left_position;
 }
 
-.rangoFechas{
+.fans{
   position:absolute;
   left:$left_position+$space;
 }
 
-.fans{
+.interaction{
 	position:absolute;
 	left: $left_position;
-	top:300px;
-}
-
-.interactividad{
-	position:absolute;
-	top: $top_position+100;
-	left:$left_position;
+	top:390px;
 }
 
 .inversion{

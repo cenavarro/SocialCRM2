@@ -1,10 +1,9 @@
 javascript:
     jQuery(document).ready(function(){
-      // binds form submission and fields to the validation engine
       jQuery("#formEntradaDatos").validationEngine();
     });
 
-= form_for @twitter_datum, :html => {:class => "formNuevoDatoTwitter"} do |f|
+= form_for @twitter_datum, :html => {:class => "formNuevoDatoTwitter", :id => "formEntradaDatos"} do |f|
   - if @twitter_datum.errors.any?
     #error_explanation
       h2 = "#{pluralize(@twitter_datum.errors.count, "error")} prohibited this twitter_datum from being saved:"
@@ -12,75 +11,95 @@ javascript:
         - @twitter_datum.errors.full_messages.each do |message|
           li = message
   .form-horizontal.sectionInformation style="height: 850px;"
-    br
-    br
-    .box.informacionTwitter
+    .box.informationTwitter
       | Informacion
       br
       br
-      = f.label "Cliente"
-      - @cliente = Client.find(params[:idc])
-      = f.select :client_id, options_for_select([[@cliente.name,@cliente.id]])
-      br
-      br
+      = f.hidden_field :client_id, :value => params[:idc]
+      - start_date = "01-01-2012"
+      - end_date = "01-01-2012"
+      - start_date = params[:start_date] if params.has_key?(:start_date)
+      - end_date = params[:end_date] if params.has_key?(:end_date)
       = f.label "Fecha Inicio"
-      = f.date_select :start_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date"
+        = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
+        span.add-on
+          i.icon-th
       br
       br
       = f.label "Fecha Final"
-      = f.date_select :end_date, {:use_short_month => 1, :order => [:day, :month, :year]}, {:class => "span1"}
-      br
-      br
-    .box.seguidoresTwitter
-      | Seguidores
-      br
-      br
-      = f.label "# Nuevos Followers"
-      = f.number_field :new_followers
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date"
+        = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
+        span.add-on
+          i.icon-th
+    .box.comunityTwitter
+      | Comunidad
       br
       br
       = f.label "# Followers"
-      = f.number_field :total_followers
+      = f.number_field :total_followers, {:class => "validate[required]"}
       br
       br
       = f.label "Objetivo Followers"
-      = f.number_field :goal_followers
-      br
-      br
-      = f.label "# Tweets durante periodo"
-      = f.number_field :amount_tweets
+      = f.number_field :goal_followers, {:class => "validate[required]"}
       br
       br
       = f.label "# Tweets en total"
-      = f.number_field :total_tweets
-    .box.interactividadTwitter
+      = f.number_field :total_tweets, {:class => "validate[required]"}
+    .box.interactionTwitter
       | Interactividad
       br
       br
       = f.label "# Menciones"
-      = f.number_field :total_mentions
+      = f.number_field :total_mentions, {:class => "validate[required]"}
       br
       br
       = f.label "# Retweets"
-      = f.number_field :ret_tweets
+      = f.number_field :ret_tweets, {:class => "validate[required]"}
       br
       br
       = f.label "Clicks enlaces"
-      = f.number_field :total_clicks
+      = f.number_field :total_clicks, {:class => "validate[required]"}
       br
       br
-      = f.label "Interacciones total"
-      = f.number_field :total_interactions
+      = f.label "Interacciones en twitter ads"
+      = f.number_field :interactions_ads
       br
       br
-    .box.inversionTwitter
+      = f.label "# Impresiones (tweetreach)"
+      = f.number_field :prints
+      br
+      br
+      = f.label "# Impresiones en twitter ads"
+      = f.number_field :prints_ads
+    .box.investmentTwitter
       |Inversiones
       br
       br
       = f.label "Inversion Agencia"
-      = f.text_field :agency_investment
+      = f.text_field :agency_investment, {:class => "validate[required]"}
+      br
+      br
+      = f.label "Inversion Nuevas Acciones "
+      = f.text_field :investment_actions, {:class => "validate[required]"}
+      br
+      br
+      = f.label "Inversion anuncios twitter ads"
+      = f.text_field :investment_ads, { :class => "validate[required]"}
+      br
+      br
+      = f.label "Cost per engagement twitter ads"
+      = f.text_field :cost_twitter_ads, {:class => "validate[required]"}
     br
     br
     = f.submit 'Guardar Datos', {:class => "btn btn-success saveTwitter", :onclick => "return confirm('Estas seguro?')"}
     |     
     = link_to 'Regresar', %{#{twitter_data_path}/#{params[:idc]}/1}, :class => "btn btn-inverse backTwitter"
+
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#start_date").datepicker();
+      jQuery("#end_date").datepicker();
+    });
+
+

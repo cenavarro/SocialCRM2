@@ -1,90 +1,104 @@
 class TwitterDatum < ActiveRecord::Base
 	belongs_to :client
-	
-	def self.get_followers_growth(datum)
-		diff_followers = isZero(datum.total_followers-datum.new_followers)
-		(datum.new_followers.to_f/diff_followers.to_f)*100
-	end
 
-	def self.get_diff_mentions(datum)
-		if !isFirstData?(datum)
-			return getPercentDiffMentions(datum)
-		end
-		return nil
-	end
+  def self.get_new_followers(datum)
+    if !isFirstData?(datum)
+      old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
+      return old_data.total_followers + datum.total_followers
+    end
+    return 0
+  end
 
-	def self.getPercentDiffMentions(datum)
-		prevDataMentions = TwitterDatum.where('id < ?',datum.id).last.total_mentions
-		if prevDataMentions != 0
-			return ((datum.total_mentions-prevDataMentions).to_f/prevDataMentions.to_f)*100		
-		end
-		return 100.0
-	end
+  def self.get_period_tweets(datum)
+    if !isFirstData?(datum)
+      old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
+      return (old_data.total_tweets + datum.total_tweets)
+    end
+    return 0
+  end
 
-	def self.get_diff_retweets(datum)
-		if !isFirstData?(datum)
-			return getPercentDiffRetweets(datum)
-		end
-		return nil
-	end
+  def self.get_growth_followers(datum)
+    if !isFirstData?(datum)
+      old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
+      return (datum.new_followers.to_f/old_data.total_followers.to_f)
+    end
+    return 0
+  end
 
-	def self.getPercentDiffRetweets(datum)
-		prevDataRetweets = TwitterDatum.where('id < ?',datum.id).last.ret_tweets
-		if prevDataRetweets != 0
-		  return ((datum.ret_tweets-prevDataRetweets).to_f/prevDataRetweets.to_f)*100
-		end
-		return 100.0
-	end
+  def self.get_change_mentions(datum)
+    if !isFirstData?(datum)
+      old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
+      if old_data.total_mentions != 0
+        return ((datum.total_mentions - old_data.total_mentions).to_f/old_data.total_mentions.to_f)
+      end
+    end
+    return 0
+  end
 
-	def self.get_diff_clicks(datum)
-		if !isFirstData?(datum)
-			return getPercentDiffClicks(datum)
-		end
-		return nil
-	end
+  def self.get_change_retweets(datum)
+    if !isFirstData?(datum)
+      old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
+      if old_data.ret_tweets != 0
+        return ((datum.ret_tweets - old_data.ret_tweets).to_f/old_data.ret_tweets.to_f)
+      end
+    end
+    return 0
+  end
 
-	def self.getPercentDiffClicks(datum)
-		prevDataClicks = TwitterDatum.where('id < ?',datum.id).last.total_clicks
-		if prevDataClicks != 0
-		  return ((datum.total_clicks-prevDataClicks).to_f/prevDataClicks.to_f)*100
-		end
-		return 100.0
-	end
+  def self.get_change_clics(datum)
+    if !isFirstData?(datum)
+      old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
+      if old_data.total_clicks != 0
+        return ((datum.total_clicks - old_data.total_clicks).to_f/old_data.total_clicks.to_f)
+      end
+    end
+    return 0
+  end
 
-	def self.get_diff_total_iteractions(datum)
-		if !isFirstData?(datum)
-			return getPercentDiffIte(datum)
-		end
-		return nil
-	end
+  def self.get_change_interactions_ads(datum)
+    if !isFirstData?(datum)
+      old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
+      if old_data.interactions_ads != 0
+        return ((datum.interactions_ads - old_data.interactions_ads).to_f/old_data.interactions_ads.to_f)
+      end
+    end
+    return 0
+  end
 
-	def self.getPercentDiffIte(datum)
-		prevDataIterations = TwitterDatum.where('id < ?',datum.id).last.total_interactions
-		if prevDataIterations != 0
-		  return ((datum.total_interactions-prevDataIterations).to_f/prevDataIterations.to_f)*100
-		end
-		return 100.0
-	end
+  def self.get_total_interactions(datum)
+    (datum.total_mentions + datum.ret_tweets + datum.total_clicks + datum.interactions_ads)
+  end
+
+  def self.get_change_interactions(datum)
+    if !isFirstData?(datum)
+      old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
+      if old_data.total_interactions != 0
+        return ((datum.total_interactions - old_data.total_interactions).to_f/old_data.total_interactions.to_f)
+      end
+    end
+    return 0
+  end
+
+  def self.get_total_prints(datum)
+    (datum.prints + datum.prints_ads)
+  end
+
+  def self.get_change_prints(datum)
+    if !isFirstData?(datum)
+      old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
+      if old_data.total_prints != 0
+        return ((datum.total_prints - old_data.total_prints).to_f/old_data.total_prints.to_f)
+      end
+    end
+    return 0
+  end
 
 	def self.isFirstData?(datum)
-		if(datum.id == all.first.id)
+    before_data = TwitterDatum.where('end_date < ?',datum.start_date.to_date).first
+		if(before_data == nil)
 			return true
 		end
 		return false
-	end
-
-	def self.isZero(value)
-		if value == 0 
-			return 1
-		end
-		return value
-	end
-
-	def self.get_cost_follower(datum)
-		if datum.new_followers != 0
-			return (datum.agency_investment.to_f/datum.new_followers.to_f) 
-		end
-		return 0
 	end
 
 end

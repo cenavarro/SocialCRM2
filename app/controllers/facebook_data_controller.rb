@@ -6,16 +6,19 @@ class FacebookDataController < ApplicationController
   def createCharData
     @dates = @facebook_data.collect { |fd| "'" + fd.start_date.mday().to_s + "-" + fd.end_date.mday().to_s + " " + fd.end_date.strftime('%B') + "'" }.join(', ')
     @newFans = @facebook_data.collect(&:new_fans).join(', ')
-    @realFans = @facebook_data.collect(&:total_fans).join(', ')
-    @goalFans = @facebook_data.collect(&:goal_fans).join(', ')
-    @prints = @facebook_data.collect(&:prints).join(', ')
-    @totalInteractions = @facebook_data.collect(&:total_interactions).join(', ')
-    @totalPrints = @facebook_data.collect(&:total_prints_per_anno).join(', ')
     @totalFans = @facebook_data.collect(&:total_fans).join(', ')
+    @goalFans = @facebook_data.collect(&:goal_fans).join(', ')
+    @interactions = @facebook_data.collect(&:total_interactions).join(', ')
+    @clics_anno = @facebook_data.collect(&:total_clicks_anno).join(', ')
+    @total_interactions = @facebook_data.collect { |fd| FacebookDatum.get_total_interactions(fd)}.join(', ')
+    @newFans = @facebook_data.collect(&:new_fans).join(', ')
     @investment = @facebook_data.collect { |fd| FacebookDatum.get_total_investment(fd) }.join(', ')
-    @cpm = @facebook_data.collect { |fd| FacebookDatum.get_cpm(fd) }.join(', ')
-    @crt_anno = @facebook_data.collect(&:ctr_anno).join(', ')
+    @ctr_anno = @facebook_data.collect(&:ctr_anno).join(', ')
+    @cpc_anno = @facebook_data.collect(&:cpc_anno).join(', ')
+    @coste_interaction = @facebook_data.collect { |fd| FacebookDatum.get_coste_interaction(fd) }.join(', ')
     @cpm_anno = @facebook_data.collect(&:cpm_anno).join(', ')
+    @cpm_general = @facebook_data.collect {|fd| FacebookDatum.get_cpm_general(fd)}.join(', ')
+    @coste_fan = @facebook_data.collect {|fd| FacebookDatum.get_fan_cost(fd)}.join(', ')
   end
 
   def index
@@ -109,7 +112,7 @@ class FacebookDataController < ApplicationController
 
   def create
     @facebook_datum = FacebookDatum.new(params[:facebook_datum])
-    @facebook_datum.total_fans = FacebookDatum.get_real_fans(@facebook_datum,true)
+    @facebook_datum.new_fans = FacebookDatum.get_new_fans(@facebook_datum)
     
     respond_to do |format|
       if @facebook_datum.save
