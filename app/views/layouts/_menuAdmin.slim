@@ -90,7 +90,7 @@ javascript:
       var opcion = $("input:radio[name='social_network']:checked").val();
       switch(opcion){
         case 'facebook':
-          window.location.href = "/clients/facebook";break;
+          loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'clients/facebook'); break;
         case 'twitter':
           window.location.href = "/social_networks/new";break;
       }
