@@ -6,44 +6,47 @@
 br
 
 - @twitter_info = InfoSocialNetwork.find(2)
-- @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 2).all
+- @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 2)[0]
 
-div.margin
+.margin
   center
     h1
-      = @socialNetwork[0].name
+      = @socialNetwork.name
     br
     - @image = ("<img class='content' src='/assets/images/"+@twitter_info.image+"' alt='Twitter Logo' height='100' width='300'>").html_safe
     = @image
 br
-div.margin
+br
+
+.margin
   a.btn.btn-info href=%{/twitter_data/new/#{params[:idc]}/2} style="width: 168px"
     |Nueva Entrada de Datos
   br
   br
   button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
-
 br
 br
-div.estiloRangoFechas id="formSelectRangeDate"
+.estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
-  form action=%{/twitter_data/#{params[:idc]}/2/}
+  form action=%{/twitter_data/#{params[:idc]}/2/} method="get"
     center
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio: 
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
     br
     br
-    = date_select("fi", "fi", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
-    br
-    br
-    |Fecha Final: 
-    br
-    br
-    = date_select("ff", "ff", {:use_short_month => 1,:order => [:day, :month, :year]},{:class => "span1"})
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
     br
     center
       input.btn.btn-primary type="submit" value="Obtener Datos"
@@ -201,268 +204,347 @@ script
   |});});});
 
 section.sectionInformation
-  section.sectionTable
-    table.table.table-bordered id="tablaInformacion"
-      thead
-        tr.headerTable
-          td.hideCell
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.start_date.mday()
-              |-
-              = twitter_datum.end_date.mday()
-              |  
-              = twitter_datum.end_date.strftime("%B")
-      tbody
-        tr.titlesRows
-          td colspan=100
-            | Comunidad 
-        tr
-          td.estiloCelda
-            |# Nuevos Followers
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.new_followers
-        tr
-          td
-            |# Followers
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.total_followers
-        tr
-          td
-            | % Crecimiento
-          - @twitter_data.each do |twitter_datum|
-            - percentFollowers = TwitterDatum.get_growth_followers(twitter_datum)
-            - if percentFollowers >= 0.0 
-              td.positiveValue
-                = %{#{percentFollowers.round(2)}%}
-            - else
-              td.negativeValue
-                = %{#{percentFollowers.round(2)}%}
-        tr
-          td
-            | Objetivo Followers
-          - @twitter_data.each do |twitter_datum|
-            - if twitter_datum.goal_followers.nil?
-              td
-                | - 
-            - else
-              td
-                = twitter_datum.goal_followers
-        tr
-          td
-            | # numero tweets en total
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.total_tweets
-        tr
-          td
-            | # tweets periodo
-          - @twitter_data.each do | datum |
-            td
-              = TwitterDatum.get_period_tweets(datum)
-        tr.titlesRows
-          td colspan=100
-            |Interactividad
-        tr
-          td
-            | # Menciones
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.total_mentions
-        tr
-          td
-            | % cambio en mensiones
-          - @twitter_data.each do |twitter_datum|
-            - percentMentions = TwitterDatum.get_change_mentions(twitter_datum)
-            - if !percentMentions.nil?
-              - if percentMentions >= 0.0 
-                td.positiveValue
-                  = %{#{percentMentions.round(2)}%}
-              - else
-                td.negativeValue
-                  = %{#{percentMentions.round(2)}%}
-            - else
-              td.positiveValue
-                | 0%
-        tr
-          td
-            | # Retweets
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.ret_tweets
-        tr
-          td
-            | % cambio en retweets
-          - @twitter_data.each do |twitter_datum|
-            - percentRetweets = TwitterDatum.get_change_retweets(twitter_datum)
-            - if !percentRetweets.nil?
-              - if percentRetweets >= 0.0 
-                td.positiveValue
-                  = %{#{percentRetweets.round(2)}%}
-              - else
-                td.negativeValue
-                  = %{#{percentRetweets.round(2)}%}
-            - else
-              td.positiveValue
-                | 0%
-        tr
-          td
-            | Clicks enlaces
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.total_clicks
-        tr
-          td
-            | % cambio en clics
-          - @twitter_data.each do |twitter_datum|
-            - percentClicks = TwitterDatum.get_change_clics(twitter_datum)
-            - if !percentClicks.nil?
-              - if percentClicks >= 0.0 
-                td.positiveValue
-                  = %{#{percentClicks.round(2)}%}
-              - else
-                td.negativeValue
-                  = %{#{percentClicks.round(2)}%}
-            - else
-              td.positiveValue
-                | 0%
-        tr
-          td
-            | Interacciones en twitter ads
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.interactions_ads
-        tr
-          td
-            | % cambio interacciones en twitter ads
-          - @twitter_data.each do |twitter_datum|
-            - percentInteracAds = TwitterDatum.get_change_interactions_ads(twitter_datum)
-            - if !percentInteracAds.nil?
-              - if percentInteracAds >= 0.0 
-                td.positiveValue
-                  = %{#{percentInteracAds.round(2)}%}
-              - else
-                td.negativeValue
-                  = %{#{percentInteracAds.round(2)}%}
-            - else
-              td.positiveValue
-                | 0%
-        tr
-          td
-            | Interacciones en Total
-          - @twitter_data.each do | datum |
-            td
-              = TwitterDatum.get_total_interactions(datum)
-        tr
-          td
-            | % cambio en interacciones
-          - @twitter_data.each do |twitter_datum|
-            - percentIteractions = TwitterDatum.get_change_interactions(twitter_datum)
-            - if !percentIteractions.nil?
-              - if percentIteractions >= 0.0 
-                td.positiveValue
-                  = %{#{percentIteractions.round(2)}%}
-              - else
-                td.negativeValue
-                  = %{#{percentIteractions.round(2)}%}
-            - else
-              td.positiveValue
-                | 0%
-        tr
-          td
-            | # impresiones (tweetreach)
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.prints
-        tr
-          td
-            | # impresiones en twitter ads
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.prints_ads
-        tr
-          td 
-            | impresiones en total
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.prints_ads
-        tr
-          td
-            | % cambio en impresiones
-          - @twitter_data.each do | datum |
-            - percentPrints = TwitterDatum.get_change_prints(datum)
-            - if !percentPrints.nil?
-              - if percentPrints >= 0.0 
-                td.positiveValue
-                  = %{#{percentPrints.round(2)}%}
-              - else
-                td.negativeValue
-                  = %{#{percentPrints.round(2)}%}
-            - else
-              td.positiveValue
-                | 0%
-        tr.titlesRows
-          td colspan=100
-            | Inversion
-        tr
-          td
-            | Inversion Agencia
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.agency_investment
-        tr
-          td
-            | Inversion nuevas acciones
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.investment_actions
-        tr
-          td
-            | Inversion anuncios twitter ads
-        tr
-          td
-            | Inversion Total
-        tr.titlesRows
-          td colspan=100
-            | Costes
-        tr
-          td
-            | Cost per engagement twitter ads
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.cost_twitter_ads
-        tr
-          td
-            | Coste por mil impresiones
-        tr
-          td
-            | Coste por interaccion
-        tr
-          td
-            | Costes por follower
-          - @twitter_data.each do |twitter_datum|
-            td
-              = twitter_datum.cost_follower.round(2)
-        tr
-          td.nilValue
-            |Opciones
-          -@twitter_data.each do |twitter_datum|
-            td.celdaOpciones
-              a.btn.btn-info href=%{/twitter_data/#{twitter_datum.id}/edit/#{params[:idc]}} id=%{edit_#{twitter_datum.id}}
-                i.icon-pencil.icon-white
-              |  
-              a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{twitter_datum.id}} href=%{/twitter_data/#{twitter_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
-                i.icon-trash.icon-white
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          |Otros datos
 
-  section.sectionGraphics id="seccionGraficos"
-    div.estilo_graficos
-      #container_comunidad
-    div.estilo_graficos
-      #container_interacciones
-    div.estilo_graficos
-      #container_inversion
-    div.estilo_graficos
-      #container_costes
-br
+  br
+  br
+
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.start_date.mday()
+                  |-
+                  = twitter_datum.end_date.mday()
+                  |  
+                  = twitter_datum.end_date.strftime("%B")
+          tbody
+            tr.titlesRows
+              td colspan=100
+                | Comunidad 
+            tr
+              td.estiloCelda
+                |# Nuevos Followers
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.new_followers
+            tr
+              td
+                |# Followers
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.total_followers
+            tr
+              td
+                | % Crecimiento
+              - @twitter_data.each do |twitter_datum|
+                - percentFollowers = TwitterDatum.get_growth_followers(twitter_datum)
+                - if percentFollowers >= 0.0 
+                  td.positiveValue
+                    = %{#{percentFollowers.round(2)}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentFollowers.round(2)}%}
+            tr
+              td
+                | Objetivo Followers
+              - @twitter_data.each do |twitter_datum|
+                - if twitter_datum.goal_followers.nil?
+                  td
+                    | - 
+                - else
+                  td
+                    = twitter_datum.goal_followers
+            tr
+              td
+                | # numero tweets en total
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.total_tweets
+            tr
+              td
+                | # tweets periodo
+              - @twitter_data.each do | datum |
+                td
+                  = TwitterDatum.get_period_tweets(datum)
+            tr.titlesRows
+              td colspan=100
+                |Interactividad
+            tr
+              td
+                | # Menciones
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.total_mentions
+            tr
+              td
+                | % cambio en mensiones
+              - @twitter_data.each do |twitter_datum|
+                - percentMentions = TwitterDatum.get_change_mentions(twitter_datum)
+                - if !percentMentions.nil?
+                  - if percentMentions >= 0.0 
+                    td.positiveValue
+                      = %{#{percentMentions.round(2)}%}
+                  - else
+                    td.negativeValue
+                      = %{#{percentMentions.round(2)}%}
+                - else
+                  td.positiveValue
+                    | 0%
+            tr
+              td
+                | # Retweets
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.ret_tweets
+            tr
+              td
+                | % cambio en retweets
+              - @twitter_data.each do |twitter_datum|
+                - percentRetweets = TwitterDatum.get_change_retweets(twitter_datum)
+                - if !percentRetweets.nil?
+                  - if percentRetweets >= 0.0 
+                    td.positiveValue
+                      = %{#{percentRetweets.round(2)}%}
+                  - else
+                    td.negativeValue
+                      = %{#{percentRetweets.round(2)}%}
+                - else
+                  td.positiveValue
+                    | 0%
+            tr
+              td
+                | Clicks enlaces
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.total_clicks
+            tr
+              td
+                | % cambio en clics
+              - @twitter_data.each do |twitter_datum|
+                - percentClicks = TwitterDatum.get_change_clics(twitter_datum)
+                - if !percentClicks.nil?
+                  - if percentClicks >= 0.0 
+                    td.positiveValue
+                      = %{#{percentClicks.round(2)}%}
+                  - else
+                    td.negativeValue
+                      = %{#{percentClicks.round(2)}%}
+                - else
+                  td.positiveValue
+                    | 0%
+            tr
+              td
+                | Interacciones en twitter ads
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.interactions_ads
+            tr
+              td
+                | % cambio interacciones en twitter ads
+              - @twitter_data.each do |twitter_datum|
+                - percentInteracAds = TwitterDatum.get_change_interactions_ads(twitter_datum)
+                - if !percentInteracAds.nil?
+                  - if percentInteracAds >= 0.0 
+                    td.positiveValue
+                      = %{#{percentInteracAds.round(2)}%}
+                  - else
+                    td.negativeValue
+                      = %{#{percentInteracAds.round(2)}%}
+                - else
+                  td.positiveValue
+                    | 0%
+            tr
+              td
+                | Interacciones en Total
+              - @twitter_data.each do | datum |
+                td
+                  = TwitterDatum.get_total_interactions(datum)
+            tr
+              td
+                | % cambio en interacciones
+              - @twitter_data.each do |twitter_datum|
+                - percentIteractions = TwitterDatum.get_change_interactions(twitter_datum)
+                - if !percentIteractions.nil?
+                  - if percentIteractions >= 0.0 
+                    td.positiveValue
+                      = %{#{percentIteractions.round(2)}%}
+                  - else
+                    td.negativeValue
+                      = %{#{percentIteractions.round(2)}%}
+                - else
+                  td.positiveValue
+                    | 0%
+            tr
+              td
+                | # impresiones (tweetreach)
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.prints
+            tr
+              td
+                | # impresiones en twitter ads
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.prints_ads
+            tr
+              td 
+                | impresiones en total
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.prints_ads
+            tr
+              td
+                | % cambio en impresiones
+              - @twitter_data.each do | datum |
+                - percentPrints = TwitterDatum.get_change_prints(datum)
+                - if !percentPrints.nil?
+                  - if percentPrints >= 0.0 
+                    td.positiveValue
+                      = %{#{percentPrints.round(2)}%}
+                  - else
+                    td.negativeValue
+                      = %{#{percentPrints.round(2)}%}
+                - else
+                  td.positiveValue
+                    | 0%
+            tr.titlesRows
+              td colspan=100
+                | Inversion
+            tr
+              td
+                | Inversion Agencia
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.agency_investment
+            tr
+              td
+                | Inversion nuevas acciones
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.investment_actions
+            tr
+              td
+                | Inversion anuncios twitter ads
+            tr
+              td
+                | Inversion Total
+            tr.titlesRows
+              td colspan=100
+                | Costes
+            tr
+              td
+                | Cost per engagement twitter ads
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.cost_twitter_ads
+            tr
+              td
+                | Coste por mil impresiones
+            tr
+              td
+                | Coste por interaccion
+            tr
+              td
+                | Costes por follower
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.cost_follower.round(2)
+            tr
+              td.nilValue
+                |Opciones
+              -@twitter_data.each do |twitter_datum|
+                td.celdaOpciones
+                  a.btn.btn-info href=%{/twitter_data/#{twitter_datum.id}/edit/#{params[:idc]}} id=%{edit_#{twitter_datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{twitter_datum.id}} href=%{/twitter_data/#{twitter_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        div.estilo_graficos
+          #container_comunidad
+        div.estilo_graficos
+          #container_interacciones
+        div.estilo_graficos
+          #container_inversion
+        div.estilo_graficos
+          #container_costes
+
+
+    .tab-pane.fade id="tabothers"
+        .margin
+          button.btn.btn-info onclick="show('addNewImage','btnAddImages')" id="btnAddImages"
+            | Agregar Imagenes
+      
+        .form_nueva_imagen id="addNewImage"
+          button.close onclick="hide('addNewImage', 'btnAddImages')"
+            |x
+          = form_for ImagesSocialNetwork.new, :as => :images, :url => '/social_networks/add_image', :html => { :multipart => true} do | f |
+            center
+              h3 Agregar Imagen
+            br
+            br
+            = f.label "Titulo:"
+            = f.text_field :title, :required => "required"
+            br
+            br
+            = f.label "Seleccione la imagen"
+            = f.file_field :attachment, :required => "required", :accept => "image/*"
+            br
+            br
+            = f.label "Comentario Imagen"
+            = f.text_area :comment 
+            br
+            br
+            = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
+            center
+              = f.submit "Guardar", :class => "btn btn-success" 
+
+        br
+        br
+        .margin
+          - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork).all
+          - @images.each do | imagen |
+            br
+            br
+            h3
+              = imagen.title
+            br
+            br
+            img src="#{imagen.attachment.url}" height="400px" width="800px"
+            br
+            br
+            h4 Comentario
+            br
+            form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id});"
+              textarea id="comment" style="max-width:790px; width: 100%;" rows="10"
+                = imagen.comment
+              button.btn.btn-success style="float:left;"
+                |Actualizar
+              |      
+              a.btn.btn-danger href="/facebook_data/destroy_comment/#{imagen.id}" style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+                |Eliminar
+              |      
+              .result
+  javascript:
+      jQuery(document).ready(function(){
+        jQuery("#start_date_picker").datepicker();
+        jQuery("#end_date_picker").datepicker();
+      });

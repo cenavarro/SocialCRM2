@@ -57,10 +57,20 @@ script
   | chart: {renderTo: 'container_fans', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Comunidad', x: -20 },
   | xAxis: {categories: [ #{@dates} ] },
-  | yAxis: {title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
   | series: [{name: 'Nuevos Fans', data: [ #{@newFans} ]}, {name: 'Fans Totales',data: [ #{@totalFans} ]}, {name: 'Objetivo Fans',data: [ #{@goalFans}]}]
+  | });});});
+
+  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
+  | chart: {renderTo: 'container_reach', type: 'line', marginRight: 130, marginBottom: 45 },
+  | title: {text: 'Alcance', x: -20 },
+  | xAxis: {categories: [ #{@dates} ] },
+  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
+  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
+  | series: [{name: '# impresiones', data: [ #{@prints} ]}, {name: 'Alcance Total',data: [ #{@total_reach} ]}, {name: 'Alcance Potencial',data: [ #{@potencial_reach}]}]
   | });});});
 
 
@@ -68,7 +78,7 @@ script
   | chart: {renderTo: 'container_interactivity', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Interactividad', x: -20 },
   | xAxis: {categories: [ #{@dates} ] },
-  | yAxis: {title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
   | series: [{name: '# Interacciones', data: [ #{@interactions} ]}, {name: '# clics Anuncios',data: [ #{@clics_anno} ]}, {name: 'Interaccion Total Marca Plataforma',data: [ #{@total_interactions} ]}]
@@ -78,7 +88,7 @@ script
   | chart: {renderTo: 'container_investment_growth', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Inversiones', x: -20 },
   | xAxis: {categories: [ #{@dates} ] },
-  | yAxis: {title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
   | series: [{name: '# Nuevos Fans', data: [ #{@newFans} ]}, {name: 'Inversion total',data: [ #{@investment} ]}]
@@ -88,7 +98,7 @@ script
   | chart: {renderTo: 'container_costs', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Costes', x: -20 },
   | xAxis: {categories: [ #{@dates} ] },
-  | yAxis: {title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
   | series: [{name: 'CTR Anuncios', data: [ #{@ctr_anno} ]}, {name: 'CPC anuncios',data: [ #{@cpc_anno} ]}, {name: 'Coste por iteracion',data: [ #{@coste_interactions} ]},{ name: 'CPM Anuncios', data:[ #{@cpm_anno}]}, { name: 'CPM General', data:[#{@cpm_general}]}, { name: 'Coste por Fan', data:[#{@coste_fan}]}]
@@ -407,6 +417,21 @@ section.sectionInformation
 
             textarea rows=10 id="comment"
               = @comments.interaction
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        
+        .estilo_graficos
+          #container_reach
+        .comment
+          .title
+            h4
+              | Comentario Grafico Alcance
+          br
+          form  id="reach" onsubmit="return saveComment('#reach',#{@socialNetwork.id},6);"
+            textarea rows=10 id="comment"
+              = @comments.reach
             br
             button.btn.btn-success
               | Guardar

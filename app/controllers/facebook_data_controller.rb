@@ -19,6 +19,9 @@ class FacebookDataController < ApplicationController
     @cpm_anno = @facebook_data.collect(&:cpm_anno).join(', ')
     @cpm_general = @facebook_data.collect {|fd| FacebookDatum.get_cpm_general(fd)}.join(', ')
     @coste_fan = @facebook_data.collect {|fd| FacebookDatum.get_fan_cost(fd)}.join(', ')
+    @prints = @facebook_data.collect(&:total_prints).join(', ')
+    @total_reach = @facebook_data.collect(&:total_reach).join(', ')
+    @potencial_reach = @facebook_data.collect(&:potential_reach).join(', ')
   end
 
   def index
@@ -164,6 +167,8 @@ class FacebookDataController < ApplicationController
         comment.investment = params[:comment]
       when 5
         comment.cost = params[:comment]
+      when 6
+        comment.reach = params[:comment]
     end
     if comment.save
         mensaje =  "Comentario Guardado!"

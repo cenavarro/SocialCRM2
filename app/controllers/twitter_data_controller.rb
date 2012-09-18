@@ -6,8 +6,8 @@ class TwitterDataController < ApplicationController
       if !getDataDateRange?
         @twitter_data = TwitterDatum.order("start_date ASC")
       else
-        fechaInicio = Date.new(params[:fi]['fi(1i)'].to_i,params[:fi]['fi(2i)'].to_i,params[:fi]['fi(3i)'].to_i)
-        fechaFinal = Date.new(params[:ff]['ff(1i)'].to_i,params[:ff]['ff(2i)'].to_i,params[:ff]['ff(3i)'].to_i)
+        fechaInicio = params[:start_date].to_date
+        fechaFinal = params[:end_date].to_date
         @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,params[:idc].to_i]).order("start_date ASC")
         @dates = ""
         @twitter_data.each do |twitter_datum|
