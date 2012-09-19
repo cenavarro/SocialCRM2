@@ -28,6 +28,13 @@ class SocialNetworksController < ApplicationController
 
     respond_to do |format|
       if @social_network.save
+        case @social_network.info_social_network_id
+          when 1
+            comments = FacebookComment.new(:social_network_id => @social_network.id)
+          when 2
+            comments = TwitterComment.new(:social_network_id => @social_network.id)
+        end
+        comments.save
         format.html { redirect_to social_networks_path, notice: 'La Red Social se creo satisfactoriamente.' }
       else
         format.html { render action: "new" }
@@ -73,6 +80,32 @@ class SocialNetworksController < ApplicationController
     respond_to do | format |
       format.html {redirect_to request.referer, notice: mensaje}
       format.json {head :ok}
+    end
+  end
+
+  def update_comment_image
+    image = ImagesSocialNetwork.find(params[:id_image].to_i)
+    image.comment = params[:comment].to_s
+    if image.save
+      mensaje = "Comentario Actualizado!"
+    else
+      mensaje = "El comentario no se pudo actualizar. Error:"
+    end
+
+    respond_to do | format |
+      format.json { render json: mensaje.to_json }
+    end
+  end
+
+  def destroy_image
+    image = ImagesSocialNetwork.find(params[:id])
+    if image.destroy
+      mensaje = "La imagen se elimino correctamente!"
+    else
+      mensaje = "La imagen no se pudo eliminar!"
+    end
+    respond_to do | format |
+      format.html { redirect_to request.referer, notice: mensaje }
     end
   end
 end

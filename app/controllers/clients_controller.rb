@@ -134,7 +134,12 @@ class ClientsController < ApplicationController
   def insert_social_network
     social_network = SocialNetwork.new(:name => params[:name], :client_id => params[:client_id], :info_social_network_id => params[:info_social], :image => params[:image], :id_object => params[:object_id])
     if social_network.save
-      comments = FacebookComment.new(:social_network_id => social_network.id)
+      case social_network.info_social_network_id
+        when 1
+          comments = FacebookComment.new(:social_network_id => social_network.id)
+        when 2
+          comments = TwitterComments.new(:social_network_id => social_network.id)
+      end
       comments.save
       respond_to do | format |
         format.html {redirect_to "/", notice: "La red social se asocio correctamente." }

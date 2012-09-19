@@ -1,6 +1,24 @@
 class TwitterDataController < ApplicationController
   before_filter :authenticate_user!
 
+
+  def createChartData
+    @dates = @twitter_data.collect { |td| "'" + td.start_date.mday().to_s + "-" + td.end_date.mday().to_s + " " + td.end_date.strftime('%B') + "'" }.join(', ')
+    @new_followers = @twitter_data.collect(&:new_followers).join(', ')
+    @total_followers = @twitter_data.collect(&:total_followers).join(', ')
+    @goal_followers = @twitter_data.collect(&:goal_followers).join(', ')
+    @mentions = @twitter_data.collect(&:total_mentions).join(', ')
+    @retweets = @twitter_data.collect(&:ret_tweets).join(', ')
+    @clics = @twitter_data.collect(&:total_clicks).join(', ')
+    @interactions_ads = @twitter_data.collect(&:interactions_ads).join(', ')
+    @total_interactions = @twitter_data.collect(&:total_interactions).join(', ')
+    @total_investment = @twitter_data.collect { |td| TwitterDatum.get_total_investment(td)}.join(', ')
+    @cost_per_engagement = @twitter_data.collect(&:cost_twitter_ads).join(', ')
+    @cost_follower = @twitter_data.collect {|td| TwitterDatum.get_cost_follower(td)}.join(', ')
+    @cost_prints = @twitter_data.collect {|td| TwitterDatum.get_cost_per_prints(td)}.join(', ')
+    @cost_interactions = @twitter_data.collect {|td| TwitterDatum.get_cost_per_interaction(td)}.join(', ')
+  end
+
   def index
     if existParamIdClient?
       if !getDataDateRange?
@@ -9,11 +27,9 @@ class TwitterDataController < ApplicationController
         fechaInicio = params[:start_date].to_date
         fechaFinal = params[:end_date].to_date
         @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,params[:idc].to_i]).order("start_date ASC")
-        @dates = ""
-        @twitter_data.each do |twitter_datum|
-          @dates = @dates + twitter_datum.start_date.mday().to_s + " al " + twitter_datum.end_date.mday().to_s + " de " + twitter_datum.end_date.strftime('%B') + ","
-        end
       end
+
+      createChartData
 
       respond_to do |format|
         format.html
@@ -88,6 +104,30 @@ class TwitterDataController < ApplicationController
     respond_to do |format|
       format.html { redirect_to %{/twitter_data/#{@client_id}/1}, notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
+    end
+  end
+
+  def save_comment
+    comment = TwitterComment.where(:social_network_id => params[:social_network].to_i)[0]
+    case params[:id_comment].to_i
+      when 1
+        comment.table = params[:comment]
+      when 2
+        comment.comunity = params[:comment]
+      when 3
+        comment.interaction = params[:comment]
+      when 4
+        comment.investment = params[:comment]
+      when 5
+        comment.cost = params[:comment]
+    end
+    if comment.save
+        mensaje =  "Comentario Guardado!"
+    else
+        mensaje =  "El comentario no se pudo almacenar!"
+    end
+    respond_to do | format |
+      format.json { render json: mensaje.to_json }
     end
   end
 

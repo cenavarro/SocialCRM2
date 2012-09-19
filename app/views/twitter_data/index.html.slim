@@ -7,6 +7,7 @@ br
 
 - @twitter_info = InfoSocialNetwork.find(2)
 - @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 2)[0]
+- @comments = TwitterComment.where(:social_network_id => @socialNetwork.id)[0]
 
 .margin
   center
@@ -56,152 +57,45 @@ script
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
   | chart: {renderTo: 'container_comunidad', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Comunidad', x: -20 },
-  | xAxis: {categories: [
-  - @twitter_data.each do |twitter_datum|
-    | '
-    = twitter_datum.start_date.mday()
-    |-
-    = twitter_datum.end_date.mday()
-    |  
-    = twitter_datum.end_date.strftime("%B")
-    |',
-  | ] },
-  | yAxis: {title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | xAxis: {categories: [#{@dates}]},
+  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: 
-  |   [{name: '# Nuevos Followers', data: [
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.new_followers.nil?
-      = twitter_datum.new_followers
-      |,
-    - else
-      |null,
-  |]},{name: 'Objetivo Followers', data:[
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.goal_followers.nil?
-      = twitter_datum.goal_followers
-      |,
-    - else
-      |null,
-  |]},{name: '# Followers', data:[
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.total_followers.nil?
-      = twitter_datum.total_followers
-      |,
-    - else
-      |null,
-  |]},{name: '# Tweets en total', data:[
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.total_tweets.nil?
-      = twitter_datum.total_tweets
-      |,
-    - else
-      |null,
-  |]}]
-  |});});});
+  | series: [ {name: '# Nuevos Followers', data: [ #{@new_followers}]}, { name: '# Followers', data:[#{@total_followers}]},
+  | { name: '# Objetivo Followers', data:[#{@goal_followers}]}]
+  | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
   | chart: {renderTo: 'container_interacciones', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Interactividad', x: -20 },
-  | xAxis: {categories: [
-  - @twitter_data.each do |twitter_datum|
-    | '
-    = twitter_datum.start_date.mday()
-    |-
-    = twitter_datum.end_date.mday()
-    |  
-    = twitter_datum.end_date.strftime("%B")
-    |',
-  | ] },
-  | yAxis: {title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | xAxis: {categories: [#{@dates}] },
+  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: 
-  |   [{name: '# Menciones', data: [
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.total_mentions.nil?
-      = twitter_datum.total_mentions
-      |,
-    - else
-      |null,
-  |]},{name: '# Rettweets', data:[
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.ret_tweets.nil?
-      = twitter_datum.ret_tweets
-      |,
-    - else
-      |null,
-  |]},{name: 'Clicks Enlaces', data:[
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.total_clicks.nil?
-      = twitter_datum.total_clicks
-      |,
-    - else
-      |null,
-  |]},{name: '# Interacciones Total', data:[
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.total_interactions.nil?
-      = twitter_datum.total_interactions
-      |,
-    - else
-      |null,
-  |]}]
-  |});});});
+  | series: [{ name: '# Menciones', data: [#{@mentions}]},{name: '# Retweets', data:[#{@retweets}]},{name: 'Clicks Enlaces', data:[#{@clics}]},
+  | { name: '# Interacciones en twitter ads', data:[#{@interactions_ads}]}, { name: 'Interacciones Totales', data:[#{@total_interactions}]}]
+  | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
   | chart: {renderTo: 'container_inversion', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Inversion', x: -20 },
-  | xAxis: {categories: [
-  - @twitter_data.each do |twitter_datum|
-    | '
-    = twitter_datum.start_date.mday()
-    |-
-    = twitter_datum.end_date.mday()
-    |  
-    = twitter_datum.end_date.strftime("%B")
-    |',
-  | ] },
-  | yAxis: {title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | xAxis: {categories: [#{@dates}] },
+  | yAxis: { min:0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: 
-  |   [{name: 'Inversión Agencia', data: [
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.agency_investment.nil?
-      = twitter_datum.agency_investment
-      |,
-    - else
-      |null,
-  |]}]
-  |});});});
+  | series: [{name: '# nuevos followers', data:[#{@new_followers}]},{name: 'Inversión Total', data: [#{@total_investment}]}]
+  | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
   | chart: {renderTo: 'container_costes', type: 'line', marginRight: 130, marginBottom: 45 },
   | title: {text: 'Costes', x: -20 },
-  | xAxis: {categories: [
-  - @twitter_data.each do |twitter_datum|
-    | '
-    = twitter_datum.start_date.mday()
-    |-
-    = twitter_datum.end_date.mday()
-    |  
-    = twitter_datum.end_date.strftime("%B")
-    |',
-  | ] },
-  | yAxis: {title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | xAxis: {categories: [#{@dates}] },
+  | yAxis: {min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
   | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
   | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: 
-  |   [{name: 'Costes por followers', data: [
-  - @twitter_data.each do |twitter_datum|
-    - if !twitter_datum.cost_follower.nil?
-      = twitter_datum.cost_follower
-      |,
-    - else
-      |null,
-  |]}]
-  |});});});
+  | series: [{name: 'Costes', data: [#{@cost_follower}]}, {name: 'Cost per engagement twitter ads', data:[#{@cost_per_engagement}]}, 
+  | { name: 'Coste por mil impresiones', data:[#{@cost_prints}]}, {name: 'Coste por interaccion', data:[#{@cost_interactions}]}]
+  | });});});
 
 section.sectionInformation
   .estilo_tabs
@@ -441,9 +335,15 @@ section.sectionInformation
             tr
               td
                 | Inversion anuncios twitter ads
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = twitter_datum.investment_ads
             tr
               td
                 | Inversion Total
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = TwitterDatum.get_total_investment(twitter_datum)
             tr.titlesRows
               td colspan=100
                 | Costes
@@ -456,15 +356,21 @@ section.sectionInformation
             tr
               td
                 | Coste por mil impresiones
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = TwitterDatum.get_cost_per_prints(twitter_datum).round(2)
             tr
               td
                 | Coste por interaccion
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = TwitterDatum.get_cost_per_interaction(twitter_datum).round(2)
             tr
               td
                 | Costes por follower
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.cost_follower.round(2)
+                  = TwitterDatum.get_cost_follower(twitter_datum).round(2)
             tr
               td.nilValue
                 |Opciones
@@ -475,17 +381,80 @@ section.sectionInformation
                   |  
                   a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{twitter_datum.id}} href=%{/twitter_data/#{twitter_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
                     i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        br
+        form id="table" onsubmit="return saveCommentTwitter('#table',#{@socialNetwork.id},1);"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
-        div.estilo_graficos
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
           #container_comunidad
-        div.estilo_graficos
+        .comment
+          .title
+            h4
+              | Comentario Grafico Comnidad
+          br
+          form  id="comunity" onsubmit="return saveCommentTwitter('#comunity',#{@socialNetwork.id},2);"
+            textarea rows=10 id="comment"
+              = @comments.comunity
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
           #container_interacciones
-        div.estilo_graficos
+        .comment
+          .title
+            h4
+              | Comentario Grafico Interacciones
+          br
+          form  id="interactions" onsubmit="return saveCommentTwitter('#interactions',#{@socialNetwork.id},3);"
+            textarea rows=10 id="comment"
+              = @comments.interaction
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
           #container_inversion
-        div.estilo_graficos
+        .comment
+          .title
+            h4
+              | Comentario Grafico Inversion
+          br
+          form  id="investment" onsubmit="return saveCommentTwitter('#investment',#{@socialNetwork.id},4);"
+            textarea rows=10 id="comment"
+              = @comments.investment
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
           #container_costes
+        .comment
+          .title
+            h4
+              | Comentario Grafico Costes
+          br
+          form  id="cost" onsubmit="return saveCommentTwitter('#cost',#{@socialNetwork.id},5);"
+            textarea rows=10 id="comment"
+              = @comments.cost
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
 
 
     .tab-pane.fade id="tabothers"
@@ -520,7 +489,7 @@ section.sectionInformation
         br
         br
         .margin
-          - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork).all
+          - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork.id).all
           - @images.each do | imagen |
             br
             br
@@ -539,7 +508,7 @@ section.sectionInformation
               button.btn.btn-success style="float:left;"
                 |Actualizar
               |      
-              a.btn.btn-danger href="/facebook_data/destroy_comment/#{imagen.id}" style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+              a.btn.btn-danger href="/social_networks/destroy_image/#{imagen.id}" style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
                 |Eliminar
               |      
               .result

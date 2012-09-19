@@ -117,10 +117,8 @@ section.sectionInformation
       li
         a href="#tabimagenes" data-toggle="tab"
           | Otros datos
-
   br
   br
-
   .tab-content
     .tab-pane.fade.in.active id="tabtable"
       section.sectionTable
@@ -379,7 +377,7 @@ section.sectionInformation
           h4
             | Comentario para la Tabla:
         br
-        form id="table" onsubmit="return saveComment('#table',#{@socialNetwork.id},1);"
+        form id="table" onsubmit="return saveCommentFacebook('#table',#{@socialNetwork.id},1);"
           textarea id="comment"
             = @comments.table
           br
@@ -398,7 +396,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Fans
           br
-          form  id="fans" onsubmit="return saveComment('#fans',#{@socialNetwork.id},2);"
+          form  id="fans" onsubmit="return saveCommentFacebook('#fans',#{@socialNetwork.id},2);"
             textarea rows=10 id="comment"
               = @comments.fans
             br
@@ -413,7 +411,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Interactividad
           br
-          form id="interaction" onsubmit="return saveComment('#interaction',#{@socialNetwork.id},3);"
+          form id="interaction" onsubmit="return saveCommentFacebook('#interaction',#{@socialNetwork.id},3);"
 
             textarea rows=10 id="comment"
               = @comments.interaction
@@ -429,7 +427,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Alcance
           br
-          form  id="reach" onsubmit="return saveComment('#reach',#{@socialNetwork.id},6);"
+          form  id="reach" onsubmit="return saveCommentFacebook('#reach',#{@socialNetwork.id},6);"
             textarea rows=10 id="comment"
               = @comments.reach
             br
@@ -444,7 +442,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Crecimiento Inversion
           br
-          form id="investment" onsubmit="return saveComment('#investment',#{@socialNetwork.id},4);"
+          form id="investment" onsubmit="return saveCommentFacebook('#investment',#{@socialNetwork.id},4);"
             textarea rows=10 id="comment"
               = @comments.investment
             br
@@ -459,7 +457,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Costes
           br
-          form id="costs" onsubmit="return saveComment('#costs',#{@socialNetwork.id},5);"
+          form id="costs" onsubmit="return saveCommentFacebook('#costs',#{@socialNetwork.id},5);"
             textarea rows=10 id="comment"
               = @comments.cost
             br
@@ -498,7 +496,7 @@ section.sectionInformation
       br
       br
       .margin
-        - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork).all
+        - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork.id).all
         - @images.each do | imagen |
           br
           br
@@ -517,7 +515,7 @@ section.sectionInformation
             button.btn.btn-success style="float:left;"
               |Actualizar
             |      
-            a.btn.btn-danger href="/facebook_data/destroy_comment/#{imagen.id}" style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+            a.btn.btn-danger href="/social_networks/destroy_image/#{imagen.id}" style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
               |Eliminar
             |      
             .result

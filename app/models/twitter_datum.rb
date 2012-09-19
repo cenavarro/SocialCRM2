@@ -93,6 +93,36 @@ class TwitterDatum < ActiveRecord::Base
     return 0
   end
 
+  def self.get_total_investment(datum)
+    (datum.agency_investment + datum.investment_ads + datum.investment_actions) 
+  end
+
+  def self.get_cost_per_prints(datum)
+    if !isFirstData?(datum)
+      total_investment = get_total_investment(datum)
+      total_prints = get_total_prints(datum)
+      return (total_investment.to_f/total_prints.to_f)*1000
+    end
+    return 0
+  end
+
+  def self.get_cost_per_interaction(datum)
+    if !isFirstData?(datum)
+      total_investment = get_total_investment(datum)
+      total_interactions = get_total_interactions(datum)
+      return (total_investment.to_f/total_interactions.to_f)
+    end
+    return 0
+  end
+
+  def self.get_cost_follower(datum)
+    if !isFirstData?(datum)
+      total_investment = get_total_investment(datum)
+      return (total_investment.to_f/datum.new_followers.to_f)
+    end
+    return 0
+  end
+  
 	def self.isFirstData?(datum)
     before_data = TwitterDatum.where('end_date < ?',datum.start_date.to_date).first
 		if(before_data == nil)

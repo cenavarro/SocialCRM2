@@ -28,27 +28,11 @@ function connectFacebook(IdClient,APP_ID){
 }
 
 
-function saveComment(form,social_network,id_comment){
+function saveCommentFacebook(form,social_network,id_comment){
   jQuery.ajax( {
     type: 'POST',
     url: '/facebook_data/save_comment',
     data: { comment: $(form).find("#comment").val(), social_network: social_network, id_comment: id_comment },
-    dataType: 'json',
-    success: function(data){
-      $(form).find('.result').html(data);
-    },
-    error: function(data){
-      $(form).find('.result').html(data);
-    }
-  });
-  return false;
-}
-
-function updateImageComment(form, id_image){
-  jQuery.ajax({
-    type: 'POST',
-    url: '/facebook_data/update_comment',
-    data: { comment: $(form).find("#comment").val(), id_image: id_image },
     dataType: 'json',
     success: function(data){
       $(form).find('.result').html(data);

@@ -180,32 +180,6 @@ class FacebookDataController < ApplicationController
     end
   end
 
-  def update_comment
-    image = ImagesSocialNetwork.find(params[:id_image].to_i)
-    image.comment = params[:comment].to_s
-    if image.save
-      mensaje = "Comentario Actualizado!"
-    else
-      mensaje = "El comentario no se pudo actualizar. Error:"
-    end
-
-    respond_to do | format |
-      format.json { render json: mensaje.to_json }
-    end
-  end
-
-  def destroy_comment
-    image = ImagesSocialNetwork.find(params[:id])
-    if image.destroy
-      mensaje = "La imagen se elimino correctamente!"
-    else
-      mensaje = "La imagen no se pudo eliminar!"
-    end
-    respond_to do | format |
-      format.html { redirect_to request.referer, notice: mensaje }
-    end
-  end
-
   def calcular_datos
 
     if !@page_friends_of_fans['data'].empty?
