@@ -1,5 +1,14 @@
 DemoComentarios::Application.routes.draw do
 
+  resource :linkedin_data
+  post "linkedin_data" => "linkedin_data#create", :as => "linkedin_datum" 
+  get "linkedin_data/:idc/:opcion" => "linkedin_data#index"
+  get "linkedin_data/new/:idc/:opcion" => "linkedin_data#new"
+  get "linkedin_data/:id/edit/:idc" => "linkedin_data#edit"
+  post "linkedin_data/save_comment" => "linkedin_data#save_comment"
+  delete "linkedin_data/:id" => "linkedin_data#destroy"
+
+
   get "notifications/index"
 
   post "notifications/create"
@@ -17,6 +26,7 @@ DemoComentarios::Application.routes.draw do
 
   resources :info_social_networks
 
+  get "social_networks/new/:isn" => "social_networks#new"
   resources :social_networks
 
   post "social_networks/add_image" => "social_networks#add_image"

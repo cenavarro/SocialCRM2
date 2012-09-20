@@ -6,7 +6,7 @@ class InfoSocialNetwork < ActiveRecord::Base
   		when 2
   			@return = "twitter_data"
       when 3
-        @return = "tuenti_data"
+        @return = "linkedin_data"
   	end
   end
 end

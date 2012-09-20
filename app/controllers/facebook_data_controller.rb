@@ -130,7 +130,7 @@ class FacebookDataController < ApplicationController
 
   def update
     @facebook_datum = FacebookDatum.find(params[:id])
-    @facebook_datum.total_fans = FacebookDatum.get_real_fans(@facebook_datum)
+    @facebook_datum.new_fans = FacebookDatum.get_new_fans(@facebook_datum)
 
     respond_to do |format|
       if @facebook_datum.update_attributes(params[:facebook_datum])

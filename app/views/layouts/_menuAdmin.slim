@@ -77,6 +77,11 @@
     input type="radio" name="social_network" value="twitter" style="margin-left:100px;"
       |     
       img src="/assets/images/twitter_logo.jpg" width="100" height="100"
+    br
+    br
+    input type="radio" name="social_network" value="linkedin" style="margin-left:100px;"
+      |     
+      img src="/assets/images/linkedin_logo.png" width="100" height="100"
   .modal-footer
     button.btn data-dismiss="modal" aria-hidden="true"
       |Cerrar
@@ -92,7 +97,9 @@ javascript:
         case 'facebook':
           loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'clients/facebook'); break;
         case 'twitter':
-          window.location.href = "/social_networks/new";break;
+          window.location.href = "/social_networks/new/2"; break;
+        case 'linkedin':
+          window.location.href = "/social_networks/new/3"; break;
       }
     });
   });

@@ -37,59 +37,59 @@ javascript:
       br
       br
       = f.label "# Followers"
-      = f.number_field :total_followers, {:class => "validate[required]"}
+      = f.text_field :total_followers, {:class => "validate[required,custom[number]]"}
       br
       br
       = f.label "Objetivo Followers"
-      = f.number_field :goal_followers, {:class => "validate[required]"}
+      = f.text_field :goal_followers, {:class => "validate[required,custom[number]]"}
       br
       br
       = f.label "# Tweets en total"
-      = f.number_field :total_tweets, {:class => "validate[required]"}
+      = f.text_field :total_tweets, {:class => "validate[required,custom[number]]"}
     .box.interactionTwitter
       | Interactividad
       br
       br
       = f.label "# Menciones"
-      = f.number_field :total_mentions, {:class => "validate[required]"}
+      = f.text_field :total_mentions, {:class => "validate[required,custom[number]]"}
       br
       br
       = f.label "# Retweets"
-      = f.number_field :ret_tweets, {:class => "validate[required]"}
+      = f.text_field :ret_tweets, {:class => "validate[required,custom[number]]"}
       br
       br
       = f.label "Clicks enlaces"
-      = f.number_field :total_clicks, {:class => "validate[required]"}
+      = f.text_field :total_clicks, {:class => "validate[required,custom[number]]"}
       br
       br
       = f.label "Interacciones en twitter ads"
-      = f.number_field :interactions_ads
+      = f.text_field :interactions_ads, {:class => "validate[required,custom[number]]"}
       br
       br
       = f.label "# Impresiones (tweetreach)"
-      = f.number_field :prints
+      = f.text_field :prints, {:class => "validate[required,custom[number]]"}
       br
       br
       = f.label "# Impresiones en twitter ads"
-      = f.number_field :prints_ads
+      = f.text_field :prints_ads, {:class => "validate[required,custom[number]]"}
     .box.investmentTwitter
       |Inversiones
       br
       br
       = f.label "Inversion Agencia"
-      = f.text_field :agency_investment, {:class => "validate[required]"}
+      = f.text_field :agency_investment, {:class => "validate[required,custom[number]]"}
       br
       br
       = f.label "Inversion Nuevas Acciones "
-      = f.text_field :investment_actions, {:class => "validate[required]"}
+      = f.text_field :investment_actions, {:class => "validate[required,custom[number]]"}
       br
       br
       = f.label "Inversion anuncios twitter ads"
-      = f.text_field :investment_ads, { :class => "validate[required]"}
+      = f.text_field :investment_ads, { :class => "validate[required,custom[number]]"}
       br
       br
       = f.label "Cost per engagement twitter ads"
-      = f.text_field :cost_twitter_ads, {:class => "validate[required]"}
+      = f.text_field :cost_twitter_ads, {:class => "validate[required,custom[number]]"}
     br
     br
     = f.submit 'Guardar Datos', {:class => "btn btn-success saveTwitter", :onclick => "return confirm('Estas seguro?')"}

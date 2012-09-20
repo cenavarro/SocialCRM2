@@ -1,0 +1,49 @@
+// Place all the styles related to the LinkedinData controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$top_position: 390px;
+$left_position: 80px;
+$space: 400px;
+
+.informationLinkedin{
+	position:absolute;
+	left:$left_position;
+}
+
+.comunityLinkedin{
+	position:absolute;
+  top: 50px;
+	left: $left_position+$space;
+}
+
+.interactionLinkedin{
+	position:absolute;
+	top: -140 + ($top_position);
+	left:$left_position;
+}
+
+.investmentLinkedin{
+	position:absolute;
+	top: 300px;
+  left:$left_position+$space;
+
+}
+
+.costsLinkedin{
+	position:absolute;
+	top: $top_position+225;
+	left:$left_position+$space;
+}
+
+.saveLinkedin{
+	position:absolute;
+	top: 940px;
+	left: 300px;
+}
+
+.backLinkedin{
+	position:absolute;
+	top: 940px;
+	left:500px;
+}

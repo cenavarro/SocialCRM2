@@ -1,0 +1,337 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+
+- @linkedin_info = InfoSocialNetwork.find(3)
+- @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 3)[0]
+- @comments = LinkedinComment.where(:social_network_id => @socialNetwork.id)[0]
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='/assets/images/"+@linkedin_info.image+"' alt='linkedin Logo' height='100' width='300'>").html_safe
+    = @image
+br
+br
+
+.margin
+  a.btn.btn-info href=%{/linkedin_data/new/#{params[:idc]}/2} style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+br
+br
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=%{/linkedin_data/#{params[:idc]}/2/} method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+
+script 
+  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
+  | chart: {renderTo: 'container_followers', type: 'line', marginRight: 130, marginBottom: 45 },
+  | title: {text: 'Seguidores', x: -20 },
+  | xAxis: {categories: [#{@dates}]},
+  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
+  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
+  | series: [ { name: '# Nuevos Followers', data: [ #{@new_followers}]}, { name: '# Followers', data:[#{@total_followers}]}]
+  | });});});
+
+  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
+  | chart: {renderTo: 'container_interactions', type: 'line', marginRight: 130, marginBottom: 45 },
+  | title: {text: 'Interactividad', x: -20 },
+  | xAxis: {categories: [#{@dates}] },
+  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
+  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
+  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
+  | series: [{ name: 'Resumen', data: [#{@summary}]},{name: 'Empleo', data:[#{@employment}]},{name: 'Productos y Servicios', data:[#{@products_services}]},
+  | { name: 'Impresiones', data:[#{@prints}]}, { name: 'Clicks', data:[#{@clics}]}, { name: '% interes', data: [#{@interest}]}, 
+  | { name: 'Recomendacion', data:[#{@recommendation}]}, { name: 'Compartidos', data: [#{@shared}]}]
+  | });});});
+
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          |Otros datos
+
+  br
+  br
+
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.start_date.mday()
+                  |-
+                  = linkedin_datum.end_date.mday()
+                  |  
+                  = linkedin_datum.end_date.strftime("%B")
+          tbody
+            tr.titlesRows
+              td colspan=100
+                | Comunidad 
+            tr
+              td.estiloCelda
+                |# Nuevos Followers
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.new_followers
+            tr
+              td
+                |# Followers
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.total_followers
+            tr
+              td
+                | % Crecimiento
+              - @linkedin_data.each do |linkedin_datum|
+                - percentFollowers = LinkedinDatum.get_growth_followers(linkedin_datum)
+                - if percentFollowers >= 0.0 
+                  td.positiveValue
+                    = %{#{percentFollowers.round(2)}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentFollowers.round(2)}%}
+            tr.titlesRows
+              td colspan=100
+                |Interactividad
+            tr
+              td
+                | # Visualizaciones de paginas
+              - @linkedin_data.each do | datum |
+                td
+                  = LinkedinDatum.get_views_page(datum) 
+            tr
+              td
+                | Resumen
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.summary
+            tr
+              td
+                | Empleo
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.employment
+            tr
+              td
+                | Productos y Servicios
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.products_services
+            tr
+              td
+                | Impresiones
+              - @linkedin_data.each do | linkedin_datum |
+                td
+                  = linkedin_datum.prints
+            tr
+              td
+                | Clicks
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.clics
+            tr
+              td
+                | % de interes
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.interest
+            tr
+              td
+                | Recomendacion
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.recommendation
+            tr
+              td
+                | Compartidos
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.shared
+            tr.titlesRows
+              td colspan=100
+                | Inversion
+            tr
+              td
+                | Inversion Agencia
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.investment_agency
+            tr
+              td
+                | Inversion nuevas acciones
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.investment_actions
+            tr
+              td
+                | Inversion anuncios
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.investment_anno
+            tr
+              td
+                | Inversion Total
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = LinkedinDatum.get_total_investment(linkedin_datum)
+            tr
+              td.nilValue
+                |Opciones
+              -@linkedin_data.each do |linkedin_datum|
+                td.celdaOpciones
+                  a.btn.btn-info href=%{/linkedin_data/#{linkedin_datum.id}/edit/#{params[:idc]}} id=%{edit_#{linkedin_datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{linkedin_datum.id}} href=%{/linkedin_data/#{linkedin_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        br
+        form id="table" onsubmit="return saveCommentLinkedin('#table',#{@socialNetwork.id},1);"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_followers
+        .comment
+          .title
+            h4
+              | Comentario Grafico Seguidores
+          br
+          form  id="followers" onsubmit="return saveCommentLinkedin('#followers',#{@socialNetwork.id},2);"
+            textarea rows=10 id="comment"
+              = @comments.comunity
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_interactions
+        .comment
+          .title
+            h4
+              | Comentario Grafico Interacciones
+          br
+          form  id="interactions" onsubmit="return saveCommentLinkedin('#interactions',#{@socialNetwork.id},3);"
+            textarea rows=10 id="comment"
+              = @comments.interaction
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+
+    .tab-pane.fade id="tabothers"
+        .margin
+          button.btn.btn-info onclick="show('addNewImage','btnAddImages')" id="btnAddImages"
+            | Agregar Imagenes
+      
+        .form_nueva_imagen id="addNewImage"
+          button.close onclick="hide('addNewImage', 'btnAddImages')"
+            |x
+          = form_for ImagesSocialNetwork.new, :as => :images, :url => '/social_networks/add_image', :html => { :multipart => true} do | f |
+            center
+              h3 Agregar Imagen
+            br
+            br
+            = f.label "Titulo:"
+            = f.text_field :title, :required => "required"
+            br
+            br
+            = f.label "Seleccione la imagen"
+            = f.file_field :attachment, :required => "required", :accept => "image/*"
+            br
+            br
+            = f.label "Comentario Imagen"
+            = f.text_area :comment 
+            br
+            br
+            = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
+            center
+              = f.submit "Guardar", :class => "btn btn-success" 
+
+        br
+        br
+        .margin
+          - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork.id).all
+          - @images.each do | imagen |
+            br
+            br
+            h3
+              = imagen.title
+            br
+            br
+            img src="#{imagen.attachment.url}" height="400px" width="800px"
+            br
+            br
+            h4 Comentario
+            br
+            form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id});"
+              textarea id="comment" style="max-width:790px; width: 100%;" rows="10"
+                = imagen.comment
+              button.btn.btn-success style="float:left;"
+                |Actualizar
+              |      
+              a.btn.btn-danger href="/social_networks/destroy_image/#{imagen.id}" style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+                |Eliminar
+              |      
+              .result
+  javascript:
+      jQuery(document).ready(function(){
+        jQuery("#start_date_picker").datepicker();
+        jQuery("#end_date_picker").datepicker();
+      });

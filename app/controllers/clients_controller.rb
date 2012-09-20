@@ -139,6 +139,8 @@ class ClientsController < ApplicationController
           comments = FacebookComment.new(:social_network_id => social_network.id)
         when 2
           comments = TwitterComments.new(:social_network_id => social_network.id)
+        when 3
+          comments = LinkedinComments.new(:social_network_id => social_network.id)
       end
       comments.save
       respond_to do | format |

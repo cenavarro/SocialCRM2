@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120919174353) do
+ActiveRecord::Schema.define(:version => 20120920173225) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",        :null => false
@@ -81,6 +81,36 @@ ActiveRecord::Schema.define(:version => 20120919174353) do
     t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "linkedin_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.text     "table"
+    t.text     "comunity"
+    t.text     "interaction"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "linkedin_data", :force => true do |t|
+    t.integer  "new_followers"
+    t.integer  "total_followers"
+    t.integer  "summary"
+    t.integer  "employment"
+    t.integer  "products_services"
+    t.integer  "prints"
+    t.integer  "clics"
+    t.integer  "recommendation"
+    t.integer  "shared"
+    t.float    "investment_agency"
+    t.float    "investment_actions"
+    t.float    "investment_anno"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "client_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.float    "interest"
   end
 
   create_table "revisions", :force => true do |t|

@@ -4,7 +4,7 @@ class TwitterDatum < ActiveRecord::Base
   def self.get_new_followers(datum)
     if !isFirstData?(datum)
       old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
-      return old_data.total_followers + datum.total_followers
+      return  datum.total_followers - old_data.total_followers
     end
     return 0
   end
@@ -86,8 +86,9 @@ class TwitterDatum < ActiveRecord::Base
   def self.get_change_prints(datum)
     if !isFirstData?(datum)
       old_data = TwitterDatum.where('end_date <= ?', datum.start_date.to_date).first
-      if old_data.total_prints != 0
-        return ((datum.total_prints - old_data.total_prints).to_f/old_data.total_prints.to_f)
+      before_total_prints = TwitterDatum.get_total_prints(datum) 
+      if before_total_prints != 0
+        return ((TwitterDatum.get_total_prints(datum) - before_total_prints).to_f/before_total_prints.to_f)
       end
     end
     return 0

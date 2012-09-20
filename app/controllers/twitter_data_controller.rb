@@ -66,7 +66,7 @@ class TwitterDataController < ApplicationController
 
   def create
     @twitter_datum = TwitterDatum.new(params[:twitter_datum])
-    @twitter_datum.new_followers = @twitter_datum.total_followers - TwitterDatum.get_before_followers(@twitter_datum)
+    @twitter_datum.new_followers = TwitterDatum.get_new_followers(@twitter_datum)
     @twitter_datum.total_interactions = TwitterDatum.get_total_interactions(@twitter_datum)
     @twitter_datum.cost_follower = TwitterDatum.get_cost_follower(@twitter_datum)
 
@@ -83,6 +83,8 @@ class TwitterDataController < ApplicationController
 
   def update
     @twitter_datum = TwitterDatum.find(params[:id])
+    @twitter_datum.new_followers = TwitterDatum.get_new_followers(@twitter_datum)
+    @twitter_datum.total_interactions = TwitterDatum.get_total_interactions(@twitter_datum)
     @twitter_datum.cost_follower = TwitterDatum.get_cost_follower(@twitter_datum)
 
     respond_to do |format|

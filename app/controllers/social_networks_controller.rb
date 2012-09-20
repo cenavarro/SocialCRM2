@@ -33,8 +33,12 @@ class SocialNetworksController < ApplicationController
             comments = FacebookComment.new(:social_network_id => @social_network.id)
           when 2
             comments = TwitterComment.new(:social_network_id => @social_network.id)
+          when 3
+            comments = LinkedinComments.new(:social_network_id => @social_network.id)
         end
-        comments.save
+        if !comments.nil?
+          comments.save
+        end
         format.html { redirect_to social_networks_path, notice: 'La Red Social se creo satisfactoriamente.' }
       else
         format.html { render action: "new" }
