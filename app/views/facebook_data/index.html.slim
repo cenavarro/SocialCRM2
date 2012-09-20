@@ -17,7 +17,7 @@ br
     = @image
 br
 .margin
-  a.btn.btn-info href=%{/facebook_data/new/#{params[:idc]}/2} style="width: 168px"
+  a.btn.btn-info href=facebook_new_path(params[:idc],2) style="width: 168px"
     |Nueva Entrada de Datos
   br
   br
@@ -29,7 +29,7 @@ br
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
-  form action=%{/facebook_data/#{params[:idc]}/2/} method="get"
+  form action=facebook_index_path(params[:idc],2) method="get"
     center
       | Seleccione el rango de fechas
     br
@@ -366,18 +366,18 @@ section.sectionInformation
                 |Opciones
               -@facebook_data.each do |facebook_datum|
                 td.celdaOpciones
-                  a.btn.btn-info href=%{/facebook_data/#{facebook_datum.id}/edit/#{params[:idc]}} id=%{edit_#{facebook_datum.id}}
+                  a.btn.btn-info href=facebook_edit_path(facebook_datum.id,params[:idc]) id=%{edit_#{facebook_datum.id}}
                     i.icon-pencil.icon-white
                   |  
                   - idFacebookData = facebook_datum.id
-                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{facebook_datum.id}} href=%{/facebook_data/#{facebook_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{facebook_datum.id}} href=facebook_datum_path(facebook_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
                     i.icon-trash.icon-white
       .comment
         .title
           h4
             | Comentario para la Tabla:
         br
-        form id="table" onsubmit="return saveCommentFacebook('#table',#{@socialNetwork.id},1);"
+        form id="table" onsubmit="return saveCommentFacebook('#table',#{@socialNetwork.id},1, '#{params[:locale]}');"
           textarea id="comment"
             = @comments.table
           br
@@ -396,7 +396,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Fans
           br
-          form  id="fans" onsubmit="return saveCommentFacebook('#fans',#{@socialNetwork.id},2);"
+          form  id="fans" onsubmit="return saveCommentFacebook('#fans',#{@socialNetwork.id},2, '#{params[:locale]}');"
             textarea rows=10 id="comment"
               = @comments.fans
             br
@@ -411,7 +411,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Interactividad
           br
-          form id="interaction" onsubmit="return saveCommentFacebook('#interaction',#{@socialNetwork.id},3);"
+          form id="interaction" onsubmit="return saveCommentFacebook('#interaction',#{@socialNetwork.id},3, '#{params[:locale]}');"
 
             textarea rows=10 id="comment"
               = @comments.interaction
@@ -427,7 +427,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Alcance
           br
-          form  id="reach" onsubmit="return saveCommentFacebook('#reach',#{@socialNetwork.id},6);"
+          form  id="reach" onsubmit="return saveCommentFacebook('#reach',#{@socialNetwork.id},6, '#{params[:locale]}');"
             textarea rows=10 id="comment"
               = @comments.reach
             br
@@ -442,7 +442,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Crecimiento Inversion
           br
-          form id="investment" onsubmit="return saveCommentFacebook('#investment',#{@socialNetwork.id},4);"
+          form id="investment" onsubmit="return saveCommentFacebook('#investment',#{@socialNetwork.id},4, '#{params[:locale]}');"
             textarea rows=10 id="comment"
               = @comments.investment
             br
@@ -457,7 +457,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Costes
           br
-          form id="costs" onsubmit="return saveCommentFacebook('#costs',#{@socialNetwork.id},5);"
+          form id="costs" onsubmit="return saveCommentFacebook('#costs',#{@socialNetwork.id},5, '#{params[:locale]}');"
             textarea rows=10 id="comment"
               = @comments.cost
             br
@@ -472,7 +472,7 @@ section.sectionInformation
       .form_nueva_imagen id="addNewImage"
         button.close onclick="hide('addNewImage', 'btnAddImages')"
           |x
-        = form_for ImagesSocialNetwork.new, :as => :images, :url => '/social_networks/add_image', :html => { :multipart => true} do | f |
+        = form_for ImagesSocialNetwork.new, :as => :images, :url => social_networks_add_image_path, :html => { :multipart => true} do | f |
           center
             h3 Agregar Imagen
           br
@@ -509,13 +509,13 @@ section.sectionInformation
           br
           h4 Comentario
           br
-          form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id});"
+          form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id},'#{params[:locale]}');"
             textarea id="comment" style="max-width:790px; width: 100%;" rows="10"
               = imagen.comment
             button.btn.btn-success style="float:left;"
               |Actualizar
             |      
-            a.btn.btn-danger href="/social_networks/destroy_image/#{imagen.id}" style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+            a.btn.btn-danger href=social_networks_destroy_image_path(imagen.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
               |Eliminar
             |      
             .result

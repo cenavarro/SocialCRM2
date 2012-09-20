@@ -1,2 +1,20 @@
 es:
-  login: "Iniciar Sesion"
+  menu:
+    home: "Home"
+    client:
+      title: "Clientes"
+      add_social_network: "Agregar Red Social"
+      new: "Nuevo Cliente"
+      edit: "Editar/Eliminar"
+    social_network:
+      title: "Redes Sociales"
+      new_entry: "Nueva Entrada Datos"
+      list: "Listar Redes Sociales"
+      edit_info: "Editar Info Red Social"
+    login: "Iniciar Sesion"
+    logout: "Salir"
+    config:
+      title: "Configuracion"
+      new_user: "Nuevo Usuario"
+      edit_account: "Editar Cuenta"
+      delete_user: "Eliminar Usuario"

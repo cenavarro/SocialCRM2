@@ -1,8 +1,8 @@
 - if user_signed_in?
   a href=destroy_user_session_path
-    |Salir  
+    = (t 'menu.logout') + "  "
     i.icon-share.icon-white
 - else
   a href="/users/sign_in"
     i.icon-user.icon-white
-    = t :login
+    = "  " + (t 'menu.login')

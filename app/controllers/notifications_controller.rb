@@ -13,10 +13,10 @@ class NotificationsController < ApplicationController
       email = Notifier.gmail_message(user,token)
       email.deliver
       flash[:notice] = "Su correo ha sido enviado."
-      redirect_to root_path
+      redirect_to root2_path
     else
       flash[:notice] = "No existe cuenta asociada con este correo."
-      redirect_to '/notifications/index'
+      redirect_to notification_index_path
     end
 
   end

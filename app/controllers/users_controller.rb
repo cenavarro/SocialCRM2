@@ -34,7 +34,7 @@ class UsersController < ApplicationController
 		  	add_user(@client.id)
 		  else
 		  	respond_to do |format|
-			  	format.html { redirect_to "/users/new/2", notice: 'El Cliente NO se pudo ingresar correctamente.'}
+			  	format.html { redirect_to new_user_path(2), notice: 'El Cliente NO se pudo ingresar correctamente.'}
 		  	  format.json {head :ok}
 	  	    end
 		  end
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
   	  end
   	end
   	respond_to do |format|
-	  	format.html { redirect_to %{/users/new/#{params[:user_type]}}, notice: @mensaje }
+	  	format.html { redirect_to new_user_path(params[:user_type]), notice: @mensaje }
   	  format.json {head :ok}
 	  end
 	end

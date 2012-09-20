@@ -10,6 +10,7 @@ center
     | Clientes
 br
 br
+
 #contentFlow.ContentFlow
   - if @clients.empty?
     br
@@ -20,7 +21,7 @@ br
   - else
    .flow
      - @clients.each do |client|
-       - @imagen = ("<img class='content' src='"+client.image+"' href='clients/social_networks/"+client.id.to_s()+"' height='240' >").html_safe
+       - @imagen = ("<img class='content' src='"+client.image+"' href='#{clients_social_networks_path(client.id)}' height='240' >").html_safe
        .item
          = @imagen
          .caption

@@ -36,7 +36,7 @@ class TwitterDataController < ApplicationController
         format.json { render json: @twitter_data }
       end
     else
-      redirect_to :controller => 'home', :action => 'index'
+      redirect_to root2_path 
     end
   end
 
@@ -56,7 +56,7 @@ class TwitterDataController < ApplicationController
         end
       end
     else
-      redirect_to :controller => 'home', :action => 'index'
+      redirect_to root2_path
     end
   end
 
@@ -72,7 +72,7 @@ class TwitterDataController < ApplicationController
 
     respond_to do |format|
       if @twitter_datum.save
-        format.html { redirect_to %{/twitter_data/#{@twitter_datum.client_id}/1}, notice: 'La informacion se ha ingresado exitosamente.'}
+        format.html { redirect_to twitter_index_path(@twitter_datum.client_id,1), notice: 'La informacion se ha ingresado exitosamente.'}
         format.json { render json: @twitter_datum, status: :created, location: @twitter_datum }
       else
         format.html { render action: "new" }
@@ -89,7 +89,7 @@ class TwitterDataController < ApplicationController
 
     respond_to do |format|
       if @twitter_datum.update_attributes(params[:twitter_datum])
-        format.html { redirect_to %{/twitter_data/#{@twitter_datum.client_id}/1}, notice: 'La informacion ha sido actualizada exitosamente.' }
+        format.html { redirect_to twitter_index_path(@twitter_datum.client_id,1), notice: 'La informacion ha sido actualizada exitosamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -104,7 +104,7 @@ class TwitterDataController < ApplicationController
     @twitter_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to %{/twitter_data/#{@client_id}/1}, notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to twitter_index_path(@twitter_datum.client_id,1), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end
@@ -155,6 +155,3 @@ class TwitterDataController < ApplicationController
   end
 
 end
-
-
-

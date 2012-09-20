@@ -94,7 +94,8 @@ class ClientsController < ApplicationController
   def getAccessToken(code)
     client_id = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']}"
     client_secret = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_secret']}"
-    uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{request.protocol}#{request.host_with_port}/clients/facebook/&code=#{code}&client_secret=#{client_secret}"
+    # uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{request.protocol}#{request.host_with_port}/clients/facebook/&code=#{code}&client_secret=#{client_secret}"
+    uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{clients_facebook_path}/&code=#{code}&client_secret=#{client_secret}"
     result = result_of_get(uri)
     result.split("&")[0].split("=")[1]
   end
@@ -144,7 +145,7 @@ class ClientsController < ApplicationController
       end
       comments.save
       respond_to do | format |
-        format.html {redirect_to "/", notice: "La red social se asocio correctamente." }
+        format.html {redirect_to root2_path, notice: "La red social se asocio correctamente." }
         format.json { head :ok }
       end
     else

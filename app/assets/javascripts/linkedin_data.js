@@ -1,7 +1,7 @@
-function saveCommentLinkedin(form,social_network,id_comment){
+function saveCommentLinkedin(form,social_network,id_comment,locale){
   jQuery.ajax( {
     type: 'POST',
-    url: '/linkedin_data/save_comment',
+    url: '/'+locale+'/linkedin_data/save_comment',
     data: { comment: $(form).find("#comment").val(), social_network: social_network, id_comment: id_comment },
     dataType: 'json',
     success: function(data){

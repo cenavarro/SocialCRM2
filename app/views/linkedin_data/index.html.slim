@@ -20,7 +20,7 @@ br
 br
 
 .margin
-  a.btn.btn-info href=%{/linkedin_data/new/#{params[:idc]}/2} style="width: 168px"
+  a.btn.btn-info href=linkedin_new_path(params[:idc],2) style="width: 168px"
     |Nueva Entrada de Datos
   br
   br
@@ -31,7 +31,7 @@ br
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
-  form action=%{/linkedin_data/#{params[:idc]}/2/} method="get"
+  form action=linkedin_index_path(params[:idc],2) method="get"
     center
       | Seleccione el rango de fechas
     br
@@ -223,17 +223,17 @@ section.sectionInformation
                 |Opciones
               -@linkedin_data.each do |linkedin_datum|
                 td.celdaOpciones
-                  a.btn.btn-info href=%{/linkedin_data/#{linkedin_datum.id}/edit/#{params[:idc]}} id=%{edit_#{linkedin_datum.id}}
+                  a.btn.btn-info href=linkedin_edit_path(linkedin_datum.id,params[:idc]) id=%{edit_#{linkedin_datum.id}}
                     i.icon-pencil.icon-white
                   |  
-                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{linkedin_datum.id}} href=%{/linkedin_data/#{linkedin_datum.id}} data-confirm="Esta seguro que desea eliminar estos datos?"
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{linkedin_datum.id}} href=linkedin_delete_path(linkedin_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
                     i.icon-trash.icon-white
       .comment
         .title
           h4
             | Comentario para la Tabla:
         br
-        form id="table" onsubmit="return saveCommentLinkedin('#table',#{@socialNetwork.id},1);"
+        form id="table" onsubmit="return saveCommentLinkedin('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}');"
           textarea id="comment"
             = @comments.table
           br
@@ -253,7 +253,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Seguidores
           br
-          form  id="followers" onsubmit="return saveCommentLinkedin('#followers',#{@socialNetwork.id},2);"
+          form  id="followers" onsubmit="return saveCommentLinkedin('#followers',#{@socialNetwork.id},2 ,'#{params[:locale]}');"
             textarea rows=10 id="comment"
               = @comments.comunity
             br
@@ -267,7 +267,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Interacciones
           br
-          form  id="interactions" onsubmit="return saveCommentLinkedin('#interactions',#{@socialNetwork.id},3);"
+          form  id="interactions" onsubmit="return saveCommentLinkedin('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}');"
             textarea rows=10 id="comment"
               = @comments.interaction
             br
@@ -283,7 +283,7 @@ section.sectionInformation
         .form_nueva_imagen id="addNewImage"
           button.close onclick="hide('addNewImage', 'btnAddImages')"
             |x
-          = form_for ImagesSocialNetwork.new, :as => :images, :url => '/social_networks/add_image', :html => { :multipart => true} do | f |
+          = form_for ImagesSocialNetwork.new, :as => :images, :url => social_networks_add_image_path, :html => { :multipart => true} do | f |
             center
               h3 Agregar Imagen
             br
@@ -320,13 +320,13 @@ section.sectionInformation
             br
             h4 Comentario
             br
-            form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id});"
+            form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id}, '#{params[:locale]}');"
               textarea id="comment" style="max-width:790px; width: 100%;" rows="10"
                 = imagen.comment
               button.btn.btn-success style="float:left;"
                 |Actualizar
               |      
-              a.btn.btn-danger href="/social_networks/destroy_image/#{imagen.id}" style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+              a.btn.btn-danger href=social_networks_destroy_image_path(imagen.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
                 |Eliminar
               |      
               .result

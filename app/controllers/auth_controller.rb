@@ -4,7 +4,7 @@ class AuthController < Devise::OmniauthCallbacksController
     @user = User.find_by_email(auth.email)
     if !@user.nil?
       sign_in @user
-      redirect_to "/" 
+      redirect_to root2_path 
     else
       flash[:notice] = "El usuario no tiene cuenta en el sitio."
       redirect_to new_user_session_url 
@@ -17,7 +17,7 @@ class AuthController < Devise::OmniauthCallbacksController
     @user = User.find_by_email(auth.email)
     if !@user.nil?
       sign_in @user
-      redirect_to "/" 
+      redirect_to root2_path 
     else
       flash[:notice] = "El usuario no tiene cuenta en el sitio."
       redirect_to new_user_session_url 

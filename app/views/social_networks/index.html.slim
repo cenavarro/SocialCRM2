@@ -19,7 +19,6 @@ table.table.table-bordered
     tr
       td
         = social_network.name
-      - p social_network.client_id
       - @client = Client.find(social_network.client_id)
       td
         = @client.name
@@ -32,9 +31,8 @@ table.table.table-bordered
           i.icon-pencil.icon-white
           |  Editar
       td
-        - red_social = "social_networks/#{social_network.id}"
         - str_id = "delete_client_#{social_network.id}"
-        a.btn.btn-danger href=red_social data-confirm="Esta seguro que desea eliminar esta Red Social?" data-method="delete" rel="nofollow" id=str_id
+        a.btn.btn-danger href=social_networks_index_path(social_network.id) data-confirm="Esta seguro que desea eliminar esta Red Social?" data-method="delete" rel="nofollow" id=str_id
           i.icon-trash.icon-white
           |  Eliminar
 br

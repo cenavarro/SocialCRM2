@@ -51,12 +51,12 @@ class FacebookDataController < ApplicationController
     fecha_inicio = params[:start_date]
     fecha_final = params[:end_date]
     hostname = request.host_with_port
-    uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{request.protocol}#{hostname}/facebook_data/callback/#{params[:idc]}/#{fecha_inicio}/#{fecha_final}/&code=#{params[:code]}&client_secret=#{client_secret}"
+    uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{facebook_callback_path(params[:idc],fecha_inicio,fecha_final)}/&code=#{params[:code]}&client_secret=#{client_secret}"
     result_from_facebook = open(URI.parse(URI.escape(uri))).read
     access_token = result_from_facebook.split("&")[0].split("=")[1]
 
     respond_to do |format|
-      @path = %{/facebook_data/new/#{params[:idc]}/1/?start_date=#{params[:start_date]}&end_date=#{params[:end_date]}&access_token=#{access_token}}
+      @path = %{#{facebook_new_path(params[:idc],1)}/?start_date=#{params[:start_date]}&end_date=#{params[:end_date]}&access_token=#{access_token}}
       format.html { redirect_to @path }
       format.json
     end
@@ -105,7 +105,7 @@ class FacebookDataController < ApplicationController
         format.json { render json: @facebook_datum }
       end
     else
-      redirect_to :controller => 'home', :action => 'index'
+      redirect_to root2_path
     end
   end
 
@@ -119,8 +119,7 @@ class FacebookDataController < ApplicationController
     
     respond_to do |format|
       if @facebook_datum.save
-        @path = %{/facebook_data/#{@facebook_datum.client_id.to_i}/1}
-        format.html { redirect_to @path, notice: 'La Nueva Entrada de Datos se creo satisfactoriamente.' }
+        format.html { redirect_to facebook_index_path(@facebook_datum.client_id.to_i,1), notice: 'La Nueva Entrada de Datos se creo satisfactoriamente.' }
       else
         format.html { render action: "new" }
         format.json { render json: @facebook_datum.errors, status: :unprocessable_entity }
@@ -134,7 +133,7 @@ class FacebookDataController < ApplicationController
 
     respond_to do |format|
       if @facebook_datum.update_attributes(params[:facebook_datum])
-        format.html { redirect_to %{/facebook_data/#{@facebook_datum.client_id}/1}, notice: 'La informacion ha sido actualizada con exitosamente.' }
+        format.html { redirect_to facebook_index_path(@facebook_datum.client_id,1), notice: 'La informacion ha sido actualizada con exitosamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -149,7 +148,7 @@ class FacebookDataController < ApplicationController
     @facebook_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to %{/facebook_data/#{client_id}/1}, notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to facebook_index_path(client_id,1), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

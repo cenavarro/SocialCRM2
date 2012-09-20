@@ -3,59 +3,58 @@
     .container
       ul.nav
         li
-          a href="/"
+          a href=root2_path
             i.icon-white.icon-home
             |  
             = t :home, :scope => :menu
         li.dropdown
           a.dropdown-toggle href="#" data-toggle="dropdown"
             i.icon-user.icon-white
-            |  Cliente
-            -#= t :title, :scope => :clients
+            |  
+            = t 'menu.client.title'
             b.caret
           ul.dropdown-menu
             li
-              - # a href="/social_networks/new"
               a href="#modalSocialNetwork" data-toggle="modal"
-                | Agregar Red Social
+                = t 'menu.client.add_social_network'
             li
-              a href="/clients/new"
-                | Crear Cliente
+              a href=new_client_path
+                = t 'menu.client.new'
             li
-              a href="/clients"
-                | Editar/Borrar
+              a href=clients_path
+                = t 'menu.client.edit'
         li.dropdown
           a.dropdown-toggle href="#" data-toggle="dropdown"
             i.icon-folder-close.icon-white
-            |  Redes Sociales
+            = "  " + (t 'menu.social_network.title')
             b.caret
           ul.dropdown-menu
             li
-              a href="/"
-                | Agregar Nueva Entrada Datos
+              a href=root2_path
+                = t 'menu.social_network.new_entry'
             li
-              a href="/social_networks"
-                |Listar Redes Sociales
+              a href=social_networks_path
+                = t 'menu.social_network.list'
             li
-              a href="/info_social_networks"
-                |Editar Info Red Social
+              a href=info_social_networks_path
+                = t 'menu.social_network.edit_info'
         li style="float: right"
           = render 'devise/menu/login_items'
         li.dropdown style="float: right"
           a.dropdown-toggle href="#" data-toggle="dropdown"
             i.icon-cog.icon-white
-            |  Configuracion
+            = "  " + (t 'menu.config.title')
             b.caret
           ul.dropdown-menu
             li
-              a href="/users/new/1"
-                |Nuevo Usuario
+              a href=new_user_path(1)
+                = t 'menu.config.new_user'
             li
-              a href="/users/edit"
-                |Editar Cuenta
+              a href=edit_user_registration_path
+                = t 'menu.config.edit_account'
             li
               a href=users_delete_path
-                |Eliminar Usuarios
+                = t 'menu.config.delete_user'
 
 .modal.hide.fade id="modalSocialNetwork" tabindex="-1" role="dialog" aria-hidden="true"
   .modal-header
@@ -95,11 +94,13 @@ javascript:
       var opcion = $("input:radio[name='social_network']:checked").val();
       switch(opcion){
         case 'facebook':
-          loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'clients/facebook'); break;
+          loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'#{params[:locale]}/clients/facebook'); break;
         case 'twitter':
-          window.location.href = "/social_networks/new/2"; break;
+          window.location.href =
+          "#{social_networks_new_path(2).html_safe}"; break;
         case 'linkedin':
-          window.location.href = "/social_networks/new/3"; break;
+          window.location.href =
+          "#{social_networks_new_path(3).html_safe}"; break;
       }
     });
   });

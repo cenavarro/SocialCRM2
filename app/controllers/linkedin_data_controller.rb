@@ -32,7 +32,7 @@ class LinkedinDataController < ApplicationController
         format.json { render json: @linkedin_data }
       end
     else
-      redirect_to :controller => 'home', :action => 'index'
+      redirect_to root2_path
     end
   end
 
@@ -54,7 +54,7 @@ class LinkedinDataController < ApplicationController
     @linkedin_datum.total_followers = LinkedinDatum.get_total_followers(@linkedin_datum)
     respond_to do |format|
       if @linkedin_datum.save
-        format.html { redirect_to %{/linkedin_data/#{@linkedin_datum.client_id}/1}, notice: 'La informacion se ha ingresado exitosamente.' }
+        format.html { redirect_to linkedin_index_path(@linkedin_datum.client_id,1), notice: 'La informacion se ha ingresado exitosamente.' }
         format.json { render json: @linkedin_datum, status: :created, location: @linkedin_datum }
       else
         format.html { render action: "new" }
@@ -69,7 +69,7 @@ class LinkedinDataController < ApplicationController
 
     respond_to do |format|
       if @linkedin_datum.update_attributes(params[:linkedin_datum])
-        format.html { redirect_to %{/linkedin_data/#{@twitter_datum.client_id}/1}, notice: 'La informacion ha sido actualizada exitosamente.' }
+        format.html { redirect_to linkedin_index_path(@linkedin_datum.client_id,1), notice: 'La informacion ha sido actualizada exitosamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -84,7 +84,7 @@ class LinkedinDataController < ApplicationController
     @linkedin_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to %{/linkedin_data/#{client_id}/1}, notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to linkedin_index_path(@linkedin_datum.client_id,1), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

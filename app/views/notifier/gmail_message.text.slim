@@ -4,4 +4,4 @@
 
 = "Visite el siguiente link para restablecer su contraseña:".html_safe
 
-= "http://socialcrm2.herokuapp.com/notifications/reset_password/".html_safe + @token.to_s.html_safe
+= "http://socialcrm2.herokuapp.com/"+params[:locale]+"/notifications/reset_password/".html_safe + @token.to_s.html_safe
