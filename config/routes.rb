@@ -4,18 +4,18 @@ DemoComentarios::Application.routes.draw do
     
     put "linkedin_data" => "linkedin_data#update", :as => "linkedin_update" 
     post "linkedin_data" => "linkedin_data#create", :as => "linkedin_datum" 
-    get "linkedin_data/:idc/:opcion" => "linkedin_data#index", :as => "linkedin_index"
-    get "linkedin_data/new/:idc/:opcion" => "linkedin_data#new", :as => "linkedin_new"
-    get "linkedin_data/:id/edit/:idc" => "linkedin_data#edit", :as => "linkedin_edit"
+    get "linkedin_data/:idc/:opcion/:id_social" => "linkedin_data#index", :as => "linkedin_index"
+    get "linkedin_data/new/:idc/:opcion/:id_social" => "linkedin_data#new", :as => "linkedin_new"
+    get "linkedin_data/:id/edit/:idc/:id_social" => "linkedin_data#edit", :as => "linkedin_edit"
     post "linkedin_data/save_comment" => "linkedin_data#save_comment", :as => "linkedin_save_comment"
     delete "linkedin_data/:id" => "linkedin_data#destroy", :as => "linkedin_delete"
     put "linkedin_data/:id" => "linkedin_data#update", :as => "linkedin_update"
     resource :linkedin_data
 
     resources :twitter_data
-    get "twitter_data/:idc/:opcion" => "twitter_data#index", :as => "twitter_index"
-    get "twitter_data/new/:idc/:opcion" => "twitter_data#new", :as => "twitter_new"
-    get "twitter_data/:id/edit/:idc" => "twitter_data#edit", :as => "twitter_edit"
+    get "twitter_data/:idc/:opcion/:id_social" => "twitter_data#index", :as => "twitter_index"
+    get "twitter_data/new/:idc/:opcion/:id_social" => "twitter_data#new", :as => "twitter_new"
+    get "twitter_data/:id/edit/:idc/:id_social" => "twitter_data#edit", :as => "twitter_edit"
     post "twitter_data/save_comment" => "twitter_data#save_comment", :as => "twitter_save_comment"
     delete "twitter_data/:id" => "twitter_data#destroy", :as => "twitter_delete"
 
@@ -24,9 +24,9 @@ DemoComentarios::Application.routes.draw do
     resources :facebook_data
     get "facebook_data/callback/:idc/:start_date/:end_date" => "facebook_data#callback", :as => "facebook_callback_dates"
     get "facebook_data/callback/:idc" => "facebook#callback", :as => "facebook_callback"
-    get "facebook_data/:idc/:opcion" => "facebook_data#index", :as => "facebook_index"
-    get "facebook_data/new/:idc/:opcion" => "facebook_data#new", :as => "facebook_new"
-    get "facebook_data/:id/edit/:idc" => "facebook_data#edit", :as => "facebook_edit"
+    get "facebook_data/:idc/:opcion/:id_social" => "facebook_data#index", :as => "facebook_index"
+    get "facebook_data/new/:idc/:opcion/:id_social" => "facebook_data#new", :as => "facebook_new"
+    get "facebook_data/:id/edit/:idc/:id_social" => "facebook_data#edit", :as => "facebook_edit"
     post "facebook_data/save_comment" => "facebook_data#save_comment", :as => "facebook_save_comment"
 
     resources :clients
@@ -34,7 +34,6 @@ DemoComentarios::Application.routes.draw do
     get 'clients/facebook' => 'clients#facebook', :as => "client_facebook", :as => "clients_facebook"
     post 'clients/insert_social_network' => 'clients#insert_social_network', :as => "clients_insert_social_network"
 
-    resources :users, :only => :show
     get "users/new/:option" => "users#new", :as => "new_user"
     get 'users/delete' => 'users#delete', :as => "users_delete"
     put 'users/destroy' => 'users#destroy', :as => "users_destroy"

@@ -6,7 +6,7 @@
 br
 
 - @twitter_info = InfoSocialNetwork.find(2)
-- @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 2)[0]
+- @socialNetwork = SocialNetwork.find(params[:id_social])
 - @comments = TwitterComment.where(:social_network_id => @socialNetwork.id)[0]
 
 .margin
@@ -56,7 +56,7 @@ br
 
 script 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_comunidad', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_comunidad', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Comunidad', x: -20 },
   | xAxis: {categories: [#{@dates}]},
   | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
@@ -67,7 +67,7 @@ script
   | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_interacciones', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_interacciones', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Interactividad', x: -20 },
   | xAxis: {categories: [#{@dates}] },
   | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
@@ -78,7 +78,7 @@ script
   | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_inversion', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_inversion', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Inversion', x: -20 },
   | xAxis: {categories: [#{@dates}] },
   | yAxis: { min:0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
@@ -88,7 +88,7 @@ script
   | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_costes', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_costes', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Costes', x: -20 },
   | xAxis: {categories: [#{@dates}] },
   | yAxis: {min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},

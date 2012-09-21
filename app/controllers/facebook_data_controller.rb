@@ -27,11 +27,11 @@ class FacebookDataController < ApplicationController
   def index
     if existParamIdClient?
       if !getDataDateRange?
-        @facebook_data = FacebookDatum.where('client_id = ?', params[:idc]).order("start_date ASC")
+        @facebook_data = FacebookDatum.where('id_social_network = ?', params[:id_social]).order("start_date ASC")
       else
         fechaInicio = params[:start_date].to_date
         fechaFinal = params[:end_date].to_date
-        @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,params[:idc].to_i]).order("start_date ASC")
+        @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? and id_social_network = ?', fechaInicio,fechaFinal,params[:id_social]]).order("start_date ASC")
       end
 
       createCharData
@@ -41,7 +41,7 @@ class FacebookDataController < ApplicationController
         format.json { render json: @facebook_data }
       end
     else
-      redirect_to :controller => 'home', :action => 'index'
+      redirect_to root2_path
     end
   end
 
@@ -119,7 +119,7 @@ class FacebookDataController < ApplicationController
     
     respond_to do |format|
       if @facebook_datum.save
-        format.html { redirect_to facebook_index_path(@facebook_datum.client_id.to_i,1), notice: 'La Nueva Entrada de Datos se creo satisfactoriamente.' }
+        format.html { redirect_to facebook_index_path(@facebook_datum.client_id.to_i,1,@facebook_datum.id_social_network), notice: 'La Nueva Entrada de Datos se creo satisfactoriamente.' }
       else
         format.html { render action: "new" }
         format.json { render json: @facebook_datum.errors, status: :unprocessable_entity }
@@ -129,11 +129,12 @@ class FacebookDataController < ApplicationController
 
   def update
     @facebook_datum = FacebookDatum.find(params[:id])
-    @facebook_datum.new_fans = FacebookDatum.get_new_fans(@facebook_datum)
 
     respond_to do |format|
       if @facebook_datum.update_attributes(params[:facebook_datum])
-        format.html { redirect_to facebook_index_path(@facebook_datum.client_id,1), notice: 'La informacion ha sido actualizada con exitosamente.' }
+        @facebook_datum.new_fans = FacebookDatum.get_new_fans(@facebook_datum)
+        @facebook_datum.save!
+        format.html { redirect_to facebook_index_path(@facebook_datum.client_id,1,@facebook_datum.id_social_network), notice: 'La informacion ha sido actualizada con exitosamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -145,10 +146,11 @@ class FacebookDataController < ApplicationController
   def destroy
     @facebook_datum = FacebookDatum.find(params[:id])
     client_id = @facebook_datum.client_id
+    id_social = @facebook_datum.id_social_network
     @facebook_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to facebook_index_path(client_id,1), notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to facebook_index_path(client_id, 1, id_social), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

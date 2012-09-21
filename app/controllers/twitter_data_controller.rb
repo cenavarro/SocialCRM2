@@ -22,11 +22,11 @@ class TwitterDataController < ApplicationController
   def index
     if existParamIdClient?
       if !getDataDateRange?
-        @twitter_data = TwitterDatum.where('client_id = ?', params[:idc]).order("start_date ASC")
+        @twitter_data = TwitterDatum.where('id_social_network = ?', params[:id_social]).order("start_date ASC")
       else
         fechaInicio = params[:start_date].to_date
         fechaFinal = params[:end_date].to_date
-        @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? AND client_id = ?', fechaInicio,fechaFinal,params[:idc].to_i]).order("start_date ASC")
+        @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? and id_social_network = ?', fechaInicio,fechaFinal,params[:id_social]]).order("start_date ASC")
       end
 
       createChartData
@@ -72,7 +72,7 @@ class TwitterDataController < ApplicationController
 
     respond_to do |format|
       if @twitter_datum.save
-        format.html { redirect_to twitter_index_path(@twitter_datum.client_id,1), notice: 'La informacion se ha ingresado exitosamente.'}
+        format.html { redirect_to twitter_index_path(@twitter_datum.client_id, 1, @twitter_datum.id_social_network), notice: 'La informacion se ha ingresado exitosamente.'}
         format.json { render json: @twitter_datum, status: :created, location: @twitter_datum }
       else
         format.html { render action: "new" }
@@ -83,13 +83,14 @@ class TwitterDataController < ApplicationController
 
   def update
     @twitter_datum = TwitterDatum.find(params[:id])
-    @twitter_datum.new_followers = TwitterDatum.get_new_followers(@twitter_datum)
-    @twitter_datum.total_interactions = TwitterDatum.get_total_interactions(@twitter_datum)
-    @twitter_datum.cost_follower = TwitterDatum.get_cost_follower(@twitter_datum)
 
     respond_to do |format|
       if @twitter_datum.update_attributes(params[:twitter_datum])
-        format.html { redirect_to twitter_index_path(@twitter_datum.client_id,1), notice: 'La informacion ha sido actualizada exitosamente.' }
+        @twitter_datum.new_followers = TwitterDatum.get_new_followers(@twitter_datum)
+        @twitter_datum.total_interactions = TwitterDatum.get_total_interactions(@twitter_datum)
+        @twitter_datum.cost_follower = TwitterDatum.get_cost_follower(@twitter_datum)
+        @twitter_datum.save!
+        format.html { redirect_to twitter_index_path(@twitter_datum.client_id, 1, @twitter_datum.id_social_network), notice: 'La informacion ha sido actualizada exitosamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -100,11 +101,12 @@ class TwitterDataController < ApplicationController
 
   def destroy
     @twitter_datum = TwitterDatum.find(params[:id])
-    @client_id = @twitter_datum.client_id
+    client_id = @twitter_datum.client_id
+    social_id = @twitter_datum.id_social_network
     @twitter_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to twitter_index_path(@twitter_datum.client_id,1), notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to twitter_index_path(client_id, 1, social_id), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

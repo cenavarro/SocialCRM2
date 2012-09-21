@@ -14,6 +14,8 @@ javascript:
           li= msg
   .form-horizontal.sectionInformation style="height:1150px;"
     .box.informacion
+      = f.hidden_field :client_id, :value => params[:idc]
+      = f.hidden_field :id_social_network, :value => params[:id_social]
       - start_date = "01-01-2012"
       - end_date = "01-01-2012"
       - start_date = params[:start_date] if params.has_key?(:start_date)
@@ -34,7 +36,6 @@ javascript:
       br
       = f.label "Acciones durante el periodo"
       = f.text_field :actions
-      = f.hidden_field :client_id, :value => params[:idc]
       br
       br
       | Extraer datos desde Facebook
@@ -118,7 +119,7 @@ javascript:
       br
       = f.label "CPC anuncios"
       = f.text_field :cpc_anno, {:class => "validate[required, custom[number]]"}
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveFacebook", "data-confirm" => "Esta seguro?"}
+    = f.submit 'Guardar Datos', {:class => "btn btn-success saveFacebook"}
     |     
     = link_to 'Regresar', facebook_index_path(params[:idc],1), :class => "btn btn-inverse backFacebook"
 

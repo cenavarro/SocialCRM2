@@ -2,17 +2,17 @@ class LinkedinDatum < ActiveRecord::Base
   belongs_to :client
 
 
-  def self.get_total_followers(datum)
+  def self.get_new_followers(datum)
     if !isFirstData?(datum)
-      old_data = LinkedinDatum.where('end_date < ?', datum.start_date.to_date).first
-      return (datum.new_followers + old_data.total_followers)
+      old_data = LinkedinDatum.where('end_date < ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first
+      return (datum.total_followers - old_data.total_followers)
     end
-    return (datum.new_followers)
+    return 0
   end
 
   def self.get_growth_followers(datum)
     if !isFirstData?(datum)
-      old_data = LinkedinDatum.where('end_date < ?', datum.start_date.to_date).first
+      old_data = LinkedinDatum.where('end_date < ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first
       if old_data.total_followers != 0
         return (datum.new_followers.to_f/old_data.total_followers.to_f)*100
       end
@@ -30,7 +30,7 @@ class LinkedinDatum < ActiveRecord::Base
   end
 
   def self.isFirstData?(datum)
-    before_data = LinkedinDatum.where('end_date < ?',datum.start_date.to_date).first
+    before_data = LinkedinDatum.where('end_date < ? and id_social_network = ?',datum.start_date.to_date, datum.id_social_network).first
 		if(before_data == nil)
 			return true
 		end

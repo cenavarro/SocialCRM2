@@ -125,7 +125,7 @@ br
       br
       = f.label "CPC anuncios"
       = f.text_field :cpc_anno, {:class => "validate[required, custom[number]]"}
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveFacebook", "data-confirm" => "Esta seguro?"}
+    = f.submit 'Guardar Datos', {:class => "btn btn-success saveFacebook"}
     |     
     = link_to 'Regresar', facebook_index_path(params[:idc],1), :class => "btn btn-inverse backFacebook"
 

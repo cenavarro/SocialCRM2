@@ -22,7 +22,7 @@ class FacebookDatum < ActiveRecord::Base
 
   def self.get_new_fans(datum)
     if !isFirstData?(datum)
-      old_data = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first
+      old_data = FacebookDatum.where('end_date < ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first
       return (datum.total_fans - old_data.total_fans) 
     end
     return 0
@@ -42,7 +42,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.getPercentagePrints(datum)
-    prevPrintsData = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first.prints
+    prevPrintsData = FacebookDatum.where('end_date < ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first.prints
     if prevPrintsData != 0
       return ((datum.prints.to_f - prevPrintsData).to_f/prevPrintsData.to_f)*100
     end
@@ -55,7 +55,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.getPercentageIteractions(datum)
-    prevIteractionData = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first.total_interactions
+    prevIteractionData = FacebookDatum.where('end_date < ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first.total_interactions
     if prevIteractionData != 0
       return ((datum.total_interactions.to_f-prevIteractionData.to_f)/prevIteractionData.to_f)*100
     end
@@ -68,7 +68,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.getPercentageTotalReach(datum)
-    prevTotalReach = FacebookDatum.where('end_date < ?',datum.start_date.to_date).first.total_reach
+    prevTotalReach = FacebookDatum.where('end_date < ? and id_social_network = ?',datum.start_date.to_date, datum.id_social_network).first.total_reach
     if prevTotalReach != 0
       return ((datum.total_reach - prevTotalReach).to_f/prevTotalReach.to_f) * 100
     end
@@ -81,7 +81,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.getPercentageChangeInteractions(datum)
-    prevData = FacebookDatum.where('end_date < ?',datum.start_date.to_date).first
+    prevData = FacebookDatum.where('end_date < ? and id_social_network = ?',datum.start_date.to_date, datum.id_social_network).first
     prevTotalInteractions = get_total_interactions(prevData)
     total_interactions = get_total_interactions(datum)
     return ((total_interactions - prevTotalInteractions).to_f / prevTotalInteractions.to_f) * 100
@@ -93,7 +93,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.getPercentageChangePrints(datum)
-    prevData = FacebookDatum.where('end_date < ?',datum.start_date.to_date).first
+    prevData = FacebookDatum.where('end_date < ? and id_social_network = ?',datum.start_date.to_date, datum.id_social_network).first
     prevTotalPrints = get_total_prints(prevData)
     total_prints = get_total_prints(datum)
     return ((total_prints - prevTotalPrints).to_f / prevTotalPrints.to_f) * 100
@@ -112,7 +112,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.isFirstData?(datum)
-    before_data = FacebookDatum.where('end_date < ?', datum.start_date.to_date).first
+    before_data = FacebookDatum.where('end_date < ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first
     return before_data.nil?
   end
 end

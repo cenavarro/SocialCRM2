@@ -6,7 +6,7 @@
 br
 
 - @linkedin_info = InfoSocialNetwork.find(3)
-- @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 3)[0]
+- @socialNetwork = SocialNetwork.find(params[:id_social])
 - @comments = LinkedinComment.where(:social_network_id => @socialNetwork.id)[0]
 
 .margin
@@ -56,7 +56,7 @@ br
 
 script 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_followers', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_followers', type: 'line', marginRight: 130, marginBottom: 45, width: 806 },
   | title: {text: 'Seguidores', x: -20 },
   | xAxis: {categories: [#{@dates}]},
   | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
@@ -66,7 +66,7 @@ script
   | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_interactions', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_interactions', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Interactividad', x: -20 },
   | xAxis: {categories: [#{@dates}] },
   | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},

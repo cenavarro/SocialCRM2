@@ -5,7 +5,7 @@
           = notice
 br
 - @facebook_info = InfoSocialNetwork.find(1)
-- @socialNetwork = SocialNetwork.where(:client_id => params[:idc], :info_social_network_id => 1)[0]
+- @socialNetwork = SocialNetwork.find(params[:id_social])
 - @comments = FacebookComment.where(:social_network_id => @socialNetwork.id)[0]
 
 .margin
@@ -54,7 +54,7 @@ br
 script 
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_fans', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_fans', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Comunidad', x: -20 },
   | xAxis: {categories: [ #{@dates} ] },
   | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
@@ -64,7 +64,7 @@ script
   | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_reach', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_reach', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Alcance', x: -20 },
   | xAxis: {categories: [ #{@dates} ] },
   | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
@@ -75,7 +75,7 @@ script
 
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_interactivity', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_interactivity', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Interactividad', x: -20 },
   | xAxis: {categories: [ #{@dates} ] },
   | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
@@ -85,7 +85,7 @@ script
   | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_investment_growth', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_investment_growth', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Inversiones', x: -20 },
   | xAxis: {categories: [ #{@dates} ] },
   | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
@@ -95,7 +95,7 @@ script
   | });});});
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_costs', type: 'line', marginRight: 130, marginBottom: 45 },
+  | chart: {renderTo: 'container_costs', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
   | title: {text: 'Costes', x: -20 },
   | xAxis: {categories: [ #{@dates} ] },
   | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},

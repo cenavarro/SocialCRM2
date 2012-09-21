@@ -45,7 +45,7 @@ javascript:
       br
       br
       = f.label "Seguidores"
-      = f.text_field :new_followers, {:class => "validate[required,custom[number]]"}
+      = f.text_field :total_followers, {:class => "validate[required,custom[number]]"}
 
     .box.interactionLinkedin
       | Interactividad
@@ -99,7 +99,7 @@ javascript:
 
     br
     br
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveLinkedin", :onclick => "return confirm('Estas seguro?')"}
+    = f.submit 'Guardar Datos', {:class => "btn btn-success saveLinkedin"}
     |     
     = link_to 'Regresar', linkedin_index_path(params[:idc],1), :class => "btn btn-inverse backLinkedin"
 
