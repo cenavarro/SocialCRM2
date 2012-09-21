@@ -1,19 +1,23 @@
 DemoComentarios::Application.routes.draw do
 
   scope ':locale' do
-    resource :linkedin_data
+    
+    put "linkedin_data" => "linkedin_data#update", :as => "linkedin_update" 
     post "linkedin_data" => "linkedin_data#create", :as => "linkedin_datum" 
     get "linkedin_data/:idc/:opcion" => "linkedin_data#index", :as => "linkedin_index"
     get "linkedin_data/new/:idc/:opcion" => "linkedin_data#new", :as => "linkedin_new"
     get "linkedin_data/:id/edit/:idc" => "linkedin_data#edit", :as => "linkedin_edit"
     post "linkedin_data/save_comment" => "linkedin_data#save_comment", :as => "linkedin_save_comment"
     delete "linkedin_data/:id" => "linkedin_data#destroy", :as => "linkedin_delete"
+    put "linkedin_data/:id" => "linkedin_data#update", :as => "linkedin_update"
+    resource :linkedin_data
 
     resources :twitter_data
     get "twitter_data/:idc/:opcion" => "twitter_data#index", :as => "twitter_index"
     get "twitter_data/new/:idc/:opcion" => "twitter_data#new", :as => "twitter_new"
     get "twitter_data/:id/edit/:idc" => "twitter_data#edit", :as => "twitter_edit"
     post "twitter_data/save_comment" => "twitter_data#save_comment", :as => "twitter_save_comment"
+    delete "twitter_data/:id" => "twitter_data#destroy", :as => "twitter_delete"
 
     devise_for :users, :controllers => {:omniauth_callbacks => "auth"}
 
@@ -48,6 +52,7 @@ DemoComentarios::Application.routes.draw do
     post "social_networks/add_image" => "social_networks#add_image", :as => "social_networks_add_image"
     post "social_networks/update_comment" => "social_networks#update_comment_image", :as => "social_networks_update_comment"
     delete "social_networks/destroy_image/:id" => "social_networks#destroy_image", :as => "social_networks_destroy_image"
+    delete "social_networks/:id" => "social_networks#destroy", :as => "social_networks_delete"
 
     get "validate_user/" => "home#validate_user", :as => "validate_user"
 

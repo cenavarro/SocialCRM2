@@ -18,7 +18,7 @@ class LinkedinDataController < ApplicationController
   def index
     if existParamIdClient?
       if !getDataDateRange?
-        @linkedin_data = LinkedinDatum.order("start_date ASC")
+        @linkedin_data = LinkedinDatum.where('client_id = ?', params[:idc]).order("start_date ASC")
       else
         fechaInicio = params[:start_date].to_date
         fechaFinal = params[:end_date].to_date
@@ -37,54 +37,53 @@ class LinkedinDataController < ApplicationController
   end
 
   def new
-    @linkedin_datum = LinkedinDatum.new
+    @linkedin_data = LinkedinDatum.new
 
     respond_to do |format|
       format.html
-      format.json { render json: @linkedin_datum }
+      format.json { render json: @linkedin_data }
     end
   end
 
   def edit
-    @linkedin_datum = LinkedinDatum.find(params[:id])
+    @linkedin_data = LinkedinDatum.find(params[:id])
   end
 
   def create
-    @linkedin_datum = LinkedinDatum.new(params[:linkedin_datum])
-    @linkedin_datum.total_followers = LinkedinDatum.get_total_followers(@linkedin_datum)
+    @linkedin_data = LinkedinDatum.new(params[:linkedin_data])
+    @linkedin_data.total_followers = LinkedinDatum.get_total_followers(@linkedin_data)
     respond_to do |format|
-      if @linkedin_datum.save
-        format.html { redirect_to linkedin_index_path(@linkedin_datum.client_id,1), notice: 'La informacion se ha ingresado exitosamente.' }
-        format.json { render json: @linkedin_datum, status: :created, location: @linkedin_datum }
+      if @linkedin_data.save
+        format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1), notice: 'La informacion se ha ingresado exitosamente.' }
+        format.json { render json: @linkedin_data, status: :created, location: @linkedin_data }
       else
         format.html { render action: "new" }
-        format.json { render json: @linkedin_datum.errors, status: :unprocessable_entity }
+        format.json { render json: @linkedin_data.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    @linkedin_datum = LinkedinDatum.find(params[:id])
-    @linkedin_datum.total_followers = LinkedinDatum.get_total_followers(@linkedin_datum)
-
+    @linkedin_data = LinkedinDatum.find(params[:id])
+    @linkedin_data.total_followers = LinkedinDatum.get_total_followers(@linkedin_data)
     respond_to do |format|
-      if @linkedin_datum.update_attributes(params[:linkedin_datum])
-        format.html { redirect_to linkedin_index_path(@linkedin_datum.client_id,1), notice: 'La informacion ha sido actualizada exitosamente.' }
+      if @linkedin_data.update_attributes(params[:linkedin_datum])
+        format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1), notice: 'La informacion ha sido actualizada exitosamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
-        format.json { render json: @linkedin_datum.errors, status: :unprocessable_entity }
+        format.json { render json: @linkedin_data.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @linkedin_datum = LinkedinDatum.find(params[:id])
-    client_id = @linkedin_datum.client_id
-    @linkedin_datum.destroy
+    @linkedin_data = LinkedinDatum.find(params[:id])
+    client_id = @linkedin_data.client_id
+    @linkedin_data.destroy
 
     respond_to do |format|
-      format.html { redirect_to linkedin_index_path(@linkedin_datum.client_id,1), notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

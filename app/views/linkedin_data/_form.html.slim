@@ -3,12 +3,12 @@ javascript:
       jQuery("#formEntradaDatos").validationEngine();
     });
 
-  = form_for @linkedin_datum, :html => {:class => "formNuevoDatosLinkedin", :id => "formEntradaDatos"} do |f|
-  - if @linkedin_datum.errors.any?
+= form_for @linkedin_data, :html => {:class => "formNuevoDatosLinkedin", :id => "formEntradaDatos"} do |f|
+  - if @linkedin_data.errors.any?
     #error_explanation
-      h2 = "#{pluralize(@linkedin_datum.errors.count, "error")} prohibited this linkedin_datum from being saved:"
+      h2 = "#{pluralize(@linkedin_data.errors.count, "error")} prohibited this linkedin_data from being saved:"
       ul
-        - @linkedin_datum.errors.full_messages.each do |message|
+        - @linkedin_data.errors.full_messages.each do |message|
           li = message
 
   .form-horizontal.sectionInformation style="height: 1000px;"
@@ -19,10 +19,10 @@ javascript:
       = f.hidden_field :client_id, :value => params[:idc]
       - start_date = "01-01-2012"
       - start_date = params[:start_date] if params.has_key?(:start_date)
-      - start_date = @linkedin_datum.start_date if !@linkedin_datum.start_date.nil?
+      - start_date = @linkedin_data.start_date if !@linkedin_data.start_date.nil?
       - end_date = "01-01-2012"
       - end_date = params[:end_date] if params.has_key?(:end_date)
-      - end_date = @linkedin_datum.end_date if !@linkedin_datum.end_date.nil?
+      - end_date = @linkedin_data.end_date if !@linkedin_data.end_date.nil?
       = f.label "Fecha Inicio"
       .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true

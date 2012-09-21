@@ -21,9 +21,10 @@ class ClientsController < ApplicationController
 		@user.rol_id = 2
 		@user.client_id = client_id.to_i
   	if @user.save 		
-  			@mensaje = 'El Cliente se ha ingresado correctamente.'
+  		@mensaje = 'El Cliente se ha ingresado correctamente.'
     else
-        @mensaje = 'El Cliente NO se pudo ingresar correctamente.'
+      Client.find(client_id).destroy 
+      @mensaje = 'El Cliente NO se pudo ingresar correctamente.'
   	end
   	respond_to do |format|
 	  	format.html { redirect_to request.referer, notice: @mensaje }
@@ -44,17 +45,25 @@ class ClientsController < ApplicationController
   end
 
   def edit
+    p "Params Edit:" + params.to_json
     @client = Client.find(params[:id])
+    @user = User.find_by_client_id(@client.id)
   end
 
   def update
+    p "Params Update:" + params.to_json
     @client = Client.find(params[:id])
-    @user = User.find(User.select(:id).where(:client_id => @client.id))
+    @client.name = params[:name]
+    @client.description = params[:description]
+    @client.image = params[:image]
+    @user = User.find_by_client_id(@client.id)
+    @user.email = params[:email]
     @user.name = @client.name
-    @user.save
+    @user.password = params[:password]
+    @user.password_confirmation = params[:password_confirmation]
 
     respond_to do |format|
-      if @client.update_attributes(params[:client])
+      if @client.update_attributes(params[:client]) && @user.save
         format.html { redirect_to clients_path, notice: 'El Cliente fue actualizado correctamente.' }
         format.json { head :ok }
       else

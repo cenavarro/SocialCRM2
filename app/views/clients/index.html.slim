@@ -33,10 +33,9 @@ table.table.table-bordered
         a.btn.btn-info href=edit_client_path(client) id=edit_id
           i.icon-pencil.icon-white
           |  Editar
-      - client_path = "clients/"+client.id.to_s
       - delete_id = "delete_"+client.id.to_s
       td
-        a.btn.btn-danger href=client_path data-confirm="Esta seguro que desea eliminar este cliente?" data-method="delete" rel="nofollow" id=delete_id
+        a.btn.btn-danger href=client_path(client.id) data-confirm="Esta seguro que desea eliminar este cliente?" data-method="delete" rel="nofollow" id=delete_id
           i.icon-trash.icon-white
           |  Eliminar
 br

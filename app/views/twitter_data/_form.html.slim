@@ -17,9 +17,11 @@ javascript:
       br
       = f.hidden_field :client_id, :value => params[:idc]
       - start_date = "01-01-2012"
-      - end_date = "01-01-2012"
       - start_date = params[:start_date] if params.has_key?(:start_date)
+      - start_date = @twitter_datum.start_date if !@twitter_datum.start_date.nil?
       - end_date = params[:end_date] if params.has_key?(:end_date)
+      - end_date = "01-01-2012"
+      - end_date = @twitter_datum.end_date if !@twitter_datum.end_date.nil?
       = f.label "Fecha Inicio"
       .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
@@ -94,7 +96,7 @@ javascript:
     br
     = f.submit 'Guardar Datos', {:class => "btn btn-success saveTwitter", :onclick => "return confirm('Estas seguro?')"}
     |     
-    = link_to 'Regresar', %{#{twitter_data_path}/#{params[:idc]}/1}, :class => "btn btn-inverse backTwitter"
+    = link_to 'Regresar', twitter_index_path(params[:idc],1), :class => "btn btn-inverse backTwitter"
 
 javascript:
     jQuery(document).ready(function(){

@@ -1,6 +1,63 @@
+javascript:
+
+    jQuery(document).ready(function(){
+      jQuery("#form_new").validationEngine();
+    });
+
+
 center
   h1 Editar Cliente
 br
+br
+br
+= form_tag({:controller => "clients", :action => "update"}, :method => "put", :class => "well form-inline formNuevoCliente", :id =>"form_new") do
 
-== render 'form'
+  = label_tag :name, "Nombre:"
+  br
+  = text_field_tag :name, @client.name ,{:class => "validate[required] text-input"}
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :email, "Email:"
+  br
+  = text_field_tag :email, @user.email , :class => "validate[required, custom[email]]"
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :password, "Contraseña:"
+  = password_field_tag :password, nil, {:class => "validate[required]"}
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :password_confirmation, "Confirmación de Contraseña:"
+  = password_field_tag :password_confirmation, nil, {:class => "validate[required,equals[password]]"}
+  p.simbolo
+    span style="font-size: 16pt" align=""
+      |*
+  br
+  br
+  = label_tag :description, "Descripcion Cliente:"
+  = text_field_tag :description, @client.description
 
+  br
+  br
+  = label_tag :image, "Imagen Cliente:"
+  = text_field_tag :image, "/assets/images/client.png", :readonly => true
+  br
+  br
+  center
+    button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro que desea agregar este cliente?"
+      i.icon-check.icon-white
+      |  Crear Cliente
+  br
+  br
+  p.leyenda
+    span style="font-size: 16pt"
+      |* 
+    |Campos Requeridos

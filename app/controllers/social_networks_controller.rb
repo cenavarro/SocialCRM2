@@ -34,7 +34,7 @@ class SocialNetworksController < ApplicationController
           when 2
             comments = TwitterComment.new(:social_network_id => @social_network.id)
           when 3
-            comments = LinkedinComments.new(:social_network_id => @social_network.id)
+            comments = LinkedinComment.new(:social_network_id => @social_network.id)
         end
         if !comments.nil?
           comments.save

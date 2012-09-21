@@ -22,7 +22,7 @@ class TwitterDataController < ApplicationController
   def index
     if existParamIdClient?
       if !getDataDateRange?
-        @twitter_data = TwitterDatum.order("start_date ASC")
+        @twitter_data = TwitterDatum.where('client_id = ?', params[:idc]).order("start_date ASC")
       else
         fechaInicio = params[:start_date].to_date
         fechaFinal = params[:end_date].to_date

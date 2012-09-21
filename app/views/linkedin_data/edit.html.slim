@@ -4,5 +4,107 @@ center
 br
 br
 
-== render 'form'
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#formEntradaDatos").validationEngine();
+    });
 
+= form_for @linkedin_data, :url => linkedin_update_path(@linkedin_data.id), :method => :put, :html => {:class => "formNuevoDatosLinkedin", :id => "formEntradaDatos"} do |f|
+  - if @linkedin_data.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@linkedin_data.errors.count, "error")} prohibited this linkedin_data from being saved:"
+      ul
+        - @linkedin_data.errors.full_messages.each do |message|
+          li = message
+
+  .form-horizontal.sectionInformation style="height: 1000px;"
+    .box.informationLinkedin
+      | Informacion
+      br
+      br
+      = f.hidden_field :client_id, :value => params[:idc]
+      - start_date = "01-01-2012"
+      - start_date = @linkedin_data.start_date if !@linkedin_data.start_date.nil?
+      - end_date = "01-01-2012"
+      - end_date = @linkedin_data.end_date if !@linkedin_data.end_date.nil?
+      = f.label "Fecha Inicio"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date"
+        = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
+        span.add-on
+          i.icon-th
+      br
+      br
+      = f.label "Fecha Final"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date"
+        = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
+        span.add-on
+          i.icon-th
+
+    .box.comunityLinkedin
+      | Comunidad
+      br
+      br
+      = f.label "Seguidores"
+      = f.text_field :new_followers, {:class => "validate[required,custom[number]]"}
+
+    .box.interactionLinkedin
+      | Interactividad
+      br
+      br
+      = f.label "Resumen"
+      = f.text_field :summary, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Empleo"
+      = f.text_field :employment, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Productos y Servicios"
+      = f.text_field :products_services, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Impresiones"
+      = f.text_field :prints, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Clicks"
+      = f.text_field :clics, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "% de interes"
+      = f.text_field :interest, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Recomendacion"
+      = f.text_field :recommendation, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Compartidos"
+      = f.text_field :shared, {:class => "validate[required,custom[number]]"}
+
+    .box.investmentLinkedin
+      |Inversion
+      br
+      br
+      = f.label "Inversion Agencia"
+      = f.text_field :investment_agency, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Inversion Nuevas Acciones "
+      = f.text_field :investment_actions, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Inversion anuncios twitter ads"
+      = f.text_field :investment_anno, { :class => "validate[required,custom[number]]"}
+
+    br
+    br
+    = f.submit 'Guardar Datos', {:class => "btn btn-success saveLinkedin", :onclick => "return confirm('Estas seguro?')"}
+    |     
+    = link_to 'Regresar', linkedin_index_path(params[:idc],1), :class => "btn btn-inverse backLinkedin"
+
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#start_date").datepicker();
+      jQuery("#end_date").datepicker();
+    });
