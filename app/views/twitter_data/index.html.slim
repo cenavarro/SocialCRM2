@@ -387,7 +387,7 @@ section.sectionInformation
           h4
             | Comentario para la Tabla:
         br
-        form id="table" onsubmit="return saveCommentTwitter('#table',#{@socialNetwork.id},1,'#{params[:locale]}');"
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1,'#{params[:locale]}', '#{@twitter_info.id_name}');"
           textarea id="comment"
             = @comments.table
           br
@@ -407,7 +407,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Comnidad
           br
-          form  id="comunity" onsubmit="return saveCommentTwitter('#comunity',#{@socialNetwork.id},2,'#{params[:locale]}');"
+          form  id="comunity" onsubmit="return saveChartComment('#comunity',#{@socialNetwork.id},2,'#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.comunity
             br
@@ -421,7 +421,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Interacciones
           br
-          form  id="interactions" onsubmit="return saveCommentTwitter('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}');"
+          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interaction
             br
@@ -435,7 +435,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Inversion
           br
-          form  id="investment" onsubmit="return saveCommentTwitter('#investment',#{@socialNetwork.id},4,'#{params[:locale]}');"
+          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},4,'#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.investment
             br
@@ -449,7 +449,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Costes
           br
-          form  id="cost" onsubmit="return saveCommentTwitter('#cost',#{@socialNetwork.id},5,'#{params[:locale]}');"
+          form  id="cost" onsubmit="return saveChartComment('#cost',#{@socialNetwork.id},5,'#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.cost
             br

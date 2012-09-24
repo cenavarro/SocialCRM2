@@ -233,7 +233,7 @@ section.sectionInformation
           h4
             | Comentario para la Tabla:
         br
-        form id="table" onsubmit="return saveCommentLinkedin('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}');"
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@linkedin_info.id_name}');"
           textarea id="comment"
             = @comments.table
           br
@@ -253,7 +253,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Seguidores
           br
-          form  id="followers" onsubmit="return saveCommentLinkedin('#followers',#{@socialNetwork.id},2 ,'#{params[:locale]}');"
+          form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@linkedin_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.comunity
             br
@@ -267,7 +267,7 @@ section.sectionInformation
             h4
               | Comentario Grafico Interacciones
           br
-          form  id="interactions" onsubmit="return saveCommentLinkedin('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}');"
+          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}','#{@linkedin_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interaction
             br
