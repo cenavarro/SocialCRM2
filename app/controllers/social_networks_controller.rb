@@ -29,13 +29,16 @@ class SocialNetworksController < ApplicationController
 
     respond_to do |format|
       if @social_network.save
-        case @social_network.info_social_network_id
-          when 1
+        id_name = InfoSocialNetwork.find(@social_network.info_social_network_id).id_name
+        case id_name 
+          when 'facebook'
             comments = FacebookComment.new(:social_network_id => @social_network.id)
-          when 2
+          when 'twitter'
             comments = TwitterComment.new(:social_network_id => @social_network.id)
-          when 3
+          when 'linkedin'
             comments = LinkedinComment.new(:social_network_id => @social_network.id)
+          when 'pinterest'
+            comments = PinterestComment.new(:social_network_id => @social_network.id)
         end
         if !comments.nil?
           comments.save

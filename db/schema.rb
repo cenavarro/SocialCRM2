@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120924165709) do
+ActiveRecord::Schema.define(:version => 20120924205520) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",                    :null => false
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20120924165709) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
+    t.string   "id_name"
   end
 
   create_table "linkedin_comments", :force => true do |t|
@@ -119,6 +120,36 @@ ActiveRecord::Schema.define(:version => 20120924165709) do
     t.date     "end_date"
     t.float    "interest"
     t.integer  "id_social_network"
+  end
+
+  create_table "pinterest_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.text     "table"
+    t.text     "comunity"
+    t.text     "interaction"
+    t.text     "investment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pinterest_data", :force => true do |t|
+    t.integer  "new_followers"
+    t.integer  "total_followers"
+    t.integer  "boards"
+    t.integer  "pins"
+    t.integer  "liked"
+    t.integer  "repin"
+    t.integer  "comments"
+    t.integer  "community_boards"
+    t.float    "investment_agency"
+    t.float    "investment_actions"
+    t.float    "investment_ads"
+    t.integer  "client_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "social_network_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "revisions", :force => true do |t|

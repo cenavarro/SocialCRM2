@@ -1,0 +1,48 @@
+// Place all the styles related to the PinterestData controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$top_position: 390px;
+$left_position: 80px;
+$space: 400px;
+
+.informationPinterest{
+	position:absolute;
+	left:$left_position;
+}
+
+.comunityPinterest{
+	position:absolute;
+	left: $left_position+$space;
+}
+
+.interactionPinterest{
+	position:absolute;
+	top: -130 + ($top_position);
+	left:$left_position;
+}
+
+.investmentPinterest{
+	position:absolute;
+	top: 320px;
+  left:$left_position+$space;
+
+}
+
+.costsPinterest{
+	position:absolute;
+	top: $top_position+225;
+	left:$left_position+$space;
+}
+
+.savePinterest{
+	position:absolute;
+	top: 680px;
+	left: 300px;
+}
+
+.backPinterest{
+	position:absolute;
+	top: 680px;
+	left:500px;
+}

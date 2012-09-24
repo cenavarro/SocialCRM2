@@ -22,7 +22,7 @@ class LinkedinDataController < ApplicationController
       else
         fechaInicio = params[:start_date].to_date
         fechaFinal = params[:end_date].to_date
-        @linkedin_data = LinkedinDatum.where(['id_social_network = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio,fechaFinal,]).order("start_date ASC")
+        @linkedin_data = LinkedinDatum.where('id_social_network = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
       end
 
       createChartData

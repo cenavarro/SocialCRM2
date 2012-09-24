@@ -26,6 +26,7 @@ javascript:
   br
   br
   = f.label "Red Social:  "
+  - p "ISN:" + params[:isn]
   - @info_social_networks = InfoSocialNetwork.where('id = ?', params[:isn])
   = f.select :info_social_network_id, options_for_select(@info_social_networks.collect{|p|[p.name, p.id]},@social_network.info_social_network_id)
   br

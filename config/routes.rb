@@ -1,8 +1,18 @@
 DemoComentarios::Application.routes.draw do
 
+
   scope ':locale' do
-    
-    put "linkedin_data" => "linkedin_data#update", :as => "linkedin_update" 
+
+    resources :pinterest_data
+    post "pinterest_data" => "pinterest_data#create", :as => "pinterest_create" 
+    get "pinterest_data/:idc/:opcion/:id_social" => "pinterest_data#index", :as => "pinterest_index"
+    get "pinterest_data/new/:idc/:opcion/:id_social" => "pinterest_data#new", :as => "pinterest_new"
+    get "pinterest_data/:id/edit/:idc/:id_social" => "pinterest_data#edit", :as => "pinterest_edit"
+    post "pinterest_data/save_comment" => "pinterest_data#save_comment", :as => "pinterest_save_comment"
+    delete "pinterest_data/:id" => "pinterest_data#destroy", :as => "pinterest_delete"
+    put "pinterest_data/:id" => "pinterest_data#update", :as => "pinterest_update"
+
+    resource :linkedin_data
     post "linkedin_data" => "linkedin_data#create", :as => "linkedin_datum" 
     get "linkedin_data/:idc/:opcion/:id_social" => "linkedin_data#index", :as => "linkedin_index"
     get "linkedin_data/new/:idc/:opcion/:id_social" => "linkedin_data#new", :as => "linkedin_new"
@@ -10,7 +20,6 @@ DemoComentarios::Application.routes.draw do
     post "linkedin_data/save_comment" => "linkedin_data#save_comment", :as => "linkedin_save_comment"
     delete "linkedin_data/:id" => "linkedin_data#destroy", :as => "linkedin_delete"
     put "linkedin_data/:id" => "linkedin_data#update", :as => "linkedin_update"
-    resource :linkedin_data
 
     resources :twitter_data
     get "twitter_data/:idc/:opcion/:id_social" => "twitter_data#index", :as => "twitter_index"
@@ -45,9 +54,9 @@ DemoComentarios::Application.routes.draw do
 
 
     resources :info_social_networks
-    get "social_networks/new/:isn" => "social_networks#new", :as => "social_networks_new"
 
     resources :social_networks
+    get "social_networks/new/:isn" => "social_networks#new", :as => "social_networks_new"
     post "social_networks/add_image" => "social_networks#add_image", :as => "social_networks_add_image"
     post "social_networks/update_comment" => "social_networks#update_comment_image", :as => "social_networks_update_comment"
     delete "social_networks/destroy_image/:id" => "social_networks#destroy_image", :as => "social_networks_destroy_image"
@@ -61,5 +70,5 @@ DemoComentarios::Application.routes.draw do
 
   end
 
-  root :to => "home#index"
+  root :to => "home#index", :locale => "es"
 end

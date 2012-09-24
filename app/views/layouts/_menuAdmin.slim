@@ -62,25 +62,19 @@
       |x
     h2
       |Redes Sociales Disponibles
-  .modal-boy
+  .modal-boy style="height:500px; overflow-y:scroll;"
     center
       h3
         | Seleccion la red social
     br
     br
-    input type="radio" name="social_network" value="facebook" checked="true" style="margin-left:100px;"
-      |      
-      img src="/assets/images/imageFacebook.png" width="100" height="100"
-    br
-    br
-    input type="radio" name="social_network" value="twitter" style="margin-left:100px;"
-      |     
-      img src="/assets/images/twitter_logo.jpg" width="100" height="100"
-    br
-    br
-    input type="radio" name="social_network" value="linkedin" style="margin-left:100px;"
-      |     
-      img src="/assets/images/linkedin_logo.png" width="100" height="100"
+    - info_social_networks = InfoSocialNetwork.all
+    - info_social_networks.each do | ifn |
+      input type="radio" name="social_network" value="#{ifn.id_name}" style="margin-left:200px;"
+        |     
+        img src="#{ifn.attachment.url}" width="100" height="100"
+        br
+        br
   .modal-footer
     button.btn data-dismiss="modal" aria-hidden="true"
       |Cerrar
@@ -97,10 +91,13 @@ javascript:
           loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'#{params[:locale]}/clients/facebook'); break;
         case 'twitter':
           window.location.href =
-          "#{social_networks_new_path(2).html_safe}"; break;
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('twitter').id).html_safe}"; break;
         case 'linkedin':
           window.location.href =
-          "#{social_networks_new_path(3).html_safe}"; break;
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('linkedin').id).html_safe}"; break;
+        case 'pinterest':
+          window.location.href =
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('pinterest').id).html_safe}"; break;
       }
     });
   });

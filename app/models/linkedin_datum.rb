@@ -1,7 +1,6 @@
 class LinkedinDatum < ActiveRecord::Base
   belongs_to :client
 
-
   def self.get_new_followers(datum)
     if !isFirstData?(datum)
       old_data = LinkedinDatum.where('end_date < ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first

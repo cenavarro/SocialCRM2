@@ -3,13 +3,16 @@ class InfoSocialNetwork < ActiveRecord::Base
   validate :attachment, :attachment_presence => true
 
   def self.get_name_social_network(id)
-  	case id
-  		when 1
-  			@return = "facebook_data"
-  		when 2
-  			@return = "twitter_data"
-      when 3
-        @return = "linkedin_data"
+    id_name = InfoSocialNetwork.find(id).id_name
+  	case id_name
+  		when 'facebook'
+  			return  "facebook_data"
+  		when 'twitter'
+  			return  "twitter_data"
+      when 'linkedin'
+        return  "linkedin_data"
+      when 'pinterest'
+        return "pinterest_data"
   	end
   end
 end
