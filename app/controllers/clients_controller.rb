@@ -21,19 +21,19 @@ class ClientsController < ApplicationController
 		@user.rol_id = 2
 		@user.client_id = client_id.to_i
   	if @user.save 		
-  		@mensaje = 'El Cliente se ha ingresado correctamente.'
+  		mensaje = 'El Cliente se ha ingresado correctamente.'
     else
       Client.find(client_id).destroy 
-      @mensaje = 'El Cliente NO se pudo ingresar correctamente.'
+      mensaje = 'El Cliente NO se pudo ingresar correctamente.'
   	end
   	respond_to do |format|
-	  	format.html { redirect_to request.referer, notice: @mensaje }
+	  	format.html { redirect_to request.referer, notice: mensaje }
   	  format.json { head :ok }
 	  end
 	end
 
   def create
-    @client = Client.new(:name => params[:name],:description => params[:description], :image => params[:image]) 
+    @client = Client.new(:name => params[:name], :description => params[:description], :attachment => params[:attachment] ) 
     if @client.save
       create_user(@client.id)
     else
@@ -45,30 +45,31 @@ class ClientsController < ApplicationController
   end
 
   def edit
-    p "Params Edit:" + params.to_json
     @client = Client.find(params[:id])
     @user = User.find_by_client_id(@client.id)
   end
 
   def update
-    p "Params Update:" + params.to_json
     @client = Client.find(params[:id])
-    @client.name = params[:name]
-    @client.description = params[:description]
-    @client.image = params[:image]
     @user = User.find_by_client_id(@client.id)
-    @user.email = params[:email]
-    @user.name = @client.name
-    @user.password = params[:password]
-    @user.password_confirmation = params[:password_confirmation]
+    password_changed = !params[:password].empty?
+    if password_changed
+      @user.email = params[:email]
+      @user.name = params[:name]
+      @user.password = params[:password]
+      @user.password_confirmation = params[:password_confirmation]
+      user_save = @user.save!
+    else
+      user_save = @user.update_without_password(:email => params[:email], :name => params[:name],:password => params[:password], :password_confirmation => params[:password_confirmation])
+    end
 
     respond_to do |format|
-      if @client.update_attributes(params[:client]) && @user.save
+      if @client.update_attributes(:name => params[:name], :description => params[:description], :attachment => params[:attachment]) && user_save
         format.html { redirect_to clients_path, notice: 'El Cliente fue actualizado correctamente.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+        format.html { render action: "edit", notice: "No se pudo actualizar el cliente!" }
+        format.json { head :ok }
       end
     end
   end

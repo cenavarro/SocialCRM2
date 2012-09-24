@@ -13,7 +13,7 @@
       - @client.social_networks.each do |social_network|
         - @infoSocialNetwork = InfoSocialNetwork.find(social_network.info_social_network_id)
         - @path = %{/#{params[:locale]}/#{InfoSocialNetwork.get_name_social_network(social_network.info_social_network_id)}/#{@client.id.to_s()}/1/#{social_network.id}}
-        - @imagen = ("<img class='content' src='"+social_network.image+"' href='"+@path+"'>").html_safe
+        - @imagen = ("<img class='content' src='"+social_network.image.url+"' href='"+@path+"'>").html_safe
         .item
           = @imagen
           .caption

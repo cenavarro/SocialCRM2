@@ -25,7 +25,7 @@ table.table.table-bordered
         = client.name
       td
         = client.description
-      - @image = ("<img class='content' src='"+client.image+"' height='100' width='100'>").html_safe
+      - @image = ("<img class='content' src='"+client.attachment.url+"' height='100' width='100'>").html_safe
       td 
         = @image
       - edit_id = "edit_"+client.id.to_s
@@ -39,6 +39,6 @@ table.table.table-bordered
           i.icon-trash.icon-white
           |  Eliminar
 br
-a.btn.btn-primary href=new_user_path(2)
+a.btn.btn-primary href=new_client_path
   i.icon-plus-sign.icon-white
   |  Agregar Nuevo Cliente

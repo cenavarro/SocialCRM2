@@ -21,10 +21,9 @@ br
     br
     br
   - @pages_array.each do | page, info |
-    -  if info['category'] != 'Application'
-       input type="radio" name="social_network" value=page
-         |  
-         = page
+     input type="radio" name="social_network" value=page
+       |  
+       = page
     br
     br
 

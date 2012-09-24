@@ -10,7 +10,7 @@ center
 br
 br
 br
-= form_tag({:controller => "clients", :action => "update"}, :method => "put", :class => "well form-inline formNuevoCliente", :id =>"form_new") do
+= form_tag({:controller => "clients", :action => "update"}, :multipart => true, :method => "put", :class => "well form-inline formNuevoCliente", :id =>"form_new") do
 
   = label_tag :name, "Nombre:"
   br
@@ -29,17 +29,11 @@ br
   br
   br
   = label_tag :password, "Contraseña:"
-  = password_field_tag :password, nil, {:class => "validate[required]"}
-  p.simbolo
-    span style="font-size: 16pt" align=""
-      |*
+  = password_field_tag :password, nil
   br
   br
   = label_tag :password_confirmation, "Confirmación de Contraseña:"
-  = password_field_tag :password_confirmation, nil, {:class => "validate[required,equals[password]]"}
-  p.simbolo
-    span style="font-size: 16pt" align=""
-      |*
+  = password_field_tag :password_confirmation, nil
   br
   br
   = label_tag :description, "Descripcion Cliente:"
@@ -48,13 +42,13 @@ br
   br
   br
   = label_tag :image, "Imagen Cliente:"
-  = text_field_tag :image, "/assets/images/client.png", :readonly => true
+  = file_field_tag :attachment, {:required => "required", :accept => "image/*"}
   br
   br
   center
     button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro que desea agregar este cliente?"
       i.icon-check.icon-white
-      |  Crear Cliente
+      |  Actualizar Cliente
   br
   br
   p.leyenda

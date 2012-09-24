@@ -1,4 +1,7 @@
 class InfoSocialNetwork < ActiveRecord::Base
+  has_attached_file :attachment
+  validate :attachment, :attachment_presence => true
+
   def self.get_name_social_network(id)
   	case id
   		when 1

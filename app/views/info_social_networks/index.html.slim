@@ -21,7 +21,7 @@ table.table.table-bordered
         = info_social_network.name
       td
         = info_social_network.description
-      - @image = ("<img class='content' src='/assets/images/"+info_social_network.image+"' height='100' width='100'>").html_safe
+      - @image = ("<img class='content' src='"+info_social_network.attachment.url+"' height='100' width='100'>").html_safe
       td
         = @image
       td

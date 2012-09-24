@@ -14,7 +14,7 @@ br
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='/assets/images/"+@twitter_info.image+"' alt='Twitter Logo' height='100' width='300'>").html_safe
+    - @image = ("<img class='content' src='"+@twitter_info.attachment.url+"' alt='Twitter Logo' height='100' width='300'>").html_safe
     = @image
 br
 br

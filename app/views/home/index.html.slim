@@ -21,7 +21,7 @@ br
   - else
    .flow
      - @clients.each do |client|
-       - @imagen = ("<img class='content' src='"+client.image+"' href='#{clients_social_networks_path(client.id)}' height='240' >").html_safe
+       - @imagen = ("<img class='content' src='"+client.attachment.url+"' href='#{clients_social_networks_path(client.id)}' height='240' >").html_safe
        .item
          = @imagen
          .caption

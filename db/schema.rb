@@ -11,14 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120921201448) do
+ActiveRecord::Schema.define(:version => 20120924165709) do
 
   create_table "clients", :force => true do |t|
-    t.string   "name",        :null => false
+    t.string   "name",                    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "description", :null => false
-    t.string   "image",       :null => false
+    t.string   "description",             :null => false
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
   end
 
   create_table "facebook_comments", :force => true do |t|
@@ -77,11 +80,14 @@ ActiveRecord::Schema.define(:version => 20120921201448) do
   end
 
   create_table "info_social_networks", :force => true do |t|
-    t.string   "name",        :null => false
+    t.string   "name",                    :null => false
     t.text     "description"
-    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "attachment_file_name"
+    t.string   "attachment_content_type"
+    t.integer  "attachment_file_size"
+    t.datetime "attachment_updated_at"
   end
 
   create_table "linkedin_comments", :force => true do |t|
@@ -136,8 +142,11 @@ ActiveRecord::Schema.define(:version => 20120921201448) do
     t.integer  "info_social_network_id", :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "image"
     t.string   "id_object"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   create_table "twitter_comments", :force => true do |t|

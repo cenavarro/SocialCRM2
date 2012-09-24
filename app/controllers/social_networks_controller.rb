@@ -21,6 +21,7 @@ class SocialNetworksController < ApplicationController
 
   def edit
     @social_network = SocialNetwork.find(params[:id])
+    params[:isn] = @social_network.info_social_network_id
   end
 
   def create

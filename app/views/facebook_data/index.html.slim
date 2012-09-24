@@ -13,7 +13,7 @@ br
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@socialNetwork.image+"' alt='Facebook Logo' height='100' width='300'>").html_safe
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Facebook Logo' height='100' width='300'>").html_safe
     = @image
 br
 .margin
