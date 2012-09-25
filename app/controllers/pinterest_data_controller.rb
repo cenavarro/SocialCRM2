@@ -2,7 +2,7 @@ class PinterestDataController < ApplicationController
   before_filter :authenticate_user!
 
   def createChartData
-    @dates = @pinterest_datum.collect { |ld| "'" + ld.start_date.mday().to_s + "-" + ld.end_date.mday().to_s + " " + ld.end_date.strftime('%B') + "'" }.join(', ')
+    @dates = @pinterest_datum.collect { |ld| "'" + ld.start_date.mday().to_s + " " + ld.start_date.strftime('%b') + "-" + ld.end_date.mday().to_s + " " + ld.end_date.strftime('%b') + "'" }.join(', ')
     @new_followers = @pinterest_datum.collect(&:new_followers).join(', ')
     @total_followers = @pinterest_datum.collect(&:total_followers).join(', ')
     @boards = @pinterest_datum.collect(&:boards).join(', ')

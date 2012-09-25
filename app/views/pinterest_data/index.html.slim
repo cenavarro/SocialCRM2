@@ -18,7 +18,7 @@ br
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@pinterest_info.attachment.url+"' alt='Pinterest Logo' height='100' width='300'>").html_safe
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Pinterest Logo' height='100' width='200'>").html_safe
     = @image
 br
 br
@@ -58,38 +58,22 @@ br
     br
 
 
-script 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_community', type: 'line', marginRight: 130, marginBottom: 45, width: 806 },
-  | title: {text: 'Comunidad', x: -20 },
-  | xAxis: {categories: [#{@dates}]},
-  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [ { name: '# Nuevos Followers', data: [#{@new_followers}]}, { name: '# Followers', data:[#{@total_followers}]}, 
-  | { name: '# boards', data:[#{@boards}]}, { name: '# pins', data:[#{@pins}]}]
-  | });});});
+script
+  | createChart('container_community', 'Comunidad', [#{@dates}]);
+  | addSerie('# Nuevos Followers',[#{@new_followers}]);
+  | addSerie('# Followers',[#{@total_followers}]);
+  | addSerie('# boards',[#{@boards}]);
+  | addSerie('# pins',[#{@pins}]);
 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_interactions', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Interactividad', x: -20 },
-  | xAxis: {categories: [#{@dates}] },
-  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{ name: '# liked', data: [#{@liked}]}, { name: '#repin', data:[#{@repin}]},{ name: '#comments', data:[ #{ @comment } ]},
-  | { name: '# community boards', data:[#{@community_boards}]}]
-  | });});});
+  | createChart('container_interactions', 'Interactividad', [#{@dates}]);
+  | addSerie('# liked',[#{@liked}]);
+  | addSerie('#repin',[#{@repin}]);
+  | addSerie('#comments',[#{@comment}]);
+  | addSerie('# community boards',[#{@community_boards}]);
 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_investment', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Inversion', x: -20 },
-  | xAxis: {categories: [#{@dates}] },
-  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{ name: '# nuevos followers', data: [#{@new_followers}]},{ name: 'Inversion Total', data:[#{@total_investment}]}]
-  | });});});
+  | createChart('container_investment', 'Inversion', [#{@dates}]);
+  | addSerie('# nuevos followers',[#{@new_followers}]);
+  | addSerie('Inversion Total',[#{@total_investment}]);
 
 section.sectionInformation
   .estilo_tabs
@@ -117,10 +101,12 @@ section.sectionInformation
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = pinterest_datum.start_date.mday()
+                  |  
+                  = pinterest_datum.start_date.strftime('%b')
                   |-
                   = pinterest_datum.end_date.mday()
                   |  
-                  = pinterest_datum.end_date.strftime("%B")
+                  = pinterest_datum.end_date.strftime("%b")
           tbody
             tr.titlesRows
               td colspan=100

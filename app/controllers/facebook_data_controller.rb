@@ -4,7 +4,7 @@ class FacebookDataController < ApplicationController
   require 'open-uri'
 
   def createCharData
-    @dates = @facebook_data.collect { |fd| "'" + fd.start_date.mday().to_s + "-" + fd.end_date.mday().to_s + " " + fd.end_date.strftime('%B') + "'" }.join(', ')
+    @dates = @facebook_data.collect { |fd| "'" + fd.start_date.mday().to_s + " " + fd.start_date.strftime('%b') + "-" + fd.end_date.mday().to_s + " " + fd.end_date.strftime('%b') + "'" }.join(', ')
     @newFans = @facebook_data.collect(&:new_fans).join(', ')
     @totalFans = @facebook_data.collect(&:total_fans).join(', ')
     @goalFans = @facebook_data.collect(&:goal_fans).join(', ')

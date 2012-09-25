@@ -13,7 +13,7 @@ br
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Facebook Logo' height='100' width='300'>").html_safe
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Facebook Logo' height='100' width='200'>").html_safe
     = @image
 br
 .margin
@@ -57,48 +57,27 @@ script
   | addSerie('Fans Totales', [#{@totalFans}]);
   | addSerie('Objetivo Fans', [#{@goalFans}]);
 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_reach', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Alcance', x: -20 },
-  | xAxis: {categories: [ #{@dates} ] },
-  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: '# impresiones', data: [ #{@prints} ]}, {name: 'Alcance Total',data: [ #{@total_reach} ]}, {name: 'Alcance Potencial',data: [ #{@potencial_reach}]}]
-  | });});});
+  | createChart('container_reach', 'Alcance', [#{@dates}]);
+  | addSerie('# impresiones', [#{@prints}]);
+  | addSerie('Alcance Total', [#{@total_reach}]);
+  | addSerie('Alcance Potencial', [#{@potencial_reach}]);
 
+  | createChart('container_interactivity', 'Interactividad', [#{@dates}]);
+  | addSerie('# Interacciones', [#{@interactions}]);
+  | addSerie('# clics Anuncios', [#{@clics_anno}]);
+  | addSerie('Interaccion Total Marca Plataforma', [#{@total_interactions}]);
 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_interactivity', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Interactividad', x: -20 },
-  | xAxis: {categories: [ #{@dates} ] },
-  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: '# Interacciones', data: [ #{@interactions} ]}, {name: '# clics Anuncios',data: [ #{@clics_anno} ]}, {name: 'Interaccion Total Marca Plataforma',data: [ #{@total_interactions} ]}]
-  | });});});
+  | createChart('container_investment_growth', 'Inversiones', [#{@dates}]);
+  | addSerie('# Nuevos Fans', [#{@newFans}]);
+  | addSerie('Inversion total', [#{@investment}]);
 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_investment_growth', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Inversiones', x: -20 },
-  | xAxis: {categories: [ #{@dates} ] },
-  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: '# Nuevos Fans', data: [ #{@newFans} ]}, {name: 'Inversion total',data: [ #{@investment} ]}]
-  | });});});
-
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_costs', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Costes', x: -20 },
-  | xAxis: {categories: [ #{@dates} ] },
-  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: 'CTR Anuncios', data: [ #{@ctr_anno} ]}, {name: 'CPC anuncios',data: [ #{@cpc_anno} ]}, {name: 'Coste por iteracion',data: [ #{@coste_interactions} ]},{ name: 'CPM Anuncios', data:[ #{@cpm_anno}]}, { name: 'CPM General', data:[#{@cpm_general}]}, { name: 'Coste por Fan', data:[#{@coste_fan}]}]
-  | });});});
-
-#cont
+  | createChart('container_costs', 'Costes', [#{@dates}]);
+  | addSerie('CTR Anuncios', [#{@ctr_anno}]);
+  | addSerie('CPC anuncios', [#{@cpc_anno}]);
+  | addSerie('Coste por iteracion', [#{@coste_interactions}]);
+  | addSerie('CPM Anuncios',[#{@cpm_anno}]);
+  | addSerie('CPM General',[#{@cpm_general}]);
+  | addSerie('Coste por Fan',[#{@coste_fan}]);
 
 section.sectionInformation
   .estilo_tabs
@@ -124,10 +103,12 @@ section.sectionInformation
               - @facebook_data.each do |facebook_datum|
                 td
                   = facebook_datum.start_date.mday()
+                  |  
+                  = facebook_datum.start_date.strftime('%b')
                   |-
                   = facebook_datum.end_date.mday()
                   |  
-                  = facebook_datum.end_date.strftime("%B")
+                  = facebook_datum.end_date.strftime("%b")
           tbody
             tr.titlesRows
               td

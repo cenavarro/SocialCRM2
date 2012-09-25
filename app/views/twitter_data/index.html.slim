@@ -14,7 +14,7 @@ br
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@twitter_info.attachment.url+"' alt='Twitter Logo' height='100' width='300'>").html_safe
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Twitter Logo' height='100' width='200'>").html_safe
     = @image
 br
 br
@@ -102,10 +102,12 @@ section.sectionInformation
               - @twitter_data.each do |twitter_datum|
                 td
                   = twitter_datum.start_date.mday()
+                  |  
+                  = twitter_datum.start_date.strftime('%b')
                   |-
                   = twitter_datum.end_date.mday()
                   |  
-                  = twitter_datum.end_date.strftime("%B")
+                  = twitter_datum.end_date.strftime("%b")
           tbody
             tr.titlesRows
               td colspan=100

@@ -3,7 +3,7 @@ class TwitterDataController < ApplicationController
 
 
   def createChartData
-    @dates = @twitter_data.collect { |td| "'" + td.start_date.mday().to_s + "-" + td.end_date.mday().to_s + " " + td.end_date.strftime('%B') + "'" }.join(', ')
+    @dates = @twitter_data.collect { |td| "'" + td.start_date.mday().to_s + " " + td.start_date.strftime('%b') + "-" + td.end_date.mday().to_s + " " + td.end_date.strftime('%b') + "'" }.join(', ')
     @new_followers = @twitter_data.collect(&:new_followers).join(', ')
     @total_followers = @twitter_data.collect(&:total_followers).join(', ')
     @goal_followers = @twitter_data.collect(&:goal_followers).join(', ')

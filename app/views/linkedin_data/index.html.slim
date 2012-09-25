@@ -14,7 +14,7 @@ br
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@linkedin_info.attachment.url+"' alt='linkedin Logo' height='100' width='300'>").html_safe
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='linkedin Logo' height='100' width='200'>").html_safe
     = @image
 br
 br
@@ -55,27 +55,19 @@ br
 
 
 script 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_followers', type: 'line', marginRight: 130, marginBottom: 45, width: 806 },
-  | title: {text: 'Seguidores', x: -20 },
-  | xAxis: {categories: [#{@dates}]},
-  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [ { name: '# Nuevos Followers', data: [ #{@new_followers}]}, { name: '# Followers', data:[#{@total_followers}]}]
-  | });});});
+  | createChart('container_followers', 'Seguidores', [#{@dates}]);
+  | addSerie('# Nuevos Followers', [#{@new_followers}]);
+  | addSerie('# Followers', [#{@total_followers}]);
 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_interactions', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Interactividad', x: -20 },
-  | xAxis: {categories: [#{@dates}] },
-  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{ name: 'Resumen', data: [#{@summary}]},{name: 'Empleo', data:[#{@employment}]},{name: 'Productos y Servicios', data:[#{@products_services}]},
-  | { name: 'Impresiones', data:[#{@prints}]}, { name: 'Clicks', data:[#{@clics}]}, { name: '% interes', data: [#{@interest}]}, 
-  | { name: 'Recomendacion', data:[#{@recommendation}]}, { name: 'Compartidos', data: [#{@shared}]}]
-  | });});});
+  | createChart('container', 'Interactividad', [#{@dates}]);
+  | addSerie('Resumen',[#{@summary}]);
+  | addSerie('Empleo',[#{@employment}]);
+  | addSerie('Productos y Servicios',[#{@products_services}]);
+  | addSerie('Impresiones',[#{@prints}]);
+  | addSerie('Clicks',[#{@clics}]);
+  | addSerie('% interes',[#{@interest}]);
+  | addSerie('Recomendacion',[#{@recommendation}]);
+  | addSerie('Compartidos',[#{@shared}]);
 
 section.sectionInformation
   .estilo_tabs
@@ -103,10 +95,12 @@ section.sectionInformation
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = linkedin_datum.start_date.mday()
+                  |  
+                  = linkedin_datum.start_date.strftime('%b')
                   |-
                   = linkedin_datum.end_date.mday()
                   |  
-                  = linkedin_datum.end_date.strftime("%B")
+                  = linkedin_datum.end_date.strftime("%b")
           tbody
             tr.titlesRows
               td colspan=100
