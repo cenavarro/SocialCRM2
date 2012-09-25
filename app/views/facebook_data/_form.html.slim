@@ -21,14 +21,14 @@ javascript:
       - start_date = params[:start_date] if params.has_key?(:start_date)
       - end_date = params[:end_date] if params.has_key?(:end_date)
       = f.label "Fecha Inicio"
-      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
           i.icon-th
       br
       br
       = f.label "Fecha Final"
-      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
@@ -122,9 +122,3 @@ javascript:
     = f.submit 'Guardar Datos', {:class => "btn btn-success saveFacebook"}
     |     
     = link_to 'Regresar', facebook_index_path(params[:idc],1), :class => "btn btn-inverse backFacebook"
-
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#start_date").datepicker();
-      jQuery("#end_date").datepicker();
-    });

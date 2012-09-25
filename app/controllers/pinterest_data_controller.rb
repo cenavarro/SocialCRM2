@@ -50,9 +50,10 @@ class PinterestDataController < ApplicationController
 
   def create
     @pinterest_datum = PinterestDatum.new(params[:pinterest_datum])
-    @pinterest_datum.new_followers = PinterestDatum.get_new_followers(@pinterest_datum)
     respond_to do |format|
       if @pinterest_datum.save
+        @pinterest_datum.new_followers = PinterestDatum.get_new_followers(@pinterest_datum)
+        @pinterest_datum.save!
         format.html { redirect_to pinterest_index_path(@pinterest_datum.client_id,1,@pinterest_datum.social_network_id), notice: 'La informacion se ha ingresado exitosamente.' }
         format.json { render json: @pinterest_datum, status: :created, location: @pinterest_datum }
       else

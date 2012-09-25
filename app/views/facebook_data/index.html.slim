@@ -52,16 +52,10 @@ br
     br
 
 script 
-
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_fans', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Comunidad', x: -20 },
-  | xAxis: {categories: [ #{@dates} ] },
-  | yAxis: { min: 0, title: {text: 'Datos' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: 'Nuevos Fans', data: [ #{@newFans} ]}, {name: 'Fans Totales',data: [ #{@totalFans} ]}, {name: 'Objetivo Fans',data: [ #{@goalFans}]}]
-  | });});});
+  | createChart('container_fans', 'Comunidad', [#{@dates}]);
+  | addSerie('Nuevos Fans', [#{@newFans}]);
+  | addSerie('Fans Totales', [#{@totalFans}]);
+  | addSerie('Objetivo Fans', [#{@goalFans}]);
 
   | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
   | chart: {renderTo: 'container_reach', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
@@ -104,6 +98,7 @@ script
   | series: [{name: 'CTR Anuncios', data: [ #{@ctr_anno} ]}, {name: 'CPC anuncios',data: [ #{@cpc_anno} ]}, {name: 'Coste por iteracion',data: [ #{@coste_interactions} ]},{ name: 'CPM Anuncios', data:[ #{@cpm_anno}]}, { name: 'CPM General', data:[#{@cpm_general}]}, { name: 'Coste por Fan', data:[#{@coste_fan}]}]
   | });});});
 
+#cont
 
 section.sectionInformation
   .estilo_tabs
@@ -468,7 +463,7 @@ section.sectionInformation
       .margin
         button.btn.btn-info onclick="show('addNewImage','btnAddImages')" id="btnAddImages"
           | Agregar Imagenes
-    
+
       .form_nueva_imagen id="addNewImage"
         button.close onclick="hide('addNewImage', 'btnAddImages')"
           |x
@@ -521,11 +516,3 @@ section.sectionInformation
             .result
           br
           br
-    br
-    br
-  javascript:
-      jQuery(document).ready(function(){
-        jQuery("#start_date_picker").datepicker();
-        jQuery("#end_date_picker").datepicker();
-      });
-

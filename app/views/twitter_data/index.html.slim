@@ -53,50 +53,28 @@ br
       input.btn.btn-primary type="submit" value="Obtener Datos"
     br
 
+script
+  | createChart('container_comunidad', 'Comunidad', [#{@dates}]);
+  | addSerie('# Nuevos Followers', [#{@new_followers}]);
+  | addSerie('# Followers', [#{@total_followers}]);
+  | addSerie('# Objetivo Followers', [#{@goal_followers}]);
 
-script 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_comunidad', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Comunidad', x: -20 },
-  | xAxis: {categories: [#{@dates}]},
-  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [ {name: '# Nuevos Followers', data: [ #{@new_followers}]}, { name: '# Followers', data:[#{@total_followers}]},
-  | { name: '# Objetivo Followers', data:[#{@goal_followers}]}]
-  | });});});
+  | createChart('container_interacciones', 'Interactividad', [#{@dates}]);
+  | addSerie('# Menciones', [#{@mentions}]);
+  | addSerie('# Retweets', [#{@retweets}]);
+  | addSerie('Clicks Enlaces', [#{@clics}]);
+  | addSerie('# Interacciones en twitter ads', [#{@interactions_ads}]);
+  | addSerie('Interacciones Totales', [#{@total_interactions}]);
 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_interacciones', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Interactividad', x: -20 },
-  | xAxis: {categories: [#{@dates}] },
-  | yAxis: { min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{ name: '# Menciones', data: [#{@mentions}]},{name: '# Retweets', data:[#{@retweets}]},{name: 'Clicks Enlaces', data:[#{@clics}]},
-  | { name: '# Interacciones en twitter ads', data:[#{@interactions_ads}]}, { name: 'Interacciones Totales', data:[#{@total_interactions}]}]
-  | });});});
+  | createChart('container_inversion', 'Inversion', [#{@dates}]);
+  | addSerie('# nuevos followers', [#{@new_followers}]);
+  | addSerie('Inversion Total', [#{@total_investment}]);
 
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_inversion', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Inversion', x: -20 },
-  | xAxis: {categories: [#{@dates}] },
-  | yAxis: { min:0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: '# nuevos followers', data:[#{@new_followers}]},{name: 'Inversión Total', data: [#{@total_investment}]}]
-  | });});});
-
-  | $(function () { var chart; $(document).ready(function() { chart = new Highcharts.Chart({
-  | chart: {renderTo: 'container_costes', type: 'line', marginRight: 130, marginBottom: 45, width: 806  },
-  | title: {text: 'Costes', x: -20 },
-  | xAxis: {categories: [#{@dates}] },
-  | yAxis: {min: 0, title: {text: '' },plotLines: [{ value: 0, width: 1, color: '#808080' }]},
-  | tooltip: {formatter: function() {return '<b>'+ this.series.name +'</b><br/>'+ this.x +': '+ this.y;}},
-  | legend: {layout: 'vertical',align: 'right',verticalAlign: 'top',x: -10,y: 100,borderWidth: 0 },
-  | series: [{name: 'Costes', data: [#{@cost_follower}]}, {name: 'Cost per engagement twitter ads', data:[#{@cost_per_engagement}]}, 
-  | { name: 'Coste por mil impresiones', data:[#{@cost_prints}]}, {name: 'Coste por interaccion', data:[#{@cost_interactions}]}]
-  | });});});
+  | createChart('container_costes', 'Costest', [#{@dates}]);
+  | addSerie('Costes', [#{@cost_follower}]);
+  | addSerie('Cost per engagement twitter ads', [#{@cost_per_engagement}]);
+  | addSerie('Coste por mil impresiones', [#{@cost_prints}]);
+  | addSerie('Coste por interaccion', [#{@cost_interactions}]);
 
 section.sectionInformation
   .estilo_tabs
@@ -513,8 +491,3 @@ section.sectionInformation
                 |Eliminar
               |      
               .result
-  javascript:
-      jQuery(document).ready(function(){
-        jQuery("#start_date_picker").datepicker();
-        jQuery("#end_date_picker").datepicker();
-      });

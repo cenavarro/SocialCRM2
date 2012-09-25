@@ -1,3 +1,7 @@
+center
+  .alert.alert-error id="alert" style="display:none;"
+    strong
+  br
 - if !notice.nil?
     .alert.alert-success
       center
@@ -38,14 +42,14 @@ br
     br
     |Fecha Inicio
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
-      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
       span.add-on
         i.icon-th
     br
     br
     |Fecha Final
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
-      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
       span.add-on
         i.icon-th
     br
@@ -264,7 +268,7 @@ section.sectionInformation
           br
           form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},4,'#{params[:locale]}','#{@pinterest_info.id_name}');"
             textarea rows=10 id="comment"
-              = @comments.interaction
+              = @comments.investment
             br
             button.btn.btn-success
               | Guardar
@@ -325,8 +329,3 @@ section.sectionInformation
                 |Eliminar
               |      
               .result
-  javascript:
-      jQuery(document).ready(function(){
-        jQuery("#start_date_picker").datepicker();
-        jQuery("#end_date_picker").datepicker();
-      });
