@@ -21,14 +21,14 @@ br
     br
     br
   - @pages_array.each do | page, info |
-     input type="radio" name="social_network" value=page
-       |  
-       = page
+    input type="radio" name="social_network" value=page
+      |  
+      = page
     br
     br
 
 .formNuevaRedCliente
-  = form_tag({:controller => "clients", :action => "insert_social_network"}, :method => "post", :class => "well form-inline", :id =>"form_new") do
+  = form_tag({:controller => "clients", :action => "insert_social_network"}, :multipart => true, :method => "post", :class => "well form-inline", :id =>"form_new") do
 
     = label_tag :name, "Nombre Red Social:"
     = text_field_tag :name, nil , {:class => "validate[required] text-input"}
@@ -49,14 +49,11 @@ br
     br
     br
     = label_tag :imagelbl, "Imagen Red Social:"
-    br
-    center
-      = image_tag "/assets/images/client.png", :size => "48x48", :id => "idimage"
+    = file_field_tag :image, :required => "required", :accept => "image/*"
     br
     br
     = hidden_field_tag  :info_social, "1"
     = hidden_field_tag  :object_id, ""
-    = hidden_field_tag  :image, "/assets/images/client.png"
     center
       button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro que desea agregar esta red social?"
         i.icon-check.icon-white
@@ -77,7 +74,6 @@ javascript:
     document.getElementById('name').value = id;
     document.getElementById('description').value = data[id]['description'][0];
     document.getElementById('idimage').src = data[id]['picture'][0];
-    document.getElementById('image').value = data[id]['picture'][0];
     document.getElementById('object_id').value = data[id]['id'];
   
   });

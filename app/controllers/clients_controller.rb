@@ -105,7 +105,7 @@ class ClientsController < ApplicationController
     client_id = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']}"
     client_secret = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_secret']}"
     # uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{request.protocol}#{request.host_with_port}/clients/facebook/&code=#{code}&client_secret=#{client_secret}"
-    uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{clients_facebook_path}/&code=#{code}&client_secret=#{client_secret}"
+    uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{request.protocol}#{request.host_with_port}/#{params[:locale]}/clients/facebook/&code=#{code}&client_secret=#{client_secret}"
     result = result_of_get(uri)
     result.split("&")[0].split("=")[1]
   end
@@ -135,7 +135,6 @@ class ClientsController < ApplicationController
         @pages_array[key]['category'] << page['category']
       end
     end
-
     respond_to do | format |
       format.html
       format.json { head :ok }

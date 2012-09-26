@@ -38,9 +38,9 @@ DemoComentarios::Application.routes.draw do
     get "facebook_data/:id/edit/:idc/:id_social" => "facebook_data#edit", :as => "facebook_edit"
     post "facebook_data/save_comment" => "facebook_data#save_comment", :as => "facebook_save_comment"
 
-    resources :clients
+    resources :clients, :only => [:index, :create, :update, :new, :destroy, :edit]
     get 'clients/social_networks/:idc' => 'clients#social_networks', :as => "clients_social_networks"
-    get 'clients/facebook' => 'clients#facebook', :as => "client_facebook", :as => "clients_facebook"
+    get 'clients/facebook' => 'clients#facebook', :as => "client_facebook"
     post 'clients/insert_social_network' => 'clients#insert_social_network', :as => "clients_insert_social_network"
 
     get "users/new/:option" => "users#new", :as => "new_user"
