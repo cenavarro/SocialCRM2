@@ -101,6 +101,9 @@ javascript:
         case 'pinterest':
           window.location.href =
           "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('pinterest').id).html_safe}"; break;
+        case 'youtube':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('youtube').id).html_safe}"; break;
       }
     });
   });

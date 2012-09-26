@@ -4,15 +4,6 @@ class InfoSocialNetwork < ActiveRecord::Base
 
   def self.get_name_social_network(id)
     id_name = InfoSocialNetwork.find(id).id_name
-  	case id_name
-  		when 'facebook'
-  			return  "facebook_data"
-  		when 'twitter'
-  			return  "twitter_data"
-      when 'linkedin'
-        return  "linkedin_data"
-      when 'pinterest'
-        return "pinterest_data"
-  	end
+    return "#{id_name}_data"
   end
 end

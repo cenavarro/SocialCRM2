@@ -1,7 +1,15 @@
 DemoComentarios::Application.routes.draw do
 
-
   scope ':locale' do
+    
+    resources :youtube_data, :except => [:show]
+    post "youtube_data" => "youtube_data#create", :as => "youtube_create" 
+    get "youtube_data/:idc/:opcion/:id_social" => "youtube_data#index", :as => "youtube_index"
+    get "youtube_data/new/:idc/:opcion/:id_social" => "youtube_data#new", :as => "youtube_new"
+    get "youtube_data/:id/edit/:idc/:id_social" => "youtube_data#edit", :as => "youtube_edit"
+    post "youtube_data/save_comment" => "youtube_data#save_comment", :as => "youtube_save_comment"
+    delete "youtube_data/:id" => "youtube_data#destroy", :as => "youtube_delete"
+    put "youtube_data/:id" => "youtube_data#update", :as => "youtube_update"
 
     resources :pinterest_data
     post "pinterest_data" => "pinterest_data#create", :as => "pinterest_create" 
@@ -38,7 +46,7 @@ DemoComentarios::Application.routes.draw do
     get "facebook_data/:id/edit/:idc/:id_social" => "facebook_data#edit", :as => "facebook_edit"
     post "facebook_data/save_comment" => "facebook_data#save_comment", :as => "facebook_save_comment"
 
-    resources :clients, :only => [:index, :create, :update, :new, :destroy, :edit]
+    resources :clients, :except => [:show]
     get 'clients/social_networks/:idc' => 'clients#social_networks', :as => "clients_social_networks"
     get 'clients/facebook' => 'clients#facebook', :as => "client_facebook"
     post 'clients/insert_social_network' => 'clients#insert_social_network', :as => "clients_insert_social_network"

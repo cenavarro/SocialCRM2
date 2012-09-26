@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120924205520) do
+ActiveRecord::Schema.define(:version => 20120926161640) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",                    :null => false
@@ -237,5 +237,39 @@ ActiveRecord::Schema.define(:version => 20120924205520) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+
+  create_table "youtube_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.text     "table"
+    t.text     "community"
+    t.text     "interaction"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "youtube_data", :force => true do |t|
+    t.integer  "client_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "social_network_id"
+    t.integer  "new_subscriber"
+    t.integer  "total_subscriber"
+    t.integer  "total_video_views"
+    t.integer  "inserted_player"
+    t.float    "mobile_devise"
+    t.float    "youtube_search"
+    t.float    "youtube_suggestion"
+    t.float    "youtube_page"
+    t.float    "external_web_site"
+    t.float    "google_search"
+    t.float    "youtube_others"
+    t.float    "youtube_subscriptions"
+    t.float    "youtube_ads"
+    t.float    "investment_agency"
+    t.float    "investment_actions"
+    t.float    "investment_anno"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

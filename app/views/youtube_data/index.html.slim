@@ -1,0 +1,331 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+
+- @youtube_info = InfoSocialNetwork.find_by_id_name('youtube')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @comments = YoutubeComment.find_by_social_network_id(@socialNetwork.id)
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Youtube Logo' height='100' width='200'>").html_safe
+    = @image
+br
+br
+
+.margin
+  a.btn.btn-info href=youtube_new_path(params[:idc],2) style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+br
+br
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=youtube_index_path(params[:idc],2) method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+
+script
+  | createChart('container_community', 'Comunidad', [#{@dates}]);
+  | addSerie('Suscriptores nuevos',[#{@new_subscribers}]);
+  | addSerie('Suscriptores totales',[#{@total_subscribers}]);
+
+  | createChart('container_interactions', 'Interactividad', [#{@dates}]);
+  | addSerie('Reproducciones videos durante el periodo',[#{@total_views}]);
+  | addSerie('Reproductor insertado',[#{@inserted_player}]);
+  | addSerie('Dispositivos moviles',[#{@mobile}]);
+  | addSerie('Busqueda de Youtube',[#{@youtube_search}]);
+  | addSerie('Sugerencia de Youtube',[#{@youtube_suggest}]);
+  | addSerie('Pagina de canal de Youtube',[#{@canal_page}]);
+  | addSerie('Sitio externo a Youtube',[#{@external_site}]);
+  | addSerie('Busqueda de Google',[#{@google_search}]);
+  | addSerie('Otra paginas de Youtube',[#{@others}]);
+  | addSerie('Suscripciones de Youtube',[#{@subscriptions}]);
+  | addSerie('Publicidad de Youtube',[#{@youtube_ads}]);
+
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          |Otros datos
+
+  br
+  br
+
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.start_date.mday()
+                  |  
+                  = youtube_datum.start_date.strftime('%b')
+                  |-
+                  = youtube_datum.end_date.mday()
+                  |  
+                  = youtube_datum.end_date.strftime("%b")
+          tbody
+            tr.titlesRows
+              td colspan=100
+                | Comunidad 
+            tr
+              td.estiloCelda
+                |Suscriptores nuevos
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.new_subscriber
+            tr
+              td
+                |Suscriptores totales
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.total_subscriber
+            tr.titlesRows
+              td colspan=100
+                |Interactividad
+            tr
+              td
+                |Reproducciones videos durante un periodo
+              - @youtube_datum.each do | youtube_datum |
+                td
+                  = youtube_datum.total_video_views
+            tr
+              td
+                |Reproductor insertado
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.inserted_player
+            tr
+              td
+                |Dispositivos moviles
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.mobile_devise
+            tr
+              td
+                |Busqueda en Youtube
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.youtube_search
+            tr
+              td
+                |Sugerencia de Youtube
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.youtube_suggestion
+            tr
+              td
+                |Pagina de canal de Youtube
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.youtube_page
+            tr
+              td
+                |Sitio web externo
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.external_web_site
+            tr
+              td
+                |Busqueda en Google
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.google_search
+            tr
+              td
+                |Otras paginas de Youtube
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.youtube_others
+            tr
+              td
+                |Suscripciones de Youtube
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.youtube_subscriptions
+            tr
+              td
+                |Publicidad de Youtube
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.youtube_ads
+
+            tr.titlesRows
+              td colspan=100
+                | Inversion
+            tr
+              td
+                | Inversion Agencia
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.investment_agency
+            tr
+              td
+                | Inversion nuevas acciones
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.investment_actions
+            tr
+              td
+                | Inversion anuncios
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.investment_anno
+            tr
+              td
+                | Inversion Total
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = YoutubeDatum.get_total_investment(youtube_datum)
+            tr
+              td.nilValue
+                |Opciones
+              -@youtube_datum.each do |youtube_datum|
+                td.celdaOpciones
+                  a.btn.btn-info href=youtube_edit_path(youtube_datum.id,params[:idc]) id=%{edit_#{youtube_datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{youtube_datum.id}} href=youtube_delete_path(youtube_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        br
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@youtube_info.id_name}');"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_community
+        .comment
+          .title
+            h4
+              | Comentario Grafico Comunidad
+          br
+          form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@youtube_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.community
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_interactions
+        .comment
+          .title
+            h4
+              | Comentario Grafico Interacciones
+          br
+          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}','#{@youtube_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.interaction
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+
+    .tab-pane.fade id="tabothers"
+        .margin
+          button.btn.btn-info onclick="show('addNewImage','btnAddImages')" id="btnAddImages"
+            | Agregar Imagenes
+      
+        .form_nueva_imagen id="addNewImage"
+          button.close onclick="hide('addNewImage', 'btnAddImages')"
+            |x
+          = form_for ImagesSocialNetwork.new, :as => :images, :url => social_networks_add_image_path, :html => { :multipart => true} do | f |
+            center
+              h3 Agregar Imagen
+            br
+            br
+            = f.label "Titulo:"
+            = f.text_field :title, :required => "required"
+            br
+            br
+            = f.label "Seleccione la imagen"
+            = f.file_field :attachment, :required => "required", :accept => "image/*"
+            br
+            br
+            = f.label "Comentario Imagen"
+            = f.text_area :comment 
+            br
+            br
+            = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
+            center
+              = f.submit "Guardar", :class => "btn btn-success" 
+
+        br
+        br
+        .margin
+          - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork.id).all
+          - @images.each do | imagen |
+            br
+            br
+            h3
+              = imagen.title
+            br
+            br
+            img src="#{imagen.attachment.url}" height="400px" width="800px"
+            br
+            br
+            h4 Comentario
+            br
+            form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id}, '#{params[:locale]}');"
+              textarea id="comment" style="max-width:790px; width: 100%;" rows="10"
+                = imagen.comment
+              button.btn.btn-success style="float:left;"
+                |Actualizar
+              |      
+              a.btn.btn-danger href=social_networks_destroy_image_path(imagen.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+                |Eliminar
+              |      
+              .result

@@ -1,0 +1,113 @@
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#formEntradaDatos").validationEngine();
+    });
+
+= form_for @youtube_datum, :html => {:class => "formNuevosDatosYoutube", :id => "formEntradaDatos"} do |f|
+  - if @youtube_datum.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@youtube_datum.errors.count, "error")} prohibited this youtube_datum from being saved:"
+      ul
+        - @youtube_datum.errors.full_messages.each do |message|
+          li = message
+
+  .form-horizontal.sectionInformation style="height: 1150px;"
+    .box.informationYoutube
+      | Informacion
+      br
+      br
+      = f.hidden_field :client_id, :value => params[:idc]
+      = f.hidden_field :social_network_id, :value => params[:id_social]
+      - start_date = "01-01-2012"
+      - start_date = params[:start_date] if params.has_key?(:start_date)
+      - start_date = @youtube_datum.start_date if !@youtube_datum.start_date.nil?
+      - end_date = "01-01-2012"
+      - end_date = params[:end_date] if params.has_key?(:end_date)
+      - end_date = @youtube_datum.end_date if !@youtube_datum.end_date.nil?
+      = f.label "Fecha Inicio"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+        = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
+        span.add-on
+          i.icon-th
+      br
+      br
+      = f.label "Fecha Final"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+        = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
+        span.add-on
+          i.icon-th
+
+    .box.comunityYoutube
+      | Comunidad
+      br
+      br
+      = f.label "Subscriptores totales"
+      = f.text_field :total_subscriber, {:class => "validate[required,custom[number]]"}
+
+    .box.interactionYoutube
+      | Interactividad
+      br
+      br
+      = f.label "Reproducciones videos durante el periodo"
+      = f.text_field :total_video_views, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Reproductor insertado"
+      = f.text_field :inserted_player, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Dispositivos mobiles"
+      = f.text_field :mobile_devise, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Busqueda en Youtube"
+      = f.text_field :youtube_search, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Sugerencia de Youtube"
+      = f.text_field :youtube_suggestion, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Pagina de canal de Youtube"
+      = f.text_field :youtube_page, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Sitio web externo"
+      = f.text_field :external_web_site, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Busqueda en Google"
+      = f.text_field :google_search, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Otras paginas de Youtube"
+      = f.text_field :youtube_others, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Suscripciones de Youtube"
+      = f.text_field :youtube_subscriptions, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Publicidad de Youtube"
+      = f.text_field :youtube_ads, {:class => "validate[required,custom[number]]"}
+
+    .box.investmentYoutube
+      |Inversion
+      br
+      br
+      = f.label "Inversion Agencia"
+      = f.text_field :investment_agency, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Inversion Nuevas Acciones "
+      = f.text_field :investment_actions, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Inversion anuncios ads"
+      = f.text_field :investment_anno, { :class => "validate[required,custom[number]]"}
+
+    br
+    br
+    = f.submit 'Guardar Datos', {:class => "btn btn-success saveYoutube"}
+    |     
+    = link_to 'Regresar', youtube_index_path(params[:idc],1), :class => "btn btn-inverse backYoutube"

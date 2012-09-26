@@ -70,7 +70,7 @@ class PinterestDataController < ApplicationController
       if @pinterest_datum.update_attributes(params[:pinterest_datum])
         @pinterest_datum.new_followers = PinterestDatum.get_new_followers(@pinterest_datum)
         @pinterest_datum.save!
-        format.html { redirect_to pinterest_index_path(@pinterest_datum.client_id,1,@pinterest_datum.social_network_id), notice: 'La informacion se ha ingresado exitosamente.' }
+        format.html { redirect_to pinterest_index_path(@pinterest_datum.client_id,1,@pinterest_datum.social_network_id), notice: 'La informacion se ha actualizada exitosamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

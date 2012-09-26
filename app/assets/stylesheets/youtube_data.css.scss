@@ -1,4 +1,4 @@
-// Place all the styles related to the PinterestData controller here.
+// Place all the styles related to the YoutubeData controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
@@ -6,43 +6,44 @@ $top_position: 390px;
 $left_position: 80px;
 $space: 400px;
 
-.informationPinterest{
+.informationYoutube{
 	position:absolute;
 	left:$left_position;
 }
 
-.comunityPinterest{
+.comunityYoutube{
 	position:absolute;
+  top: 100px;
 	left: $left_position+$space;
 }
 
-.interactionPinterest{
+.interactionYoutube{
 	position:absolute;
 	top: -130 + ($top_position);
 	left:$left_position;
 }
 
-.investmentPinterest{
+.investmentYoutube{
 	position:absolute;
 	top: 320px;
   left:$left_position+$space;
 
 }
 
-.costsPinterest{
+.costsYoutube{
 	position:absolute;
 	top: $top_position+225;
 	left:$left_position+$space;
 }
 
-.savePinterest{
+.saveYoutube{
 	position:absolute;
-	top: 1180px;
+	top: 1130px;
 	left: 300px;
 }
 
-.backPinterest{
+.backYoutube{
 	position:absolute;
-	top: 680px;
+	top: 1130px;
 	left:500px;
 }
