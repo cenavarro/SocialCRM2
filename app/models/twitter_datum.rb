@@ -6,7 +6,7 @@ class TwitterDatum < ActiveRecord::Base
       old_data = TwitterDatum.where('end_date <= ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first
       return  datum.total_followers - old_data.total_followers
     end
-    return 0
+    return datum.total_followers
   end
 
   def self.get_period_tweets(datum)
@@ -14,7 +14,7 @@ class TwitterDatum < ActiveRecord::Base
       old_data = TwitterDatum.where('end_date <= ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first
       return (old_data.total_tweets + datum.total_tweets)
     end
-    return 0
+    return datum.total_tweets
   end
 
   def self.get_growth_followers(datum)
@@ -99,21 +99,15 @@ class TwitterDatum < ActiveRecord::Base
   end
 
   def self.get_cost_per_prints(datum)
-    if !isFirstData?(datum)
-      total_investment = get_total_investment(datum)
-      total_prints = get_total_prints(datum)
-      return (total_investment.to_f/total_prints.to_f)*1000
-    end
-    return 0
+    total_investment = get_total_investment(datum)
+    total_prints = get_total_prints(datum)
+    return (total_investment.to_f/total_prints.to_f)*1000
   end
 
   def self.get_cost_per_interaction(datum)
-    if !isFirstData?(datum)
-      total_investment = get_total_investment(datum)
-      total_interactions = get_total_interactions(datum)
-      return (total_investment.to_f/total_interactions.to_f)
-    end
-    return 0
+    total_investment = get_total_investment(datum)
+    total_interactions = get_total_interactions(datum)
+    return (total_investment.to_f/total_interactions.to_f)
   end
 
   def self.get_cost_follower(datum)

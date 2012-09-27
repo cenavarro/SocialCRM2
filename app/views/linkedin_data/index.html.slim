@@ -94,13 +94,7 @@ section.sectionInformation
               td.hideCell
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = linkedin_datum.start_date.mday()
-                  |  
-                  = linkedin_datum.start_date.strftime('%b')
-                  |-
-                  = linkedin_datum.end_date.mday()
-                  |  
-                  = linkedin_datum.end_date.strftime("%b")
+                  = linkedin_datum.start_date.strftime('%d %b') + "-" + linkedin_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
               td colspan=100

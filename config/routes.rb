@@ -1,7 +1,16 @@
 DemoComentarios::Application.routes.draw do
 
   scope ':locale' do
-    
+
+    resources :tuenti_data, :except => [:show]
+    post "tuenti_data" => "tuenti_data#create", :as => "tuenti_create" 
+    get "tuenti_data/:idc/:opcion/:id_social" => "tuenti_data#index", :as => "tuenti_index"
+    get "tuenti_data/new/:idc/:opcion/:id_social" => "tuenti_data#new", :as => "tuenti_new"
+    get "tuenti_data/:id/edit/:idc/:id_social" => "tuenti_data#edit", :as => "tuenti_edit"
+    post "tuenti_data/save_comment" => "tuenti_data#save_comment", :as => "tuenti_save_comment"
+    delete "tuenti_data/:id" => "tuenti_data#destroy", :as => "tuenti_delete"
+    put "tuenti_data/:id" => "tuenti_data#update", :as => "tuenti_update"
+
     resources :youtube_data, :except => [:show]
     post "youtube_data" => "youtube_data#create", :as => "youtube_create" 
     get "youtube_data/:idc/:opcion/:id_social" => "youtube_data#index", :as => "youtube_index"

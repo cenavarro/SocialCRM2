@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120926161640) do
+ActiveRecord::Schema.define(:version => 20120927203303) do
 
   create_table "clients", :force => true do |t|
     t.string   "name",                    :null => false
@@ -178,6 +178,43 @@ ActiveRecord::Schema.define(:version => 20120926161640) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+  end
+
+  create_table "tuenti_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.text     "table"
+    t.text     "fans"
+    t.text     "interaction"
+    t.text     "reach"
+    t.text     "investment"
+    t.text     "cost"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tuenti_data", :force => true do |t|
+    t.integer  "client_id"
+    t.integer  "social_network_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "new_fans"
+    t.integer  "real_fans"
+    t.integer  "goal_fans"
+    t.float    "investment_agency"
+    t.float    "investment_actions"
+    t.float    "investment_ads"
+    t.float    "cost_fan"
+    t.integer  "page_prints"
+    t.integer  "unique_total_users"
+    t.integer  "external_clics"
+    t.integer  "clics"
+    t.integer  "downloads"
+    t.integer  "comments"
+    t.float    "ctr_external_clics"
+    t.integer  "upload_photos"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "actions_text"
   end
 
   create_table "twitter_comments", :force => true do |t|

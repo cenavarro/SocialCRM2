@@ -101,13 +101,7 @@ section.sectionInformation
               td.hideCell
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.start_date.mday()
-                  |  
-                  = twitter_datum.start_date.strftime('%b')
-                  |-
-                  = twitter_datum.end_date.mday()
-                  |  
-                  = twitter_datum.end_date.strftime("%b")
+                  = twitter_datum.start_date.strftime('%d %b') + "-" + twitter_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
               td colspan=100
@@ -282,7 +276,7 @@ section.sectionInformation
                 | impresiones en total
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.prints_ads
+                  = TwitterDatum.get_total_prints(twitter_datum) 
             tr
               td
                 | % cambio en impresiones

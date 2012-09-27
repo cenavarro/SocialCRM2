@@ -10,3 +10,7 @@ social = InfoSocialNetwork.create! :name => 'Linkedin', :description => "Red Soc
 puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Pinterest', :description => "Red Social Pinterest", :id_name => "pinterest"
 puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Youtube', :description => "Red Social Youtube", :id_name => "youtube"
+puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Tuenti', :description => "Red Social Tuenti", :id_name => "tuenti"
+puts "Informacion Red Social Creada: " << social.name

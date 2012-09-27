@@ -23,7 +23,7 @@ br
   - @pages_array.each do | page, info |
     input type="radio" name="social_network" value=page
       |  
-      = page
+      = info['name'].first
     br
     br
 
@@ -70,10 +70,8 @@ javascript:
   jQuery("input[name=social_network]").change(function() {
     var id = $(this).val();
     var data = #{@pages_array.to_json.html_safe}
-    console.log(data);
-    document.getElementById('name').value = id;
+    document.getElementById('name').value = data[id]['name'];
     document.getElementById('description').value = data[id]['description'][0];
-    document.getElementById('idimage').src = data[id]['picture'][0];
     document.getElementById('object_id').value = data[id]['id'];
   
   });

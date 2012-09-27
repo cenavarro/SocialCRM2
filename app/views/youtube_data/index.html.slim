@@ -97,13 +97,7 @@ section.sectionInformation
               td.hideCell
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.start_date.mday()
-                  |  
-                  = youtube_datum.start_date.strftime('%b')
-                  |-
-                  = youtube_datum.end_date.mday()
-                  |  
-                  = youtube_datum.end_date.strftime("%b")
+                  = youtube_datum.start_date.strftime('%d %b') + "-" + youtube_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
               td colspan=100

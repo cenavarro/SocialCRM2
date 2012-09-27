@@ -97,7 +97,7 @@ class ClientsController < ApplicationController
   end
 
   def getInfoPage(page_id,access_token)
-    uri = "https://graph.facebook.com/fql?q=select page_id, username, pic_large, description, type from page where page_id = "+page_id.to_s+"&access_token="+access_token.to_s
+    uri = "https://graph.facebook.com/fql?q=select page_id, name, username, pic_large, description, type from page where page_id = "+page_id.to_s+"&access_token="+access_token.to_s
     result = JSON.parse(result_of_get(uri))
   end
 
@@ -128,7 +128,8 @@ class ClientsController < ApplicationController
     pages['data'].each do | page |
       if page['category'] != 'Application'
         info = getInfoPage(page['id'],access_token)
-        key = info['data'][0]['username']
+        key = info['data'][0]['page_id']
+        @pages_array[key]['name'] << info['data'][0]['name']
         @pages_array[key]['id'] << info['data'][0]['page_id']
         @pages_array[key]['description'] << info['data'][0]['description']
         @pages_array[key]['picture'] << info['data'][0]['pic_large']

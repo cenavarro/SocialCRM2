@@ -102,13 +102,7 @@ section.sectionInformation
               td.hideCell
               - @facebook_data.each do |facebook_datum|
                 td
-                  = facebook_datum.start_date.mday()
-                  |  
-                  = facebook_datum.start_date.strftime('%b')
-                  |-
-                  = facebook_datum.end_date.mday()
-                  |  
-                  = facebook_datum.end_date.strftime("%b")
+                  = facebook_datum.start_date.strftime('%d %b') + "-" + facebook_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
               td

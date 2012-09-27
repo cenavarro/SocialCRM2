@@ -1,0 +1,382 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+
+- @tuenti_info = InfoSocialNetwork.find_by_id_name('tuenti')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @comments = TuentiComment.find_by_social_network_id(@socialNetwork.id)
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Tuenti Logo' height='100' width='200'>").html_safe
+    = @image
+br
+br
+
+.margin
+  a.btn.btn-info href=tuenti_new_path(params[:idc],2) style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+br
+br
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=tuenti_index_path(params[:idc],2) method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+
+script
+  | createChart('container_fans', 'Fans', [#{@dates}]);
+  | addSerie('# nuevos fans',[#{@new_fans}]);
+  | addSerie('# Fans Reales',[#{@real_fans}]);
+  | addSerie('Objetivo Fans',[#{@goal_fans}]);
+
+  | createChart('container_interactions', 'Interacciones', [#{@dates}]);
+  | addSerie('Total de usuarios unicos', [#{@unique_users}]);
+  | addSerie('Clicks', [#{@clics}]);
+  | addSerie('Descargas', [#{@downloads}]);
+  | addSerie('Numero de comentarios', [#{@comment}]);
+  | addSerie('Fotos subidas', [#{@photos}]);
+
+  | createChart('container_reach', 'Alcance', [#{@dates}]);
+  | addSerie('Impresiones de la pagina', [#{@page_prints}]);
+
+  | createChart('container_investment', 'Inversiones', [#{@dates}]);
+  | addSerie('Inversion agencia', [#{@agency_investment}]);
+  | addSerie('Inversion nuevas acciones', [#{@actions_investment}]);
+  | addSerie('Inversion anuncios', [#{@ads_investment}]);
+  | addSerie('Inversion Total', [#{@total_investment}]);
+
+  | createChart('container_costs', 'Costes', [#{@dates}]);
+  | addSerie('Coste Fan', [#{@fan_cost}]);
+
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          |Otros datos
+
+  br
+  br
+
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.start_date.strftime('%d %b') + "-" + tuenti_datum.end_date.strftime("%d %b")
+          tbody
+            tr.titlesRows
+              td
+                |Acciones Durante el periodo
+              - @tuenti_datum.each do | tuenti_datum |
+                td
+                  = tuenti_datum.actions_text
+            tr.titlesRows
+              td colspan=100
+                |Fans 
+            tr
+              td.estiloCelda
+                |# nuevos fans
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.new_fans
+            tr
+              td
+                |# fans reales
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.real_fans
+            tr
+              td
+                |# Objetivo fans
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.goal_fans
+            tr
+              td
+                | Porcentaje crecimiento fans 
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = TuentiDatum.get_grown_fans_percent(tuenti_datum)
+            tr.titlesRows
+              td colspan=100
+                | Inversion
+            tr
+              td
+                | Inversion Agencia
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.investment_agency
+            tr
+              td
+                | Inversion nuevas acciones
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.investment_actions
+            tr
+              td
+                | Inversion anuncios
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.investment_ads
+            tr
+              td
+                | Inversion Total
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = TuentiDatum.get_total_investment(tuenti_datum)
+            tr.titlesRows
+              td colspan=100
+                |Costes
+            tr
+              td
+                |Coste Fan
+              - @tuenti_datum.each do | tuenti_datum |
+                td
+                  = tuenti_datum.cost_fan
+            tr.titlesRows
+              td colspan=100
+                |Pagina de empresa
+            tr
+              td
+                |Impresiones de la pagina
+              - @tuenti_datum.each do | tuenti_datum |
+                td
+                  = tuenti_datum.page_prints
+            tr
+              td
+                |Total de usuario unicos
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.unique_total_users
+            tr
+              td
+                |Clics externos
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.external_clics
+            tr
+              td
+                |Clicks
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.clics
+            tr
+              td
+                |Descargas
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.downloads
+            tr
+              td
+                |Numero de comentarios
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.comments
+            tr
+              td
+                |CTR % clic externos
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.ctr_external_clics
+            tr
+              td
+                |Fotos subidas
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.upload_photos
+            tr
+              td.nilValue
+                |Opciones
+              -@tuenti_datum.each do |tuenti_datum|
+                td.celdaOpciones
+                  a.btn.btn-info href=tuenti_edit_path(tuenti_datum.id,params[:idc]) id=%{edit_#{tuenti_datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{tuenti_datum.id}} href=tuenti_delete_path(tuenti_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        br
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@tuenti_info.id_name}');"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_fans
+        .comment
+          .title
+            h4
+              | Comentario Grafico Fans
+          br
+          form  id="fans" onsubmit="return saveChartComment('#fans',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@tuenti_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.fans
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_interactions
+        .comment
+          .title
+            h4
+              | Comentario Grafico Interacciones
+          br
+          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}','#{@tuenti_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.interaction
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_reach
+        .comment
+          .title
+            h4
+              | Comentario Grafico Alcance
+          br
+          form  id="reach" onsubmit="return saveChartComment('#reach',#{@socialNetwork.id},4,'#{params[:locale]}','#{@tuenti_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.reach
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_investment
+        .comment
+          .title
+            h4
+              | Comentario Grafico Inversiones
+          br
+          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},5,'#{params[:locale]}','#{@tuenti_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.investment
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_costs
+        .comment
+          .title
+            h4
+              | Comentario Grafico Costes
+          br
+          form  id="costs" onsubmit="return saveChartComment('#costs',#{@socialNetwork.id},6,'#{params[:locale]}','#{@tuenti_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.cost
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+
+    .tab-pane.fade id="tabothers"
+        .margin
+          button.btn.btn-info onclick="show('addNewImage','btnAddImages')" id="btnAddImages"
+            | Agregar Imagenes
+      
+        .form_nueva_imagen id="addNewImage"
+          button.close onclick="hide('addNewImage', 'btnAddImages')"
+            |x
+          = form_for ImagesSocialNetwork.new, :as => :images, :url => social_networks_add_image_path, :html => { :multipart => true} do | f |
+            center
+              h3 Agregar Imagen
+            br
+            br
+            = f.label "Titulo:"
+            = f.text_field :title, :required => "required"
+            br
+            br
+            = f.label "Seleccione la imagen"
+            = f.file_field :attachment, :required => "required", :accept => "image/*"
+            br
+            br
+            = f.label "Comentario Imagen"
+            = f.text_area :comment 
+            br
+            br
+            = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
+            center
+              = f.submit "Guardar", :class => "btn btn-success" 
+
+        br
+        br
+        .margin
+          - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork.id).all
+          - @images.each do | imagen |
+            br
+            br
+            h3
+              = imagen.title
+            br
+            br
+            img src="#{imagen.attachment.url}" height="400px" width="800px"
+            br
+            br
+            h4 Comentario
+            br
+            form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id}, '#{params[:locale]}');"
+              textarea id="comment" style="max-width:790px; width: 100%;" rows="10"
+                = imagen.comment
+              button.btn.btn-success style="float:left;"
+                |Actualizar
+              |      
+              a.btn.btn-danger href=social_networks_destroy_image_path(imagen.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+                |Eliminar
+              |      
+              .result

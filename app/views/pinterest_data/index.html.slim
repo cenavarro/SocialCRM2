@@ -100,13 +100,7 @@ section.sectionInformation
               td.hideCell
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.start_date.mday()
-                  |  
-                  = pinterest_datum.start_date.strftime('%b')
-                  |-
-                  = pinterest_datum.end_date.mday()
-                  |  
-                  = pinterest_datum.end_date.strftime("%b")
+                  = pinterest_datum.start_date.strftime('%d %b') + "-" + pinterest_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
               td colspan=100

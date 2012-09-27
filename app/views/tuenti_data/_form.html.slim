@@ -1,0 +1,106 @@
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#formEntradaDatos").validationEngine();
+    });
+
+= form_for @tuenti_datum, :html => {:class => "formNuevosDatosTuenti", :id => "formEntradaDatos"} do |f|
+  - if @tuenti_datum.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@tuenti_datum.errors.count, "error")} prohibited this tuenti_datum from being saved:"
+      ul
+        - @tuenti_datum.errors.full_messages.each do |message|
+          li = message
+
+  .form-horizontal.sectionInformation style="height: 1080px;"
+    .box.informationTuenti
+      | Informacion
+      br
+      br
+      = f.hidden_field :client_id, :value => params[:idc]
+      = f.hidden_field :social_network_id, :value => params[:id_social]
+      - start_date = "01-01-2012"
+      - start_date = params[:start_date] if params.has_key?(:start_date)
+      - start_date = @tuenti_datum.start_date if !@tuenti_datum.start_date.nil?
+      - end_date = "01-01-2012"
+      - end_date = params[:end_date] if params.has_key?(:end_date)
+      - end_date = @tuenti_datum.end_date if !@tuenti_datum.end_date.nil?
+      = f.label "Fecha Inicio"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+        = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
+        span.add-on
+          i.icon-th
+      br
+      br
+      = f.label "Fecha Final"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+        = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
+        span.add-on
+          i.icon-th
+      br
+      br
+      = f.label "Acciones durante el periodo"
+      = f.text_field :actions_text
+
+    .box.comunityTuenti
+      | Fans 
+      br
+      br
+      = f.label "# Fans Reales"
+      = f.text_field :real_fans, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Objetivo Fans"
+      = f.text_field :goal_fans, {:class => "validate[required,custom[number]]"}
+
+    .box.pageTuenti
+      | Pagina de la empresa
+      br
+      br
+      = f.label "Impresiones de la pagina"
+      = f.text_field :page_prints, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Total de usuario unicos"
+      = f.text_field :unique_total_users, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Clics externos"
+      = f.text_field :external_clics, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Clics"
+      = f.text_field :clics, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Descargas"
+      = f.text_field :downloads, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Numero de comentarios"
+      = f.text_field :comments, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "CRT % clic externo"
+      = f.text_field :ctr_external_clics, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Fotos subidas"
+      = f.text_field :upload_photos, {:class => "validate[required,custom[number]]"}
+    .box.investmentTuenti
+      |Inversion
+      br
+      br
+      = f.label "Inversion Agencia"
+      = f.text_field :investment_agency, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Inversion Nuevas Acciones "
+      = f.text_field :investment_actions, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Inversion anuncios"
+      = f.text_field :investment_ads, {:class => "validate[required, custom[number]]"}
+
+    = f.submit 'Guardar Datos', {:class => "btn btn-success saveTuenti"}
+    |     
+    = link_to 'Regresar', tuenti_index_path(params[:idc],1), :class => "btn btn-inverse backTuenti"

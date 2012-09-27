@@ -41,6 +41,8 @@ class SocialNetworksController < ApplicationController
             comments = PinterestComment.new(:social_network_id => @social_network.id)
           when 'youtube'
             comments = YoutubeComment.new(:social_network_id => @social_network.id)
+          when 'tuenti'
+            comments = TuentiComment.new(:social_network_id => @social_network.id)
         end
         if !comments.nil?
           comments.save
