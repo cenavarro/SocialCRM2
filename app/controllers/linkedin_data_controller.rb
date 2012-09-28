@@ -2,7 +2,7 @@ class LinkedinDataController < ApplicationController
   before_filter :authenticate_user!
 
   def createChartData
-    @dates = @linkedin_data.collect { |ld| "'" + ld.start_date.mday().to_s + " " + ld.start_date.strftime('%b') + "-" + ld.end_date.mday().to_s + " " + ld.end_date.strftime('%b') + "'" }.join(', ')
+    @dates = @linkedin_data.collect {|ld| "'" + ld.start_date.strftime('%d %b') + "-" + ld.end_date.strftime('%d %b') + "'"}.join(', ')
     @new_followers = @linkedin_data.collect(&:new_followers).join(', ')
     @total_followers = @linkedin_data.collect(&:total_followers).join(', ')
     @summary = @linkedin_data.collect(&:summary).join(', ')

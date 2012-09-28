@@ -1,0 +1,79 @@
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#formEntradaDatos").validationEngine();
+    });
+
+= form_for @flickr_datum, :html => {:class => "formNuevoDatosFlickr", :id => "formEntradaDatos"} do |f|
+  - if @flickr_datum.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@flickr_datum.errors.count, "error")} prohibited this flickr_datum from being saved:"
+      ul
+        - @flickr_datum.errors.full_messages.each do |message|
+          li = message
+
+  .form-horizontal.sectionInformation style="height: 650px;"
+    .box.informationFlickr
+      | Informacion
+      br
+      br
+      = f.hidden_field :client_id, :value => params[:idc]
+      = f.hidden_field :social_network_id, :value => params[:id_social]
+      - start_date = "01-01-2012"
+      - start_date = params[:start_date] if params.has_key?(:start_date)
+      - start_date = @flickr_datum.start_date if !@flickr_datum.start_date.nil?
+      - end_date = "01-01-2012"
+      - end_date = params[:end_date] if params.has_key?(:end_date)
+      - end_date = @flickr_datum.end_date if !@flickr_datum.end_date.nil?
+      = f.label "Fecha Inicio"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+        = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
+        span.add-on
+          i.icon-th
+      br
+      br
+      = f.label "Fecha Final"
+      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+        = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
+        span.add-on
+          i.icon-th
+
+    .box.comunityFlickr
+      | Comunidad
+      br
+      br
+      = f.label "# Contactos"
+      = f.text_field :total_contacts, {:class => "validate[required,custom[number]]"}
+
+    .box.interactionFlickr
+      | Interactividad
+      br
+      br
+      = f.label "# Visitas"
+      = f.text_field :visits, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "# Comentarios"
+      = f.text_field :comments, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "# Favoritos"
+      = f.text_field :favorites, {:class => "validate[required,custom[number]]"}
+    .box.investmentFlickr
+      |Inversion
+      br
+      br
+      = f.label "Inversion Agencia"
+      = f.text_field :investment_agency, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Inversion Nuevas Acciones "
+      = f.text_field :investment_actions, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Inversion anuncios"
+      = f.text_field :investment_ads, { :class => "validate[required,custom[number]]"}
+    br
+    br
+    = f.submit 'Guardar Datos', {:class => "btn btn-success saveFlickr"}
+    |     
+    = link_to 'Regresar', flickr_index_path(params[:idc],1), :class => "btn btn-inverse backFlickr"

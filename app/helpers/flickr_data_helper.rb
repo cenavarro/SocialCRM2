@@ -1,0 +1,2 @@
+module FlickrDataHelper
+end

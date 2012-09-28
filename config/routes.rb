@@ -1,6 +1,18 @@
 DemoComentarios::Application.routes.draw do
 
+
+  get "/:locale" => "home#index", :as => "language"
+
   scope ':locale' do
+
+    resources :flickr_data, :except => [:show]
+    post "flickr_data" => "flickr_data#create", :as => "flickr_create" 
+    get "flickr_data/:idc/:opcion/:id_social" => "flickr_data#index", :as => "flickr_index"
+    get "flickr_data/new/:idc/:opcion/:id_social" => "flickr_data#new", :as => "flickr_new"
+    get "flickr_data/:id/edit/:idc/:id_social" => "flickr_data#edit", :as => "flickr_edit"
+    post "flickr_data/save_comment" => "flickr_data#save_comment", :as => "flickr_save_comment"
+    delete "flickr_data/:id" => "flickr_data#destroy", :as => "flickr_delete"
+    put "flickr_data/:id" => "flickr_data#update", :as => "flickr_update"
 
     resources :tuenti_data, :except => [:show]
     post "tuenti_data" => "tuenti_data#create", :as => "tuenti_create" 
@@ -20,7 +32,7 @@ DemoComentarios::Application.routes.draw do
     delete "youtube_data/:id" => "youtube_data#destroy", :as => "youtube_delete"
     put "youtube_data/:id" => "youtube_data#update", :as => "youtube_update"
 
-    resources :pinterest_data
+    resources :pinterest_data, :except => [:show]
     post "pinterest_data" => "pinterest_data#create", :as => "pinterest_create" 
     get "pinterest_data/:idc/:opcion/:id_social" => "pinterest_data#index", :as => "pinterest_index"
     get "pinterest_data/new/:idc/:opcion/:id_social" => "pinterest_data#new", :as => "pinterest_new"
@@ -29,7 +41,7 @@ DemoComentarios::Application.routes.draw do
     delete "pinterest_data/:id" => "pinterest_data#destroy", :as => "pinterest_delete"
     put "pinterest_data/:id" => "pinterest_data#update", :as => "pinterest_update"
 
-    resource :linkedin_data
+    resource :linkedin_data, :except => [:show]
     post "linkedin_data" => "linkedin_data#create", :as => "linkedin_datum" 
     get "linkedin_data/:idc/:opcion/:id_social" => "linkedin_data#index", :as => "linkedin_index"
     get "linkedin_data/new/:idc/:opcion/:id_social" => "linkedin_data#new", :as => "linkedin_new"
@@ -38,7 +50,7 @@ DemoComentarios::Application.routes.draw do
     delete "linkedin_data/:id" => "linkedin_data#destroy", :as => "linkedin_delete"
     put "linkedin_data/:id" => "linkedin_data#update", :as => "linkedin_update"
 
-    resources :twitter_data
+    resources :twitter_data, :except => [:show]
     get "twitter_data/:idc/:opcion/:id_social" => "twitter_data#index", :as => "twitter_index"
     get "twitter_data/new/:idc/:opcion/:id_social" => "twitter_data#new", :as => "twitter_new"
     get "twitter_data/:id/edit/:idc/:id_social" => "twitter_data#edit", :as => "twitter_edit"
@@ -47,7 +59,7 @@ DemoComentarios::Application.routes.draw do
 
     devise_for :users, :controllers => {:omniauth_callbacks => "auth"}
 
-    resources :facebook_data
+    resources :facebook_data, :except => [:show]
     get "facebook_data/callback/:idc/:start_date/:end_date" => "facebook_data#callback", :as => "facebook_callback_dates"
     get "facebook_data/callback/:idc" => "facebook#callback", :as => "facebook_callback"
     get "facebook_data/:idc/:opcion/:id_social" => "facebook_data#index", :as => "facebook_index"
@@ -70,9 +82,9 @@ DemoComentarios::Application.routes.draw do
     get "notifications/reset_password/:token" => "notifications#reset_password", :as => "notifications_reset_password"
 
 
-    resources :info_social_networks
+    resources :info_social_networks, :except => [:show]
 
-    resources :social_networks
+    resources :social_networks, :except => [:show]
     get "social_networks/new/:isn" => "social_networks#new", :as => "social_networks_new"
     post "social_networks/add_image" => "social_networks#add_image", :as => "social_networks_add_image"
     post "social_networks/update_comment" => "social_networks#update_comment_image", :as => "social_networks_update_comment"
@@ -80,9 +92,6 @@ DemoComentarios::Application.routes.draw do
     delete "social_networks/:id" => "social_networks#destroy", :as => "social_networks_delete"
 
     get "validate_user/" => "home#validate_user", :as => "validate_user"
-
-    resources :revisions
-
     get "/" => "home#index", :as => "root2"
 
   end

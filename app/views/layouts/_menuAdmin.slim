@@ -109,6 +109,9 @@ javascript:
         case 'tuenti':
           window.location.href = 
           "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('tuenti').id).html_safe}"; break;
+        case 'flickr':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('flickr').id).html_safe}"; break;
       }
     });
   });

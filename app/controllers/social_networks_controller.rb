@@ -43,6 +43,8 @@ class SocialNetworksController < ApplicationController
             comments = YoutubeComment.new(:social_network_id => @social_network.id)
           when 'tuenti'
             comments = TuentiComment.new(:social_network_id => @social_network.id)
+          when 'flickr'
+            comments = FlickrComment.new(:social_network_id => @social_network.id)
         end
         if !comments.nil?
           comments.save

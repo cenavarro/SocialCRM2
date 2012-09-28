@@ -26,15 +26,4 @@ class HomeController < ApplicationController
     return false
   end
 
-  def change_language(language)
-    if language == 'en'
-      I18n.locale = 'en'
-    else
-      I18n.locale = 'es'
-    end
-    respond_to do | format |
-      format.html { redirect_to request.referer}
-    end
-  end
-
 end

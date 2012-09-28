@@ -2,44 +2,38 @@ $top_position: 390px;
 $left_position: 80px;
 $space: 400px;
 
-.informationLinkedin{
+.informationFlickr{
 	position:absolute;
 	left:$left_position;
 }
 
-.comunityLinkedin{
+.comunityFlickr{
 	position:absolute;
-  top: 50px;
+  top:35px;
 	left: $left_position+$space;
 }
 
-.interactionLinkedin{
+.interactionFlickr{
 	position:absolute;
 	top: -140 + ($top_position);
 	left:$left_position;
 }
 
-.investmentLinkedin{
+.investmentFlickr{
 	position:absolute;
-	top: 300px;
+	top: -140 + ($top_position);
   left:$left_position+$space;
 
 }
 
-.costsLinkedin{
+.saveFlickr{
 	position:absolute;
-	top: $top_position+225;
-	left:$left_position+$space;
-}
-
-.saveLinkedin{
-	position:absolute;
-	top: 940px;
+	top: 600px;
 	left: 300px;
 }
 
-.backLinkedin{
+.backFlickr{
 	position:absolute;
-	top: 940px;
+	top: 600px;
 	left:500px;
 }

@@ -5,9 +5,8 @@
   .language
     | Idioma
     br
-    a href='#'
+    a href=language_path('en')
       |EN
     |  |  
-    a href='#'
+    a href=language_path('es')
       |ES    
-    - # select :language, :id, [["English", 'en'], ["Espanol", 'es']], :class=> "select_language"
