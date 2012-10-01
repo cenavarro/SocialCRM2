@@ -15,3 +15,6 @@ puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Tuenti', :description => "Red Social Tuenti", :id_name => "tuenti"
 puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Flickr', :description => "Red Social Flickr", :id_name => 'flickr'
+puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Google+', :description => "Red Social Google+", :id_name => 'google_plus'
+puts "Informacion Red Social Creada: " << social.name

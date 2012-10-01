@@ -1,14 +1,14 @@
 class FlickrDataController < ApplicationController
   before_filter :authenticate_user!
 
-  def createChartData
+  def createchartdata
     @dates = @flickr_datum.collect {|ld| "'" + ld.start_date.strftime('%d %b') + "-" + ld.end_date.strftime('%d %b') + "'"}.join(', ')
     @new_contacts = @flickr_datum.collect(&:new_contacts).join(', ')
     @total_contacts = @flickr_datum.collect(&:total_contacts).join(', ')
     @visits = @flickr_datum.collect(&:visits).join(', ')
     @comment = @flickr_datum.collect(&:comments).join(', ')
     @favorites = @flickr_datum.collect(&:favorites).join(', ')
-    @total_investment = @flickr_datum.collect{ |fd| FlickrDatum.get_total_investment(fd)}.join(', ')
+    @total_investment = @flickr_datum.collect{ |fd| flickrdatum.get_total_investment(fd)}.join(', ')
   end
 
   def index

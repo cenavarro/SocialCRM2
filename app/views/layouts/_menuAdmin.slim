@@ -112,6 +112,9 @@ javascript:
         case 'flickr':
           window.location.href = 
           "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('flickr').id).html_safe}"; break;
+        case 'google_plus':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('google_plus').id).html_safe}"; break;
       }
     });
   });

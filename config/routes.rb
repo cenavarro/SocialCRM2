@@ -1,9 +1,19 @@
 DemoComentarios::Application.routes.draw do
 
 
+
   get "/:locale" => "home#index", :as => "language"
 
   scope ':locale' do
+
+    resources :google_plus_data, :except => [:show]
+    post "google_plus_data" => "google_plus_data#create", :as => "google_plus_create" 
+    get "google_plus_data/:idc/:opcion/:id_social" => "google_plus_data#index", :as => "google_plus_index"
+    get "google_plus_data/new/:idc/:opcion/:id_social" => "google_plus_data#new", :as => "google_plus_new"
+    get "google_plus_data/:id/edit/:idc/:id_social" => "google_plus_data#edit", :as => "google_plus_edit"
+    post "google_plus_data/save_comment" => "google_plus_data#save_comment", :as => "google_plus_save_comment"
+    delete "google_plus_data/:id" => "google_plus_data#destroy", :as => "google_plus_delete"
+    put "google_plus_data/:id" => "google_plus_data#update", :as => "google_plus_update"
 
     resources :flickr_data, :except => [:show]
     post "flickr_data" => "flickr_data#create", :as => "flickr_create" 

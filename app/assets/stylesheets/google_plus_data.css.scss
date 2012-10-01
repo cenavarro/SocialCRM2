@@ -1,0 +1,38 @@
+$top_position: 390px;
+$left_position: 80px;
+$space: 400px;
+
+.informationGooglePlus{
+	position:absolute;
+	left:$left_position;
+}
+
+.comunityGooglePlus{
+	position:absolute;
+	left: $left_position+$space;
+}
+
+.interactionGooglePlus{
+	position:absolute;
+	top: -140 + ($top_position);
+	left:$left_position;
+}
+
+.investmentGooglePlus{
+	position:absolute;
+	top: -190 + ($top_position);
+  left:$left_position+$space;
+
+}
+
+.saveGooglePlus{
+	position:absolute;
+	top: 600px;
+	left: 300px;
+}
+
+.backGooglePlus{
+	position:absolute;
+	top: 600px;
+	left:500px;
+}

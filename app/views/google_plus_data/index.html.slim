@@ -1,0 +1,298 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+
+- @google_plus_info = InfoSocialNetwork.find_by_id_name('google_plus')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @comments = GooglePlusComment.find_by_social_network_id(@socialNetwork.id)
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='GooglePlus Logo' height='100' width='200'>").html_safe
+    = @image
+br
+br
+
+.margin
+  a.btn.btn-info href=google_plus_new_path(params[:idc],2) style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+br
+br
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=google_plus_index_path(params[:idc],2) method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+
+script
+  | createChart('container_community', 'Comunidad', [#{@dates}]);
+  | addSerie('# nuevos contactos',[#{@new_followers}]);
+  | addSerie('# contactos',[#{@total_followers}]);
+
+  | createChart('container_interactions', 'Interactividad', [#{@dates}]);
+  | addSerie('# Visitas',[#{@plus}]);
+  | addSerie('# Comentarios',[#{@content_shared}]);
+  | addSerie('# Favoritos',[#{@total_interactions}]);
+
+  | createChart('container_investment', 'Inversion', [#{@dates}]);
+  | addSerie('# nuevos contactos',[#{@new_followers}]);
+  | addSerie('Inversion Total',[#{@total_investment}]);
+
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          |Otros datos
+
+  br
+  br
+
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = google_plus_datum.start_date.strftime('%d %b') + "-" + google_plus_datum.end_date.strftime("%d %b")
+          tbody
+            tr.titlesRows
+              td colspan=100
+                | Comunidad 
+            tr
+              td.estiloCelda
+                |# nuevos followers 
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = google_plus_datum.new_followers
+            tr
+              td
+                |# followers
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = google_plus_datum.total_followers
+            tr
+              td
+                |% crecimiento seguidores
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = GooglePlusDatum.get_grown_followers(google_plus_datum).round(3)
+            tr.titlesRows
+              td colspan=100
+                |Interactividad
+            tr
+              td
+                |(+1s)
+              - @google_plus_datum.each do | google_plus_datum |
+                td
+                  = google_plus_datum.plus
+            tr
+              td
+                |Compartir contenido
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = google_plus_datum.content_shared
+            tr
+              td
+                |Total de interacciones
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = GooglePlusDatum.get_total_interactions(google_plus_datum)
+            tr
+              td
+                |% cambio en interacciones
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = GooglePlusDatum.get_change_interactions(google_plus_datum).round(3)
+            tr.titlesRows
+              td colspan=100
+                | Inversion
+            tr
+              td
+                | Inversion Agencia
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = google_plus_datum.investment_agency
+            tr
+              td
+                | Inversion nuevas acciones
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = google_plus_datum.investment_actions
+            tr
+              td
+                | Inversion anuncios
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = google_plus_datum.investment_ads
+            tr
+              td
+                | Inversion Total
+              - @google_plus_datum.each do |google_plus_datum|
+                td
+                  = GooglePlusDatum.get_total_investment(google_plus_datum)
+            tr
+              td.nilValue
+                |Opciones
+              -@google_plus_datum.each do |google_plus_datum|
+                td.celdaOpciones
+                  a.btn.btn-info href=google_plus_edit_path(google_plus_datum.id,params[:idc]) id=%{edit_#{google_plus_datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{google_plus_datum.id}} href=google_plus_delete_path(google_plus_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        br
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@google_plus_info.id_name}');"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_community
+        .comment
+          .title
+            h4
+              | Comentario Grafico Comunidad
+          br
+          form  id="community" onsubmit="return saveChartComment('#community',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@google_plus_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.community
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_interactions
+        .comment
+          .title
+            h4
+              | Comentario Grafico Interacciones
+          br
+          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}','#{@google_plus_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.interaction
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_investment
+        .comment
+          .title
+            h4
+              | Comentario Grafico Inversion
+          br
+          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},4,'#{params[:locale]}','#{@google_plus_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.investment
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+
+    .tab-pane.fade id="tabothers"
+        .margin
+          button.btn.btn-info onclick="show('addNewImage','btnAddImages')" id="btnAddImages"
+            | Agregar Imagenes
+      
+        .form_nueva_imagen id="addNewImage"
+          button.close onclick="hide('addNewImage', 'btnAddImages')"
+            |x
+          = form_for ImagesSocialNetwork.new, :as => :images, :url => social_networks_add_image_path, :html => { :multipart => true} do | f |
+            center
+              h3 Agregar Imagen
+            br
+            br
+            = f.label "Titulo:"
+            = f.text_field :title, :required => "required"
+            br
+            br
+            = f.label "Seleccione la imagen"
+            = f.file_field :attachment, :required => "required", :accept => "image/*"
+            br
+            br
+            = f.label "Comentario Imagen"
+            = f.text_area :comment 
+            br
+            br
+            = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
+            center
+              = f.submit "Guardar", :class => "btn btn-success" 
+
+        br
+        br
+        .margin
+          - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork.id).all
+          - @images.each do | imagen |
+            br
+            br
+            h3
+              = imagen.title
+            br
+            br
+            img src="#{imagen.attachment.url}" height="400px" width="800px"
+            br
+            br
+            h4 Comentario
+            br
+            form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id}, '#{params[:locale]}');"
+              textarea id="comment" style="max-width:790px; width: 100%;" rows="10"
+                = imagen.comment
+              button.btn.btn-success style="float:left;"
+                |Actualizar
+              |      
+              a.btn.btn-danger href=social_networks_destroy_image_path(imagen.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+                |Eliminar
+              |      
+              .result

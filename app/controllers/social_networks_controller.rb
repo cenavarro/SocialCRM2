@@ -45,6 +45,8 @@ class SocialNetworksController < ApplicationController
             comments = TuentiComment.new(:social_network_id => @social_network.id)
           when 'flickr'
             comments = FlickrComment.new(:social_network_id => @social_network.id)
+          when 'google_plus'
+            comments = GooglePlusComment.new(:social_network_id => @social_network.id)
         end
         if !comments.nil?
           comments.save
