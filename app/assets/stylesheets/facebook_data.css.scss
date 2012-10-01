@@ -1,7 +1,3 @@
-// Place all the styles related to the Facebook_data controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: 
-
 $green: #04B404;
 $red: #FF0000; 
 $textSize: 90%;
@@ -42,7 +38,7 @@ $space: 400px;
 }
 
 .margin{
-	margin: 0px 20px 0px 50px;
+	margin: 40px 20px 40px 50px;
 }
 
 .headerTable{
@@ -171,6 +167,7 @@ $space: 400px;
 }
 
 .title{
+  margin: 0px 0px 20px 0px;
 }
 
 .result{
@@ -182,8 +179,7 @@ $space: 400px;
 }
 
 .estilo_tabs{
-  margin-left: 50px;
-  margin-right: 50px;
+  margin: 0px 50px 40px 50px;
 }
 
 .form_nueva_imagen textarea{

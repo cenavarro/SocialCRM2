@@ -3,8 +3,6 @@
       center
         h4
           = notice
-br
-
 - @twitter_info = InfoSocialNetwork.find(2)
 - @socialNetwork = SocialNetwork.find(params[:id_social])
 - @comments = TwitterComment.where(:social_network_id => @socialNetwork.id)[0]
@@ -16,9 +14,6 @@ br
     br
     - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Twitter Logo' height='100' width='200'>").html_safe
     = @image
-br
-br
-
 .margin
   a.btn.btn-info href=twitter_new_path(params[:idc],2) style="width: 168px"
     |Nueva Entrada de Datos
@@ -26,8 +21,6 @@ br
   br
   button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
-br
-br
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
@@ -52,7 +45,6 @@ br
     center
       input.btn.btn-primary type="submit" value="Obtener Datos"
     br
-
 script
   | createChart('container_comunidad', 'Comunidad', [#{@dates}]);
   | addSerie('# Nuevos Followers', [#{@new_followers}]);
@@ -75,7 +67,6 @@ script
   | addSerie('Cost per engagement twitter ads', [#{@cost_per_engagement}]);
   | addSerie('Coste por mil impresiones', [#{@cost_prints}]);
   | addSerie('Coste por interaccion', [#{@cost_interactions}]);
-
 section.sectionInformation
   .estilo_tabs
     ul.nav.nav-tabs id="myTab"
@@ -88,10 +79,6 @@ section.sectionInformation
       li
         a href="#tabothers" data-toggle="tab"
           |Otros datos
-
-  br
-  br
-
   .tab-content
     .tab-pane.fade.in.active id="tabtable"
       section.sectionTable
@@ -360,7 +347,6 @@ section.sectionInformation
         .title
           h4
             | Comentario para la Tabla:
-        br
         form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1,'#{params[:locale]}', '#{@twitter_info.id_name}');"
           textarea id="comment"
             = @comments.table
@@ -368,8 +354,6 @@ section.sectionInformation
           button.btn.btn-success
             | Guardar
           .result
-
-
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
@@ -380,7 +364,6 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Comnidad
-          br
           form  id="comunity" onsubmit="return saveChartComment('#comunity',#{@socialNetwork.id},2,'#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.comunity
@@ -394,7 +377,6 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Interacciones
-          br
           form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interaction
@@ -408,7 +390,6 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Inversion
-          br
           form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},4,'#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.investment
@@ -422,7 +403,6 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Costes
-          br
           form  id="cost" onsubmit="return saveChartComment('#cost',#{@socialNetwork.id},5,'#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.cost
@@ -430,7 +410,5 @@ section.sectionInformation
             button.btn.btn-success
               | Guardar
             .result
-
-
     .tab-pane.fade id="tabothers"
       == render 'layouts/uploadImage'

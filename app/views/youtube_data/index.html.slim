@@ -3,7 +3,6 @@
       center
         h4
           = notice
-br
 
 - @youtube_info = InfoSocialNetwork.find_by_id_name('youtube')
 - @socialNetwork = SocialNetwork.find(params[:id_social])
@@ -16,9 +15,6 @@ br
     br
     - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Youtube Logo' height='100' width='200'>").html_safe
     = @image
-br
-br
-
 .margin
   a.btn.btn-info href=youtube_new_path(params[:idc],2) style="width: 168px"
     |Nueva Entrada de Datos
@@ -26,8 +22,6 @@ br
   br
   button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
-br
-br
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
@@ -52,8 +46,6 @@ br
     center
       input.btn.btn-primary type="submit" value="Obtener Datos"
     br
-
-
 script
   | createChart('container_community', 'Comunidad', [#{@dates}]);
   | addSerie('Suscriptores nuevos',[#{@new_subscribers}]);
@@ -71,7 +63,6 @@ script
   | addSerie('Otra paginas de Youtube',[#{@others}]);
   | addSerie('Suscripciones de Youtube',[#{@subscriptions}]);
   | addSerie('Publicidad de Youtube',[#{@youtube_ads}]);
-
 section.sectionInformation
   .estilo_tabs
     ul.nav.nav-tabs id="myTab"
@@ -84,10 +75,6 @@ section.sectionInformation
       li
         a href="#tabothers" data-toggle="tab"
           |Otros datos
-
-  br
-  br
-
   .tab-content
     .tab-pane.fade.in.active id="tabtable"
       section.sectionTable
@@ -225,7 +212,6 @@ section.sectionInformation
         .title
           h4
             | Comentario para la Tabla:
-        br
         form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@youtube_info.id_name}');"
           textarea id="comment"
             = @comments.table
@@ -233,8 +219,6 @@ section.sectionInformation
           button.btn.btn-success
             | Guardar
           .result
-
-
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
@@ -245,7 +229,6 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Comunidad
-          br
           form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@youtube_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.community
@@ -259,7 +242,6 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Interacciones
-          br
           form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}','#{@youtube_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interaction
@@ -267,6 +249,5 @@ section.sectionInformation
             button.btn.btn-success
               | Guardar
             .result
-
     .tab-pane.fade id="tabothers"
       == render 'layouts/uploadImage'
