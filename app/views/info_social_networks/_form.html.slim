@@ -29,10 +29,13 @@ javascript:
   br
   = f.label :imagen
   br
-  = f.file_field :attachment, :required => "required", :accept => "image/*", :class => "validate[required] text-input"
+  = f.file_field :attachment, :required => "required", :accept => "image/*", :class => "validate[required] text-input", :onchange => "previewImage(this);"
   p.simbolo
     span style="font-size: 16pt"
       |* 
+  br
+  br
+  img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#" style="padding-left:80px;"
   br
   br
   center
@@ -49,3 +52,7 @@ javascript:
     span style="font-size: 16pt"
       |* 
     |  Campos Obligatorios 
+script
+  | $(document).ready(function() {
+  |   $('#image_preview').attr('src', '#{@info_social_network.attachment.url.html_safe}');
+  | });
