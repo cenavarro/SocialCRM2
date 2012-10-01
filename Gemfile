@@ -21,7 +21,6 @@ group :assets do
 end
 
 gem 'jquery-rails', "= 1.0.19"
-
 gem "rspec-rails", "= 2.11.0", :group => [:development, :test]
 gem "factory_girl_rails", "= 4.0.0", :group => :test
 gem "capybara", ">= 1.0.1", :group => :test
