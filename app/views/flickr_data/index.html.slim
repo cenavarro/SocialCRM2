@@ -157,7 +157,7 @@ section.sectionInformation
                   a.btn.btn-info href=flickr_edit_path(flickr_datum.id,params[:idc]) id=%{edit_#{flickr_datum.id}}
                     i.icon-pencil.icon-white
                   |  
-                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{flickr_datum.id}} href=flickr_delete_path(flickr_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{flickr_datum.id}} href=flickr_datum_path(flickr_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
                     i.icon-trash.icon-white
       .comment
         .title

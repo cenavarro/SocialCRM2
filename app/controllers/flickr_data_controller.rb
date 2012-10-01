@@ -82,7 +82,7 @@ class FlickrDataController < ApplicationController
     @flickr_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to flickr_index_path(@flickr_datum.client_id,1,social_id), notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to flickr_index_path(client_id,1,social_id), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

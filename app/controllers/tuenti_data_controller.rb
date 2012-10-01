@@ -95,7 +95,7 @@ class TuentiDataController < ApplicationController
     @tuenti_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to tuenti_index_path(@tuenti_datum.client_id,1,social_id), notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to tuenti_index_path(client_id,1,social_id), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

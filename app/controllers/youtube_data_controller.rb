@@ -91,7 +91,7 @@ class YoutubeDataController < ApplicationController
     @youtube_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to youtube_index_path(@youtube_datum.client_id,1,social_id), notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to youtube_index_path(client_id,1,social_id), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

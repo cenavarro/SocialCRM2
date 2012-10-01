@@ -206,7 +206,7 @@ section.sectionInformation
                   a.btn.btn-info href=youtube_edit_path(youtube_datum.id,params[:idc]) id=%{edit_#{youtube_datum.id}}
                     i.icon-pencil.icon-white
                   |  
-                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{youtube_datum.id}} href=youtube_delete_path(youtube_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{youtube_datum.id}} href=youtube_datum_path(youtube_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
                     i.icon-trash.icon-white
       .comment
         .title

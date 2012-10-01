@@ -221,7 +221,7 @@ section.sectionInformation
                   a.btn.btn-info href=tuenti_edit_path(tuenti_datum.id,params[:idc]) id=%{edit_#{tuenti_datum.id}}
                     i.icon-pencil.icon-white
                   |  
-                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{tuenti_datum.id}} href=tuenti_delete_path(tuenti_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{tuenti_datum.id}} href=tuenti_datum_path(tuenti_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
                     i.icon-trash.icon-white
       .comment
         .title

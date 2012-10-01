@@ -78,10 +78,12 @@ class GooglePlusDataController < ApplicationController
 
   def destroy
     @google_plus_datum = GooglePlusDatum.find(params[:id])
+    client_id = @google_plus_datum.client_id
+    social_id = @google_plus_datum.social_network_id
     @google_plus_datum.destroy
 
     respond_to do |format|
-      format.html { redirect_to google_plus_datum_url }
+      format.html { redirect_to google_plus_index_path(client_id,1,social_id), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end

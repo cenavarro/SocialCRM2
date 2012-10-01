@@ -341,7 +341,7 @@ section.sectionInformation
                   a.btn.btn-info href=twitter_edit_path(twitter_datum.id,params[:idc]) id=%{edit_#{twitter_datum.id}}
                     i.icon-pencil.icon-white
                   |  
-                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{twitter_datum.id}} href=twitter_delete_path(twitter_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{twitter_datum.id}} href=twitter_datum_path(twitter_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
                     i.icon-trash.icon-white
       .comment
         .title

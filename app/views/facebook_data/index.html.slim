@@ -333,7 +333,6 @@ section.sectionInformation
                   a.btn.btn-info href=facebook_edit_path(facebook_datum.id,params[:idc]) id=%{edit_#{facebook_datum.id}}
                     i.icon-pencil.icon-white
                   |  
-                  - idFacebookData = facebook_datum.id
                   a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{facebook_datum.id}} href=facebook_datum_path(facebook_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
                     i.icon-trash.icon-white
       .comment

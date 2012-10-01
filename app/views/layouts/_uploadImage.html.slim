@@ -25,9 +25,6 @@
     = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
     center
       = f.submit "Guardar", :class => "btn btn-success" 
-
-br
-br
 .margin
   - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork.id).all
   - @images.each do | imagen |

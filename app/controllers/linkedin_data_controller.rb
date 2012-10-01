@@ -85,7 +85,7 @@ class LinkedinDataController < ApplicationController
     @linkedin_data.destroy
 
     respond_to do |format|
-      format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1,social_id), notice: 'La informacion ha sido borrada exitosamente.' }
+      format.html { redirect_to linkedin_index_path(client_id,1,social_id), notice: 'La informacion ha sido borrada exitosamente.' }
       format.json { head :ok }
     end
   end
