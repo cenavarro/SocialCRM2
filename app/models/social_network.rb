@@ -1,5 +1,5 @@
 class SocialNetwork < ActiveRecord::Base
-  has_attached_file :image
+  has_attached_file :image, :default_url => "/assets/images/missing.png"
   validate :image, :attachment_presence => true
 
   has_many :facebook_comment, :dependent => :destroy

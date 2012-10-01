@@ -1,10 +1,7 @@
 javascript:
-
     jQuery(document).ready(function(){
       jQuery("#form_new").validationEngine();
     });
-
-
 center
   h1 Editar Cliente
 br
@@ -42,7 +39,10 @@ br
   br
   br
   = label_tag :image, "Imagen Cliente:"
-  = file_field_tag :attachment, {:required => "required", :accept => "image/*"}
+  = file_field_tag :attachment, {:required => "required", :accept => "image/*", :onchange => "previewImage(this);"}
+  br
+  br
+  img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#" style="padding-left:80px;"
   br
   br
   center
@@ -55,3 +55,7 @@ br
     span style="font-size: 16pt"
       |* 
     |Campos Requeridos
+script
+  | $(document).ready(function() {
+  |   $('#image_preview').attr('src', '#{@client.attachment.url.html_safe}');
+  | });

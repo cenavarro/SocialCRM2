@@ -35,7 +35,6 @@ group :development do
   gem 'guard-livereload', "= 1.0.0"
 end
 
-
 group :test do
   gem 'minitest', "= 3.3.0"
   gem 'turn', "= 0.9.6", :require => false

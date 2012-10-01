@@ -10,6 +10,7 @@ br
 br
 table.table.table-bordered
   tr
+    th Imagen
     th Nombre
     th Cliente
     th Red Social Asociada
@@ -17,6 +18,9 @@ table.table.table-bordered
 
   - @social_networks.each do |social_network|
     tr
+      td
+        center
+          img src='#{social_network.image.url}' height="100px" width="100px"
       td
         = social_network.name
       - @client = Client.find(social_network.client_id)
@@ -32,7 +36,7 @@ table.table.table-bordered
           |  Editar
       td
         - str_id = "delete_client_#{social_network.id}"
-        a.btn.btn-danger href=social_networks_delete_path(social_network.id) data-confirm="Esta seguro que desea eliminar esta Red Social?" data-method="delete" rel="nofollow" id=str_id
+        a.btn.btn-danger href=social_network_path(social_network.id) data-confirm="Esta seguro que desea eliminar esta Red Social?" data-method="delete" rel="nofollow" id=str_id
           i.icon-trash.icon-white
           |  Eliminar
 br

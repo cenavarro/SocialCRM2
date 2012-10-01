@@ -32,7 +32,10 @@ javascript:
   br
   = f.label "Imagen:"
   br
-  = f.file_field :image, :required => "required", :accept => "image/*" 
+  = f.file_field :image, :accept => "image/*" , :onchange => "previewImage(this);" 
+  br
+  br
+  img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#" style="padding-left:80px;"
   br
   br
   center
@@ -49,3 +52,7 @@ javascript:
     span style="font-size: 16pt"
       |* 
     |  Campos Obligatorios 
+script
+  | $(document).ready(function() {
+  |   $('#image_preview').attr('src', '#{@social_network.image.url.html_safe}');
+  | });

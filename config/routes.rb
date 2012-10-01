@@ -75,12 +75,11 @@ DemoComentarios::Application.routes.draw do
 
     resources :info_social_networks, :except => [:show]
 
-    resources :social_networks, :except => [:show]
+    resources :social_networks, :except => [:new, :show]
     get "social_networks/new/:isn" => "social_networks#new", :as => "social_networks_new"
     post "social_networks/add_image" => "social_networks#add_image", :as => "social_networks_add_image"
     post "social_networks/update_comment" => "social_networks#update_comment_image", :as => "social_networks_update_comment"
     delete "social_networks/destroy_image/:id" => "social_networks#destroy_image", :as => "social_networks_destroy_image"
-    delete "social_networks/:id" => "social_networks#destroy", :as => "social_networks_delete"
 
     get "validate_user/" => "home#validate_user", :as => "validate_user"
     get "/" => "home#index", :as => "root2"
