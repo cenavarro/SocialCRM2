@@ -19,3 +19,9 @@
 .language select{
   width:50px;
 }
+
+.log_in_as{
+  float:right;
+  color:white;
+  padding: 40px 0px 0px 0px;
+}

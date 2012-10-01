@@ -10,7 +10,6 @@ javascript:
       ul
         - flash.each do |name, msg|
           li = msg
-br
 center
   h1 Iniciar Sesion
 br
@@ -42,15 +41,15 @@ table.tableLogin
         br
         = f.submit "Iniciar Sesion", :class => "btn btn-primary"
 
-    td.loginFacebook
+    td.othersLogin
       .titleFacebook
-        h4 O inicia sesion con tu cuenta de Facebook
+        h4 O inicia sesion con otra cuenta:
       .botonLogin
-        a.btn.btn-primary href=user_omniauth_authorize_path(:facebook)
-          | Login con Facebook
+        a href=user_omniauth_authorize_path(:facebook)
+          img src="/assets/images/facebook_logo_icon_2.jpg" width="50px" height="50px"
         br
         br
-        a.btn.btn-primary href=user_omniauth_authorize_path(:google_oauth2)
-          | Login con Google
+        a href=user_omniauth_authorize_path(:google_oauth2)
+          img src="/assets/images/google_plus_icon.png" width="50px" height="50px"
       br
       br
