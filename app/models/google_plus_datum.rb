@@ -6,7 +6,7 @@ class GooglePlusDatum < ActiveRecord::Base
       old_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       return (datum.total_followers - old_data.total_followers)
     end
-    return datum.total_followers
+    return 0 
   end
 
   def self.get_total_investment(datum)

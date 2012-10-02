@@ -6,7 +6,7 @@ class TuentiDatum < ActiveRecord::Base
       old_data = TuentiDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       return (datum.real_fans - old_data.real_fans)
     end
-    return datum.real_fans 
+    return 0
   end
 
   def self.get_total_investment(datum)

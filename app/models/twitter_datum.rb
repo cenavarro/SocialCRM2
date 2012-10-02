@@ -6,7 +6,7 @@ class TwitterDatum < ActiveRecord::Base
       old_data = TwitterDatum.where('end_date <= ? and id_social_network = ?', datum.start_date.to_date, datum.id_social_network).first
       return  datum.total_followers - old_data.total_followers
     end
-    return datum.total_followers
+    return 0
   end
 
   def self.get_period_tweets(datum)
