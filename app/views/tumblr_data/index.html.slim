@@ -1,0 +1,210 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+
+- @tumblr_info = InfoSocialNetwork.find_by_id_name('tumblr')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @comments = TumblrComment.find_by_social_network_id(@socialNetwork.id)
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Tumblr Logo' height='100' width='200'>").html_safe
+    = @image
+.margin
+  a.btn.btn-info href=tumblr_new_path(params[:idc],2) style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=tumblr_index_path(params[:idc],2) method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+
+script
+  | createChart('container_followers', 'Followers', [#{@dates}]);
+  | addSerie('# nuevos followers',[#{@new_followers}]);
+  | addSerie('# followers',[#{@total_followers}]);
+
+  | createChart('container_interactivity', 'Interactividad', [#{@dates}]);
+  | addSerie('# like',[#{@likes}]);
+  | addSerie('# reblogged',[#{@reblogged}]);
+
+  | createChart('container_investment', 'Inversion', [#{@dates}]);
+  | addSerie('# nuevos followers',[#{@new_followers}]);
+  | addSerie('Inversion Total',[#{@total_investment}]);
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          |Otros datos
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @tumblr_datum.each do |tumblr_datum|
+                td
+                  = tumblr_datum.start_date.strftime('%d %b') + "-" + tumblr_datum.end_date.strftime("%d %b")
+          tbody
+            tr.titlesRows
+              td colspan=100
+                | Comunidad 
+            tr
+              td.estiloCelda
+                |# nuevos followers
+              - @tumblr_datum.each do |tumblr_datum|
+                td
+                  = tumblr_datum.new_followers
+            tr
+              td
+                |# followers
+              - @tumblr_datum.each do |tumblr_datum|
+                td
+                  = tumblr_datum.total_followers
+            tr.titlesRows
+              td colspan=100
+                |Inveractividad
+            tr
+              td
+                |#like
+              - @tumblr_datum.each do | tumblr_datum |
+                td
+                  = tumblr_datum.likes
+            tr
+              td
+                |# reblogged
+              - @tumblr_datum.each do |tumblr_datum|
+                td
+                  = tumblr_datum.reblogged
+            tr.titlesRows
+              td colspan=100
+                | Inversion
+            tr
+              td
+                | Inversion Agencia
+              - @tumblr_datum.each do |tumblr_datum|
+                td
+                  = tumblr_datum.investment_agency
+            tr
+              td
+                | Inversion nuevas acciones
+              - @tumblr_datum.each do |tumblr_datum|
+                td
+                  = tumblr_datum.investment_actions
+            tr
+              td
+                | Inversion anuncios
+              - @tumblr_datum.each do |tumblr_datum|
+                td
+                  = tumblr_datum.investment_ads
+            tr
+              td
+                | Inversion Total
+              - @tumblr_datum.each do |tumblr_datum|
+                td
+                  = TumblrDatum.get_total_investment(tumblr_datum)
+            tr
+              td.nilValue
+                |Opciones
+              -@tumblr_datum.each do |tumblr_datum|
+                td.celdaOpciones
+                  a.btn.btn-info href=tumblr_edit_path(tumblr_datum.id) id=%{edit_#{tumblr_datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{tumblr_datum.id}} href=tumblr_datum_path(tumblr_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@tumblr_info.id_name}');"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_followers
+        .comment
+          .title
+            h4
+              | Comentario Grafico Followers
+          form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@tumblr_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.followers
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_interactivity
+        .comment
+          .title
+            h4
+              | Comentario Grafico Interactividad
+          form  id="interactivity" onsubmit="return saveChartComment('#interactivity',#{@socialNetwork.id},3,'#{params[:locale]}','#{@tumblr_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.interactivity
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_investment
+        .comment
+          .title
+            h4
+              | Comentario Grafico Inversion
+          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},4,'#{params[:locale]}','#{@tumblr_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.investment
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+    .tab-pane.fade id="tabothers"
+      == render 'layouts/uploadImage'

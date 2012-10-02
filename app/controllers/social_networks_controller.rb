@@ -49,6 +49,8 @@ class SocialNetworksController < ApplicationController
             comments = GooglePlusComment.new(:social_network_id => @social_network.id)
           when 'blog'
             comments = BlogComment.new(:social_network_id => @social_network.id)
+          when 'tumblr'
+            comments = TumblrComment.new(:social_network_id => @social_network.id)
         end
         if !comments.nil?
           comments.save

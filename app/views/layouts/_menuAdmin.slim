@@ -118,6 +118,9 @@ javascript:
         case 'blog':
           window.location.href = 
           "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('blog').id).html_safe}"; break;
+        case 'tumblr':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('tumblr').id).html_safe}"; break;
       }
     });
   });

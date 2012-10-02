@@ -20,3 +20,5 @@ social = InfoSocialNetwork.create! :name => 'Google+', :description => "Red Soci
 puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Blog', :description => "Blogs", :id_name => 'blog'
 puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Tumblr', :description => "Red Social Tumblr", :id_name => 'tumblr'
+puts "Informacion Red Social Creada: " << social.name

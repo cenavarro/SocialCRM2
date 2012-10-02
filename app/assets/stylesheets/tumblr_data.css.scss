@@ -2,43 +2,37 @@ $top_position: 390px;
 $left_position: 80px;
 $space: 400px;
 
-.informationTwitter{
+.informationTumblr{
 	position:absolute;
 	left:$left_position;
 }
 
-.comunityTwitter{
+.comunityTumblr{
 	position:absolute;
 	left: $left_position+$space;
 }
 
-.interactionTwitter{
+.interactionTumblr{
 	position:absolute;
 	top: -140 + ($top_position);
 	left:$left_position;
 }
 
-.investmentTwitter{
+.investmentTumblr{
 	position:absolute;
-	top: $top_position;
+	top: -200 + $top_position;
 	left:$left_position+$space;
 
 }
 
-.costsTwitter{
+.saveTumblr{
 	position:absolute;
-	top: $top_position+225;
-	left:$left_position+$space;
-}
-
-.saveTwitter{
-	position:absolute;
-	top: 800px;
+	top: 550px;
 	left: 300px;
 }
 
-.backTwitter{
+.backTumblr{
 	position:absolute;
-	top: 800px;
+	top: 550px;
 	left:500px;
 }

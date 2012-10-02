@@ -1,11 +1,14 @@
 DemoComentarios::Application.routes.draw do
 
-
-
-
   get "/:locale" => "home#index", :as => "language"
 
   scope ':locale' do
+
+    resources :tumblr_data, :only => [:create, :destroy, :update]
+    post "tumblr_data/save_comment" => "tumblr_data#save_comment", :as => "tumblr_save_comment"
+    get "tumblr_data/new/:idc/:opcion/:id_social" => "tumblr_data#new", :as => "tumblr_new"
+    get "tumblr_data/:id/edit/:idc/:id_social" => "tumblr_data#edit", :as => "tumblr_edit"
+    get "tumblr_data/:idc/:opcion/:id_social" => "tumblr_data#index", :as => "tumblr_index"
 
     resources :blog_data, :only => [:create, :destroy, :update]
     post "blog_data/save_comment" => "blog_data#save_comment", :as => "blog_save_comment"

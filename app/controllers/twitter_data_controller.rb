@@ -41,22 +41,10 @@ class TwitterDataController < ApplicationController
   end
 
   def new
-    if existParamIdClient?
-      if getDataFromTwitter?
-        @twitter_datum = TwitterDatum.new
-        respond_to do |format|
-          format.html
-          format.json { render json: @twitter_datum }
-        end
-      else
-        @twitter_datum = TwitterDatum.new
-        respond_to do |format|
-          format.html
-          format.json { render json: @twitter_datum }
-        end
-      end
-    else
-      redirect_to root2_path
+    @twitter_datum = TwitterDatum.new
+    respond_to do |format|
+      format.html
+      format.json { render json: @twitter_datum }
     end
   end
 
