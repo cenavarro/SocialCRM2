@@ -1,0 +1,68 @@
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#formEntradaDatos").validationEngine();
+    });
+
+= form_for @blog_datum, :html => {:class => "formNuevoDatosBlog", :id => "formEntradaDatos"} do |f|
+  - if @blog_datum.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@blog_datum.errors.count, "error")} prohibited this blog_datum from being saved:"
+      ul
+        - @blog_datum.errors.full_messages.each do |message|
+          li = message
+
+  .form-horizontal.sectionInformation style="height: 650px;"
+    .box.informationBlog
+      | Informacion
+      br
+      = f.hidden_field :client_id, :value => params[:idc]
+      = f.hidden_field :social_network_id, :value => params[:id_social]
+      - start_date = get_start_date 
+      - start_date = params[:start_date] if params.has_key?(:start_date)
+      - start_date = @blog_datum.start_date if !@blog_datum.start_date.nil?
+      - end_date = get_end_date 
+      - end_date = params[:end_date] if params.has_key?(:end_date)
+      - end_date = @blog_datum.end_date if !@blog_datum.end_date.nil?
+      = f.label "Fecha Inicio"
+      .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
+        = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
+        span.add-on
+          i.icon-th
+      br
+      br
+      = f.label "Fecha Final"
+      .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
+        = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
+        span.add-on
+          i.icon-th
+
+    .box.visitsBlog
+      | Visitas
+      br
+      br
+      = f.label "# visitas unicas"
+      = f.text_field :unique_visits, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "# paginas vistas"
+      = f.text_field :view_pages, {:class => "validate[required,custom[number]]"}
+
+    .box.percentageBlog
+      | Porcentajes
+      br
+      br
+      = f.label "Porcentaje de Rebote"
+      = f.text_field :rebound_percent, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "Porcentaje visitas nuevas"
+      = f.text_field :new_visits_percent, {:class => "validate[required,custom[number]]"}
+      br
+      br
+      = f.label "# de posts"
+      = f.text_field :total_posts, {:class => "validate[required,custom[number]]"}
+    br
+    br
+    = f.submit 'Guardar Datos', {:class => "btn btn-success saveBlog"}
+    |     
+    = link_to 'Regresar', blog_index_path(params[:idc],1), :class => "btn btn-inverse backBlog"

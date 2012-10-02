@@ -1,0 +1,194 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+
+- @blog_info = InfoSocialNetwork.find_by_id_name('blog')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @comments = BlogComment.find_by_social_network_id(@socialNetwork.id)
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Blog Logo' height='100' width='200'>").html_safe
+    = @image
+.margin
+  a.btn.btn-info href=blog_new_path(params[:idc],2) style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=blog_index_path(params[:idc],2) method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+
+script
+  | createChart('container_visits', 'Visitas', [#{@dates}]);
+  | addSerie('# visitas unicas',[#{@unique_visits}]);
+  | addSerie('# paginas vistas',[#{@view_pages}]);
+
+  | createChart('container_percentage', 'Porcentajes', [#{@dates}]);
+  | addSerie('Porcentaje Rebote',[#{@rebound_percent}]);
+
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          |Otros datos
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @blog_datum.each do |blog_datum|
+                td
+                  = blog_datum.start_date.strftime('%d %b') + "-" + blog_datum.end_date.strftime("%d %b")
+          tbody
+            tr.titlesRows
+              td colspan=100
+                | Visitas 
+            tr
+              td.estiloCelda
+                |# visitas unicas
+              - @blog_datum.each do |blog_datum|
+                td
+                  = blog_datum.unique_visits
+            tr
+              td
+                |% diferencia
+              - @blog_datum.each do |blog_datum|
+                - value = BlogDatum.get_diff_unique_visits(blog_datum)
+                - if value >= 0.0
+                  td.positiveValue
+                    = %{#{value.round(3)}%}
+                - else
+                  td.negativeValue
+                    = %{#{value.round(3)}%}
+            tr
+              td
+                |# paginas vistas
+              - @blog_datum.each do |blog_datum|
+                td
+                  = blog_datum.view_pages
+            tr
+              td
+                |% diferencia
+              - @blog_datum.each do |blog_datum|
+                - value = BlogDatum.get_diff_views_pages(blog_datum)
+                - if value >= 0.0
+                  td.positiveValue
+                    = %{#{value.round(3)}%}
+                - else
+                  td.negativeValue
+                    = %{#{value.round(3)}%}
+            tr.titlesRows
+              td colspan=100
+                |Porcentajes
+            tr
+              td
+                |Porcentaje de Rebote
+              - @blog_datum.each do | blog_datum |
+                td
+                  = blog_datum.rebound_percent
+            tr
+              td
+                |Porcentaje de visitas nuevas
+              - @blog_datum.each do |blog_datum|
+                td
+                  = blog_datum.new_visits_percent
+            tr
+              td
+                |# de posts
+              - @blog_datum.each do |blog_datum|
+                td
+                  = blog_datum.total_posts
+            tr
+              td.nilValue
+                |Opciones
+              -@blog_datum.each do |blog_datum|
+                td.celdaOpciones
+                  a.btn.btn-info href=blog_edit_path(blog_datum.id) id=%{edit_#{blog_datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{blog_datum.id}} href=blog_datum_path(blog_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@blog_info.id_name}');"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_visits
+        .comment
+          .title
+            h4
+              | Comentario Grafico Visitas
+          form  id="visits" onsubmit="return saveChartComment('#visits',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@blog_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.visits
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_percentage
+        .comment
+          .title
+            h4
+              | Comentario Grafico Porcentajes
+          form  id="percentage" onsubmit="return saveChartComment('#percentage',#{@socialNetwork.id},3,'#{params[:locale]}','#{@blog_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.percentages
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+    .tab-pane.fade id="tabothers"
+      == render 'layouts/uploadImage'

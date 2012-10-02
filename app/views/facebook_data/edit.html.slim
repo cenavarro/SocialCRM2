@@ -19,21 +19,19 @@ br
           li= msg
   .form-horizontal.sectionInformation style="height:1150px;"
     .box.informacion
-      - start_date = "01-01-2012"
       - start_date = @facebook_datum.start_date if !@facebook_datum.nil?
       - start_date = params[:start_date] if params.has_key?(:start_date)
-      - end_date = "01-01-2012"
       - end_date = @facebook_datum.end_date if !@facebook_datum.nil?
       - end_date = params[:end_date] if params.has_key?(:end_date)
       = f.label "Fecha Inicio"
-      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
           i.icon-th
       br
       br
       = f.label "Fecha Final"
-      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th

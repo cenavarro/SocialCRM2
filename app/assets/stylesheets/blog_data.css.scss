@@ -1,0 +1,31 @@
+$top_position: 390px;
+$left_position: 80px;
+$space: 400px;
+
+.informationBlog{
+	position:absolute;
+	left:$left_position;
+}
+
+.visitsBlog{
+	position:absolute;
+	left: $left_position+$space;
+}
+
+.percentageBlog{
+	position:absolute;
+	top: -140 + ($top_position);
+	left:$left_position+200px;
+}
+
+.saveBlog{
+	position:absolute;
+	top: 600px;
+	left: 300px;
+}
+
+.backBlog{
+	position:absolute;
+	top: 600px;
+	left:500px;
+}

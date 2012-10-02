@@ -30,8 +30,6 @@ class GooglePlusDatum < ActiveRecord::Base
       old_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       total_interactions = GooglePlusDatum.get_total_interactions(datum)
       before_total_interactions = GooglePlusDatum.get_total_interactions(old_data)
-      p "TI:" + total_interactions.to_s
-      p "BTI:" + total_interactions.to_s
       return (total_interactions-before_total_interactions).to_f/before_total_interactions.to_f if before_total_interactions != 0
     end
     return 0 

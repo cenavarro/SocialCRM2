@@ -2,9 +2,16 @@ DemoComentarios::Application.routes.draw do
 
 
 
+
   get "/:locale" => "home#index", :as => "language"
 
   scope ':locale' do
+
+    resources :blog_data, :only => [:create, :destroy, :update]
+    post "blog_data/save_comment" => "blog_data#save_comment", :as => "blog_save_comment"
+    get "blog_data/new/:idc/:opcion/:id_social" => "blog_data#new", :as => "blog_new"
+    get "blog_data/:id/edit/:idc/:id_social" => "blog_data#edit", :as => "blog_edit"
+    get "blog_data/:idc/:opcion/:id_social" => "blog_data#index", :as => "blog_index"
 
     resources :google_plus_data, :only => [:create, :destroy, :update]
     post "google_plus_data/save_comment" => "google_plus_data#save_comment", :as => "google_plus_save_comment"

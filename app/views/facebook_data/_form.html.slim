@@ -18,14 +18,14 @@ javascript:
       - start_date = get_start_date 
       - end_date = get_end_date 
       = f.label "Fecha Inicio"
-      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
           i.icon-th
       br
       br
       = f.label "Fecha Final"
-      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th

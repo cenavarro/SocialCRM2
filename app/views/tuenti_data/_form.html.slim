@@ -25,14 +25,14 @@ javascript:
       - end_date = params[:end_date] if params.has_key?(:end_date)
       - end_date = @tuenti_datum.end_date if !@tuenti_datum.end_date.nil?
       = f.label "Fecha Inicio"
-      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
           i.icon-th
       br
       br
       = f.label "Fecha Final"
-      .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th

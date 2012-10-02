@@ -1,0 +1,2 @@
+module BlogDataHelper
+end

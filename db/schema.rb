@@ -11,7 +11,30 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121001152706) do
+ActiveRecord::Schema.define(:version => 20121002181739) do
+
+  create_table "blog_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.text     "table"
+    t.text     "visits"
+    t.text     "percentages"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "blog_data", :force => true do |t|
+    t.integer  "client_id"
+    t.integer  "social_network_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "unique_visits"
+    t.integer  "view_pages"
+    t.float    "rebound_percent"
+    t.float    "new_visits_percent"
+    t.integer  "total_posts"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "clients", :force => true do |t|
     t.string   "name",                    :null => false

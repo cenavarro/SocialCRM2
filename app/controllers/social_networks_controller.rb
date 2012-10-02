@@ -47,6 +47,8 @@ class SocialNetworksController < ApplicationController
             comments = FlickrComment.new(:social_network_id => @social_network.id)
           when 'google_plus'
             comments = GooglePlusComment.new(:social_network_id => @social_network.id)
+          when 'blog'
+            comments = BlogComment.new(:social_network_id => @social_network.id)
         end
         if !comments.nil?
           comments.save

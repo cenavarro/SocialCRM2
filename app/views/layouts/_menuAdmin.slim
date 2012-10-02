@@ -115,6 +115,9 @@ javascript:
         case 'google_plus':
           window.location.href = 
           "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('google_plus').id).html_safe}"; break;
+        case 'blog':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('blog').id).html_safe}"; break;
       }
     });
   });
