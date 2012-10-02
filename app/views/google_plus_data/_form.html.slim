@@ -18,10 +18,10 @@ javascript:
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
-      - start_date = "01-01-2012"
+      - start_date = get_start_date 
       - start_date = params[:start_date] if params.has_key?(:start_date)
       - start_date = @google_plus_datum.start_date if !@google_plus_datum.start_date.nil?
-      - end_date = "01-01-2012"
+      - end_date = get_end_date 
       - end_date = params[:end_date] if params.has_key?(:end_date)
       - end_date = @google_plus_datum.end_date if !@google_plus_datum.end_date.nil?
       = f.label "Fecha Inicio"

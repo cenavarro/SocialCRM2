@@ -1,8 +1,7 @@
 javascript:
-
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });
+  jQuery(document).ready(function(){
+    jQuery("#formEntradaDatos").validationEngine();
+  });
 
 
 = form_for @facebook_datum, :html => {:class => "formEntradaDatos", :id => "formEntradaDatos"} do |f|
@@ -16,12 +15,8 @@ javascript:
     .box.informacion
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :id_social_network, :value => params[:id_social]
-      - start_date = "01-01-2012"
-      - start_date = @facebook_datum.start_date if !@facebook_datum.nil?
-      - start_date = params[:start_date] if params.has_key?(:start_date)
-      - end_date = "01-01-2012"
-      - end_date = @facebook_datum.end_date if !@facebook_datum.nil?
-      - end_date = params[:end_date] if params.has_key?(:end_date)
+      - start_date = get_start_date 
+      - end_date = get_end_date 
       = f.label "Fecha Inicio"
       .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
@@ -43,7 +38,7 @@ javascript:
       | Extraer datos desde Facebook
       br
       br
-      button.btn.btn-primary type="button" onclick="javascript:connectFacebook(#{params[:idc]},#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},#{params[:locale]});"
+      button.btn.btn-primary type="button" onclick="javascript:connectFacebook(#{params[:idc]},#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'#{params[:locale]}');"
         |Conectar
     .box.fans
       | Fans
