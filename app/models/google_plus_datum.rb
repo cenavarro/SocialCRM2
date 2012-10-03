@@ -1,10 +1,10 @@
 class GooglePlusDatum < ActiveRecord::Base
-  belongs_to :client
+  belongs_to :social_network
 
   def self.get_new_followers(datum)
     if !isFirstData?(datum)
-      old_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
-      return (datum.total_followers - old_data.total_followers)
+      previous_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
+      return (datum.total_followers - previous_data.total_followers)
     end
     return 0 
   end
@@ -15,8 +15,8 @@ class GooglePlusDatum < ActiveRecord::Base
 
   def self.get_grown_followers(datum)
     if !isFirstData?(datum)
-      old_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
-      return ((datum.total_followers-old_data.total_followers).to_f/old_data.total_followers.to_f) if old_data.total_followers != 0
+      previous_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
+      return ((datum.total_followers-previous_data.total_followers).to_f/previous_data.total_followers.to_f) if previous_data.total_followers != 0
     end
     return 0 
   end
@@ -27,17 +27,17 @@ class GooglePlusDatum < ActiveRecord::Base
 
   def self.get_change_interactions(datum)
     if !isFirstData?(datum)
-      old_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
+      previous_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       total_interactions = GooglePlusDatum.get_total_interactions(datum)
-      before_total_interactions = GooglePlusDatum.get_total_interactions(old_data)
-      return (total_interactions-before_total_interactions).to_f/before_total_interactions.to_f if before_total_interactions != 0
+      previous_total_interactions = GooglePlusDatum.get_total_interactions(previous_data)
+      return (total_interactions-previous_total_interactions).to_f/previous_total_interactions.to_f if previous_total_interactions != 0
     end
     return 0 
   end
 
   def self.isFirstData?(datum)
-    before_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
-		if(before_data == nil)
+    previous_data = GooglePlusDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
+		if(previous_data == nil)
 			return true
 		end
 		return false

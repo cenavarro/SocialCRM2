@@ -17,7 +17,7 @@ javascript:
       br
       br
       = f.hidden_field :client_id, :value => params[:idc]
-      = f.hidden_field :id_social_network, :value => params[:id_social]
+      = f.hidden_field :social_network_id, :value => params[:id_social]
       - start_date = get_start_date 
       - start_date = params[:start_date] if params.has_key?(:start_date)
       - start_date = @linkedin_data.start_date if !@linkedin_data.start_date.nil?

@@ -18,11 +18,11 @@ class LinkedinDataController < ApplicationController
   def index
     if existParamIdClient?
       if !getDataDateRange?
-        @linkedin_data = LinkedinDatum.where('id_social_network = ?', params[:id_social]).order("start_date ASC")
+        @linkedin_data = LinkedinDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
       else
         fechaInicio = params[:start_date].to_date
         fechaFinal = params[:end_date].to_date
-        @linkedin_data = LinkedinDatum.where('id_social_network = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
+        @linkedin_data = LinkedinDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
       end
 
       createChartData
@@ -54,7 +54,7 @@ class LinkedinDataController < ApplicationController
     @linkedin_data.new_followers = LinkedinDatum.get_new_followers(@linkedin_data)
     respond_to do |format|
       if @linkedin_data.save
-        format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1,@linkedin_data.id_social_network), notice: 'La informacion se ha ingresado exitosamente.' }
+        format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1,@linkedin_data.social_network_id), notice: 'La informacion se ha ingresado exitosamente.' }
         format.json { render json: @linkedin_data, status: :created, location: @linkedin_data }
       else
         format.html { render action: "new" }
@@ -69,7 +69,7 @@ class LinkedinDataController < ApplicationController
       if @linkedin_data.update_attributes(params[:linkedin_datum])
         @linkedin_data.new_followers = LinkedinDatum.get_new_followers(@linkedin_data)
         @linkedin_data.save!
-        format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1,@linkedin_data.id_social_network), notice: 'La informacion ha sido actualizada exitosamente.' }
+        format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1,@linkedin_data.social_network_id), notice: 'La informacion ha sido actualizada exitosamente.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -81,7 +81,7 @@ class LinkedinDataController < ApplicationController
   def destroy
     @linkedin_data = LinkedinDatum.find(params[:id])
     client_id = @linkedin_data.client_id
-    social_id = @linkedin_data.id_social_network
+    social_id = @linkedin_data.social_network_id
     @linkedin_data.destroy
 
     respond_to do |format|

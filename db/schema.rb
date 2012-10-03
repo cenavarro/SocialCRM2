@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121002212010) do
+ActiveRecord::Schema.define(:version => 20121003212356) do
 
   create_table "blog_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(:version => 20121002212010) do
     t.datetime "updated_at"
     t.integer  "ranking_espana"
     t.integer  "ranking_world"
-    t.integer  "id_social_network"
+    t.integer  "social_network_id"
   end
 
   create_table "flickr_comments", :force => true do |t|
@@ -195,7 +195,7 @@ ActiveRecord::Schema.define(:version => 20121002212010) do
     t.date     "start_date"
     t.date     "end_date"
     t.float    "interest"
-    t.integer  "id_social_network"
+    t.integer  "social_network_id"
   end
 
   create_table "pinterest_comments", :force => true do |t|
@@ -353,7 +353,7 @@ ActiveRecord::Schema.define(:version => 20121002212010) do
     t.integer  "prints_ads"
     t.float    "cost_twitter_ads"
     t.float    "investment_ads"
-    t.integer  "id_social_network"
+    t.integer  "social_network_id"
   end
 
   create_table "users", :force => true do |t|

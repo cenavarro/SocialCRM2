@@ -1,10 +1,10 @@
 class TuentiDatum < ActiveRecord::Base
-  belongs_to :client
+  belongs_to :social_network
 
   def self.get_new_fans(datum)
     if !isFirstData?(datum)
-      old_data = TuentiDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
-      return (datum.real_fans - old_data.real_fans)
+      previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
+      return (datum.real_fans - previous_data.real_fans)
     end
     return 0
   end
@@ -22,15 +22,15 @@ class TuentiDatum < ActiveRecord::Base
 
   def self.get_grown_fans_percent(datum)
     if !isFirstData?(datum)
-      old_data = TuentiDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
-      return ((datum.real_fans.to_f-old_data.real_fans.to_f)*100) if old_data.real_fans != 0
+      previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
+      return ((datum.real_fans.to_f-previous_data.real_fans.to_f)*100) if previous_data.real_fans != 0
     end
     return datum.new_fans * 100.0
   end
 
   def self.isFirstData?(datum)
-    before_data = TuentiDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
-		if(before_data == nil)
+    previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
+		if(previous_data == nil)
 			return true
 		end
 		return false

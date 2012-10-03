@@ -3,6 +3,7 @@
       center
         h4
           = notice
+
 - @facebook_info = InfoSocialNetwork.find(1)
 - @socialNetwork = SocialNetwork.find(params[:id_social])
 - @comments = FacebookComment.where(:social_network_id => @socialNetwork.id)[0]
@@ -379,7 +380,7 @@ section.sectionInformation
             button.btn.btn-success
               | Guardar
             .result
-        
+
         .estilo_graficos
           #container_reach
         .comment

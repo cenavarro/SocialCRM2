@@ -14,7 +14,7 @@ javascript:
   .form-horizontal.sectionInformation style="height:1150px;"
     .box.informacion
       = f.hidden_field :client_id, :value => params[:idc]
-      = f.hidden_field :id_social_network, :value => params[:id_social]
+      = f.hidden_field :social_network_id, :value => params[:id_social]
       - start_date = get_start_date 
       - end_date = get_end_date 
       = f.label "Fecha Inicio"
