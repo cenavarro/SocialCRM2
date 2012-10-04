@@ -28,32 +28,28 @@ br
     br
 
 .formNuevaRedCliente
-  = form_tag({:controller => "clients", :action => "insert_social_network"}, :multipart => true, :method => "post", :class => "well form-inline", :id =>"form_new") do
+  = form_for SocialNetwork.new, :multipart => true, :html => {:class => "well form-inline", :id =>"form_new"} do |f|
 
-    = label_tag :name, "Nombre Red Social:"
-    = text_field_tag :name, nil , {:class => "validate[required] text-input"}
+    = f.label "Nombre Red Social:"
+    = f.text_field :name, :class => "validate[required] text-input"
     p.simbolo
       span style="font-size: 16pt" align=""
         |*
     br
     br
-    = label_tag :client_id, "Cliente:"
-    = select_tag :client_id, options_for_select(Client.all.collect {|c| [c.name, c.id]})
+    = f.label "Cliente:"
+    = f.select :client_id, options_for_select(Client.all.collect {|c| [c.name, c.id]})
     p.simbolo
       span style="font-size: 16pt" align=""
         |*
-    br
-    br
-    = label_tag :description, "Descripcion Red Social:"
-    = text_field_tag :description
     br
     br
     = label_tag :imagelbl, "Imagen Red Social:"
-    = file_field_tag :image, :required => "required", :accept => "image/*"
+    = f.file_field :image, :accept => "image/*"
     br
     br
-    = hidden_field_tag  :info_social, "1"
-    = hidden_field_tag  :object_id, ""
+    = f.hidden_field  :info_social_network_id, :value => "1"
+    = f.hidden_field  :id_object, :value => "none"
     center
       button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro que desea agregar esta red social?"
         i.icon-check.icon-white
@@ -69,9 +65,9 @@ javascript:
 
   jQuery("input[name=social_network]").change(function() {
     var id = $(this).val();
+    console.log(id);
     var data = #{@pages_array.to_json.html_safe}
-    document.getElementById('name').value = data[id]['name'];
-    document.getElementById('description').value = data[id]['description'][0];
-    document.getElementById('object_id').value = data[id]['id'];
+    document.getElementById('social_network_name').value = data[id]['name'];
+    document.getElementById('social_network_id_object').value = id;
   
   });

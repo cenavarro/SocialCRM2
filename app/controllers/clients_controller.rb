@@ -30,17 +30,19 @@ class ClientsController < ApplicationController
 	  	format.html { redirect_to request.referer, notice: mensaje }
   	  format.json { head :ok }
 	  end
-	end
+  end
 
   def create
-    @client = Client.new(:name => params[:name], :description => params[:description], :attachment => params[:attachment] ) 
-    if @client.save
-      create_user(@client.id)
-    else
+    begin
+      @client = Client.new(:name => params[:name], :description => params[:description], :attachment => params[:attachment] ) 
+      if @client.save
+        create_user(@client.id)
+      end
+    rescue
       respond_to do |format|
         format.html { redirect_to request.referer, notice: 'El Cliente NO se pudo ingresar correctamente.'}
         format.json { head :ok }
-        end
+      end
     end
   end
 
@@ -64,7 +66,10 @@ class ClientsController < ApplicationController
     end
 
     respond_to do |format|
-      if @client.update_attributes(:name => params[:name], :description => params[:description], :attachment => params[:attachment]) && user_save
+      @client.name = params[:name]
+      @client.description = params[:description]
+      @client.attachment = params[:attachment] if !params[:attachment].nil?
+      if @client.save! && user_save
         format.html { redirect_to clients_path, notice: 'El Cliente fue actualizado correctamente.' }
         format.json { head :ok }
       else
@@ -139,30 +144,6 @@ class ClientsController < ApplicationController
     respond_to do | format |
       format.html
       format.json { head :ok }
-    end
-  end
-
-  def insert_social_network
-    social_network = SocialNetwork.new(:name => params[:name], :client_id => params[:client_id], :info_social_network_id => params[:info_social], :image => params[:image], :id_object => params[:object_id])
-    if social_network.save
-      case social_network.info_social_network_id
-        when 1
-          comments = FacebookComment.new(:social_network_id => social_network.id)
-        when 2
-          comments = TwitterComments.new(:social_network_id => social_network.id)
-        when 3
-          comments = LinkedinComments.new(:social_network_id => social_network.id)
-      end
-      comments.save
-      respond_to do | format |
-        format.html {redirect_to root2_path, notice: "La red social se asocio correctamente." }
-        format.json { head :ok }
-      end
-    else
-      respond_to do | format |
-        format.html {redirect_to render.refer, notice: "La red social NO se asocio correctamente." }
-        format.json { head :ok }
-      end
     end
   end
 
