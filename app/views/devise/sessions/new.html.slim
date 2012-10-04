@@ -6,7 +6,7 @@ javascript:
 
 - if !flash.empty?
   center
-    .alert.alert-danger
+    .alert.alert-success
       ul
         - flash.each do |name, msg|
           li = msg
@@ -35,7 +35,7 @@ table.tableLogin
           = f.password_field :password, :class => 'pass_input'
         br
         br
-        a href="/notifications/index"
+        a href=notifications_index_path
           |Olvido su contraseña?
         br
         br
