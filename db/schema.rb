@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121003212356) do
+ActiveRecord::Schema.define(:version => 20121008173352) do
 
   create_table "blog_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(:version => 20121003212356) do
     t.float    "rebound_percent"
     t.float    "new_visits_percent"
     t.integer  "total_posts"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "campaign_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.text     "table"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -239,6 +246,22 @@ ActiveRecord::Schema.define(:version => 20121003212356) do
 
   create_table "rols", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "row_data", :force => true do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "value"
+    t.integer  "rows_campaign_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rows_campaigns", :force => true do |t|
+    t.string   "name"
+    t.integer  "social_network_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

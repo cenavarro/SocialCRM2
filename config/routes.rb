@@ -4,6 +4,14 @@ DemoComentarios::Application.routes.draw do
 
   scope ':locale' do
 
+    get "campaign_data/new/:idc/:id_social" => "campaign_data#new", :as => "campaign_new"
+    post "campaign_data/save_comment" => "campaign_data#save_comment", :as => "campaign_save_comment"
+    get "campaign_data/:id/edit/:idc/:id_social" => "campaign_data#edit", :as => "campaign_edit"
+    post "campaign_data/:idc/:id_social" => "campaign_data#create", :as => "campaign_data"
+    put "campaign_data/:idc/:id_social" => "campaign_data#update", :as => "campaign_datum"
+    get "campaign_data/:idc/:opcion/:id_social" => "campaign_data#index", :as => "campaign_index"
+    delete "campaign_data/:idc/:id_social/:id" => "campaign_data#destroy", :as => "campaign_datum"
+
     resources :tumblr_data, :only => [:create, :destroy, :update]
     post "tumblr_data/save_comment" => "tumblr_data#save_comment", :as => "tumblr_save_comment"
     get "tumblr_data/new/:idc/:opcion/:id_social" => "tumblr_data#new", :as => "tumblr_new"
@@ -87,8 +95,10 @@ DemoComentarios::Application.routes.draw do
 
     resources :social_networks, :except => [:new, :show]
     get "social_networks/new/:isn" => "social_networks#new", :as => "social_networks_new"
+    get "social_networks/new_campaign" => "social_networks#new_campaign", :as => "social_networks_new_campaign"
     post "social_networks/add_image" => "social_networks#add_image", :as => "social_networks_add_image"
     post "social_networks/update_comment" => "social_networks#update_comment_image", :as => "social_networks_update_comment"
+    post "social_networks/create_campaign" => "social_networks#create_campaign", :as => "social_networks_create_campaing"
     delete "social_networks/destroy_image/:id" => "social_networks#destroy_image", :as => "social_networks_destroy_image"
 
     get "validate_user/" => "home#validate_user", :as => "validate_user"

@@ -1,0 +1,111 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+
+- @campaign_info = InfoSocialNetwork.find_by_id_name('campaign')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @comment = CampaignComment.find_by_social_network_id(params[:id_social])
+
+.margin
+  center
+    h2
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Campaign Logo' height='100' width='200'>").html_safe
+    = @image
+.margin
+  a.btn.btn-info href=campaign_new_path(params[:idc],params[:id_social]) style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=campaign_index_path(params[:idc],2) method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabothers" data-toggle="tab"
+          |Otros datos
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+                = @socialNetwork.name
+                - if params.has_key?('start_date')
+                  - @row_data = RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', @rows_campaign.first.id, params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
+                - else
+                  - @row_data = RowDatum.where('rows_campaign_id = ?', @rows_campaign.first.id).order("start_date ASC")
+                - @row_data.each do |datum|
+                  td
+                    = datum.start_date.strftime("%d %b ") + datum.end_date.strftime("- %d %b")
+          tbody
+            tr.titlesRows
+              td colspan=100
+            - @rows_campaign.each do |row|
+              tr
+                td
+                  = row.name
+                - if params.has_key?('start_date')
+                  - @row_data = RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', row.id, params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
+                - else
+                  - @row_data = RowDatum.where('rows_campaign_id = ?', row.id).order("start_date ASC")
+                - @row_data.each do |datum|
+                  td
+                    = datum.value
+            tr
+              td.nilValue
+                |Opciones
+              - @row_data.each do |datum|
+                td.celdaOpciones
+                  a.btn.btn-info href="#" id=%{edit_#{datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{datum.id}} href=campaign_datum_path(params[:idc], params[:id_social],datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@campaign_info.id_name}');"
+          textarea id="comment"
+            = @comment.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+    .tab-pane.fade id="tabothers"
+      == render 'layouts/uploadImage'

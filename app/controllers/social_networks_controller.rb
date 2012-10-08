@@ -1,3 +1,4 @@
+# encoding: utf-8
 class SocialNetworksController < ApplicationController
   before_filter :authenticate_user!
 
@@ -16,6 +17,12 @@ class SocialNetworksController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @social_network }
+    end
+  end
+
+  def new_campaign
+    respond_to do | format |
+      format.html
     end
   end
 
@@ -84,6 +91,27 @@ class SocialNetworksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to social_networks_url, notice: 'La Red Social fue eliminada correctamente.' }
       format.json { head :ok }
+    end
+  end
+
+  def create_campaign
+    campaign = SocialNetwork.new
+    campaign.name = params[:name]
+    campaign.client_id = params[:id_client]
+    campaign.info_social_network_id = InfoSocialNetwork.find_by_id_name('campaign').id
+    if campaign.save!
+      CampaignComment.new(:social_network_id => campaign.id).save!
+      list = params[:criteria]
+      list.each do |item|
+        RowsCampaign.new(:name => item, :social_network_id => campaign.id).save!
+      end
+      respond_to do |format|
+        format.html { redirect_to social_networks_path, notice: "La Campaña se ha creada exitosamente!"}
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to request.referer, notice: "La Campaña no se pudo crear!"}
+      end
     end
   end
 

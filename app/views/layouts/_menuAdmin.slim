@@ -121,6 +121,9 @@ javascript:
         case 'tumblr':
           window.location.href = 
           "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('tumblr').id).html_safe}"; break;
+        case 'campaign':
+          window.location.href = 
+          "#{social_networks_new_campaign_path.html_safe}"; break;
       }
     });
   });
