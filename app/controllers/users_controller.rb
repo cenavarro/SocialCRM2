@@ -10,21 +10,20 @@ class UsersController < ApplicationController
 	end
 
 	def destroy
-	  @user = User.find(params[:id])
-	  if @user.id != current_user.id
-	  	if @user.destroy
+    @user = User.find(params[:id])
+    if @user.id != current_user.id
+      if @user.destroy
         respond_to do |format|
-	  	    format.html { redirect_to users_delete_path, notice: 'El usuario se ha eliminado correctamente.'}
-	  	    format.json {head :ok}
-	      end
+          format.html { redirect_to users_delete_path, notice: 'El usuario se ha eliminado correctamente.'}
+          format.json {head :ok}
+        end
       end
     else
       respond_to do |format|
-	  	format.html { redirect_to users_delete_path, notice: 'El usuario no se puede eliminar el mismo!.'}
-	  	format.json {head :ok}
-	  end
-	  end
-	  
+        format.html { redirect_to users_delete_path, notice: 'El usuario no se puede eliminar el mismo!.'}
+        format.json {head :ok}
+      end
+    end
 	end
 
 	def new

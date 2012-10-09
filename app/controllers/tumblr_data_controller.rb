@@ -99,23 +99,18 @@ class TumblrDataController < ApplicationController
       when 4
         comment.investment = params[:comment]
     end
-    if comment.save
-        mensaje =  "Comentario Guardado!"
-    else
-        mensaje =  "El comentario no se pudo almacenar!"
-    end
+    comment.save! ? (msg = "Comentario Guardado!") : (msg = "El comentario no se pudo guardar!")
     respond_to do | format |
-      format.json { render json: mensaje.to_json }
+      format.json { render json: msg.to_json }
     end
   end
 
   def existParamIdClient?
-    return true if params.has_key?(:idc)
-    return false
-  end  
+    params.has_key?(:idc) ? (return true) : (return false)
+  end
 
   def getDataDateRange?
-    return true if params[:opcion].to_i == 2
-    return false
+    (params[:opcion].to_i == 2) ? (return true) : (return false)
   end
+
 end

@@ -68,7 +68,7 @@
         | Seleccion la red social
     br
     br
-    - info_social_networks = InfoSocialNetwork.all
+    - info_social_networks = InfoSocialNetwork.find(:all, :order => "name ASC")
     - info_social_networks.each do | ifn |
       input type="radio" name="social_network" value="#{ifn.id_name}" style="margin-left:200px;"
         |     

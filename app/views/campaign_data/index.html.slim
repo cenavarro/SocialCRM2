@@ -90,7 +90,7 @@ section.sectionInformation
                 |Opciones
               - @row_data.each do |datum|
                 td.celdaOpciones
-                  a.btn.btn-info href="#" id=%{edit_#{datum.id}}
+                  a.btn.btn-info href=campaign_edit_path(datum.id, params[:idc],params[:id_social]) id=%{edit_#{datum.id}}
                     i.icon-pencil.icon-white
                   |  
                   a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{datum.id}} href=campaign_datum_path(params[:idc], params[:id_social],datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"

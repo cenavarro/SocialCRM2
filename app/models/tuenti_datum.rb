@@ -16,8 +16,7 @@ class TuentiDatum < ActiveRecord::Base
   def self.get_cost_fan(datum)
     total_investment = get_total_investment(datum)
     new_fans = get_new_fans(datum)
-    return (total_investment.to_f/new_fans.to_f) if new_fans != 0
-    return 0
+    (new_fans != 0) ? (return (total_investment.to_f/new_fans.to_f)) : (return 0)
   end
 
   def self.get_grown_fans_percent(datum)
@@ -30,9 +29,6 @@ class TuentiDatum < ActiveRecord::Base
 
   def self.isFirstData?(datum)
     previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
-		if(previous_data == nil)
-			return true
-		end
-		return false
-	end
+    (previous_data == nil) ? (return true) : (return false)
+  end
 end

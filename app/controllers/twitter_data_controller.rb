@@ -113,35 +113,22 @@ class TwitterDataController < ApplicationController
       when 5
         comment.cost = params[:comment]
     end
-    if comment.save
-        mensaje =  "Comentario Guardado!"
-    else
-        mensaje =  "El comentario no se pudo almacenar!"
-    end
+    comment.save! ? (msg = "Comentario Guardado!") : (msg = "El comentario no se pudo guardar!")
     respond_to do | format |
-      format.json { render json: mensaje.to_json }
+      format.json { render json: msg.to_json }
     end
   end
 
   def existParamIdClient?
-    if params.has_key?(:idc)
-      return true
-    end
-    return false
-  end  
+    params.has_key?(:idc) ? (return true) : (return false)
+  end
 
   def getDataFromTwitter?
-    if params[:opcion].to_i == 1
-      return true
-    end
-    return false
+    (params[:opcion].to_i == 1) ? (return true) : (return false)
   end
 
   def getDataDateRange?
-    if params[:opcion].to_i == 2
-      return true
-    end
-    return false
+    (params[:opcion].to_i == 2) ? (return true) : (return false)
   end
 
 end

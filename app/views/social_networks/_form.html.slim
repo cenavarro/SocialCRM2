@@ -22,7 +22,10 @@ javascript:
   = f.label "Cliente:  "
   br
   - @clients = Client.all
-  = f.select :client_id, options_for_select(@clients.collect{|p|[p.name, p.id]},@social_network.client_id)
+  = f.select :client_id, options_for_select(@clients.collect{|p|[p.name, p.id]},@social_network.client_id), {}, { :class => "validate[required]" }
+  p.simbolo
+    span style="font-size: 16pt"
+      |* 
   br
   br
   = f.label "Red Social:  "

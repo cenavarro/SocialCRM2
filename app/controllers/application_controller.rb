@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  before_filter :set_locale, :except => [:change_language]
+  before_filter :set_locale
 
   def set_locale
     I18n.locale = params[:locale] if params.include?('locale')

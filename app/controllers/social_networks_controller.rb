@@ -134,26 +134,18 @@ class SocialNetworksController < ApplicationController
   def update_comment_image
     image = ImagesSocialNetwork.find(params[:id_image].to_i)
     image.comment = params[:comment].to_s
-    if image.save
-      mensaje = "Comentario Actualizado!"
-    else
-      mensaje = "El comentario no se pudo actualizar. Error:"
-    end
+    image.save! ? (msg = "Comentario Actualizado!") : (msg = "El comentario no se pudo actualizar!")
 
     respond_to do | format |
-      format.json { render json: mensaje.to_json }
+      format.json { render json: msg.to_json }
     end
   end
 
   def destroy_image
     image = ImagesSocialNetwork.find(params[:id])
-    if image.destroy
-      mensaje = "La imagen se elimino correctamente!"
-    else
-      mensaje = "La imagen no se pudo eliminar!"
-    end
+    image.destroy ? (msg = "La imagen se elimino correctamente!") : (msg = "La imagen no se pudo eliminar!")
     respond_to do | format |
-      format.html { redirect_to request.referer, notice: mensaje }
+      format.html { redirect_to request.referer, notice: msg }
     end
   end
 end

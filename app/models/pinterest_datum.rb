@@ -15,10 +15,7 @@ class PinterestDatum < ActiveRecord::Base
 
   def self.isFirstData?(datum)
     previous_data = PinterestDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
-		if(previous_data == nil)
-			return true
-		end
-		return false
+		(previous_data == nil) ? (return true) : (return false)
   end
 
 end

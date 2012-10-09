@@ -8,7 +8,7 @@ DemoComentarios::Application.routes.draw do
     post "campaign_data/save_comment" => "campaign_data#save_comment", :as => "campaign_save_comment"
     get "campaign_data/:id/edit/:idc/:id_social" => "campaign_data#edit", :as => "campaign_edit"
     post "campaign_data/:idc/:id_social" => "campaign_data#create", :as => "campaign_data"
-    put "campaign_data/:idc/:id_social" => "campaign_data#update", :as => "campaign_datum"
+    post "campaign_data" => "campaign_data#update", :as => "campaign_update"
     get "campaign_data/:idc/:opcion/:id_social" => "campaign_data#index", :as => "campaign_index"
     delete "campaign_data/:idc/:id_social/:id" => "campaign_data#destroy", :as => "campaign_datum"
 

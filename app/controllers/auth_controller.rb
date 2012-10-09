@@ -1,4 +1,5 @@
 class AuthController < Devise::OmniauthCallbacksController 
+
   def google_oauth2
     auth = request.env["omniauth.auth"].info
     @user = User.find_by_email(auth.email)

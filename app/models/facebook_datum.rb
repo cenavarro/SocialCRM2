@@ -16,7 +16,7 @@ class FacebookDatum < ActiveRecord::Base
   def self.get_fan_cost(datum)
     if !isFirstData?(datum)
       total_investment = get_total_investment(datum)
-      (total_investment.to_f/datum.new_fans.to_f)
+      return (total_investment.to_f/datum.new_fans.to_f)
     end
     return 0
   end
@@ -31,54 +31,38 @@ class FacebookDatum < ActiveRecord::Base
 
   def self.get_fan_growth_percentage(datum)
     diffFans = datum.total_fans-datum.new_fans
-    if diffFans != 0
-      return (datum.new_fans.to_f/(datum.total_fans-datum.new_fans).to_f)*100
-    end
-    return 100
+    (diffFans != 0) ? (return (datum.new_fans.to_f/(datum.total_fans-datum.new_fans).to_f)*100) : ( return 100)
   end
 
   def self.get_print_percentage(datum)
-    return getPercentagePrints(datum)  if !isFirstData?(datum)
-    return 0
+    !isFirstData?(datum) ? (return getPercentagePrints(datum)) : (return 0)
   end
 
   def self.getPercentagePrints(datum)
     prevPrintsData = FacebookDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first.prints
-    if prevPrintsData != 0
-      return ((datum.prints.to_f - prevPrintsData).to_f/prevPrintsData.to_f)*100
-    end
-    return 100
+    (prevPrintsData != 0) ? (return ((datum.prints.to_f - prevPrintsData).to_f/prevPrintsData.to_f)*100) : ( return 100)
   end
 
   def self.get_interactions_percentage(datum)
-    return getPercentageIteractions(datum) if !isFirstData?(datum)
-    return 0
+     !isFirstData?(datum) ? (return getPercentageIteractions(datum)) : ( return 0 )
   end
 
   def self.getPercentageIteractions(datum)
     prevIteractionData = FacebookDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first.total_interactions
-    if prevIteractionData != 0
-      return ((datum.total_interactions.to_f-prevIteractionData.to_f)/prevIteractionData.to_f)*100
-    end
-    return 100
+    (prevIteractionData != 0) ? ( return ((datum.total_interactions.to_f-prevIteractionData.to_f)/prevIteractionData.to_f)*100) : ( return 100)
   end
 
   def self.percentage_total_reach(datum) 
-    return getPercentageTotalReach(datum) if !isFirstData?(datum)
-    return 0
+    !isFirstData?(datum) ? (return getPercentageTotalReach(datum)) : (return 0)
   end
 
   def self.getPercentageTotalReach(datum)
     prevTotalReach = FacebookDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first.total_reach
-    if prevTotalReach != 0
-      return ((datum.total_reach - prevTotalReach).to_f/prevTotalReach.to_f) * 100
-    end
-    return 0
+    (prevTotalReach != 0) ? (return ((datum.total_reach - prevTotalReach).to_f/prevTotalReach.to_f) * 100) : ( return 0)
   end
 
   def self.percentage_change_interactions(datum) 
-    return getPercentageChangeInteractions(datum) if !isFirstData?(datum)
-    return 0
+    !isFirstData?(datum) ? (return getPercentageChangeInteractions(datum)) : ( return 0) 
   end
 
   def self.getPercentageChangeInteractions(datum)
@@ -89,8 +73,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def self.percentage_change_prints(datum) 
-    return getPercentageChangePrints(datum) if !isFirstData?(datum)
-    return 0
+    !isFirstData?(datum) ? (return getPercentageChangePrints(datum)) : (return 0)
   end
 
   def self.getPercentageChangePrints(datum)
@@ -103,15 +86,13 @@ class FacebookDatum < ActiveRecord::Base
   def self.get_cpm_general(datum)
     total_investment = get_total_investment(datum)
     total_prints = get_total_prints(datum)
-    return (total_investment.to_f/total_prints.to_f)/1000.0 if total_prints != 0
-    return 0
+    (total_prints != 0) ? (return (total_investment.to_f/total_prints.to_f)/1000.0) : (return 0)
   end
 
   def self.get_coste_interaction(datum)
    total_investment = get_total_investment(datum)
    total_interaction = get_total_interactions(datum)
-   return (total_investment.to_f/total_interaction.to_f) if total_interaction != 0
-   return 0
+   (total_interaction != 0) ? (return (total_investment.to_f/total_interaction.to_f)) : (return 0)
   end
 
   def self.isFirstData?(datum)

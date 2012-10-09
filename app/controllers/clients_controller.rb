@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_filter :authenticate_user!
-  
+
   require 'open-uri'
 
   def index
@@ -35,9 +35,7 @@ class ClientsController < ApplicationController
   def create
     begin
       @client = Client.new(:name => params[:name], :description => params[:description], :attachment => params[:attachment] ) 
-      if @client.save
-        create_user(@client.id)
-      end
+      create_user(@client.id) if @client.save!
     rescue
       respond_to do |format|
         format.html { redirect_to request.referer, notice: 'El Cliente NO se pudo ingresar correctamente.'}
@@ -55,20 +53,11 @@ class ClientsController < ApplicationController
     @client = Client.find(params[:id])
     @user = User.find_by_client_id(@client.id)
     password_changed = !params[:password].empty?
-    if password_changed
-      @user.email = params[:email]
-      @user.name = params[:name]
-      @user.password = params[:password]
-      @user.password_confirmation = params[:password_confirmation]
-      user_save = @user.save!
-    else
-      user_save = @user.update_without_password(:email => params[:email], :name => params[:name],:password => params[:password], :password_confirmation => params[:password_confirmation])
-    end
-
+    password_changed ? (user_save = @user.update_attributes!(params)) : (user_save = @user.update_without_password(params))
+    @client.name = params[:name]
+    @client.description = params[:description]
+    @client.attachment = params[:attachment] if !params[:attachment].nil?
     respond_to do |format|
-      @client.name = params[:name]
-      @client.description = params[:description]
-      @client.attachment = params[:attachment] if !params[:attachment].nil?
       if @client.save! && user_save
         format.html { redirect_to clients_path, notice: 'El Cliente fue actualizado correctamente.' }
         format.json { head :ok }
@@ -103,13 +92,12 @@ class ClientsController < ApplicationController
 
   def getInfoPage(page_id,access_token)
     uri = "https://graph.facebook.com/fql?q=select page_id, name, username, pic_large, description, type from page where page_id = "+page_id.to_s+"&access_token="+access_token.to_s
-    result = JSON.parse(result_of_get(uri))
+    JSON.parse(result_of_get(uri))
   end
 
   def getAccessToken(code)
     client_id = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']}"
     client_secret = "#{SOCIAL_NETWORKS_CONFIG['facebook']['client_secret']}"
-    # uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{request.protocol}#{request.host_with_port}/clients/facebook/&code=#{code}&client_secret=#{client_secret}"
     uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{request.protocol}#{request.host_with_port}/#{params[:locale]}/clients/facebook/&code=#{code}&client_secret=#{client_secret}"
     result = result_of_get(uri)
     result.split("&")[0].split("=")[1]

@@ -20,10 +20,7 @@ class HomeController < ApplicationController
 
 
   def isUserClient?
-    if current_user.rol_id == 2
-      return true
-    end
-    return false
+    (current_user.rol_id == 2) ? (return true) : (return false)
   end
 
 end

@@ -35,7 +35,7 @@ class FacebookDataController < ApplicationController
       end
 
       createCharData
-      
+
       respond_to do |format|
         format.html
         format.json { render json: @facebook_data }
@@ -116,7 +116,7 @@ class FacebookDataController < ApplicationController
   def create
     @facebook_datum = FacebookDatum.new(params[:facebook_datum])
     @facebook_datum.new_fans = FacebookDatum.get_new_fans(@facebook_datum)
-    
+
     respond_to do |format|
       if @facebook_datum.save
         format.html { redirect_to facebook_index_path(@facebook_datum.client_id.to_i,1,@facebook_datum.social_network_id), notice: 'La Nueva Entrada de Datos se creo satisfactoriamente.' }
@@ -171,21 +171,15 @@ class FacebookDataController < ApplicationController
       when 6
         comment.reach = params[:comment]
     end
-    if comment.save
-        mensaje =  "Comentario Guardado!"
-    else
-        mensaje =  "El comentario no se pudo almacenar!"
-    end
+    comment.save! ? (msg =  "Comentario Guardado!") : (msg =  "El comentario no se pudo almacenar!")
     respond_to do | format |
-      format.json { render json: mensaje.to_json }
+      format.json { render json: msg.to_json }
     end
   end
 
   def calcular_datos
 
-    if !@page_friends_of_fans['data'].empty?
-      @page_friends_of_fan = @page_friends_of_fans['data'][0]['values'].last['value']
-    end
+    @page_friends_of_fan = @page_friends_of_fans['data'][0]['values'].last['value'] if !@page_friends_of_fans['data'].empty?
 
     if !@page_fan_adds_unique['data'].empty?
       @page_fan_adds_unique['data'][0]['values'].each do |f|
@@ -237,24 +231,15 @@ class FacebookDataController < ApplicationController
   end
 
   def getDataFromFacebook?
-    if params[:opcion].to_i == 1
-      return true
-    end
-    return false
+    (params[:opcion].to_i == 1) ? ( return true) : (return false)
   end
 
   def getDataDateRange?
-    if params[:opcion].to_i == 2
-      return true
-    end
-    return false
+    (params[:opcion].to_i == 2) ? ( return true) : (return false)
   end
 
   def existParamIdClient?
-    if params.has_key?(:idc)
-      return true
-    end
-    return false
+    params.has_key?(:idc) ? (return true) : ( return false)
   end
 
 end
