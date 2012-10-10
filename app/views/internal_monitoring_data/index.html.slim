@@ -131,6 +131,13 @@ section.sectionInformation
               - @internal_monitoring_data.each do |internal_monitoring_datum|
                 td
                   = internal_monitoring_datum.feedback
+            tr
+              td
+                b Total
+              - @internal_monitoring_data.each do |datum|
+                td
+                  b
+                    = InternalMonitoringDatum.get_total_theme(datum)
             tr.titlesRows
               td colspan=100
                 | Destribucion de Canales
@@ -142,6 +149,27 @@ section.sectionInformation
                   - channel_values.each do |value|
                     td
                       = value
+              tr
+                td
+                  b Total de comentarios
+                - @internal_monitoring_data.each do |datum|
+                  td
+                    b
+                      = InternalMonitoringDatum.get_total_comments(@channels, datum)
+              tr
+                td
+                  b % cambio en volumen de total de comentarios
+                - @internal_monitoring_data.each do |datum|
+                  td
+                    b
+                      = InternalMonitoringDatum.get_change_volume_comments(@channels, datum).round(2)
+              tr
+                td
+                  b Promerio Diario 
+                - @internal_monitoring_data.each do |datum|
+                  td
+                    b
+                      = InternalMonitoringDatum.get_daily_average(@channels, datum).round(2)
             tr
               td.nilValue
                 |Opciones

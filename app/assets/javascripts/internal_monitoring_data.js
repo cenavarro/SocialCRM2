@@ -7,6 +7,7 @@ function addNewChannel(){
     selectBoxOption.text = optionValue.value;
     htmlSelect.add(selectBoxOption, null);
     optionValue.value = '';
+    optionValue.focus();
     return true;
   }
   alert("El canal no puede ser vacio!");
@@ -21,6 +22,8 @@ function removeChannel(){
     if(htmlSelect.options.length > 0){
       htmlSelect.options[0].selected = true;
     }
+    var optionValue = document.getElementById('newOption');
+    optionValue.focus();
     return true;
   }
   alert("No hay mas elementos por eliminar!");
