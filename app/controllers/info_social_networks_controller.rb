@@ -2,7 +2,7 @@ class InfoSocialNetworksController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @info_social_networks = InfoSocialNetwork.all
+    @info_social_networks = InfoSocialNetwork.find(:all, :order => "name ASC")
 
     respond_to do |format|
       format.html

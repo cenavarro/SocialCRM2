@@ -19,9 +19,9 @@ br
           li= msg
   .form-horizontal.sectionInformation style="height:1150px;"
     .box.informacion
-      - start_date = @facebook_datum.start_date if !@facebook_datum.nil?
+      - start_date = @facebook_datum.start_date.strftime("%d-%m-%Y") if !@facebook_datum.nil?
       - start_date = params[:start_date] if params.has_key?(:start_date)
-      - end_date = @facebook_datum.end_date if !@facebook_datum.nil?
+      - end_date = @facebook_datum.end_date.strftime("%d-%m-%Y") if !@facebook_datum.nil?
       - end_date = params[:end_date] if params.has_key?(:end_date)
       = f.label "Fecha Inicio"
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"

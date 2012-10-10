@@ -1,3 +1,4 @@
+# encoding: utf-8
 puts 'SETTING UP DEFAULT USER LOGIN'
 user = User.create! :name => 'Super Admin', :email => 'admin@pernix-solutions.com', :password => '123456', :password_confirmation => '123456', :rol_id => 1
 puts 'Nuevo usuario creado: ' << user.name
@@ -23,4 +24,12 @@ puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Tumblr', :description => "Red Social Tumblr", :id_name => 'tumblr'
 puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Campaña', :description => "Red Social Campaña", :id_name => 'campaign'
+puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Foursquare', :description => "Red Social Foursquare", :id_name => 'foursquare'
+puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Monitoreo Interno', :description => "Monitoreo Interno", :id_name => 'internal_monitoring'
+puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Monitoreo Externo', :description => "Monitoreo Externo", :id_name => 'external_monitoring'
+puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Benchmark', :description => "Benchmark", :id_name => 'benchmark'
 puts "Informacion Red Social Creada: " << social.name

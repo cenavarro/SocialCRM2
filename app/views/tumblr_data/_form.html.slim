@@ -19,10 +19,10 @@ javascript:
       = f.hidden_field :social_network_id, :value => params[:id_social]
       - start_date = get_start_date
       - start_date = params[:start_date] if params.has_key?(:start_date)
-      - start_date = @tumblr_datum.start_date if !@tumblr_datum.start_date.nil?
+      - start_date = @tumblr_datum.start_dat.strftime("%d-%m-%Y")e if !@tumblr_datum.start_date.nil?
       - end_date = get_end_date 
       - end_date = params[:end_date] if params.has_key?(:end_date)
-      - end_date = @tumblr_datum.end_date if !@tumblr_datum.end_date.nil?
+      - end_date = @tumblr_datum.end_dat.strftime("%d-%m-%Y")e if !@tumblr_datum.end_date.nil?
       = f.label "Fecha Inicio"
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true

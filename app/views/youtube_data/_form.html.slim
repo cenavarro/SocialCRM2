@@ -20,10 +20,10 @@ javascript:
       = f.hidden_field :social_network_id, :value => params[:id_social]
       - start_date = get_start_date 
       - start_date = params[:start_date] if params.has_key?(:start_date)
-      - start_date = @youtube_datum.start_date if !@youtube_datum.start_date.nil?
+      - start_date = @youtube_datum.start_date.strftime("%d-%m-%Y") if !@youtube_datum.start_date.nil?
       - end_date = get_end_date 
       - end_date = params[:end_date] if params.has_key?(:end_date)
-      - end_date = @youtube_datum.end_date if !@youtube_datum.end_date.nil?
+      - end_date = @youtube_datum.end_date.strftime("%d-%m-%Y") if !@youtube_datum.end_date.nil?
       = f.label "Fecha Inicio"
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true

@@ -58,10 +58,10 @@ class SocialNetworksController < ApplicationController
             comments = BlogComment.new(:social_network_id => @social_network.id)
           when 'tumblr'
             comments = TumblrComment.new(:social_network_id => @social_network.id)
+          when 'internal_monitoring'
+            comments = InternalMonitoringComment.new(:social_network_id => @social_network.id)
         end
-        if !comments.nil?
-          comments.save
-        end
+        comments.save if !comments.nil?
         format.html { redirect_to social_networks_path, notice: 'La Red Social se creo satisfactoriamente.' }
       else
         format.html { render action: "new" }
@@ -111,6 +111,30 @@ class SocialNetworksController < ApplicationController
     else
       respond_to do |format|
         format.html { redirect_to request.referer, notice: "La Campaña no se pudo crear!"}
+      end
+    end
+  end
+
+  def create_internal_monitoring
+    p "Parametros: #{params.to_json}"
+    internal_monitoring = SocialNetwork.new
+    internal_monitoring.name = params[:name]
+    internal_monitoring.client_id = params[:id_client]
+    internal_monitoring.info_social_network_id = InfoSocialNetwork.find_by_id_name('internal_monitoring').id
+    if internal_monitoring.save!
+      InternalMonitoringComment.new(:social_network_id => internal_monitoring.id).save!
+      channel_list = params[:channels]
+      channel_number = 1
+      channel_list.each do |item|
+        InternalMonitoringChannel.new(:social_network_id => internal_monitoring.id, :channel_number => channel_number, :title => item).save!
+        channel_number = channel_number + 1
+      end
+      respond_to do |format|
+        format.html { redirect_to social_networks_path, notice: "El Monitoreo Interno se ha creado exitosamente!"}
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to request.referer, notice: "El Monitoreo Interno NO se pudo crear!"}
       end
     end
   end
