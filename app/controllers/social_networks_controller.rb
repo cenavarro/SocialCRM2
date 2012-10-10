@@ -58,8 +58,8 @@ class SocialNetworksController < ApplicationController
             comments = BlogComment.new(:social_network_id => @social_network.id)
           when 'tumblr'
             comments = TumblrComment.new(:social_network_id => @social_network.id)
-          when 'internal_monitoring'
-            comments = InternalMonitoringComment.new(:social_network_id => @social_network.id)
+          when 'foursquare'
+            comments = FoursquareComment.new(:social_network_id => @social_network.id)
         end
         comments.save if !comments.nil?
         format.html { redirect_to social_networks_path, notice: 'La Red Social se creo satisfactoriamente.' }

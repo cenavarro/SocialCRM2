@@ -1,7 +1,6 @@
 DemoComentarios::Application.routes.draw do
 
 
-
   get "/:locale" => "home#index", :as => "language"
 
   scope ':locale' do
@@ -13,6 +12,12 @@ DemoComentarios::Application.routes.draw do
     post "campaign_data" => "campaign_data#update", :as => "campaign_update"
     get "campaign_data/:idc/:opcion/:id_social" => "campaign_data#index", :as => "campaign_index"
     delete "campaign_data/:idc/:id_social/:id" => "campaign_data#destroy", :as => "campaign_datum"
+
+    resources :foursquare_data, :only => [:create, :destroy, :update]
+    post "foursquare_data/save_comment" => "foursquare_data#save_comment", :as => "foursquare_save_comment"
+    get "foursquare_data/new/:idc/:opcion/:id_social" => "foursquare_data#new", :as => "foursquare_new"
+    get "foursquare_data/:id/edit/:idc/:id_social" => "foursquare_data#edit", :as => "foursquare_edit"
+    get "foursquare_data/:idc/:opcion/:id_social" => "foursquare_data#index", :as => "foursquare_index"
 
     resources :internal_monitoring_data, :only => [:create, :destroy, :update]
     post "internal_monitoring_data/save_comment" => "internal_monitoring_data#save_comment", :as => "internal_monitoring_save_comment"

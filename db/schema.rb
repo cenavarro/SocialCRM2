@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121010150856) do
+ActiveRecord::Schema.define(:version => 20121010212428) do
 
   create_table "blog_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -120,6 +120,28 @@ ActiveRecord::Schema.define(:version => 20121010150856) do
     t.float    "investment_agency"
     t.float    "investment_actions"
     t.float    "investment_ads"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "foursquare_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.text     "table"
+    t.text     "followers"
+    t.text     "deals"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "foursquare_data", :force => true do |t|
+    t.integer  "client_id"
+    t.integer  "social_network_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "new_followers"
+    t.integer  "total_followers"
+    t.integer  "total_unlocks"
+    t.integer  "total_visits"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

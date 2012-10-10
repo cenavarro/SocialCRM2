@@ -1,0 +1,165 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+
+- @foursquare_info = InfoSocialNetwork.find_by_id_name('foursquare')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @comments = FoursquareComment.find_by_social_network_id(@socialNetwork.id)
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Foursquare Logo' height='100' width='200'>").html_safe
+    = @image
+.margin
+  a.btn.btn-info href=foursquare_new_path(params[:idc],2) style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=foursquare_index_path(params[:idc],2) method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+
+script
+  | createChart('container_followers', 'Followers', [#{@dates}]);
+  | addSerie('# nuevos followers',[#{@followers}]);
+  | addSerie('# followers',[#{@total_followers}]);
+
+  | createChart('container_deals', 'Ofertas', [#{@dates}]);
+  | addSerie('# unlocks total de las ofertas',[#{@unlocks}]);
+  | addSerie('# visitas total de las ofertas',[#{@visits}]);
+
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          |Otros datos
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.start_date.strftime('%d %b') + "-" + foursquare_datum.end_date.strftime("%d %b")
+          tbody
+            tr.titlesRows
+              td colspan=100
+                | Comunidad 
+            tr
+              td.estiloCelda
+                |# nuevos followers 
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.new_followers
+            tr
+              td
+                |# followers
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.total_followers
+            tr
+              td
+                |# unlocks total de las ofertas
+              - @foursquare_datum.each do | foursquare_datum |
+                td
+                  = foursquare_datum.total_unlocks
+            tr
+              td
+                |# visitas total de las ofertas
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.total_visits
+            tr
+              td.nilValue
+                |Opciones
+              -@foursquare_datum.each do |foursquare_datum|
+                td.celdaOpciones
+                  a.btn.btn-info href=foursquare_edit_path(foursquare_datum.id,params[:idc]) id=%{edit_#{foursquare_datum.id}}
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{foursquare_datum.id}} href=foursquare_datum_path(foursquare_datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@foursquare_info.id_name}');"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_followers
+        .comment
+          .title
+            h4
+              | Comentario Grafico Followers
+          form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@foursquare_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.followers
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_deals
+        .comment
+          .title
+            h4
+              | Comentario Grafico Ofertas
+          form  id="deals" onsubmit="return saveChartComment('#deals',#{@socialNetwork.id},3,'#{params[:locale]}','#{@foursquare_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.deals
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+    .tab-pane.fade id="tabothers"
+      == render 'layouts/uploadImage'
