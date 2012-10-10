@@ -15,7 +15,7 @@ br
 br
 
 
-= form_tag ({:controller => "social_networks", :action => "create_campaign"}), :id => 'form_campaign', :onsubmit => "return selectAllListBoxItems()", :class => "well form-inline formNewCampaign" do
+= form_tag ({:controller => "social_networks", :action => "create_campaign"}), :multipart => true, :id => 'form_campaign', :onsubmit => "return selectAllListBoxItems()", :class => "well form-inline formNewCampaign" do
   | Informacion de la campaña
   br
   br
@@ -48,6 +48,15 @@ br
   button.btn.btn-inverse type="button" name="removeItem" id="removeItem" onclick="removeListItem();"
     | Remover Criterio
   br
+  br
+  | Imagen:
+  br
+  br
+  = file_field_tag :image, {:accept => "image/*", :onchange => "previewImage(this);"}
+  br
+  br
+  center
+    img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#"
   br
   br
   center

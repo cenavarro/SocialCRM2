@@ -98,6 +98,7 @@ class SocialNetworksController < ApplicationController
     campaign = SocialNetwork.new
     campaign.name = params[:name]
     campaign.client_id = params[:id_client]
+    campaign.image = params[:image] if !params[:image].nil?
     campaign.info_social_network_id = InfoSocialNetwork.find_by_id_name('campaign').id
     if campaign.save!
       CampaignComment.new(:social_network_id => campaign.id).save!
@@ -120,6 +121,7 @@ class SocialNetworksController < ApplicationController
     internal_monitoring = SocialNetwork.new
     internal_monitoring.name = params[:name]
     internal_monitoring.client_id = params[:id_client]
+    internal_monitoring.image = params[:image] if !params[:image].nil?
     internal_monitoring.info_social_network_id = InfoSocialNetwork.find_by_id_name('internal_monitoring').id
     if internal_monitoring.save!
       InternalMonitoringComment.new(:social_network_id => internal_monitoring.id).save!

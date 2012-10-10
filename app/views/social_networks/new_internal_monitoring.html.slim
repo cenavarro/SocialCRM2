@@ -15,7 +15,7 @@ br
 br
 
 
-= form_tag ({:controller => "social_networks", :action => "create_internal_monitoring"}), :onsubmit => "return selectAllChannelItems()", :id => 'form_internal_monitoring', :class => "well form-inline formNewInternalMonitoring" do
+= form_tag ({:controller => "social_networks", :action => "create_internal_monitoring"}), :multipart => true, :onsubmit => "return selectAllChannelItems()", :id => 'form_internal_monitoring', :class => "well form-inline formNewInternalMonitoring" do
   | Informacion Monitoreo Interno
   br
   br
@@ -48,6 +48,15 @@ br
   button.btn.btn-inverse type="button" name="removeItem" id="removeItem" onclick="removeChannel();"
     | Remover Canal
   br
+  br
+  | Imagen:
+  br
+  br
+  = file_field_tag :image, {:accept => "image/*", :onchange => "previewImage(this);"}
+  br
+  br
+  center
+    img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#"
   br
   br
   center
