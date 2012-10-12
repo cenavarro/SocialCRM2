@@ -18,3 +18,6 @@ en:
       new_user: "New User"
       edit_account: "Edit Account"
       delete_user: "Delete User" 
+  comments:
+      success: "Comment saved!"
+      fail: "Comment could no be saved!"

@@ -11,4 +11,12 @@ class ApplicationController < ActionController::Base
     {:locale => I18n.locale}
   end
 
+  def has_comments_table?(model, social_network_id)
+    model.find_by_social_network_id(social_network_id)
+  end
+
+  def getDataDateRange?(parameters)
+    (parameters[:opcion].to_i == 2) ? (return true) : (return false)
+  end
+
 end

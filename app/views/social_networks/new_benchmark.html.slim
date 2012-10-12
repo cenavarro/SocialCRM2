@@ -1,0 +1,64 @@
+javascript:
+  jQuery(document).ready(function(){
+    jQuery("#form_benchmark").validationEngine();
+  });
+
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+center
+  h1 Agregar Benchmark a un Cliente 
+br
+br
+
+= form_tag ({:controller => "social_networks", :action => "create_benchmark"}), :as => "benchmark", :multipart => true, :onsubmit => "return select_all_competitor_items()", :id => 'form_internal_monitoring', :class => "well form-inline formNewInternalMonitoring" do
+  | Informacion Benchmark
+  br
+  br
+  |Nombre:
+  br
+  = text_field_tag :name, nil, :class => "validate[required]"
+  br
+  br
+  |Cliente
+  br
+  = select_tag :client_id, options_for_select(Client.all.collect {|c| [c.name, c.id]}), :class => "validate[required]"
+  br
+  br
+  | Competidores del Benchmark
+  br
+  br
+  |Competidor
+  br
+  = text_field_tag :newOption, nil
+  |     
+  button.btn.btn-inverse type="button" name="addItem" id="addItem" onclick="add_new_competitor();"
+    | Agregar Competidor
+  br
+  br
+  | Lista de Competidores
+  br
+  = select_tag "competitors[]", nil, {:multiple => "multiple", :size => 8, :width => 200, :style => "width: 500px;", :class => "validate[required]"}
+  br
+  br
+  button.btn.btn-inverse type="button" name="removeItem" id="removeItem" onclick="remove_competitor();"
+    | Remover Competidor
+  br
+  br
+  | Imagen:
+  br
+  br
+  = file_field_tag :image, {:accept => "image/*", :onchange => "previewImage(this);"}
+  br
+  br
+  center
+    img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#"
+  br
+  br
+  center
+    button.btn.btn-success
+      | Guardar Datos
+

@@ -151,7 +151,7 @@ section.sectionInformation
         .title
           h4
             | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@blog_info.id_name}');"
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@blog_info.id_name}');"
           textarea id="comment"
             = @comments.table
           br
@@ -170,7 +170,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Visitas
-          form  id="visits" onsubmit="return saveChartComment('#visits',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@blog_info.id_name}');"
+          form  id="visits" onsubmit="return saveChartComment('#visits',#{@socialNetwork.id},'visits' ,'#{params[:locale]}','#{@blog_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.visits
             br
@@ -183,7 +183,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Porcentajes
-          form  id="percentage" onsubmit="return saveChartComment('#percentage',#{@socialNetwork.id},3,'#{params[:locale]}','#{@blog_info.id_name}');"
+          form  id="percentage" onsubmit="return saveChartComment('#percentage',#{@socialNetwork.id},'percentages','#{params[:locale]}','#{@blog_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.percentages
             br

@@ -11,7 +11,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121010212428) do
+ActiveRecord::Schema.define(:version => 20121012164747) do
+
+  create_table "benchmark_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.text     "table"
+    t.text     "distribution"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "benchmark_competitors", :force => true do |t|
+    t.integer  "social_network_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "benchmark_data", :force => true do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "blogs"
+    t.integer  "forums"
+    t.integer  "videos"
+    t.integer  "twitter"
+    t.integer  "facebook"
+    t.integer  "others"
+    t.integer  "benchmark_competitor_id", :limit => 255
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "blog_comments", :force => true do |t|
     t.integer  "social_network_id"

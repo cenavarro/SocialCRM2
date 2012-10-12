@@ -163,7 +163,7 @@ section.sectionInformation
         .title
           h4
             | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@flickr_info.id_name}');"
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@flickr_info.id_name}');"
           textarea id="comment"
             = @comments.table
           br
@@ -182,7 +182,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Comunidad
-          form  id="contacts" onsubmit="return saveChartComment('#contacts',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@flickr_info.id_name}');"
+          form  id="contacts" onsubmit="return saveChartComment('#contacts',#{@socialNetwork.id},'community' ,'#{params[:locale]}','#{@flickr_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.community
             br
@@ -195,7 +195,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Interacciones
-          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}','#{@flickr_info.id_name}');"
+          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},'interaction','#{params[:locale]}','#{@flickr_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interaction
             br
@@ -208,7 +208,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Inversion
-          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},4,'#{params[:locale]}','#{@flickr_info.id_name}');"
+          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},'investment','#{params[:locale]}','#{@flickr_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.investment
             br

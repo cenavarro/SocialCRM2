@@ -7,6 +7,7 @@ function addNewListItem(){
     selectBoxOption.text = optionValue.value;
     htmlSelect.add(selectBoxOption, null);
     optionValue.value = '';
+    optionValue.focus();
     return true;
   }
   alert("El criterio no puede ser vacio!");

@@ -1,35 +1,20 @@
 class InternalMonitoringDataController < ApplicationController
 
-  def create_chart_data
-    @dates = @internal_monitoring_data.collect {|ld| "'" + ld.start_date.strftime('%d %b') + "-" + ld.end_date.strftime('%d %b') + "'"}.join(', ')
-    @complaints = @internal_monitoring_data.map(&:complaints)
-    @client_att = @internal_monitoring_data.map(&:client_att)
-    @lead = @internal_monitoring_data.map(&:lead)
-    @engaged = @internal_monitoring_data.map(&:engaged)
-    @curiosities = @internal_monitoring_data.map(&:curiosities)
-    @mentions = @internal_monitoring_data.map(&:mentions)
-    @feedback = @internal_monitoring_data.map(&:feedback)
-  end
-
   def index
-    if existParamIdClient?
-      @channels = InternalMonitoringChannel.where('social_network_id = ?', params[:id_social]).order("channel_number ASC")
-      if !getDataDateRange?
-        @internal_monitoring_data = InternalMonitoringDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
-      else
-        start_date = params[:start_date].to_date
-        end_date = params[:end_date].to_date
-        @internal_monitoring_data = InternalMonitoringDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], start_date, end_date).order("start_date ASC")
-      end
-
-      create_chart_data
-
-      respond_to do |format|
-        format.html
-        format.json { render json: @internal_monitoring_data }
-      end
+    if !has_comments_table?(InternalMonitoringComment, params[:id_social])
+      InternalMonitoringComment.create!(:social_network_id => params[:id_social])
+    end
+    @channels = InternalMonitoringChannel.where('social_network_id = ?', params[:id_social]).order("channel_number ASC")
+    if !getDataDateRange?(params)
+      @internal_monitoring_data = InternalMonitoringDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
-      redirect_to root2_path
+      start_date = params[:start_date].to_date
+      end_date = params[:end_date].to_date
+      @internal_monitoring_data = InternalMonitoringDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], start_date, end_date).order("start_date ASC")
+    end
+    create_chart_data
+    respond_to do |format|
+      format.html
     end
   end
 
@@ -39,7 +24,6 @@ class InternalMonitoringDataController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render json: @internal_monitoring_data }
     end
   end
 
@@ -54,10 +38,8 @@ class InternalMonitoringDataController < ApplicationController
     respond_to do |format|
       if @internal_monitoring_datum.save
         format.html { redirect_to internal_monitoring_index_path(@internal_monitoring_datum.client_id,1,@internal_monitoring_datum.social_network_id), notice: 'La informacion se ha ingresado exitosamente.' }
-        format.json { render json: @internal_monitoring_datum, status: :created, location: @internal_monitoring_datum }
       else
         format.html { render action: "new" }
-        format.json { render json: @internal_monitoring_datum.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -68,10 +50,8 @@ class InternalMonitoringDataController < ApplicationController
     respond_to do |format|
       if @internal_monitoring_datum.update_attributes(params[:internal_monitoring_datum])
         format.html { redirect_to internal_monitoring_index_path(@internal_monitoring_datum.client_id,1,@internal_monitoring_datum.social_network_id), notice: 'La informacion ha sido actualizada exitosamente.' }
-        format.json { head :ok }
       else
         format.html { render action: "edit" }
-        format.json { render json: @internal_monitoring_datum.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -84,31 +64,29 @@ class InternalMonitoringDataController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to internal_monitoring_index_path(client_id, 1, social_network_id), notice: 'La informacion ha sido eliminada exitosamente.' }
-      format.json { head :ok }
     end
   end
 
   def save_comment
     comment = InternalMonitoringComment.where(:social_network_id => params[:social_network].to_i)[0]
-    case params[:id_comment].to_i
-      when 1
-        comment.table = params[:comment]
-      when 2
-        comment.distributions = params[:comment]
-      when 3
-        comment.typology = params[:comment]
+    message = (t 'comments.fail')
+    if comment.update_attributes({params[:id_comment] => params[:comment]})
+      message = (t 'comments.success')
     end
-    comment.save! ? (msg = "Comentario Guardado!") : (msg = "El comentario no se pudo guardar!")
-    respond_to do | format |
-      format.json { render json: msg.to_json }
-    end
+    render :json => message.to_json
   end
 
-  def existParamIdClient?
-    params.has_key?(:idc) ? (return true) : (return false)
+  private
+
+  def create_chart_data
+    @dates = @internal_monitoring_data.collect {|ld| "'" + ld.start_date.strftime('%d %b') + "-" + ld.end_date.strftime('%d %b') + "'"}.join(', ')
+    @complaints = @internal_monitoring_data.map(&:complaints)
+    @client_att = @internal_monitoring_data.map(&:client_att)
+    @lead = @internal_monitoring_data.map(&:lead)
+    @engaged = @internal_monitoring_data.map(&:engaged)
+    @curiosities = @internal_monitoring_data.map(&:curiosities)
+    @mentions = @internal_monitoring_data.map(&:mentions)
+    @feedback = @internal_monitoring_data.map(&:feedback)
   end
 
-  def getDataDateRange?
-    (params[:opcion].to_i == 2) ? (return true) : (return false)
-  end
 end

@@ -18,3 +18,6 @@ es:
       new_user: "Nuevo Usuario"
       edit_account: "Editar Cuenta"
       delete_user: "Eliminar Usuario"
+  comments:
+      success: "Comentario Guardado!"
+      fail: "El comentario no se pudo guardar!"

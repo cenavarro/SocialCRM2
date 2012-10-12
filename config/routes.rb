@@ -1,6 +1,5 @@
 DemoComentarios::Application.routes.draw do
 
-
   get "/:locale" => "home#index", :as => "language"
 
   scope ':locale' do
@@ -12,6 +11,12 @@ DemoComentarios::Application.routes.draw do
     post "campaign_data" => "campaign_data#update", :as => "campaign_update"
     get "campaign_data/:idc/:opcion/:id_social" => "campaign_data#index", :as => "campaign_index"
     delete "campaign_data/:idc/:id_social/:id" => "campaign_data#destroy", :as => "campaign_datum"
+
+    resources :benchmark_data, :only => [:create, :destroy, :update]
+    post "benchmark_data/save_comment" => "benchmark_data#save_comment", :as => "benchmark_save_comment"
+    get "benchmark_data/new/:idc/:opcion/:id_social" => "benchmark_data#new", :as => "benchmark_new"
+    get "benchmark_data/:id/edit/:idc/:id_social" => "benchmark_data#edit", :as => "benchmark_edit"
+    get "benchmark_data/:idc/:opcion/:id_social" => "benchmark_data#index", :as => "benchmark_index"
 
     resources :foursquare_data, :only => [:create, :destroy, :update]
     post "foursquare_data/save_comment" => "foursquare_data#save_comment", :as => "foursquare_save_comment"
@@ -109,12 +114,15 @@ DemoComentarios::Application.routes.draw do
 
     resources :social_networks, :except => [:new, :show]
     get "social_networks/new/:isn" => "social_networks#new", :as => "social_networks_new"
+    post "social_networks/new_redirect" => "social_networks#redirect", :as => "social_networks_redirect_new"
     get "social_networks/new_campaign" => "social_networks#new_campaign", :as => "social_networks_new_campaign"
     get "social_networks/new_internal_monitoring" => "social_networks#new_internal_monitoring", :as => "social_networks_new_internal_monitoring"
+    get "social_networks/new_benchmark" => "social_networks#new_benchmark", :as => "social_networks_new_benchmark"
     post "social_networks/add_image" => "social_networks#add_image", :as => "social_networks_add_image"
     post "social_networks/update_comment" => "social_networks#update_comment_image", :as => "social_networks_update_comment"
     post "social_networks/create_campaign" => "social_networks#create_campaign", :as => "social_networks_create_campaing"
     post "social_networks/create_internal_monitoring" => "social_networks#create_internal_monitoring", :as => "social_networks_create_internal_monitoring"
+    post "social_networks/create_benchmark" => "social_networks#create_benchmark", :as => "social_networks_create_benchmark"
     delete "social_networks/destroy_image/:id" => "social_networks#destroy_image", :as => "social_networks_destroy_image"
 
     get "validate_user/" => "home#validate_user", :as => "validate_user"

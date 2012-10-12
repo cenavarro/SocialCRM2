@@ -6,7 +6,7 @@ html
     = javascript_include_tag "application"
     = csrf_meta_tags
     link rel="shortcut icon" href="/assets/images/favicon.ico"
-    
+
   body
     .container
       = render 'layouts/header'
@@ -23,3 +23,4 @@ html
       #contentWrapper.well
         = yield
       = render 'layouts/footer'
+      = render 'layouts/menu_social_network'

@@ -347,7 +347,7 @@ section.sectionInformation
         .title
           h4
             | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1,'#{params[:locale]}', '#{@twitter_info.id_name}');"
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table','#{params[:locale]}', '#{@twitter_info.id_name}');"
           textarea id="comment"
             = @comments.table
           br
@@ -364,7 +364,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Comnidad
-          form  id="comunity" onsubmit="return saveChartComment('#comunity',#{@socialNetwork.id},2,'#{params[:locale]}', '#{@twitter_info.id_name}');"
+          form  id="comunity" onsubmit="return saveChartComment('#comunity',#{@socialNetwork.id},'comunity','#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.comunity
             br
@@ -377,7 +377,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Interacciones
-          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},3,'#{params[:locale]}', '#{@twitter_info.id_name}');"
+          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},'interaction','#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interaction
             br
@@ -390,7 +390,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Inversion
-          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},4,'#{params[:locale]}', '#{@twitter_info.id_name}');"
+          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},'investment','#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.investment
             br
@@ -403,7 +403,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Costes
-          form  id="cost" onsubmit="return saveChartComment('#cost',#{@socialNetwork.id},5,'#{params[:locale]}', '#{@twitter_info.id_name}');"
+          form  id="cost" onsubmit="return saveChartComment('#cost',#{@socialNetwork.id},'cost','#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.cost
             br

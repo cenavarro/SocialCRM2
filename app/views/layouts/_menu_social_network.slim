@@ -1,0 +1,79 @@
+- # form_tag social_networks_redirect_new_path
+.modal.hide.fade id="modalSocialNetwork" tabindex="-1" role="dialog" aria-hidden="true"
+  .modal-header
+    button.close type="button" data-dismiss="modal" aria-hidden="true"
+      |x
+    h2
+      |Redes Sociales Disponibles
+  .modal-boy style="height:500px; overflow-y:scroll;"
+    center
+      h3
+        | Seleccion la red social
+    br
+    br
+    - info_social_networks = InfoSocialNetwork.find(:all, :order => "name ASC")
+    - info_social_networks.each do | ifn |
+      input type="radio" name="social_network" value="#{ifn.id_name}" style="margin-left:200px;"
+        |       
+        = ifn.name
+        br
+        img src="#{ifn.attachment.url}" width="100" height="100" style="margin-left:200px;"
+        br
+        br
+    .botones style="float: right;"
+      button.btn.btn-primary id="btnNext" style="margin: 20px 30px 20px 0px;"
+        |Siguiente
+      |               
+      button.btn.btn-inverse data-dismiss="modal" aria-hidden="true" style="margin:20px 20px 20px 0px;"
+        |Cerrar
+
+javascript:
+
+  jQuery(document).ready(function () {
+    $("#btnNext").click(function(){
+      var opcion = $("input:radio[name='social_network']:checked").val();
+      switch(opcion){
+        case 'facebook':
+          loginFacebook(#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'#{params[:locale]}/clients/facebook'); break;
+        case 'twitter':
+          window.location.href =
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('twitter').id).html_safe}"; break;
+        case 'linkedin':
+          window.location.href =
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('linkedin').id).html_safe}"; break;
+        case 'pinterest':
+          window.location.href =
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('pinterest').id).html_safe}"; break;
+        case 'youtube':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('youtube').id).html_safe}"; break;
+        case 'tuenti':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('tuenti').id).html_safe}"; break;
+        case 'flickr':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('flickr').id).html_safe}"; break;
+        case 'google_plus':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('google_plus').id).html_safe}"; break;
+        case 'blog':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('blog').id).html_safe}"; break;
+        case 'tumblr':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('tumblr').id).html_safe}"; break;
+        case 'foursquare':
+          window.location.href = 
+          "#{social_networks_new_path(InfoSocialNetwork.find_by_id_name('foursquare').id).html_safe}"; break;
+        case 'campaign':
+          window.location.href = 
+          "#{social_networks_new_campaign_path.html_safe}"; break;
+        case 'internal_monitoring':
+          window.location.href = 
+          "#{social_networks_new_internal_monitoring_path.html_safe}"; break;
+        case 'benchmark':
+          window.location.href = 
+          "#{social_networks_new_benchmark_path.html_safe}"; break;
+      }
+    });
+  });

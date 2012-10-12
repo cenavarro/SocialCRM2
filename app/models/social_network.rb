@@ -16,6 +16,7 @@ class SocialNetwork < ActiveRecord::Base
   has_many :campaign_comment, :dependent => :destroy
   has_many :foursquare_comment, :dependent => :destroy
   has_many :internal_monitoring_comment, :dependent => :destroy
+  has_many :benchmark_comment, :dependent => :destroy
   has_many :images_social_network, :dependent => :destroy
 
   has_many :blog_data, :dependent => :destroy
@@ -29,11 +30,10 @@ class SocialNetwork < ActiveRecord::Base
   has_many :twitter_data, :dependent => :destroy
   has_many :youtube_data, :dependent => :destroy
   has_many :foursquare_data, :dependent => :destroy
+  has_many :benchmark_competitor, :dependent => :destroy
   has_many :rows_campaign, :dependent => :destroy
   has_many :internal_monitoring_data, :dependent => :destroy
   has_many :internal_monitoring_channel, :dependent => :destroy
-
-
 
   attr_accessible :name, :client_id, :info_social_network_id, :id_object, :image
 

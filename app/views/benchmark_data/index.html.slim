@@ -1,0 +1,154 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+
+- @benchmark_info = InfoSocialNetwork.find_by_id_name('benchmark')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @comments = BenchmarkComment.where(:social_network_id => @socialNetwork.id)[0]
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Benchmark Logo' height='100' width='200'>").html_safe
+    = @image
+.margin
+  a.btn.btn-info href=benchmark_new_path(params[:idc],2) style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=benchmark_index_path(params[:idc],2) method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+
+script 
+  | createChart('container_distribution', 'Distribucion de los comentarios en canales', [#{@dates}]);
+
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          | Otros datos
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr
+              td
+              - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
+              - @competitor_data.each do |data|
+                td colspan="6" style="text-align: center; font-weight: bold;"
+                  = "#{data.start_date.strftime("%d/%m")}-#{data.end_date.strftime("%d/%m")}"
+            tr.titlesRows
+              td
+              - @competitor_data.each do |data|
+                td.columnsTableBenchmark
+                  |Blogs
+                td.columnsTableBenchmark
+                  |Foros
+                td.columnsTableBenchmark
+                  |Videos
+                td.columnsTableBenchmark
+                  |Twitter
+                td.columnsTableBenchmark
+                  |Facebook
+                td.columnsTableBenchmark
+                  |Otros
+          tbody
+            - @benchmark_competitors.each do |competitor|
+              tr
+                td
+                  = competitor.name
+                  - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => competitor.id).order("start_date ASC")
+                  - @competitor_data.each do |data|
+                    td.columnsTableBenchmark
+                      = data.blogs
+                    td.columnsTableBenchmark
+                      = data.forums
+                    td.columnsTableBenchmark
+                      = data.videos
+                    td.columnsTableBenchmark
+                      = data.twitter
+                    td.columnsTableBenchmark
+                      = data.facebook
+                    td.columnsTableBenchmark
+                      = data.others
+            tr
+              td.nilValue
+                |Opciones
+              - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
+              - @competitor_data.each do |data|
+                td colspan="6" style="text-align: center;"
+                  a.btn.btn-info href=benchmark_edit_path(data.id)
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' href=benchmark_datum_path(data.id) data-confirm="Esta seguro?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@benchmark_info.id_name}');"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_distribution
+        .comment
+          .title
+            h4
+              | Comentario Grafico Distribucion de los comentarios en canales
+          form  id="distribution" onsubmit="return saveChartComment('#distribution',#{@socialNetwork.id},'distribution' ,'#{params[:locale]}','#{@benchmark_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.distribution
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+
+    .tab-pane.fade id="tabothers"
+      == render 'layouts/uploadImage'

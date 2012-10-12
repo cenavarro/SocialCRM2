@@ -184,7 +184,7 @@ section.sectionInformation
         .title
           h4
             | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@monitoring_info.id_name}');"
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@monitoring_info.id_name}');"
           textarea id="comment"
             = @comments.table
           br
@@ -203,7 +203,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Distribucion de los comentarios en canales
-          form  id="distribution" onsubmit="return saveChartComment('#distribution',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@monitoring_info.id_name}');"
+          form  id="distribution" onsubmit="return saveChartComment('#distribution',#{@socialNetwork.id},'distributions' ,'#{params[:locale]}','#{@monitoring_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.distributions
             br
@@ -216,7 +216,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Tipologia de los comentarios
-          form  id="typology" onsubmit="return saveChartComment('#typology',#{@socialNetwork.id},3,'#{params[:locale]}','#{@monitoring_info.id_name}');"
+          form  id="typology" onsubmit="return saveChartComment('#typology',#{@socialNetwork.id},'typology','#{params[:locale]}','#{@monitoring_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.typology
             br

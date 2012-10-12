@@ -154,7 +154,7 @@ section.sectionInformation
         .title
           h4
             | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1 ,'#{params[:locale]}','#{@tumblr_info.id_name}');"
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@tumblr_info.id_name}');"
           textarea id="comment"
             = @comments.table
           br
@@ -173,7 +173,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Followers
-          form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},2 ,'#{params[:locale]}','#{@tumblr_info.id_name}');"
+          form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},'followers' ,'#{params[:locale]}','#{@tumblr_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.followers
             br
@@ -186,7 +186,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Interactividad
-          form  id="interactivity" onsubmit="return saveChartComment('#interactivity',#{@socialNetwork.id},3,'#{params[:locale]}','#{@tumblr_info.id_name}');"
+          form  id="interactivity" onsubmit="return saveChartComment('#interactivity',#{@socialNetwork.id}, 'interactivity','#{params[:locale]}','#{@tumblr_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interactivity
             br
@@ -199,7 +199,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Inversion
-          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},4,'#{params[:locale]}','#{@tumblr_info.id_name}');"
+          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id}, 'investment','#{params[:locale]}','#{@tumblr_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.investment
             br

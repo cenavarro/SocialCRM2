@@ -3,13 +3,12 @@ class CampaignDataController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    if existParamIdClient?
-      @rows_campaign = RowsCampaign.where('social_network_id = ?', params[:id_social].to_i)
-      respond_to do |format|
-        format.html
-      end
-    else
-      redirect_to root2_path
+    if !has_comments_table?(CampaignComment, params[:id_social])
+      CampaignComment.create!(:social_network_id => params[:id_social])
+    end
+    @rows_campaign = RowsCampaign.where('social_network_id = ?', params[:id_social].to_i)
+    respond_to do |format|
+      format.html
     end
   end
 
@@ -66,14 +65,12 @@ class CampaignDataController < ApplicationController
   end
 
   def save_comment
-    campaign = CampaignComment.find_by_social_network_id(params[:social_network].to_i)
-    campaign.table = params[:comment]
-    campaign.save! ? (msg = "Comentario Guardado!") : (msg = "El comentario no se pudo guardar!")
-    render :json => msg.to_json
-  end
-
-  def existParamIdClient?
-    params.has_key?(:idc) ? (return true) : (return false)
+    comment = CampaignComment.find_by_social_network_id(params[:social_network].to_i)
+    message = (t 'comments.fail')
+    if comment.update_attributes({params[:id_comment] => params[:comment]})
+      message = (t 'comments.success')
+    end
+    render :json => message.to_json
   end
 
 end

@@ -20,12 +20,6 @@ class SocialNetworksController < ApplicationController
     end
   end
 
-  def new_campaign
-    respond_to do | format |
-      format.html
-    end
-  end
-
   def edit
     @social_network = SocialNetwork.find(params[:id])
     params[:isn] = @social_network.info_social_network_id
@@ -36,32 +30,6 @@ class SocialNetworksController < ApplicationController
 
     respond_to do |format|
       if @social_network.save
-        id_name = InfoSocialNetwork.find(@social_network.info_social_network_id).id_name
-        case id_name 
-          when 'facebook'
-            comments = FacebookComment.new(:social_network_id => @social_network.id)
-          when 'twitter'
-            comments = TwitterComment.new(:social_network_id => @social_network.id)
-          when 'linkedin'
-            comments = LinkedinComment.new(:social_network_id => @social_network.id)
-          when 'pinterest'
-            comments = PinterestComment.new(:social_network_id => @social_network.id)
-          when 'youtube'
-            comments = YoutubeComment.new(:social_network_id => @social_network.id)
-          when 'tuenti'
-            comments = TuentiComment.new(:social_network_id => @social_network.id)
-          when 'flickr'
-            comments = FlickrComment.new(:social_network_id => @social_network.id)
-          when 'google_plus'
-            comments = GooglePlusComment.new(:social_network_id => @social_network.id)
-          when 'blog'
-            comments = BlogComment.new(:social_network_id => @social_network.id)
-          when 'tumblr'
-            comments = TumblrComment.new(:social_network_id => @social_network.id)
-          when 'foursquare'
-            comments = FoursquareComment.new(:social_network_id => @social_network.id)
-        end
-        comments.save if !comments.nil?
         format.html { redirect_to social_networks_path, notice: 'La Red Social se creo satisfactoriamente.' }
       else
         format.html { render action: "new" }
@@ -117,7 +85,6 @@ class SocialNetworksController < ApplicationController
   end
 
   def create_internal_monitoring
-    p "Parametros: #{params.to_json}"
     internal_monitoring = SocialNetwork.new
     internal_monitoring.name = params[:name]
     internal_monitoring.client_id = params[:id_client]
@@ -141,6 +108,25 @@ class SocialNetworksController < ApplicationController
     end
   end
 
+  def create_benchmark
+    benchmark = SocialNetwork.new(params)
+    benchmark.info_social_network_id = InfoSocialNetwork.find_by_id_name('benchmark').id
+    if benchmark.save!
+      BenchmarkComment.new(:social_network_id => benchmark.id).save!
+      competitors_list = params[:competitors]
+      competitors_list.each do |competitor|
+        BenchmarkCompetitor.new(:social_network_id => benchmark.id, :name => competitor).save!
+      end
+      respond_to do |format|
+        format.html { redirect_to social_networks_path, notice: "Benchmark se ha creado exitosamente!"}
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to request.referer, notice: "Benchmark no se pudo crear!"}
+      end
+    end
+  end
+
   def add_image
     image = ImagesSocialNetwork.new(params[:images])
     if image.save
@@ -153,7 +139,6 @@ class SocialNetworksController < ApplicationController
     end
     respond_to do | format |
       format.html {redirect_to request.referer, notice: mensaje}
-      format.json {head :ok}
     end
   end
 
@@ -174,4 +159,25 @@ class SocialNetworksController < ApplicationController
       format.html { redirect_to request.referer, notice: msg }
     end
   end
+
+  def redirect
+    option = params[:social_network]
+    case option
+      when 'facebook'
+        redirect_url = "#{request.protocol}#{request.host_with_port}/#{params[:locale]}/clients/facebook/"
+        app_id = SOCIAL_NETWORKS_CONFIG['facebook']['client_id'].to_s
+        url = "https://www.facebook.com/dialog/oauth?client_id="+app_id+"&redirect_uri="+redirect_url+"&response_type=code&display=page&scope=email,manage_pages,read_insights,ads_management";
+      when 'internal_monitoring'
+        url = social_networks_new_internal_monitoring_path
+      when 'campaign'
+        url = social_networks_new_campaign_path
+      else
+        url = social_networks_new_path(InfoSocialNetwork.find_by_id_name(option).id)
+    end
+    p url
+    respond_to do |format|
+      format.html { redirect_to url }
+    end
+  end
+
 end
