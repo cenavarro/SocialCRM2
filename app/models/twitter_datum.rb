@@ -20,7 +20,7 @@ class TwitterDatum < ActiveRecord::Base
   def self.get_growth_followers(datum)
     if !isFirstData?(datum)
       previous_data = TwitterDatum.where('end_date <= ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
-      return (datum.new_followers.to_f/previous_data.total_followers.to_f)
+      return (datum.new_followers.to_f/previous_data.total_followers.to_f)*100 if previous_data.total_followers != 0
     end
     return 0
   end
@@ -29,7 +29,7 @@ class TwitterDatum < ActiveRecord::Base
     if !isFirstData?(datum)
       previous_data = TwitterDatum.where('end_date <= ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       if previous_data.total_mentions != 0
-        return ((datum.total_mentions - previous_data.total_mentions).to_f/previous_data.total_mentions.to_f)
+        return ((datum.total_mentions - previous_data.total_mentions).to_f/previous_data.total_mentions.to_f)*100
       end
     end
     return 0
@@ -39,7 +39,7 @@ class TwitterDatum < ActiveRecord::Base
     if !isFirstData?(datum)
       previous_data = TwitterDatum.where('end_date <= ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       if previous_data.ret_tweets != 0
-        return ((datum.ret_tweets - previous_data.ret_tweets).to_f/previous_data.ret_tweets.to_f)
+        return ((datum.ret_tweets - previous_data.ret_tweets).to_f/previous_data.ret_tweets.to_f)*100
       end
     end
     return 0
@@ -49,7 +49,7 @@ class TwitterDatum < ActiveRecord::Base
     if !isFirstData?(datum)
       previous_data = TwitterDatum.where('end_date <= ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       if previous_data.total_clicks != 0
-        return ((datum.total_clicks - previous_data.total_clicks).to_f/previous_data.total_clicks.to_f)
+        return ((datum.total_clicks - previous_data.total_clicks).to_f/previous_data.total_clicks.to_f)*100
       end
     end
     return 0
@@ -59,7 +59,7 @@ class TwitterDatum < ActiveRecord::Base
     if !isFirstData?(datum)
       previous_data = TwitterDatum.where('end_date <= ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       if previous_data.interactions_ads != 0
-        return ((datum.interactions_ads - previous_data.interactions_ads).to_f/previous_data.interactions_ads.to_f)
+        return ((datum.interactions_ads - previous_data.interactions_ads).to_f/previous_data.interactions_ads.to_f)*100
       end
     end
     return 0
@@ -73,7 +73,7 @@ class TwitterDatum < ActiveRecord::Base
     if !isFirstData?(datum)
       previous_data = TwitterDatum.where('end_date <= ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       if previous_data.total_interactions != 0
-        return ((datum.total_interactions - previous_data.total_interactions).to_f/previous_data.total_interactions.to_f)
+        return ((datum.total_interactions - previous_data.total_interactions).to_f/previous_data.total_interactions.to_f)*100
       end
     end
     return 0
@@ -88,7 +88,7 @@ class TwitterDatum < ActiveRecord::Base
       previous_data = TwitterDatum.where('end_date <= ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
       previous_total_prints = TwitterDatum.get_total_prints(datum) 
       if previous_total_prints != 0
-        return ((TwitterDatum.get_total_prints(datum) - previous_total_prints).to_f/previous_total_prints.to_f)
+        return ((TwitterDatum.get_total_prints(datum) - previous_total_prints).to_f/previous_total_prints.to_f)*100
       end
     end
     return 0
@@ -119,7 +119,7 @@ class TwitterDatum < ActiveRecord::Base
     end
     return 0
   end
-  
+
 	def self.isFirstData?(datum)
     previous_data = TwitterDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
 		if(previous_data == nil)

@@ -1,10 +1,6 @@
 function add_new_competitor(){
   var html_select = document.getElementById('competitors_');
   var option_value = document.getElementById('newOption');
-  if(html_select.length > 7){
-    alert("No se pueden agregar mas de 8 competidores!");
-    return false;
-  }
   if (option_value.value != ''){
     var select_box_option = document.createElement("option");
     select_box_option.value = option_value.value;

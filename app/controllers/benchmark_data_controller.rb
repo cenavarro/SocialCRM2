@@ -1,10 +1,6 @@
 class BenchmarkDataController < ApplicationController
   before_filter :authenticate_user!
 
-  def create_chart_data
-
-  end
-
   def index
     if !has_comments_table?(BenchmarkComment, params[:id_social])
       BenchmarkComment.new(:social_network_id => params[:id_social].to_i).save! 
@@ -73,6 +69,21 @@ class BenchmarkDataController < ApplicationController
     end
     respond_to do | format |
       format.json { render json: message.to_json }
+    end
+  end
+
+  private
+
+  def create_chart_data
+    competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
+    @x_axis = []
+    competitor_data.each do
+      @x_axis.push('Blogs')
+      @x_axis.push('Foros')
+      @x_axis.push('Videos')
+      @x_axis.push('Twitter')
+      @x_axis.push('Facebook')
+      @x_axis.push('Otros')
     end
   end
 

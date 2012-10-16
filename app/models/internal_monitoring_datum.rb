@@ -18,7 +18,7 @@ class InternalMonitoringDatum < ActiveRecord::Base
     if !isFirstData?(datum)
       previous_data = InternalMonitoringDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
       prev_total_comments = get_total_comments(channels, previous_data)
-      prev_total_comments != 0 ? (return ((get_total_comments(channels, datum).to_f-prev_total_comments.to_f)/prev_total_comments.to_f)) : (return 0) 
+      prev_total_comments != 0 ? (return ((get_total_comments(channels, datum).to_f-prev_total_comments.to_f)/prev_total_comments.to_f)*100) : (return 0) 
     end
     return 0
   end

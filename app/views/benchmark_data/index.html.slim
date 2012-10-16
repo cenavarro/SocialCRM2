@@ -49,7 +49,16 @@
 
 
 script 
-  | createChart('container_distribution', 'Distribucion de los comentarios en canales', [#{@dates}]);
+  | createChart('container_distribution', 'Distribucion de los comentarios en canales', #{@x_axis.to_s.html_safe});
+  - @benchmark_competitors.each do |competitor|
+    - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => competitor.id).order("start_date ASC")
+    - @blogs = @competitor_data.collect(&:blogs).join(', ')
+    - @forums = @competitor_data.collect(&:forums).join(', ')
+    - @videos = @competitor_data.collect(&:videos).join(', ')
+    - @twitter = @competitor_data.collect(&:twitter).join(', ')
+    - @facebook = @competitor_data.collect(&:facebook).join(', ')
+    - @others = @competitor_data.collect(&:others).join(', ')
+    | addSerie('#{competitor.name}',[#{@blogs},#{@forums},#{@videos},#{@twitter},#{@facebook},#{@others}]);
 
 section.sectionInformation
   .estilo_tabs
@@ -72,7 +81,7 @@ section.sectionInformation
               td
               - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
               - @competitor_data.each do |data|
-                td colspan="6" style="text-align: center; font-weight: bold;"
+                td colspan="7" style="text-align: center; font-weight: bold;"
                   = "#{data.start_date.strftime("%d/%m")}-#{data.end_date.strftime("%d/%m")}"
             tr.titlesRows
               td
@@ -89,6 +98,8 @@ section.sectionInformation
                   |Facebook
                 td.columnsTableBenchmark
                   |Otros
+                td.columnsTableBenchmark
+                  |Totales
           tbody
             - @benchmark_competitors.each do |competitor|
               tr
@@ -108,12 +119,14 @@ section.sectionInformation
                       = data.facebook
                     td.columnsTableBenchmark
                       = data.others
+                    td.columnsTableBenchmark
+                      = data.blogs + data.forums + data.videos + data.twitter + data.facebook + data.others
             tr
               td.nilValue
                 |Opciones
               - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
               - @competitor_data.each do |data|
-                td colspan="6" style="text-align: center;"
+                td colspan="7" style="text-align: center;"
                   a.btn.btn-info href=benchmark_edit_path(data.id)
                     i.icon-pencil.icon-white
                   |  
