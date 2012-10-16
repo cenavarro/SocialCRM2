@@ -42,14 +42,15 @@ class BenchmarkDataController < ApplicationController
   end
 
   def update
+    data_of_competitor = BenchmarkDatum.find(params[:id])
     benchmark_competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:social_network_id]).order("name ASC")
     benchmark_competitors.each do |competitor|
       values = {start_date: params[:start_date], end_date: params[:end_date]}.merge(params[competitor.id.to_s.to_sym])
-      datum = BenchmarkDatum.find_by_benchmark_competitor_id(competitor.id)
+      datum = BenchmarkDatum.find_by_benchmark_competitor_id_and_start_date_and_end_date(competitor.id, data_of_competitor.start_date, data_of_competitor.end_date)
       datum.update_attributes(values)
     end
     respond_to do |format|
-      format.html { redirect_to benchmark_index_path(params[:client_id],1,params[:social_network_id]), notice: 'La informacion ha sido actualizada exitosamente.' }
+      format.html { redirect_to benchmark_index_path(params[:client_id], 1, params[:social_network_id]), notice: 'La informacion ha sido actualizada exitosamente.' }
     end
   end
 
@@ -66,9 +67,9 @@ class BenchmarkDataController < ApplicationController
 
   def save_comment
     comment = BenchmarkComment.find_by_social_network_id(params[:social_network].to_i)
-    message = "El comentario no se pudo guardar!"
+    message = (t 'comments.fail')
     if comment.update_attributes({params[:id_comment] => params[:comment]})
-      message = "Comentario Guardado!"
+      message = (t 'comments.success')
     end
     respond_to do | format |
       format.json { render json: message.to_json }

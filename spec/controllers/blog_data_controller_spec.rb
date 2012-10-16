@@ -22,6 +22,13 @@ describe BlogDataController do
       get :index, :locale => :es, :idc => 1, :opcion => 1, :id_social => 1 
       assigns(:blog_datum).should eq([blog_datum])
     end
+
+    it "assigns blog_data as @blog_datum in a date range" do
+      blog_datum = BlogDatum.create! valid_attributes
+      get :index, :locale => :es, :idc => 1, :opcion => 2, :id_social => 1, :start_date => "01-01-2012", :end_date => "31-01-2012" 
+      assigns(:blog_datum).should eq([blog_datum])
+    end
+
   end
 
   describe "#new" do
@@ -55,17 +62,19 @@ describe BlogDataController do
 
     end
 
-    #context "with invalid params" do
-    #  it "assigns a newly created but unsaved blog_datum as @blog_datum" do
-    #    post :create, :locale => :es, :blog_datum => invalid_attributes
-    #    assigns(:blog_datum).should be_a_new(BlogDatum)
-    #  end
+    context "with invalid params" do
+      it "assigns a newly created but unsaved blog_datum as @blog_datum" do
+        BlogDatum.any_instance.stub(:save).and_return(false)
+        post :create, :locale => :es, :blog_datum => invalid_attributes
+        assigns(:blog_datum).should be_a_new(BlogDatum)
+      end
 
-    #  it "re-renders the 'new' template" do
-    #    post :create, :locale => :es, :blog_datum => invalid_attributes
-    #    response.should render_template("new")
-    #  end
-    #end
+      it "re-renders the 'new' template" do
+        BlogDatum.any_instance.stub(:save).and_return(false)
+        post :create, :locale => :es, :blog_datum => invalid_attributes
+        response.should render_template("new")
+      end
+    end
   end
 
   describe "#update" do
@@ -112,6 +121,19 @@ describe BlogDataController do
       blog_datum = BlogDatum.create! valid_attributes
       delete :destroy, :locale => :es, :id => blog_datum.to_param
       response.should redirect_to(blog_index_path(1,1,1))
+    end
+  end
+
+  describe "#save_comment" do
+    it "update a comments of a BlogComment given a social network" do
+      BlogComment.create!({:social_network_id => 1})
+      post :save_comment, :locale => :es, :comment => "Comment Table Test", :id_comment => "table", :social_network => 1
+      post :save_comment, :locale => :es, :comment => "Comment Visits Test", :id_comment => "visits", :social_network => 1
+      post :save_comment, :locale => :es, :comment => "Comment Percentages Test", :id_comment => "percentages", :social_network => 1
+      datum_comments = BlogComment.find_by_social_network_id(1)
+      datum_comments.table.should eq("Comment Table Test")
+      datum_comments.visits.should eq("Comment Visits Test")
+      datum_comments.percentages.should eq("Comment Percentages Test")
     end
   end
 
