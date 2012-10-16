@@ -27,9 +27,7 @@ social = InfoSocialNetwork.create! :name => 'Campaña', :description => "Red Soc
 puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Foursquare', :description => "Red Social Foursquare", :id_name => 'foursquare'
 puts "Informacion Red Social Creada: " << social.name
-social = InfoSocialNetwork.create! :name => 'Monitoreo Interno', :description => "Monitoreo Interno", :id_name => 'internal_monitoring'
-puts "Informacion Red Social Creada: " << social.name
-social = InfoSocialNetwork.create! :name => 'Monitoreo Externo', :description => "Monitoreo Externo", :id_name => 'external_monitoring'
+social = InfoSocialNetwork.create! :name => 'Monitoring Interno', :description => "Monitoreo Interno", :id_name => 'internal_monitoring'
 puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Benchmark', :description => "Benchmark", :id_name => 'benchmark'
 puts "Informacion Red Social Creada: " << social.name

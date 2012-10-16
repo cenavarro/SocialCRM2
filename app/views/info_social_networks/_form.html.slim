@@ -29,10 +29,7 @@ javascript:
   br
   = f.label :imagen
   br
-  = f.file_field :attachment, :required => "required", :accept => "image/*", :class => "validate[required] text-input", :onchange => "previewImage(this);"
-  p.simbolo
-    span style="font-size: 16pt"
-      |* 
+  = f.file_field :attachment, :accept => "image/*", :onchange => "previewImage(this);"
   br
   br
   img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#" style="padding-left:80px;"
