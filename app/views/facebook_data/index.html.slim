@@ -340,7 +340,7 @@ section.sectionInformation
         .title
           h4
             | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},1, '#{params[:locale]}', '#{@facebook_info.id_name}');"
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table', '#{params[:locale]}', '#{@facebook_info.id_name}');"
           textarea id="comment"
             = @comments.table
           br
@@ -358,7 +358,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Fans
-          form  id="fans" onsubmit="return saveChartComment('#fans',#{@socialNetwork.id},2, '#{params[:locale]}', '#{@facebook_info.id_name}');"
+          form  id="fans" onsubmit="return saveChartComment('#fans',#{@socialNetwork.id},'fans', '#{params[:locale]}', '#{@facebook_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.fans
             br
@@ -372,7 +372,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Interactividad
-          form id="interaction" onsubmit="return saveChartComment('#interaction',#{@socialNetwork.id},3, '#{params[:locale]}', '#{@facebook_info.id_name}');"
+          form id="interaction" onsubmit="return saveChartComment('#interaction',#{@socialNetwork.id},'interaction', '#{params[:locale]}', '#{@facebook_info.id_name}');"
 
             textarea rows=10 id="comment"
               = @comments.interaction
@@ -387,7 +387,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Alcance
-          form  id="reach" onsubmit="return saveChartComment('#reach',#{@socialNetwork.id},6, '#{params[:locale]}', '#{@facebook_info.id_name}');"
+          form  id="reach" onsubmit="return saveChartComment('#reach',#{@socialNetwork.id},'reach', '#{params[:locale]}', '#{@facebook_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.reach
             br
@@ -401,7 +401,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Crecimiento Inversion
-          form id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},4, '#{params[:locale]}', '#{@facebook_info.id_name}');"
+          form id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},'investment', '#{params[:locale]}', '#{@facebook_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.investment
             br
@@ -415,7 +415,7 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Costes
-          form id="costs" onsubmit="return saveChartComment('#costs',#{@socialNetwork.id},5, '#{params[:locale]}', '#{@facebook_info.id_name}');"
+          form id="costs" onsubmit="return saveChartComment('#costs',#{@socialNetwork.id},'cost', '#{params[:locale]}', '#{@facebook_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.cost
             br

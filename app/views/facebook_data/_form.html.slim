@@ -38,7 +38,7 @@ javascript:
       | Extraer datos desde Facebook
       br
       br
-      button.btn.btn-primary type="button" onclick="javascript:connectFacebook(#{params[:idc]},#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'#{params[:locale]}');"
+      button.btn.btn-primary type="button" onclick="javascript:connectFacebook(#{params[:idc]},#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},'#{params[:locale]}', '#{params[:id_social]}');"
         |Conectar
     .box.fans
       | Fans
