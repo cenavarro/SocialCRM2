@@ -29,10 +29,8 @@ class FacebookDataController < ApplicationController
     fecha_final = params[:end_date]
     hostname = "#{request.protocol}#{request.host_with_port}"
     uri = "https://graph.facebook.com/oauth/access_token?client_id=#{client_id}&redirect_uri=#{hostname}#{facebook_callback_dates_path(params[:idc], params[:id_social], fecha_inicio,fecha_final)}/&code=#{params[:code]}&client_secret=#{client_secret}"
-    p uri
     result_from_facebook = open(URI.parse(URI.escape(uri))).read
     access_token = result_from_facebook.split("&")[0].split("=")[1]
-    p "Parametros:" + params.to_s
 
     respond_to do |format|
       @path = %{#{facebook_new_path(params[:idc], 1, params[:id_social])}/?start_date=#{params[:start_date]}&end_date=#{params[:end_date]}&access_token=#{access_token}}
@@ -59,7 +57,7 @@ class FacebookDataController < ApplicationController
     @page_impression = 0
     @page_friends_of_fan = 0
     if getDataFromFacebook?
-      facebook_id = SocialNetwork.where("client_id = ? and info_social_network_id = 1",params[:idc])[0].id_object.to_s
+      facebook_id = SocialNetwork.find_by_id_and_client_id(params[:id_social], params[:idc]).id_object.to_s
       fecha_inicio = params[:start_date]
       fecha_final = params[:end_date]
       access_token = params[:access_token]

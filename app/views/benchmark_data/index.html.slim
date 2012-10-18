@@ -52,6 +52,7 @@ script
   | createChart('container_distribution', 'Distribucion de los comentarios en canales', #{@x_axis.to_s.html_safe});
   - @benchmark_competitors.each do |competitor|
     - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => competitor.id).order("start_date ASC")
+    - @competitor_data = BenchmarkDatum.where('start_date = ? and end_date = ? and benchmark_competitor_id = ?', params[:start_date].to_date, params[:end_date].to_date, competitor.id).order("start_date ASC") if params.has_key?(:start_date)
     - @blogs = @competitor_data.collect(&:blogs).join(', ')
     - @forums = @competitor_data.collect(&:forums).join(', ')
     - @videos = @competitor_data.collect(&:videos).join(', ')
@@ -79,13 +80,14 @@ section.sectionInformation
           thead
             tr
               td
-              - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
-              - @competitor_data.each do |data|
+              - @competitor_datum = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
+              - @competitor_datum = BenchmarkDatum.where('start_date = ? and end_date = ? and benchmark_competitor_id = ?', params[:start_date].to_date, params[:end_date].to_date, @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil and params.has_key?(:start_date)
+              - @competitor_datum.each do |data|
                 td colspan="7" style="text-align: center; font-weight: bold;"
                   = "#{data.start_date.strftime("%d/%m")}-#{data.end_date.strftime("%d/%m")}"
             tr.titlesRows
               td
-              - @competitor_data.each do |data|
+              - @competitor_datum.each do |data|
                 td.columnsTableBenchmark
                   |Blogs
                 td.columnsTableBenchmark
@@ -106,6 +108,7 @@ section.sectionInformation
                 td
                   = competitor.name
                   - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => competitor.id).order("start_date ASC")
+                  - @competitor_data = BenchmarkDatum.where('start_date = ? and end_date = ? and benchmark_competitor_id = ?', params[:start_date].to_date, params[:end_date].to_date, competitor.id).order("start_date ASC") if params.has_key?(:start_date)
                   - @competitor_data.each do |data|
                     td.columnsTableBenchmark
                       = data.blogs
@@ -124,8 +127,7 @@ section.sectionInformation
             tr
               td.nilValue
                 |Opciones
-              - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
-              - @competitor_data.each do |data|
+              - @competitor_datum.each do |data|
                 td colspan="7" style="text-align: center;"
                   a.btn.btn-info href=benchmark_edit_path(data.id)
                     i.icon-pencil.icon-white

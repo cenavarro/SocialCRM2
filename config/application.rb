@@ -1,3 +1,5 @@
+require 'active_support/core_ext/numeric/bytes'
+
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -31,7 +33,7 @@ module DemoComentarios
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
-    # config.i18n.default_locale = :de
+    config.i18n.default_locale = :es
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -46,5 +48,8 @@ module DemoComentarios
     config.assets.version = '1.0'
 
     config.assets.initialize_on_precompile = false
+
+    config.logger = Logger.new(Rails.root.join('log', "#{Rails.env}.log"), "daily", 10.megabytes)
+
   end
 end

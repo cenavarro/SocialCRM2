@@ -63,11 +63,8 @@ class SocialNetworksController < ApplicationController
   end
 
   def create_campaign
-    campaign = SocialNetwork.new
-    campaign.name = params[:name]
-    campaign.client_id = params[:id_client]
+    campaign = SocialNetwork.new(:name => params[:name], :client_id => params[:id_client], :info_social_network_id => InfoSocialNetwork.find_by_id_name('campaign').id)
     campaign.image = params[:image] if !params[:image].nil?
-    campaign.info_social_network_id = InfoSocialNetwork.find_by_id_name('campaign').id
     if campaign.save!
       CampaignComment.new(:social_network_id => campaign.id).save!
       list = params[:criteria]
@@ -84,26 +81,24 @@ class SocialNetworksController < ApplicationController
     end
   end
 
-  def create_internal_monitoring
-    internal_monitoring = SocialNetwork.new
-    internal_monitoring.name = params[:name]
-    internal_monitoring.client_id = params[:id_client]
-    internal_monitoring.image = params[:image] if !params[:image].nil?
-    internal_monitoring.info_social_network_id = InfoSocialNetwork.find_by_id_name('internal_monitoring').id
-    if internal_monitoring.save!
-      InternalMonitoringComment.new(:social_network_id => internal_monitoring.id).save!
-      channel_list = params[:channels]
-      channel_number = 1
-      channel_list.each do |item|
-        InternalMonitoringChannel.new(:social_network_id => internal_monitoring.id, :channel_number => channel_number, :title => item).save!
-        channel_number = channel_number + 1
+  def create_monitoring
+    monitoring = SocialNetwork.new(:name => params[:name], :client_id => params[:id_client], :info_social_network_id => InfoSocialNetwork.find_by_id_name('monitoring').id)
+    monitoring.image = params[:image] if !params[:image].nil?
+    if monitoring.save!
+      themes = params[:themes]
+      themes.each do |theme|
+        Monitoring.new(social_network_id: monitoring.id, name: theme, isTheme: true).save!
+      end
+      channels = params[:channels]
+      channels.each do |channel|
+        Monitoring.new(social_network_id: monitoring.id, name: channel, isTheme: false).save!
       end
       respond_to do |format|
-        format.html { redirect_to social_networks_path, notice: "El Monitoreo Interno se ha creado exitosamente!"}
+        format.html { redirect_to social_networks_path, notice: "El Monitoring se ha creado exitosamente!"}
       end
     else
       respond_to do |format|
-        format.html { redirect_to request.referer, notice: "El Monitoreo Interno NO se pudo crear!"}
+        format.html { redirect_to request.referer, notice: "El Monitoring no se pudo crear!"}
       end
     end
   end

@@ -1,0 +1,175 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+
+- @monitoring_info = InfoSocialNetwork.find_by_id_name('monitoring')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @comments = MonitoringComment.find_by_social_network_id(@socialNetwork.id)
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Monitoring  Logo' height='100' width='200'>").html_safe
+    = @image
+.margin
+  a.btn.btn-info href=monitoring_new_path(params[:idc],params[:id_social]) style="width: 168px"
+    |Nueva Entrada de Datos
+  br
+  br
+  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+    | Seleccionar Rango de Fecha
+.estiloRangoFechas id="formSelectRangeDate"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+    |x
+  form action=monitoring_index_path(params[:idc],params[:id_social]) method="get"
+    center
+      | Seleccione el rango de fechas
+    br
+    br
+    |Fecha Inicio
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
+    br
+    br
+    |Fecha Final
+    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
+      span.add-on
+        i.icon-th
+    br
+    center
+      input.btn.btn-primary type="submit" value="Obtener Datos"
+    br
+
+
+script 
+  | createChart('container_distribution', 'Distribucion de los comentarios en canales', [#{@dates}]);
+  - @themes.each do |theme|
+    - if params.has_key?(:start_date) and params.has_key?(:end_date)
+      - @themes_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, theme.id).order('start_date ASC')
+    - else
+      - @themes_datum = MonitoringData.where('monitoring_id = ?', theme.id).order('start_date ASC')
+    - @theme_data = @themes_datum.map(&:value)
+    |addSerie('#{theme.name}',#{@theme_data});
+  | createChart('container_typology', 'Tipologia de los comentarios', [#{@dates}]);
+  - @channels.each do |channel|
+    - if params.has_key?(:start_date) and params.has_key?(:end_date)
+      - @channel_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, channel.id).order('start_date ASC')
+    - else
+      - @channel_datum = MonitoringData.where('monitoring_id = ?', channel.id).order('start_date ASC')
+    - @channel_data = @channel_datum.map(&:value)
+    |addSerie('#{channel.name}',#{@channel_data});
+
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabtable" data-toggle="tab"
+          | Tabla
+      li
+        a href="#tabcharts" data-toggle="tab"
+          | Graficos
+      li
+        a href="#tabothers" data-toggle="tab"
+          | Otros datos
+  .tab-content
+    .tab-pane.fade.in.active id="tabtable"
+      section.sectionTable
+        table.table.table-bordered id="tablaInformacion"
+          thead
+            tr.headerTable
+              td.hideCell
+              - @dates.split(',').each do |date|
+                td
+                  = date.gsub("'","")
+          tbody
+            tr.titlesRows
+              td colspan=100
+                | Temas
+              - @themes.each do |theme|
+                tr
+                  td
+                    = theme.name
+                  - if params.has_key?(:start_date) and params.has_key?(:end_date)
+                    - @themes_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, theme.id).order('start_date ASC')
+                  - else
+                    - @themes_datum = MonitoringData.where('monitoring_id = ?', theme.id).order('start_date ASC')
+                  - @themes_datum.each do |theme|
+                    td 
+                      = theme.value
+            tr.titlesRows
+              td colspan=100
+                | Distribucion de canales
+              - @channels.each do |channel|
+                tr
+                  td
+                    = channel.name
+                  - if params.has_key?(:start_date) and params.has_key?(:end_date)
+                    - @channel_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, channel.id).order('start_date ASC')
+                  - else
+                    - @channel_datum = MonitoringData.where('monitoring_id = ?', channel.id).order('start_date ASC')
+                  - @channel_datum.each do |channel|
+                    td 
+                      = channel.value
+            tr
+              td.nilValue
+                |Opciones
+              - @datum.each do |data|
+                td.celdaOpciones
+                  a.btn.btn-info href=monitoring_edit_path(data.id)
+                    i.icon-pencil.icon-white
+                  |  
+                  a.btn.btn-danger data-method='delete' rel='nofollow' href=monitoring_datum_path(params[:idc], params[:id_social], data.id) data-confirm="Esta seguro?"
+                    i.icon-trash.icon-white
+      .comment
+        .title
+          h4
+            | Comentario para la Tabla:
+        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@monitoring_info.id_name}');"
+          textarea id="comment"
+            = @comments.table
+          br
+          button.btn.btn-success
+            | Guardar
+          .result
+
+
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_distribution
+        .comment
+          .title
+            h4
+              | Comentario Grafico Distribucion de los comentarios en canales
+          form  id="distribution" onsubmit="return saveChartComment('#distribution',#{@socialNetwork.id},'distributions' ,'#{params[:locale]}','#{@monitoring_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.distributions
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_typology
+        .comment
+          .title
+            h4
+              | Comentario Grafico Tipologia de los comentarios
+          form  id="typology" onsubmit="return saveChartComment('#typology',#{@socialNetwork.id},'typology','#{params[:locale]}','#{@monitoring_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.typology
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+
+    .tab-pane.fade id="tabothers"
+      == render 'layouts/uploadImage'

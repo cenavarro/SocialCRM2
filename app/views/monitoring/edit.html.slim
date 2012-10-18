@@ -1,0 +1,60 @@
+br
+center
+  h1 Editando Entrada de Datos Monitoring
+br
+br
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#formEntradaDatos").validationEngine();
+    });
+
+= form_tag monitoring_update_path, :class => "formNewMonitoring", :id => "formEntradaDatos" do
+  .form-horizontal.sectionInformation
+    .box.informationMonitoring
+      | Informacion
+      br
+      br
+      - datum = MonitoringData.find(params[:id])
+      = hidden_field_tag :client_id, params[:idc]
+      = hidden_field_tag :social_network_id, params[:id_social]
+      - start_date = datum.start_date.strftime("%d-%m-%Y") 
+      - end_date = datum.end_date.strftime("%d-%m-%Y") 
+      = label_tag "Fecha Inicio"
+      .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
+        = text_field_tag :start_date, nil, :class => "span2", :value => start_date, :readonly => true
+        span.add-on
+          i.icon-th
+      br
+      br
+      = label_tag "Fecha Final"
+      .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
+        = text_field_tag :end_date, nil, :class => "span2", :value => end_date, :readonly => true
+        span.add-on
+          i.icon-th
+    .sectionDataMonitoring
+      .box.themesMonitoring
+        | Temas
+        br
+        br
+        - @themes.each do |theme|
+          = theme.name
+          br
+          - data = MonitoringData.find_by_monitoring_id_and_start_date_and_end_date(theme.id, start_date.to_date, end_date.to_date)
+          = text_field_tag "monitoring[#{data.id}]", data.value, :class => "validate[required, custom[number]]"
+          br
+          br
+      .box.distributionMonitoring
+        | Distribucion de canales
+        br
+        br
+        - @channels.each do |channel|
+          = channel.name
+          br
+          - data = MonitoringData.find_by_monitoring_id_and_start_date_and_end_date(channel.id, start_date.to_date, end_date.to_date)
+          = text_field_tag "monitoring[#{data.id}]", data.value, :class => "validate[required, custom[number]]"
+          br
+          br
+    .buttonsMonitoring
+      = submit_tag 'Guardar Datos', {:class => "btn btn-success saveMonitoring"}
+      |     
+      = link_to 'Regresar', monitoring_index_path(params[:idc], params[:id_social]), :class => "btn btn-inverse backMonitoring"

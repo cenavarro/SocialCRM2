@@ -4,6 +4,14 @@ DemoComentarios::Application.routes.draw do
 
   scope ':locale' do
 
+    get "monitoring_data/new/:idc/:id_social" => "monitoring#new", :as => "monitoring_new"
+    post "monitoring/save_comment" => "monitoring#save_comment", :as => "monitoring_save_comment"
+    get "monitoring_data/:id/edit/:idc/:id_social" => "monitoring#edit", :as => "monitoring_edit"
+    post "monitoring/:idc/:id_social" => "monitoring#create", :as => "monitoring"
+    post "monitoring" => "monitoring#update", :as => "monitoring_update"
+    get "monitoring_data/:idc/:opcion/:id_social" => "monitoring#index", :as => "monitoring_index"
+    delete "monitoring/:idc/:id_social/:id" => "monitoring#destroy", :as => "monitoring_datum"
+
     get "campaign_data/new/:idc/:id_social" => "campaign_data#new", :as => "campaign_new"
     post "campaign_data/save_comment" => "campaign_data#save_comment", :as => "campaign_save_comment"
     get "campaign_data/:id/edit/:idc/:id_social" => "campaign_data#edit", :as => "campaign_edit"
@@ -23,13 +31,6 @@ DemoComentarios::Application.routes.draw do
     get "foursquare_data/new/:idc/:opcion/:id_social" => "foursquare_data#new", :as => "foursquare_new"
     get "foursquare_data/:id/edit/:idc/:id_social" => "foursquare_data#edit", :as => "foursquare_edit"
     get "foursquare_data/:idc/:opcion/:id_social" => "foursquare_data#index", :as => "foursquare_index"
-
-    resources :internal_monitoring_data, :only => [:create, :destroy, :update]
-    post "internal_monitoring_data/save_comment" => "internal_monitoring_data#save_comment", :as => "internal_monitoring_save_comment"
-    get "internal_monitoring_data/new/:idc/:opcion/:id_social" => "internal_monitoring_data#new", :as => "internal_monitoring_new"
-    get "internal_monitoring_data/:id/edit/:idc/:id_social" => "internal_monitoring_data#edit", :as => "internal_monitoring_edit"
-    get "internal_monitoring_data/:idc/:opcion/:id_social" => "internal_monitoring_data#index", :as => "internal_monitoring_index"
-
 
     resources :tumblr_data, :only => [:create, :destroy, :update]
     post "tumblr_data/save_comment" => "tumblr_data#save_comment", :as => "tumblr_save_comment"
@@ -116,12 +117,12 @@ DemoComentarios::Application.routes.draw do
     get "social_networks/new/:isn" => "social_networks#new", :as => "social_networks_new"
     post "social_networks/new_redirect" => "social_networks#redirect", :as => "social_networks_redirect_new"
     get "social_networks/new_campaign" => "social_networks#new_campaign", :as => "social_networks_new_campaign"
-    get "social_networks/new_internal_monitoring" => "social_networks#new_internal_monitoring", :as => "social_networks_new_internal_monitoring"
+    get "social_networks/new_monitoring" => "social_networks#new_monitoring", :as => "social_networks_new_monitoring"
     get "social_networks/new_benchmark" => "social_networks#new_benchmark", :as => "social_networks_new_benchmark"
     post "social_networks/add_image" => "social_networks#add_image", :as => "social_networks_add_image"
     post "social_networks/update_comment" => "social_networks#update_comment_image", :as => "social_networks_update_comment"
     post "social_networks/create_campaign" => "social_networks#create_campaign", :as => "social_networks_create_campaing"
-    post "social_networks/create_internal_monitoring" => "social_networks#create_internal_monitoring", :as => "social_networks_create_internal_monitoring"
+    post "social_networks/create_monitoring" => "social_networks#create_monitoring", :as => "social_networks_create_monitoring"
     post "social_networks/create_benchmark" => "social_networks#create_benchmark", :as => "social_networks_create_benchmark"
     delete "social_networks/destroy_image/:id" => "social_networks#destroy_image", :as => "social_networks_destroy_image"
 
