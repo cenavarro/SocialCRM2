@@ -1,3 +1,4 @@
+require 'bundler/capistrano'
 require 'capistrano/ext/multistage'
 
 set :application, "social_crm"
@@ -12,6 +13,7 @@ default_run_options[:pty] = true
 set :scm_passphrase, "Pernix-D3ploy3R"
 set :use_sudo, false
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
+
 
 set :branch, "master"
 set :deploy_via, :remote_cache
