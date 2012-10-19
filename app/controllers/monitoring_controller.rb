@@ -13,7 +13,7 @@ class MonitoringController < ApplicationController
     else
       @datum = MonitoringData.where('monitoring_id = ?', @themes.first.id).order('start_date ASC')
     end
-    create_chart_data
+    create_all_data
     respond_to do |format|
       format.html
     end
@@ -70,8 +70,56 @@ class MonitoringController < ApplicationController
 
   private
 
-  def create_chart_data
+  def create_all_data
+    @total_days = []
+    @theme_datum = []
+    @channel_datum = []
+    @change_volume_comments = []
+    @daily_average = []
+    @theme_total_comment = []
+    @channel_total_comment = []
     @dates = @datum.collect{|data| "'#{data.start_date.strftime('%d %b')}-#{data.end_date.strftime('%d %b')}'"}.join(', ')
+    @datum.each do |data|
+      @total_days << ((data.end_date - data.start_date).to_i + 1)
+    end
+    create_theme_datum
+    create_channel_datum
+  end
+
+  def create_theme_datum
+    @themes.each do |theme|
+      if getDataDateRange?(params)
+        @themes_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, theme.id).order('start_date ASC')
+      else
+        @themes_datum = MonitoringData.where('monitoring_id = ?', theme.id).order('start_date ASC')
+      end
+      @data = []
+      index = 0
+      @themes_datum.each do |data|
+        @data << data.value
+        @theme_total_comment[index].nil? ? (@theme_total_comment[index] = data.value) : (@theme_total_comment[index] = @theme_total_comment[index] + data.value)  
+        index  = index + 1
+      end
+      @theme_datum << {:name => theme.name, :data => @data}
+    end
+  end
+
+  def create_channel_datum
+    @channels.each do |channel|
+      if getDataDateRange?(params)
+        @channels_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, channel.id).order('start_date ASC')
+      else
+        @channels_datum = MonitoringData.where('monitoring_id = ?', channel.id).order('start_date ASC')
+      end
+      @data = []
+      index = 0
+      @channels_datum.each do |data|
+        @data << data.value
+        @channel_total_comment[index].nil? ? (@channel_total_comment[index] = data.value) : (@channel_total_comment[index] = @channel_total_comment[index] + data.value)
+        index  = index + 1
+      end
+      @channel_datum << {:name => channel.name, :data => @data}
+    end
   end
 
 end

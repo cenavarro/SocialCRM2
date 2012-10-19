@@ -25,7 +25,7 @@
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
     |x
-  form action=monitoring_index_path(params[:idc],params[:id_social]) method="get"
+  form action=monitoring_index_path(params[:idc], 2,params[:id_social]) method="get"
     center
       | Seleccione el rango de fechas
     br
@@ -50,21 +50,11 @@
 
 script 
   | createChart('container_distribution', 'Distribucion de los comentarios en canales', [#{@dates}]);
-  - @themes.each do |theme|
-    - if params.has_key?(:start_date) and params.has_key?(:end_date)
-      - @themes_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, theme.id).order('start_date ASC')
-    - else
-      - @themes_datum = MonitoringData.where('monitoring_id = ?', theme.id).order('start_date ASC')
-    - @theme_data = @themes_datum.map(&:value)
-    |addSerie('#{theme.name}',#{@theme_data});
+  - @theme_datum.each do |datum|
+    |addSerie('#{datum[:name]}',#{datum[:data]});
   | createChart('container_typology', 'Tipologia de los comentarios', [#{@dates}]);
-  - @channels.each do |channel|
-    - if params.has_key?(:start_date) and params.has_key?(:end_date)
-      - @channel_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, channel.id).order('start_date ASC')
-    - else
-      - @channel_datum = MonitoringData.where('monitoring_id = ?', channel.id).order('start_date ASC')
-    - @channel_data = @channel_datum.map(&:value)
-    |addSerie('#{channel.name}',#{@channel_data});
+  - @channel_datum.each do |datum|
+    |addSerie('#{datum[:name]}',#{datum[:data]});
 
 section.sectionInformation
   .estilo_tabs
@@ -92,31 +82,63 @@ section.sectionInformation
             tr.titlesRows
               td colspan=100
                 | Temas
-              - @themes.each do |theme|
-                tr
+            - @theme_datum.each do |datum|
+              tr
+                td
+                  = datum[:name]
+                - datum[:data].each do |value|
                   td
-                    = theme.name
-                  - if params.has_key?(:start_date) and params.has_key?(:end_date)
-                    - @themes_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, theme.id).order('start_date ASC')
-                  - else
-                    - @themes_datum = MonitoringData.where('monitoring_id = ?', theme.id).order('start_date ASC')
-                  - @themes_datum.each do |theme|
-                    td 
-                      = theme.value
+                    = value
+            tr
+              td
+                b Total Comentarios
+              - index = 0
+              - @theme_total_comment.each do |value|
+                - if @channel_total_comment[index] == @theme_total_comment[index]
+                  td bgcolor="33CC33"
+                    = value
+                - else
+                  td bgcolor="FF0000"
+                    = value
+                - index = index + 1
             tr.titlesRows
               td colspan=100
                 | Distribucion de canales
-              - @channels.each do |channel|
-                tr
+            - @channel_datum.each do |datum|
+              tr
+                td
+                  = datum[:name]
+                - datum[:data].each do |value|
                   td
-                    = channel.name
-                  - if params.has_key?(:start_date) and params.has_key?(:end_date)
-                    - @channel_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, channel.id).order('start_date ASC')
-                  - else
-                    - @channel_datum = MonitoringData.where('monitoring_id = ?', channel.id).order('start_date ASC')
-                  - @channel_datum.each do |channel|
-                    td 
-                      = channel.value
+                    = value
+            tr
+              td
+                b Total de Comentarios
+              - index = 0
+              - @channel_total_comment.each do |value|
+                - if @channel_total_comment[index] == @theme_total_comment[index]
+                  td bgcolor="33CC33"
+                    = value
+                - else
+                  td bgcolor="FF0000"
+                    = value
+                - index = index + 1
+            tr
+              td
+                b % cambio en volumen total de comentarios
+              td
+                | 0 
+              - for i in (1..@channel_total_comment.length-1)
+                td
+                  = (((@channel_total_comment[i]-@channel_total_comment[i-1]).to_f/@channel_total_comment[i-1])*100).round(2)
+            tr
+              td
+                b Promedio diario
+              - index = 0
+              - @channel_total_comment.each do |value|
+                td 
+                  = (value/@total_days[index]).round(2)
+                  - index = index + 1
             tr
               td.nilValue
                 |Opciones
@@ -127,6 +149,9 @@ section.sectionInformation
                   |  
                   a.btn.btn-danger data-method='delete' rel='nofollow' href=monitoring_datum_path(params[:idc], params[:id_social], data.id) data-confirm="Esta seguro?"
                     i.icon-trash.icon-white
+        b Nota
+        br
+        | El campo de total de comentarios de Temas y Canales deben ser iguales( rojo = incorrectos y verde = correctos)
       .comment
         .title
           h4
