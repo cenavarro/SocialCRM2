@@ -1,8 +1,8 @@
-facebook:
+facebook_server:
   client_id: 330159117080546
   client_secret: 7761f33bb9830ee3f33252e93e0a0ee6
 
-facebook_scrm2:
+facebook:
   client_id: 417226721668029
   client_secret: a622591870c428777fdbf65903e40ecf
 

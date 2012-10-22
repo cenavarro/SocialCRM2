@@ -162,14 +162,13 @@ class SocialNetworksController < ApplicationController
         redirect_url = "#{request.protocol}#{request.host_with_port}/#{params[:locale]}/clients/facebook/"
         app_id = SOCIAL_NETWORKS_CONFIG['facebook']['client_id'].to_s
         url = "https://www.facebook.com/dialog/oauth?client_id="+app_id+"&redirect_uri="+redirect_url+"&response_type=code&display=page&scope=email,manage_pages,read_insights,ads_management";
-      when 'internal_monitoring'
-        url = social_networks_new_internal_monitoring_path
+      when 'monitoring'
+        url = social_networks_new_monitoring_path
       when 'campaign'
         url = social_networks_new_campaign_path
       else
         url = social_networks_new_path(InfoSocialNetwork.find_by_id_name(option).id)
     end
-    p url
     respond_to do |format|
       format.html { redirect_to url }
     end
