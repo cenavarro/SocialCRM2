@@ -1,6 +1,7 @@
 # encoding: utf-8
 class SocialNetworksController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :has_admin_credentials?
 
   def index
     @social_networks = SocialNetwork.all
@@ -157,6 +158,7 @@ class SocialNetworksController < ApplicationController
 
   def redirect
     option = params[:social_network]
+    p option
     case option
       when 'facebook'
         redirect_url = "#{request.protocol}#{request.host_with_port}/#{params[:locale]}/clients/facebook/"
@@ -166,6 +168,8 @@ class SocialNetworksController < ApplicationController
         url = social_networks_new_monitoring_path
       when 'campaign'
         url = social_networks_new_campaign_path
+      when 'benchmark'
+        url = social_networks_new_benchmark_path
       else
         url = social_networks_new_path(InfoSocialNetwork.find_by_id_name(option).id)
     end

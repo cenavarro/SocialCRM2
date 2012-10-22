@@ -1,3 +1,10 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+br
 - if @client.nil? || @client.social_networks.empty?
   br
   br

@@ -43,7 +43,7 @@ br
   br
   br
   = label_tag :image, "Imagen Cliente:"
-  = file_field_tag :attachment, {:required => "required", :accept => "image/*", :onchange => "previewImage(this);"}
+  = file_field_tag :attachment, {:accept => "image/*", :onchange => "previewImage(this);"}
   br
   br
   img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#" style="padding-left:80px;"

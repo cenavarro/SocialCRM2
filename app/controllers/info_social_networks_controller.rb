@@ -1,5 +1,6 @@
 class InfoSocialNetworksController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :has_admin_credentials?
 
   def index
     @info_social_networks = InfoSocialNetwork.find(:all, :order => "name ASC")

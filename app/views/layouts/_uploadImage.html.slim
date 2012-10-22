@@ -49,3 +49,15 @@
         |Eliminar
       |      
       .result
+
+- if !admin_user?
+  javascript:
+    $(document).ready(function() {
+      var inputs = $(":button");
+      $("#btnNewData").css("display","none");
+      inputs.each(function(index, element){
+        $(element).css("display","none");
+        });
+      $("#btnMostrarRangos").css("display","block");
+      $("#btnCloseRange").css("display","block");
+    });

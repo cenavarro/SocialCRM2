@@ -1,5 +1,6 @@
 class YoutubeDataController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :has_admin_credentials?, :except => [:index]
 
   def index
     if !has_comments_table?(YoutubeComment, params[:id_social])

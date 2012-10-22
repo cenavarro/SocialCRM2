@@ -20,14 +20,14 @@ center
     - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Pinterest Logo' height='100' width='200'>").html_safe
     = @image
 .margin
-  a.btn.btn-info href=pinterest_new_path(params[:idc],2) style="width: 168px"
+  a.btn.btn-info href=pinterest_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     |Nueva Entrada de Datos
   br
   br
   button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
 .estiloRangoFechas id="formSelectRangeDate"
-  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
   form action=pinterest_index_path(params[:idc],2) method="get"
     center

@@ -1,5 +1,6 @@
 class BenchmarkDataController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :has_admin_credentials?, :except => [:index]
 
   def index
     if !has_comments_table?(BenchmarkComment, params[:id_social])
@@ -85,6 +86,12 @@ class BenchmarkDataController < ApplicationController
       @x_axis.push('Facebook')
       @x_axis.push('Otros')
     end
+    @blogs = []
+    @forums = []
+    @videos = []
+    @twitter = []
+    @facebook = []
+    @others = []
   end
 
 end

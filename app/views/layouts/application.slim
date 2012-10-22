@@ -11,13 +11,10 @@ html
     .container
       = render 'layouts/header'
       - if user_signed_in?
-        - if current_user.rol_id == 1
+        - if current_user.rol_id == 1 
           = render 'layouts/menuAdmin'
-        - elsif current_user.rol_id == 2
-          = render 'layouts/menuClient'
         - else
-          javascript: 
-            window.location.href="users/sign_out"
+          = render 'layouts/menuClient'
       - else
         = render 'layouts/menuVisit'
       #contentWrapper.well

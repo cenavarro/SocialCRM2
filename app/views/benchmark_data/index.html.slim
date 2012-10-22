@@ -16,14 +16,14 @@
     - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Benchmark Logo' height='100' width='200'>").html_safe
     = @image
 .margin
-  a.btn.btn-info href=benchmark_new_path(params[:idc],2) style="width: 168px"
+  a.btn.btn-info href=benchmark_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     |Nueva Entrada de Datos
   br
   br
   button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
 .estiloRangoFechas id="formSelectRangeDate"
-  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
   form action=benchmark_index_path(params[:idc],2) method="get"
     center
@@ -53,12 +53,13 @@ script
   - @benchmark_competitors.each do |competitor|
     - @competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => competitor.id).order("start_date ASC")
     - @competitor_data = BenchmarkDatum.where('start_date = ? and end_date = ? and benchmark_competitor_id = ?', params[:start_date].to_date, params[:end_date].to_date, competitor.id).order("start_date ASC") if params.has_key?(:start_date)
-    - @blogs = @competitor_data.collect(&:blogs).join(', ')
-    - @forums = @competitor_data.collect(&:forums).join(', ')
-    - @videos = @competitor_data.collect(&:videos).join(', ')
-    - @twitter = @competitor_data.collect(&:twitter).join(', ')
-    - @facebook = @competitor_data.collect(&:facebook).join(', ')
-    - @others = @competitor_data.collect(&:others).join(', ')
+    - if !@competitor_data.empty?
+      - @blogs = @competitor_data.collect(&:blogs).join(', ')
+      - @forums = @competitor_data.collect(&:forums).join(', ')
+      - @videos = @competitor_data.collect(&:videos).join(', ')
+      - @twitter = @competitor_data.collect(&:twitter).join(', ')
+      - @facebook = @competitor_data.collect(&:facebook).join(', ')
+      - @others = @competitor_data.collect(&:others).join(', ')
     | addSerie('#{competitor.name}',[#{@blogs},#{@forums},#{@videos},#{@twitter},#{@facebook},#{@others}]);
 
 section.sectionInformation

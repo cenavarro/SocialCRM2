@@ -16,14 +16,14 @@
     - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Monitoring  Logo' height='100' width='200'>").html_safe
     = @image
 .margin
-  a.btn.btn-info href=monitoring_new_path(params[:idc],params[:id_social]) style="width: 168px"
+  a.btn.btn-info href=monitoring_new_path(params[:idc],params[:id_social]) style="width: 168px" id="btnNewData"
     |Nueva Entrada de Datos
   br
   br
   button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
 .estiloRangoFechas id="formSelectRangeDate"
-  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
   form action=monitoring_index_path(params[:idc], 2,params[:id_social]) method="get"
     center
@@ -126,8 +126,9 @@ section.sectionInformation
             tr
               td
                 b % cambio en volumen total de comentarios
-              td
-                | 0 
+                - if !@channel_total_comment.empty?
+                  td
+                    | 0 
               - for i in (1..@channel_total_comment.length-1)
                 td
                   = (((@channel_total_comment[i]-@channel_total_comment[i-1]).to_f/@channel_total_comment[i-1])*100).round(2)

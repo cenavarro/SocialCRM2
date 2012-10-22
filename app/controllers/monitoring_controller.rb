@@ -1,5 +1,6 @@
 class MonitoringController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :has_admin_credentials?, :except => [:index]
 
 
   def index

@@ -16,14 +16,14 @@
     - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Campaign Logo' height='100' width='200'>").html_safe
     = @image
 .margin
-  a.btn.btn-info href=campaign_new_path(params[:idc],params[:id_social]) style="width: 168px"
+  a.btn.btn-info href=campaign_new_path(params[:idc],params[:id_social]) style="width: 168px" id="btnNewData"
     |Nueva Entrada de Datos
   br
   br
   button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
 .estiloRangoFechas id="formSelectRangeDate"
-  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')"
+  button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
   form action=campaign_index_path(params[:idc],2) method="get"
     center
