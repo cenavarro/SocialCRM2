@@ -6,3 +6,4 @@ tmp/
 .DS_Store
 device/*
 coverage
+public/system/*

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121017174147) do
+ActiveRecord::Schema.define(:version => 20121022195405) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -225,59 +225,6 @@ ActiveRecord::Schema.define(:version => 20121017174147) do
     t.string   "id_name"
   end
 
-  create_table "internal_monitoring_channels", :force => true do |t|
-    t.integer  "social_network_id"
-    t.integer  "channel_number"
-    t.string   "title"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "internal_monitoring_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "distributions"
-    t.text     "typology"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "internal_monitoring_data", :force => true do |t|
-    t.integer  "client_id"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "social_network_id"
-    t.integer  "complaints"
-    t.integer  "client_att"
-    t.integer  "lead"
-    t.integer  "engaged"
-    t.integer  "curiosities"
-    t.integer  "mentions"
-    t.integer  "feedback"
-    t.integer  "channel_1"
-    t.integer  "channel_2"
-    t.integer  "channel_3"
-    t.integer  "channel_4"
-    t.integer  "channel_5"
-    t.integer  "channel_6"
-    t.integer  "channel_7"
-    t.integer  "channel_8"
-    t.integer  "channel_9"
-    t.integer  "channel_10"
-    t.integer  "channel_11"
-    t.integer  "channel_12"
-    t.integer  "channel_13"
-    t.integer  "channel_14"
-    t.integer  "channel_15"
-    t.integer  "channel_16"
-    t.integer  "channel_17"
-    t.integer  "channel_18"
-    t.integer  "channel_19"
-    t.integer  "channel_20"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "linkedin_comments", :force => true do |t|
     t.integer  "social_network_id"
     t.text     "table"
@@ -361,15 +308,6 @@ ActiveRecord::Schema.define(:version => 20121017174147) do
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "social_network_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "revisions", :force => true do |t|
-    t.text     "comment"
-    t.text     "suggestion"
-    t.text     "company_comment"
-    t.boolean  "state"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
