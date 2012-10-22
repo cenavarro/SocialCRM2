@@ -1,23 +1,18 @@
-require 'bundler/capistrano'
-require 'capistrano/ext/multistage'
-
-set :application, "social_crm"
+set :application, "socialcrm"
 set :scm, :git
 set :repository,  "https://cenavarro@github.com/cenavarro/SocialCRM2.git"
 server "184.106.134.102", :app, :web, :db, :primary => true
 set :scm_username, "cenavarro"
 set :user, "deployer"
 set :default_stage, "production"
+set :deploy_to, "/var/rails/Social-CRM"
 default_run_options[:pty] = true
 
 set :scm_passphrase, "Pernix-D3ploy3R"
 set :use_sudo, false
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
-
-
 set :branch, "master"
 set :deploy_via, :remote_cache
-
 set :stages, ["production"]
 
 #role :web, "your web-server here"                          # Your HTTP server, Apache/etc
