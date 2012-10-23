@@ -3,7 +3,7 @@ class FlickrDatum < ActiveRecord::Base
 
   def self.get_new_contacts(datum)
     if !isFirstData?(datum)
-      previous_data = FlickrDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
+      previous_data = FlickrDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).last
       return (datum.total_contacts - previous_data.total_contacts)
     end
     return 0
@@ -14,7 +14,7 @@ class FlickrDatum < ActiveRecord::Base
   end
 
   def self.isFirstData?(datum)
-    previous_data = FlickrDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
+    previous_data = FlickrDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).last
 		(previous_data == nil) ? (return true) : (return false)
   end
 end

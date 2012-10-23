@@ -3,7 +3,7 @@ class TuentiDatum < ActiveRecord::Base
 
   def self.get_new_fans(datum)
     if !isFirstData?(datum)
-      previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
+      previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).last
       return (datum.real_fans - previous_data.real_fans)
     end
     return 0
@@ -21,14 +21,14 @@ class TuentiDatum < ActiveRecord::Base
 
   def self.get_grown_fans_percent(datum)
     if !isFirstData?(datum)
-      previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).first
+      previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).last
       return ((datum.real_fans.to_f-previous_data.real_fans.to_f)*100) if previous_data.real_fans != 0
     end
     return datum.new_fans * 100.0
   end
 
   def self.isFirstData?(datum)
-    previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).first
+    previous_data = TuentiDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).last
     (previous_data == nil) ? (return true) : (return false)
   end
 end
