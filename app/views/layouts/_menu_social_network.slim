@@ -13,13 +13,14 @@
       br
       - info_social_networks = InfoSocialNetwork.find(:all, :order => "name ASC")
       - info_social_networks.each do | ifn |
-        input type="radio" name="social_network" value="#{ifn.id_name}" style="margin-left:200px;"
-          |       
+        input type="radio" id="#{ifn.id_name}" name="social_network" value="#{ifn.id_name}" style="float:left; clear:none; margin-left:200px;"
+        label for="#{ifn.id_name}" style="float:left; clear:none; margin-left:10px;"
           = ifn.name
-          br
+        br
+        label for="#{ifn.id_name}"
           img src="#{ifn.attachment.url}" width="100" height="100" style="margin-left:200px;"
-          br
-          br
+        br
+        br
       .botones style="float: right;"
         button.btn.btn-primary id="btnNext" style="margin: 20px 30px 20px 0px;"
           |Siguiente

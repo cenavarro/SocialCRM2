@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  #rescue_from Exception, :with => :handle_public_exception
 
   before_filter :set_locale
 
@@ -25,5 +26,10 @@ class ApplicationController < ActionController::Base
 
   def has_admin_credentials?
     admin_user? ? (return true) : (redirect_to root_path, notice: "No tiene los permisos necesarios para realizar esta accion!")
+  end
+
+  def handle_public_exception(exception)
+    logger.info "Ha ocurrido un error:#{exception}"
+    @error = exception
   end
 end
