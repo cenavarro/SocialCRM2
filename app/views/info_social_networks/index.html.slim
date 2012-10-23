@@ -13,7 +13,7 @@ table.table.table-bordered
     th Nombre
     th Descripcion
     th Imagen
-    th
+    th Editar
 
   - @info_social_networks.each do |info_social_network|
     tr
@@ -26,8 +26,8 @@ table.table.table-bordered
         = @image
       td
         - edit_id = "edit_info_" + info_social_network.id.to_s
-        a.btn.btn-info href=edit_info_social_network_path(info_social_network) id=edit_id
-          i.icon-pencil.icon-white
-          |  Editar
+        center
+          a.btn.btn-info href=edit_info_social_network_path(info_social_network) id=edit_id
+            i.icon-pencil.icon-white
 br
 br

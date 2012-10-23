@@ -17,11 +17,11 @@ br
     - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Flickr Logo' height='100' width='200'>").html_safe
     = @image
 .margin
-  a.btn.btn-info href=flickr_new_path(params[:idc],2) id="btnNewData" style="width: 168px"
+  a.btn.btn-primary href=flickr_new_path(params[:idc],2) id="btnNewData" style="width: 168px"
     |Nueva Entrada de Datos
   br
   br
-  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+  button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"

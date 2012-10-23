@@ -18,6 +18,7 @@ table.table.table-bordered
     th 
       |Imagen
     th
+      |Editar/Borrar
 
   - @clients.each do |client|
     tr
@@ -30,14 +31,11 @@ table.table.table-bordered
         = @image
       - edit_id = "edit_"+client.id.to_s
       td
-        a.btn.btn-info href=edit_client_path(client) id=edit_id
+        a.btn.btn-info href=edit_client_path(client) id=edit_id style="margin-right:10px;"
           i.icon-pencil.icon-white
-          |  Editar
-      - delete_id = "delete_"+client.id.to_s
-      td
+        - delete_id = "delete_"+client.id.to_s
         a.btn.btn-danger href=client_path(client.id) data-confirm="Esta seguro que desea eliminar este cliente?" data-method="delete" rel="nofollow" id=delete_id
           i.icon-trash.icon-white
-          |  Eliminar
 br
 a.btn.btn-primary href=new_client_path
   i.icon-plus-sign.icon-white

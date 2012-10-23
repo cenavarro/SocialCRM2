@@ -16,11 +16,11 @@
     - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Tumblr Logo' height='100' width='200'>").html_safe
     = @image
 .margin
-  a.btn.btn-info href=tumblr_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
+  a.btn.btn-primary href=tumblr_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     |Nueva Entrada de Datos
   br
   br
-  button.btn.btn-info onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
+  button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
     | Seleccionar Rango de Fecha
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"

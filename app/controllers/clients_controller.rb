@@ -79,7 +79,7 @@ class ClientsController < ApplicationController
   end
 
   def social_networks
-    @client = Client.find(params[:idc])
+    (session.has_key?(:client_id)) ? (@client = Client.find(session[:client_id]) ): (@client = Client.find(params[:idc]))
     respond_to do|format|
       format.html
       format.json { render json: @client }
