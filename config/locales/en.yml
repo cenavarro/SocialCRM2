@@ -6,6 +6,7 @@ en:
       add_social_network: "Add Social Network"
       new: "New Client"
       edit: "Edit/Delete"
+      report: "Create Report"
     social_network:
       title: "Social Networks"
       new_entry: "Add New Data Entry"

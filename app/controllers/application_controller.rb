@@ -32,4 +32,5 @@ class ApplicationController < ActionController::Base
     logger.info "Ha ocurrido un error:#{exception}"
     @error = exception
   end
+
 end

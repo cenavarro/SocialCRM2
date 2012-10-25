@@ -1,4 +1,5 @@
 class BlogDataController < ApplicationController
+  require "axlsx"
   before_filter :authenticate_user!
   before_filter :has_admin_credentials?, :except => [:index]
 
@@ -14,6 +15,9 @@ class BlogDataController < ApplicationController
       @blog_datum = BlogDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
     end
     create_chart_data
+    @report = Axlsx::Package.new
+    BlogDatum.generate_excel(@report, params[:id_social], "01-01-2012", "31-12-2012")
+    @report.serialize('reporte.xlsx')
     respond_to do |format|
       format.html
     end

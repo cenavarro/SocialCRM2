@@ -49,7 +49,7 @@ module DemoComentarios
 
     config.assets.initialize_on_precompile = false
 
-#    config.logger = Logger.new(Rails.root.join('log', "#{Rails.env}.log"), "daily", 10.megabytes)
+    config.logger = Logger.new(Rails.root.join('log', "#{Rails.env}.log"), "daily", 10.megabytes)
 
   end
 end
