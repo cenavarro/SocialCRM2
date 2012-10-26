@@ -39,7 +39,7 @@ test: &test
 production:
   adapter: mysql2
   encoding: utf8
-  database: comentarios_production
+  database: socialcrm 
   pool: 5
   username: root
   password: MysqlPernix

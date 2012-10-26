@@ -1,5 +1,0 @@
-<h1>Nueva revisi&oacute;n</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Atr&aacute;s', revisions_path %>
