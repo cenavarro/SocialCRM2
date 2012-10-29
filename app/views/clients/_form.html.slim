@@ -8,7 +8,7 @@ br
 br
 = form_tag({:controller => "clients", :action => "create"}, :multipart => true, :method => "post", :class => "well form-inline formNuevoCliente", :id =>"form_new") do
 
-  = label_tag :name, "Nombre:"
+  = label_tag :name, t('customers.name')
   br
   = text_field_tag :name, nil, {:class => "validate[required] text-input"}
   p.simbolo
@@ -16,7 +16,7 @@ br
       |*
   br
   br
-  = label_tag :email, "Email:"
+  = label_tag :email, t('customers.email')
   br
   = text_field_tag :email, nil, :class => "validate[required, custom[email]]"
   p.simbolo
@@ -24,38 +24,40 @@ br
       |*
   br
   br
-  = label_tag :password, "Contraseña:"
+  = label_tag :password, t('customers.password')
+  br
   = password_field_tag :password, nil, {:class => "validate[required]"}
   p.simbolo
     span style="font-size: 16pt" align=""
       |*
   br
   br
-  = label_tag :password_confirmation, "Confirmación de Contraseña:"
+  = label_tag :password_confirmation, t('customers.confirm_password')
   = password_field_tag :password_confirmation, nil, {:class => "validate[required,equals[password]]"}
   p.simbolo
     span style="font-size: 16pt" align=""
       |*
   br
   br
-  = label_tag :description, "Descripcion Cliente:"
+  = label_tag :description, t('customers.description')
   = text_field_tag :description
   br
   br
-  = label_tag :image, "Imagen Cliente:"
+  = label_tag :image, t('customers.image')
+  br
   = file_field_tag :attachment, {:accept => "image/*", :onchange => "previewImage(this);"}
   br
   br
-  img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#" style="padding-left:80px;"
+  img id="image_preview" alt="#{t('messages.alt_image')}" width="100px" height="100px" src="#" style="padding-left:80px;"
   br
   br
   center
-    button.btn.btn-success type="submit" name="commit" data-confirm="Estas seguro que desea agregar este cliente?"
+    button.btn.btn-success type="submit" name="commit" data-confirm="#{t('messages.data_confirm')}"
       i.icon-check.icon-white
-      |  Crear Cliente
+      = t 'buttons.new_customer'
   br
   br
   p.leyenda
     span style="font-size: 16pt"
       |* 
-    |Campos Requeridos
+    = t 'messages.requireds'

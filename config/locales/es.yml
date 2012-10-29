@@ -16,9 +16,36 @@ es:
     logout: "Salir"
     config:
       title: "Configuracion"
-      new_user: "Nuevo Usuario"
+      new_user: "Nuevo Administrador"
       edit_account: "Editar Cuenta"
-      delete_user: "Eliminar Usuario"
+      delete_user: "Eliminar Administrador"
   comments:
       success: "Comentario Guardado!"
       fail: "El comentario no se pudo guardar!"
+  home:
+    title: "Clientes"
+  customers:
+    name: "Nombre"
+    email: "Correo"
+    password: "Contraseña"
+    confirm_password: "Confirmar Contraseña"
+    description: "Descripcion"
+    image: "Imagen"
+    index:
+      title: "Listado de Clientes"
+      options: "Editar/Borrar"
+    new:
+      title: "Nuevo Cliente"
+    edit:
+      title: "Editar Cliente"
+  buttons:
+    new_customer: "Crear Cliente"
+    update_customer: "Actualizar Cliente"
+    add_new_customer: "Agregar Nuevo Cliente"
+  messages:
+    requireds: "Campos Requeridos"
+    required: "Campo Requerido"
+    alt_image: "Vista Previa"
+    data_confirm: "Está seguro?"
+    logged_in: "Conectado como"
+

@@ -158,7 +158,6 @@ class SocialNetworksController < ApplicationController
 
   def redirect
     option = params[:social_network]
-    p option
     case option
       when 'facebook'
         redirect_url = "#{request.protocol}#{request.host_with_port}/#{params[:locale]}/clients/facebook/"

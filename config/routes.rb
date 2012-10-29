@@ -92,7 +92,7 @@ DemoComentarios::Application.routes.draw do
     get "facebook_data/callback/:idc/:id_social/:start_date/:end_date" => "facebook_data#callback", :as => "facebook_callback_dates"
     get "facebook_data/callback/:idc/:id_social" => "facebook#callback", :as => "facebook_callback"
     post "facebook_data/save_comment" => "facebook_data#save_comment", :as => "facebook_save_comment"
-    get "facebook_data/new/:idc/:opcion/:id_social" => "facebook_data#new", :as => "facebook_new"
+    get "facebook_data/new/:idc/:opcion/:id_social(/:start_date/:end_date/:access_token)" => "facebook_data#new", :as => "facebook_new"
     get "facebook_data/:id/edit/:idc/:id_social" => "facebook_data#edit", :as => "facebook_edit"
     get "facebook_data/:idc/:opcion/:id_social" => "facebook_data#index", :as => "facebook_index"
 
@@ -131,5 +131,5 @@ DemoComentarios::Application.routes.draw do
 
   end
 
-  root :to => "home#index", :locale => "es"
+  root :to => "home#index"
 end

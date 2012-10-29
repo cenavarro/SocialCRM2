@@ -15,18 +15,10 @@ class YoutubeDataController < ApplicationController
     end
 
     create_chart_data
-
-    respond_to do |format|
-      format.html 
-    end
   end
 
   def new
     @youtube_datum = YoutubeDatum.new
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit

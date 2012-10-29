@@ -4,6 +4,7 @@ describe BenchmarkDataController do
 
   before(:each) do
     @controller.stub(:authenticate_user!)
+    @controller.stub(:has_admin_credentials?)
   end
 
   def valid_attributes_datum
@@ -17,6 +18,7 @@ describe BenchmarkDataController do
   describe "#index" do
     it "assigns all benchmark_competitors as @benchmark_competitors" do
       benchmark_competitor = BenchmarkCompetitor.create! valid_attributes_competitor
+      competitor_data = BenchmarkDatum.create! valid_attributes_datum
       get :index, :locale => :es, :opcion => 1, :idc => 1, :id_social => 1
       assigns(:benchmark_competitors).should eq([benchmark_competitor])
     end

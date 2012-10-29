@@ -3,6 +3,7 @@ require 'spec_helper'
 describe ClientsController do
   before(:each) do
     @controller.stub(:authenticate_user!)
+    @controller.stub(:has_admin_credentials?)
   end
 
   def valid_attributes
@@ -99,14 +100,14 @@ describe ClientsController do
     context "with invalid params" do
       it "assigns the client as @client" do
         client = create_client_with_user
-        Client.any_instance.stub(:save).and_return(false)
+        Client.any_instance.stub(:save!).and_return(false)
         put :update, :locale => :es, :id => client.id.to_s, :name => "Test Name", :password => "", :description => ""
         assigns(:client).should eq(client)
       end
 
       it "re-renders the 'edit' template" do
         client = create_client_with_user
-        Client.any_instance.stub(:save).and_return(false)
+        Client.any_instance.stub(:save!).and_return(false)
         put :update, :locale => :es, :id => client.id.to_s, :name => "Test Name", :password => "", :description => ""
         response.should render_template("edit")
       end

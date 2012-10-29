@@ -47,7 +47,7 @@ javascript:
       br
       br
       = f.label "# total fans"
-      = f.text_field :total_fans, :value => @page_fan_adds-@page_fan_removes, :class => "validate[required, custom[number]]"
+      = f.text_field :total_fans, :value => @facebook['page_fan_adds_unique']-@facebook['page_fan_removes_unique'], :class => "validate[required, custom[number]]"
       br
       br
       = f.label "Objetivo fans"
@@ -65,19 +65,19 @@ javascript:
       br
       br
       = f.label "# impresiones"
-      = f.text_field :prints, :value => @page_impressions_org, :class => "validate[required, custom[number]]"
+      = f.text_field :prints, :value => @facebook['page_impressions_organic'], :class => "validate[required, custom[number]]"
       br
       br
       = f.label "# interacciones"
-      = f.text_field :total_interactions, :value => @page_story_teller + @page_impressions_organic_u + @page_consumptions_u, :class => "validate[required, custom[number]]"
+      = f.text_field :total_interactions, :value => @facebook['page_storytellers'] + @facebook['page_impressions_organic_unique'] + @facebook['page_consumptions_unique'], :class => "validate[required, custom[number]]"
       br
       br
       = f.label "Alcance total"
-      = f.text_field :total_reach, :value => @page_impressions_u, :class => "validate[required, custom[number]]"
+      = f.text_field :total_reach, :value => @facebook['page_impressions_unique'], :class => "validate[required, custom[number]]"
       br
       br
       = f.label "Alcance potencial"
-      = f.text_field :potential_reach, :value => @page_friends_of_fan, :class => "validate[required, custom[number]]"
+      = f.text_field :potential_reach, :value => @facebook['page_friends_of_fans'], :class => "validate[required, custom[number]]"
       br
       br
       = f.label "# impresiones anuncios"

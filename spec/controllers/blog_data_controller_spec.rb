@@ -4,6 +4,7 @@ describe BlogDataController do
 
   before(:each) do
     @controller.stub(:authenticate_user!)
+    @controller.stub(:has_admin_credentials?)
   end
 
   def valid_attributes

@@ -13,19 +13,11 @@ class TwitterDataController < ApplicationController
       fechaFinal = params[:end_date].to_date
       @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? and social_network_id = ?', fechaInicio,fechaFinal,params[:id_social]]).order("start_date ASC")
     end
-
     create_chart_data
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def new
     @twitter_datum = TwitterDatum.new
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit

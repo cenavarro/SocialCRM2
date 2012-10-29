@@ -11,4 +11,4 @@
     a href=language_path('es')
       |ES    
   .log_in_as
-    = "Log in as: " + current_user.email if !current_user.nil?
+    = "#{t('messages.logged_in')}: " + current_user.email if !current_user.nil?

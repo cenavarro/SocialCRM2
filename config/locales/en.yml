@@ -2,9 +2,9 @@ en:
   menu:
     home: "Home"
     client:
-      title: "Clients"
+      title: "Customers"
       add_social_network: "Add Social Network"
-      new: "New Client"
+      new: "New Customer"
       edit: "Edit/Delete"
       report: "Create Report"
     social_network:
@@ -16,9 +16,35 @@ en:
     logout: "Log out"
     config:
       title: "Configuration"
-      new_user: "New User"
+      new_user: "New Admin"
       edit_account: "Edit Account"
-      delete_user: "Delete User" 
+      delete_user: "Delete Admin"
   comments:
       success: "Comment saved!"
-      fail: "Comment could no be saved!"
+      fail: "Comment could not be saved!"
+  home:
+    title: "Customer"
+  customers:
+    name: "Name"
+    description: "Description"
+    image: "Image"
+    email: "Email"
+    password: "Password"
+    confirm_password: "Password Confirmation"
+    index:
+      title: "Client List"
+      options: "Edit/Delete"
+    new:
+      title: "New Customer"
+    edit:
+      title: "Edit Customer"
+  buttons:
+    new_customer: "New Customer"
+    update_customer: "Update Customer"
+    add_new_customer: "Add New Customer"
+  messages:
+    requireds: "Required Fields"
+    required: "Required Field"
+    alt_image: "Image Preview"
+    data_confirm: "Are you sure?"
+    logged_in: "Logged in as"

@@ -5,20 +5,21 @@
           = notice
 br
 center
-  h1 Listado de Clientes
+  h1
+    = t 'customers.index.title'
 br
 br
 
 table.table.table-bordered
   tr
     th 
-      |Nombre
+      = t 'customers.name'
     th 
-      |Descripcion
+      = t 'customers.description'
     th 
-      |Imagen
+      = t 'customers.image'
     th
-      |Editar/Borrar
+      = t 'customers.index.options'
 
   - @clients.each do |client|
     tr
@@ -34,9 +35,10 @@ table.table.table-bordered
         a.btn.btn-info href=edit_client_path(client) id=edit_id style="margin-right:10px;"
           i.icon-pencil.icon-white
         - delete_id = "delete_"+client.id.to_s
-        a.btn.btn-danger href=client_path(client.id) data-confirm="Esta seguro que desea eliminar este cliente?" data-method="delete" rel="nofollow" id=delete_id
+        a.btn.btn-danger href=client_path(client.id) data-confirm="#{t('messages.data_confirm')}" data-method="delete" rel="nofollow" id=delete_id
           i.icon-trash.icon-white
 br
 a.btn.btn-primary href=new_client_path
   i.icon-plus-sign.icon-white
-  |  Agregar Nuevo Cliente
+  = t 'buttons.add_new_customer'
+
