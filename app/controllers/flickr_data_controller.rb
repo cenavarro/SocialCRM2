@@ -9,25 +9,16 @@ class FlickrDataController < ApplicationController
     if !getDataDateRange?(params)
       @flickr_datum = FlickrDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
-      fechaInicio = params[:start_date].to_date
-      fechaFinal = params[:end_date].to_date
-      @flickr_datum = FlickrDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
+      @flickr_datum = FlickrDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], 
+         params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
 
     create_chart_data
 
-    respond_to do |format|
-      format.html
-    end
   end
 
   def new
     @flickr_datum = FlickrDatum.new
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @flickr_datum }
-    end
   end
 
   def edit

@@ -115,9 +115,7 @@ describe FacebookDataController do
         FacebookDatum.create! valid_attributes2
         facebook_datum = FacebookDatum.create! valid_attributes
         put :update, :locale => :es, :id => facebook_datum.id, :facebook_datum => {'end_date' => "01-01-2011", 'start_date' => "01-02-2011", 'actions' => 100}
-        p facebook_datum
         facebook_datum = FacebookDatum.find(facebook_datum.id)
-        p facebook_datum
         facebook_datum.start_date.should eq("01-02-2011".to_date)
         facebook_datum.end_date.should eq("01-01-2011".to_date)
         facebook_datum.actions.should eq("100")

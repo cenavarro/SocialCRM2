@@ -4,21 +4,28 @@ describe FlickrDataController do
 
   before(:each) do
     @controller.stub(:authenticate_user!)
+    @controller.stub(:has_admin_credentials?)
   end
 
   def valid_attributes
-    {}
+    { 
+      :client_id => 1, :social_network_id => 1, :start_date => "01-01-2012", :end_date => "31-01-2012",
+      :new_contacts => 100, :total_contacts => 200, :visits => 500, :comments => 150, :favorites => 30,
+      :investment_agency => 150, :investment_actions => 120, :investment_ads => 100
+    }
   end
 
-  def valid_session
-    {}
-  end
-
-  describe "GET index" do
+  describe "#index" do
     it "assigns all flickr_data as @flickr_data" do
       flickr_datum = FlickrDatum.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:flickr_data).should eq([flickr_datum])
+      get :index, :locale => :es, :id_social => 1, :idc => 1, :opcion => 1
+      assigns(:flickr_datum).should eq([flickr_datum])
+    end
+
+    it "assigns flickr_data as @flickr_data in a date range" do
+      flickr_datum = FlickrDatum.create! valid_attributes
+      get :index, :locale => :es, :id_social => 1, :idc => 1, :opcion => 1, :start_date => "01-01-2012", :end_date => "31-01-2012"
+      assigns(:flickr_datum).should eq([flickr_datum])
     end
   end
 
