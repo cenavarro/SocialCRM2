@@ -62,6 +62,9 @@ describe BenchmarkDataController do
       benchmark_competitor = BenchmarkCompetitor.create! valid_attributes_competitor
       benchmark_datum = BenchmarkDatum.create! valid_attributes_datum
       put :update, :id => 1, :locale => :es, :social_network_id => 1, :client_id => 1, "1".to_sym => { start_date: "01-03-2012", end_date: "01-04-2012", blogs: 3, forums: 4, videos: 5, twitter: 6, facebook: 7, others: 8, benchmark_competitor_id: 1}, :start_date => "01-01-2010", :end_date => "01-02-2010"
+      benchmark_datum = BenchmarkDatum.find(benchmark_datum.id)
+      benchmark_datum.start_date.should eq("01-01-2010".to_date)
+      benchmark_datum.end_date.should eq("01-02-2010".to_date)
     end
 
     it "redirects to the Benchmark Index Page" do

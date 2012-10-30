@@ -13,23 +13,44 @@ describe UsersController do
   end
 
   def valid_attributes
-    {:name => "User Test", :email => "userTest@test.com", :password => "123456", :password_confirmation => "123456", :rol_id => 1, :user_type => 1}
+    {
+      :name => "User Test", :email => "userTest@test.com", 
+      :password => "123456", :password_confirmation => "123456", 
+      :rol_id => 1, :user_type => 1
+    }
   end
 
   def invalid_attributes
-    {:name => "User Test", :email => "", :password => "123456", :password_confirmation => "123456", :rol_id => 1, :user_type => 1}
+    {
+      :name => "User Test", :email => "", 
+      :password => "123456", :password_confirmation => "123456", 
+      :rol_id => 1, :user_type => 1
+    }
   end
 
   def valid_attributesClient
-    {:name => "Client Test", :email => "clientTest@test.com", :password => "123456", :password_confirmation => "123456", :rol_id => 2, :user_type => 2, :description => "Description Client", :image => "image"}
+    {
+      :name => "Client Test", :email => "clientTest@test.com", 
+      :password => "123456", :password_confirmation => "123456", 
+      :rol_id => 2, :user_type => 2, :description => "Description Client", 
+      :image => "image"
+    }
   end
 
   def invalid_attributesClient
-    {:name => "", :email => "userTest@test.com", :password => "123456", :password_confirmation => "123456", :rol_id => 2, :user_type => 2, :description => "Description Client", :image => "image"}
+    {
+      :name => "", :email => "userTest@test.com", :password => "123456", 
+      :password_confirmation => "123456", :rol_id => 2, :user_type => 2, 
+      :description => "Description Client", :image => "image"
+    }
   end
 
   def invalid_attributesClient2
-    {:name => "Client Test", :email => "userTest@test.com", :password => "", :password_confirmation => "123456", :rol_id => 2, :user_type => 2, :description => "Description Client", :image => "image"}
+    {
+      :name => "Client Test", :email => "userTest@test.com", :password => "", 
+      :password_confirmation => "123456", :rol_id => 2, :user_type => 2, 
+      :description => "Description Client", :image => "image"
+    }
   end
 
   describe "# delete" do

@@ -7,7 +7,14 @@ describe YoutubeDataController do
   end
 
   def valid_attributes
-    {:client_id => 1, :start_date => "01-01-2012".to_date, :end_date => "15-01-2012".to_date, :social_network_id => 1, :new_subscriber => 0, :total_subscriber => 1, :total_video_views => 1, :inserted_player => 1, :mobile_devise => 1, :youtube_search => 1, :youtube_suggestion => 1, :youtube_page => 1, :external_web_site => 1, :google_search => 1, :youtube_others => 1, :youtube_subscriptions => 1, :youtube_ads => 1, :investment_agency => 1, :investment_actions => 1, :investment_anno => 1}
+    {
+      :client_id => 1, :start_date => "01-01-2012".to_date, :end_date => "15-01-2012".to_date, 
+      :social_network_id => 1, :new_subscriber => 0, :total_subscriber => 1, :total_video_views => 1, 
+      :inserted_player => 1, :mobile_devise => 1, :youtube_search => 1, :youtube_suggestion => 1, 
+      :youtube_page => 1, :external_web_site => 1, :google_search => 1, :youtube_others => 1, 
+      :youtube_subscriptions => 1, :youtube_ads => 1, :investment_agency => 1, 
+      :investment_actions => 1, :investment_anno => 1
+    }
   end
 
   describe "#index" do
@@ -77,10 +84,6 @@ describe YoutubeDataController do
     describe "with valid params" do
       it "updates the requested youtube_datum" do
         youtube_datum = YoutubeDatum.create! valid_attributes
-        # Assuming there are no other youtube_data in the database, this
-        # specifies that the YoutubeDatum created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         YoutubeDatum.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, {:id => youtube_datum.to_param, :youtube_datum => {'these' => 'params'}}, valid_session
       end

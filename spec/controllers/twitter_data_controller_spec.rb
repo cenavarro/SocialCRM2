@@ -8,21 +8,9 @@ describe TwitterDataController do
 
   def valid_attributes
     { 
-      :client_id => 1,
-      :global_goal => "Objetivo Followers Text",
-      :new_followers => 10,
-      :total_followers => 10,
-      :goal_followers => 10,
-      :amount_tweets => 10,
-      :total_tweets => 10,
-      :total_mentions => 10,
-      :ret_tweets => 10,
-      :total_clicks => 10,
-      :total_interactions => 10,
-      :agency_investment => 10.5,
-      :cost_follower => 0.1,
-      :start_date => "2012/08/01".to_date,
-      :end_date => "2012/08/15".to_date
+      :client_id => 1, :global_goal => "Objetivo Followers Text", :new_followers => 10, :total_followers => 10, :goal_followers => 10,
+      :amount_tweets => 10, :total_tweets => 10, :total_mentions => 10, :ret_tweets => 10, :total_clicks => 10,
+      :total_interactions => 10, :agency_investment => 10.5, :cost_follower => 0.1, :start_date => "2012/08/01".to_date, :end_date => "2012/08/15".to_date
     }
   end
 
