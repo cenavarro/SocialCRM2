@@ -11,16 +11,11 @@ class FacebookDataController < ApplicationController
     if !getDataDateRange?(params)
       @facebook_data = FacebookDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
-      fechaInicio = params[:start_date].to_date
-      fechaFinal = params[:end_date].to_date
-      @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? and social_network_id = ?', fechaInicio,fechaFinal,params[:id_social]]).order("start_date ASC")
+      @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? and social_network_id = ?', params[:start_date].to_date, params[:end_date].to_date, params[:id_social]]).order("start_date ASC")
     end
 
-    create_char_data
+    @chart = create_chart_data(@facebook_data)
 
-    respond_to do |format|
-      format.html
-    end
   end
 
   def callback
@@ -39,9 +34,6 @@ class FacebookDataController < ApplicationController
       @facebook = calc_facebook_values(facebook_id,facebook_data_keys)
     end
     @facebook_datum = FacebookDatum.new
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit
@@ -101,25 +93,19 @@ class FacebookDataController < ApplicationController
     (params[:opcion].to_i == 1) ? ( return true) : (return false)
   end
 
-  def create_char_data
-    @dates = @facebook_data.collect { |fd| "'" + fd.start_date.mday().to_s + " " + fd.start_date.strftime('%b') + "-" + fd.end_date.mday().to_s + " " + fd.end_date.strftime('%b') + "'" }.join(', ')
-    @newFans = @facebook_data.collect(&:new_fans).join(', ')
-    @totalFans = @facebook_data.collect(&:total_fans).join(', ')
-    @goalFans = @facebook_data.collect(&:goal_fans).join(', ')
-    @interactions = @facebook_data.collect(&:total_interactions).join(', ')
-    @clics_anno = @facebook_data.collect(&:total_clicks_anno).join(', ')
-    @total_interactions = @facebook_data.collect { |fd| FacebookDatum.get_total_interactions(fd)}.join(', ')
-    @newFans = @facebook_data.collect(&:new_fans).join(', ')
-    @investment = @facebook_data.collect { |fd| FacebookDatum.get_total_investment(fd) }.join(', ')
-    @ctr_anno = @facebook_data.collect(&:ctr_anno).join(', ')
-    @cpc_anno = @facebook_data.collect(&:cpc_anno).join(', ')
-    @coste_interaction = @facebook_data.collect { |fd| FacebookDatum.get_coste_interaction(fd) }.join(', ')
-    @cpm_anno = @facebook_data.collect(&:cpm_anno).join(', ')
-    @cpm_general = @facebook_data.collect {|fd| FacebookDatum.get_cpm_general(fd)}.join(', ')
-    @coste_fan = @facebook_data.collect {|fd| FacebookDatum.get_fan_cost(fd)}.join(', ')
-    @prints = @facebook_data.collect{ |fd| FacebookDatum.get_total_prints(fd) }.join(', ')
-    @total_reach = @facebook_data.collect(&:total_reach).join(', ')
-    @potencial_reach = @facebook_data.collect(&:potential_reach).join(', ')
+  def create_chart_data(data)
+    chart_values = {}
+    chart_data_keys.each do |key|
+      chart_values[key] = data.collect(&:"#{key}").join(', ')
+    end
+    chart_values['dates'] =  data.collect { |fd| "'#{fd.start_date.strftime('%d %b')} - #{fd.end_date.strftime('%d %b')}'" }.join(', ')
+    chart_values['cpm_general'] = data.collect {|fd| FacebookDatum.get_cpm_general(fd)}.join(', ')
+    chart_values['coste_fan'] = data.collect {|fd| FacebookDatum.get_fan_cost(fd)}.join(', ')
+    chart_values['prints'] = data.collect{ |fd| FacebookDatum.get_total_prints(fd) }.join(', ')
+    chart_values['coste_interactions'] = data.collect { |fd| FacebookDatum.get_coste_interaction(fd) }.join(', ')
+    chart_values['brand_total_interactions'] = data.collect { |fd| FacebookDatum.get_total_interactions(fd)}.join(', ')
+    chart_values['investment'] = data.collect { |fd| FacebookDatum.get_total_investment(fd) }.join(', ')
+    p chart_values
   end
 
   def calc_facebook_values(facebook_id,facebook_data_keys)
@@ -145,6 +131,20 @@ class FacebookDataController < ApplicationController
       'page_impressions_unique', 
       'page_friends_of_fans',
       'page_impressions']
+  end
+
+  def chart_data_keys
+    ['new_fans',
+      'total_fans',
+      'goal_fans',
+      'total_interactions',
+      'total_clicks_anno',
+      'ctr_anno',
+      'cpc_anno',
+      'cpm_anno',
+      'total_reach',
+      'potential_reach',
+    ]
   end
 
   def http_get(object_id,command,start_date,end_date,access_token)
