@@ -48,12 +48,12 @@ module DemoComentarios
     config.assets.version = '1.0'
 
     config.assets.initialize_on_precompile = false
-
+=begin
     if !FileTest.exist?(Rails.root.join('log', "#{Rails.env}.log"))
       File.open(Rails.root.join('log', "#{Rails.env}.log"), "w")
     end
 
     config.logger = Logger.new(Rails.root.join('log', "#{Rails.env}.log"), "weekly", 10.megabytes)
-
+=end
   end
 end
