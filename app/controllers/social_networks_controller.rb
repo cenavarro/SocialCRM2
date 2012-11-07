@@ -148,6 +148,18 @@ class SocialNetworksController < ApplicationController
     end
   end
 
+  def change_image
+    image = ImagesSocialNetwork.find(params[:id].to_i)
+    message = "La imagen no se ha podido actualizar!"
+    image.attachment = params[:attachment]
+    if image.save!
+      message = "La imagen ha sido actualizada exitosamente!"
+    end
+    respond_to do | format |
+      format.html {redirect_to request.referer, notice: message}
+    end
+  end
+
   def destroy_image
     image = ImagesSocialNetwork.find(params[:id])
     image.destroy ? (msg = "La imagen se elimino correctamente!") : (msg = "La imagen no se pudo eliminar!")

@@ -125,6 +125,7 @@ DemoComentarios::Application.routes.draw do
     post "social_networks/create_monitoring" => "social_networks#create_monitoring", :as => "social_networks_create_monitoring"
     post "social_networks/create_benchmark" => "social_networks#create_benchmark", :as => "social_networks_create_benchmark"
     delete "social_networks/destroy_image/:id" => "social_networks#destroy_image", :as => "social_networks_destroy_image"
+    post "social_networks/change_image/:id" => "social_networks#change_image", :as => "social_networks_change_image"
 
     get "validate_user/" => "home#validate_user", :as => "validate_user"
     get "/" => "home#index", :as => "root2"

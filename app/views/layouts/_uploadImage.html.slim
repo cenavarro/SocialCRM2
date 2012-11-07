@@ -37,6 +37,15 @@
     img src="#{imagen.attachment.url}" style="width:800px; height:auto;"
     br
     br
+    = form_tag({:controller => "social_networks", :action => "change_image", :id => imagen.id}, :multipart => true, :method => "post") do
+      .change_image style="position:absolute;right:0px;"
+        br
+        = file_field_tag :attachment, {:accept => "image/*", :required => "required"}
+        br
+        button.btn.btn-primary type="submit" name="commit" style="height:25px;"
+          | Cambiar Imagen
+    br
+    br
     h4 Comentario
     br
     form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id}, '#{params[:locale]}');"
