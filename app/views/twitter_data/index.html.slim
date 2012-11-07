@@ -333,7 +333,7 @@ section.sectionInformation
               - @twitter_data.each do |twitter_datum|
                 td
                   = TwitterDatum.get_cost_follower(twitter_datum).round(2)
-            tr
+            tr id="buttons"
               td.nilValue
                 |Opciones
               -@twitter_data.each do |twitter_datum|

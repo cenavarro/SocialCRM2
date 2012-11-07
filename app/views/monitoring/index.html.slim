@@ -140,7 +140,7 @@ section.sectionInformation
                 td 
                   = (value/@total_days[index]).round(2)
                   - index = index + 1
-            tr
+            tr id="buttons"
               td.nilValue
                 |Opciones
               - @datum.each do |data|

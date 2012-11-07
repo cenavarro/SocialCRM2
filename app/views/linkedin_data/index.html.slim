@@ -195,7 +195,7 @@ section.sectionInformation
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = LinkedinDatum.get_total_investment(linkedin_datum)
-            tr
+            tr id="buttons"
               td.nilValue
                 |Opciones
               -@linkedin_data.each do |linkedin_datum|

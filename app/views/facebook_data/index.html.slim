@@ -326,7 +326,7 @@ section.sectionInformation
               - @facebook_data.each do | datum |
                 td
                   = FacebookDatum.get_fan_cost(datum).round(3)
-            tr
+            tr id="buttons"
               td.nilValue
                 |Opciones
               -@facebook_data.each do |facebook_datum|

@@ -206,8 +206,9 @@ Devise.setup do |config|
   SOCIAL_NETWORKS_CONFIG  = YAML.load_file("#{Rails.root}/config/social_networks.yml")
   require "omniauth-facebook"
   config.omniauth :facebook, SOCIAL_NETWORKS_CONFIG['facebook']['client_id'], SOCIAL_NETWORKS_CONFIG['facebook']['client_secret'], :strategy_class => OmniAuth::Strategies::Facebook
-  #config.omniauth :facebook, SOCIAL_NETWORKS_CONFIG['facebook']['client_id'], SOCIAL_NETWORKS_CONFIG['facebook']['client_secret'], :strategy_class => OmniAuth::Strategies::Facebook
 
+  require "omniauth-twitter"
+  config.omniauth :twitter, "dHnfZxanolf0ay64TtNg", "33dbk8mRnjp6UvvLDupOaqafc8kNu0gbCXTBBS1eXpo"
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

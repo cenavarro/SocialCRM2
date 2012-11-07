@@ -8,6 +8,11 @@
 - @socialNetwork = SocialNetwork.find(params[:id_social])
 - @comment = CampaignComment.find_by_social_network_id(params[:id_social])
 
+script
+  | createChart('container_chart', 'Grafico Campañas', #{ raw @campaign_data['dates']});
+  - @campaign_data['data'].each do |data|
+    | addSerie('#{data.keys.first}', #{data.values.first});
+
 .margin
   center
     h2
@@ -54,6 +59,9 @@ section.sectionInformation
         a href="#tabtable" data-toggle="tab"
           | Tabla
       li
+        a href="#tabcharts" data-toggle="tab"
+          |Graficos
+      li
         a href="#tabothers" data-toggle="tab"
           |Otros datos
   .tab-content
@@ -64,36 +72,28 @@ section.sectionInformation
             tr.headerTable
               td.hideCell
                 = @socialNetwork.name
-                - if params.has_key?('start_date')
-                  - @row_data = RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', @rows_campaign.first.id, params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
-                - else
-                  - @row_data = RowDatum.where('rows_campaign_id = ?', @rows_campaign.first.id).order("start_date ASC")
-                - @row_data.each do |datum|
+                - @campaign_data['dates'].each do |date|
                   td
-                    = datum.start_date.strftime("%d %b ") + datum.end_date.strftime("- %d %b")
+                    = date
           tbody
             tr.titlesRows
               td colspan=100
-            - @rows_campaign.each do |row|
+            - @campaign_data['data'].each do |data|
               tr
                 td
-                  = row.name
-                - if params.has_key?('start_date')
-                  - @row_data = RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', row.id, params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
-                - else
-                  - @row_data = RowDatum.where('rows_campaign_id = ?', row.id).order("start_date ASC")
-                - @row_data.each do |datum|
+                  = data.keys.first
+                - data.values.first.each do |value|
                   td
-                    = datum.value
-            tr
+                    = value
+            tr id="buttons"
               td.nilValue
                 |Opciones
-              - @row_data.each do |datum|
+              - @campaign_data['ids'].each do |id|
                 td.celdaOpciones
-                  a.btn.btn-info href=campaign_edit_path(datum.id, params[:idc],params[:id_social]) id=%{edit_#{datum.id}}
+                  a.btn.btn-info href=campaign_edit_path(id, params[:idc],params[:id_social]) id=%{edit_#{id}}
                     i.icon-pencil.icon-white
                   |  
-                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{datum.id}} href=campaign_datum_path(params[:idc], params[:id_social],datum.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                  a.btn.btn-danger data-method='delete' rel='nofollow' id=%{delete_#{id}} href=campaign_datum_path(params[:idc], params[:id_social], id) data-confirm="Esta seguro que desea eliminar estos datos?"
                     i.icon-trash.icon-white
       .comment
         .title
@@ -107,5 +107,22 @@ section.sectionInformation
             | Guardar
           .result
 
+    .tab-pane.fade id="tabcharts"
+      section.sectionGraphics id="seccionGraficos"
+        center
+          h2 Graficos de la Tabla
+        .estilo_graficos
+          #container_chart
+        .comment
+          .title
+            h4
+              | Comentario Grafico
+          form  id="chart" onsubmit="return saveChartComment('#chart',#{@socialNetwork.id},'chart' ,'#{params[:locale]}','#{@campaign_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comment.chart
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
     .tab-pane.fade id="tabothers"
       == render 'layouts/uploadImage'

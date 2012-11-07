@@ -149,7 +149,7 @@ section.sectionInformation
               - @flickr_datum.each do |flickr_datum|
                 td
                   = FlickrDatum.get_total_investment(flickr_datum)
-            tr
+            tr id="buttons"
               td.nilValue
                 |Opciones
               -@flickr_datum.each do |flickr_datum|

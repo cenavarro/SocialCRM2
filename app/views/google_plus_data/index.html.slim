@@ -160,7 +160,7 @@ section.sectionInformation
               - @google_plus_datum.each do |google_plus_datum|
                 td
                   = GooglePlusDatum.get_total_investment(google_plus_datum)
-            tr
+            tr id="buttons"
               td.nilValue
                 |Opciones
               -@google_plus_datum.each do |google_plus_datum|

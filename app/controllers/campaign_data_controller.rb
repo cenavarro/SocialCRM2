@@ -7,10 +7,7 @@ class CampaignDataController < ApplicationController
     if !has_comments_table?(CampaignComment, params[:id_social])
       CampaignComment.create!(:social_network_id => params[:id_social])
     end
-    @rows_campaign = RowsCampaign.where('social_network_id = ?', params[:id_social].to_i)
-    respond_to do |format|
-      format.html
-    end
+    create_campaign_data
   end
 
   def new
@@ -72,6 +69,25 @@ class CampaignDataController < ApplicationController
       message = (t 'comments.success')
     end
     render :json => message.to_json
+  end
+
+  private 
+
+  def create_campaign_data
+    @campaign_data = { "dates" => [], "data" => [] }
+    row_data = []
+    rows_campaign = RowsCampaign.where('social_network_id = ?', params[:id_social].to_i)
+    rows_campaign.each do |row|
+      if params.has_key?('start_date')
+        row_data = RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', row.id, params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
+      else
+        row_data = RowDatum.where('rows_campaign_id = ?', row.id).order("start_date ASC")
+      end
+      values = row_data.map(&:value)
+      @campaign_data['data'] << {"#{row.name}" => values}
+    end
+    @campaign_data['ids'] = row_data.map(&:id)
+    row_data.collect{ |datum| @campaign_data['dates'] << datum.start_date.strftime("%d %b ") + datum.end_date.strftime("- %d %b")}.join(', ')
   end
 
 end

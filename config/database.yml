@@ -40,7 +40,7 @@ production:
   adapter: mysql2
   encoding: utf8
   database: socialcrm 
-  pool: 5
+  pool: 50
   username: root
   password: MysqlPernix
   socket: /var/run/mysqld/mysqld.sock

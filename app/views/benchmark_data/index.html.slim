@@ -125,16 +125,16 @@ section.sectionInformation
                       = data.others
                     td.columnsTableBenchmark
                       = data.blogs + data.forums + data.videos + data.twitter + data.facebook + data.others
-            tr
+            tr id="buttons"
               td.nilValue
                 |Opciones
-              - @competitor_datum.each do |data|
-                td colspan="7" style="text-align: center;"
-                  a.btn.btn-info href=benchmark_edit_path(data.id)
-                    i.icon-pencil.icon-white
-                  |  
-                  a.btn.btn-danger data-method='delete' rel='nofollow' href=benchmark_datum_path(data.id) data-confirm="Esta seguro?"
-                    i.icon-trash.icon-white
+                - @competitor_datum.each do |data|
+                  td colspan="7" style="text-align: center;"
+                    a.btn.btn-info href=benchmark_edit_path(data.id)
+                      i.icon-pencil.icon-white
+                    |  
+                    a.btn.btn-danger data-method='delete' rel='nofollow' href=benchmark_datum_path(data.id) data-confirm="Esta seguro?"
+                      i.icon-trash.icon-white
       .comment
         .title
           h4

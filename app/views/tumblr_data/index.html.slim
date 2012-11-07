@@ -140,7 +140,7 @@ section.sectionInformation
               - @tumblr_datum.each do |tumblr_datum|
                 td
                   = TumblrDatum.get_total_investment(tumblr_datum)
-            tr
+            tr id="buttons"
               td.nilValue
                 |Opciones
               -@tumblr_datum.each do |tumblr_datum|

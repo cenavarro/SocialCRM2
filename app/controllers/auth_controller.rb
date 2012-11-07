@@ -29,4 +29,30 @@ class AuthController < Devise::OmniauthCallbacksController
     end
 
   end
+
+  def twitter
+    auth = request.env["omniauth.auth"].info
+    p params['oauth_token']
+    uri = 'http://api.twitter.com/oauth/authorize?oauth_token=' + params['oauth_token'] + '&force_login=true'
+    p uri
+    result = URI.parse(URI.escape(uri))
+    json = open(result).read
+    p json
+    p result
+=begin
+    consumer = OAuth::Consumer.new("dHnfZxanolf0ay64TtNg", "33dbk8mRnjp6UvvLDupOaqafc8kNu0gbCXTBBS1eXpo",
+      { :site => "http://api.twitter.com",
+        :scheme => :header
+    })
+    token_hash = {
+      :oauth_token => "93132023-FttxuEbFeOdosuEseXElDpfOs52IHd9mqffUKwTlC",
+      :oauth_token_secret => "ezheU9LnMIdi6alAS9c2cHsJCD6F6XhlvYSmXABtrBs"
+    }
+    access_token = OAuth::AccessToken.from_hash(consumer, token_hash)
+    res = access_token.request(:get, "http://api.twitter.com/1/statuses/home_timeline.json")
+    p "RESSSSSSSSSSSSSSS: #{res.body}"
+    p access_token
+=end
+  end
+
 end

@@ -171,7 +171,7 @@ section.sectionInformation
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = PinterestDatum.get_total_investment(pinterest_datum)
-            tr
+            tr id="buttons"
               td.nilValue
                 |Opciones
               -@pinterest_datum.each do |pinterest_datum|
