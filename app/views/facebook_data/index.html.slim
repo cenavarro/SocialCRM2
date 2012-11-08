@@ -53,20 +53,24 @@ script
   | addSerie('Nuevos Fans', [#{@chart['new_fans']}]);
   | addSerie('Fans Totales', [#{@chart['total_fans']}]);
   | addSerie('Objetivo Fans', [#{@chart['goal_fans']}]);
+  | refreshChart();
 
   | createChart('container_reach', 'Alcance', [#{@chart['dates']}]);
   | addSerie('# impresiones', [#{@chart['prints']}]);
   | addSerie('Alcance Total', [#{@chart['total_reach']}]);
   | addSerie('Alcance Potencial', [#{@chart['potential_reach']}]);
+  | refreshChart();
 
   | createChart('container_interactivity', 'Interactividad', [#{@chart['dates']}]);
   | addSerie('# Interacciones', [#{@chart['total_interactions']}]);
   | addSerie('# clics Anuncios', [#{@chart['total_clicks_anno']}]);
   | addSerie('Interaccion Total Marca Plataforma', [#{@chart['brand_total_interactions']}]);
+  | refreshChart();
 
   | createChart('container_investment_growth', 'Inversiones', [#{@chart['dates']}]);
   | addSerie('# Nuevos Fans', [#{@chart['new_fans']}]);
   | addSerie('Inversion total', [#{@chart['investment']}]);
+  | refreshChart();
 
   | createChart('container_costs', 'Costes', [#{@chart['dates']}]);
   | addSerie('CTR Anuncios', [#{@chart['ctr_anno']}]);
@@ -75,6 +79,7 @@ script
   | addSerie('CPM Anuncios',[#{@chart['cpm_anno']}]);
   | addSerie('CPM General',[#{@chart['cpm_general']}]);
   | addSerie('Coste por Fan',[#{@chart['coste_fan']}]);
+  | refreshChart();
 
 section.sectionInformation
   .estilo_tabs

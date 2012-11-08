@@ -50,6 +50,7 @@ script
   | addSerie('# Nuevos Followers', [#{@new_followers}]);
   | addSerie('# Followers', [#{@total_followers}]);
   | addSerie('# Objetivo Followers', [#{@goal_followers}]);
+  | refreshChart();
 
   | createChart('container_interacciones', 'Interactividad', [#{@dates}]);
   | addSerie('# Menciones', [#{@mentions}]);
@@ -57,16 +58,19 @@ script
   | addSerie('Clicks Enlaces', [#{@clics}]);
   | addSerie('# Interacciones en twitter ads', [#{@interactions_ads}]);
   | addSerie('Interacciones Totales', [#{@total_interactions}]);
+  | refreshChart();
 
   | createChart('container_inversion', 'Inversion', [#{@dates}]);
   | addSerie('# nuevos followers', [#{@new_followers}]);
   | addSerie('Inversion Total', [#{@total_investment}]);
+  | refreshChart();
 
   | createChart('container_costes', 'Costest', [#{@dates}]);
   | addSerie('Costes', [#{@cost_follower}]);
   | addSerie('Cost per engagement twitter ads', [#{@cost_per_engagement}]);
   | addSerie('Coste por mil impresiones', [#{@cost_prints}]);
   | addSerie('Coste por interaccion', [#{@cost_interactions}]);
+  | refreshChart();
 section.sectionInformation
   .estilo_tabs
     ul.nav.nav-tabs id="myTab"

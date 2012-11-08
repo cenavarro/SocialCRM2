@@ -53,10 +53,12 @@ script
   | createChart('container_followers', 'Followers', [#{@dates}]);
   | addSerie('# nuevos followers',[#{@followers}]);
   | addSerie('# followers',[#{@total_followers}]);
+  | refreshChart();
 
   | createChart('container_deals', 'Ofertas', [#{@dates}]);
   | addSerie('# unlocks total de las ofertas',[#{@unlocks}]);
   | addSerie('# visitas total de las ofertas',[#{@visits}]);
+  | refreshChart();
 
 section.sectionInformation
   .estilo_tabs

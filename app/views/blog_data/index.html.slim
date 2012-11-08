@@ -52,9 +52,11 @@ script
   | createChart('container_visits', 'Visitas', [#{@dates}]);
   | addSerie('# visitas unicas',[#{@unique_visits}]);
   | addSerie('# paginas vistas',[#{@view_pages}]);
+  | refreshChart();
 
   | createChart('container_percentage', 'Porcentajes', [#{@dates}]);
   | addSerie('Porcentaje Rebote',[#{@rebound_percent}]);
+  | refreshChart();
 
 section.sectionInformation
   .estilo_tabs

@@ -12,6 +12,7 @@ script
   | createChart('container_chart', 'Grafico Campañas', #{ raw @campaign_data['dates']});
   - @campaign_data['data'].each do |data|
     | addSerie('#{data.keys.first}', #{data.values.first});
+  | refreshChart();
 
 .margin
   center

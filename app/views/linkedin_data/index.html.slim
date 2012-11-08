@@ -51,6 +51,7 @@ script
   | createChart('container_followers', 'Seguidores', [#{@dates}]);
   | addSerie('# Nuevos Followers', [#{@new_followers}]);
   | addSerie('# Followers', [#{@total_followers}]);
+  | refreshChart();
 
   | createChart('container_interactions', 'Interactividad', [#{@dates}]);
   | addSerie('Resumen',[#{@summary}]);
@@ -61,6 +62,7 @@ script
   | addSerie('% interes',[#{@interest}]);
   | addSerie('Recomendacion',[#{@recommendation}]);
   | addSerie('Compartidos',[#{@shared}]);
+  | refreshChart();
 
 section.sectionInformation
   .estilo_tabs

@@ -48,25 +48,41 @@ $(document).ready(function(){
   var chart = null;
   createChart = function(container, title, categorie){
     chart = new Highcharts.Chart({
-      chart: { renderTo: container, type: 'line', marginRight: 130, marginBottom: 45, width: 806 },
-        title: { text: title, x: -20 },
-        xAxis: {
-          categories: categorie },
-        yAxis: {
-          min: 0,
-          title: { text: '' },
-          plotLines: [ { value: 0, width: 1, color: '#808080' }] },
-        tooltip: {
-          formatter: function() {
-            return '<b>'+ this.series.name +'</b><br/>'+
-            this.x +': '+ this.y; } },
-        legend: { layout: 'vertical', align: 'right', verticalAlign: 'top', x: -10, y: 100, borderWidth: 0 },
-        series: [ ]
+      chart : { renderTo : container, type : 'line', marginRight : 130, marginBottom : 45, width : 806 },
+      title : { text : title, x: -20 },
+      xAxis : {
+        categories : categorie,
+      },
+      yAxis : {
+        title : { text : '' },
+        plotLines : [ { value : 0, width : 1, color : '#808080' }] },
+      tooltip : {
+        formatter : function() {
+          return '<b>'+ this.series.name +'</b><br/>'+
+          this.x +': '+ this.y; } },
+      legend : { layout : 'vertical', align : 'right', verticalAlign : 'top', x : -10, y : 100, borderWidth : 0 },
+      navigator : { enabled : false},
+      series : [ ],
+      scrollbar : { enabled : true }
     });
+    var maxSeries;
   },
 
   addSerie = function(serie){
     chart.addSeries(serie);
+    if(serie.data.length > 6){
+      maxSeries = 6;
+    }else{
+      maxSeries = serie.data.length;
+    }
+  },
+
+  refreshChart = function(xMax){
+    chart.setSize(806, 400, false);
+    if (xMax != null){
+      maxSeries = xMax;
+    }
+    chart.xAxis[0].setExtremes(0, (maxSeries - 1), true, false);
   }
 
   $("#start_date_picker").datepicker({ format: 'dd-mm-yyyy' });
@@ -93,5 +109,12 @@ function addSerie(n, d){
   var serie = { name: n, data: d };
   $(function(){
     addSerie(serie)
+  })
+}
+
+function refreshChart(xAxisMax){
+  $(function(){
+    xAxisM = typeof xAxisMax !== 'undefined' ? xAxisMax : null; 
+    refreshChart(xAxisM)
   })
 }

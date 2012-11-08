@@ -50,6 +50,7 @@ script
   | addSerie('# nuevos fans',[#{@new_fans}]);
   | addSerie('# Fans Reales',[#{@real_fans}]);
   | addSerie('Objetivo Fans',[#{@goal_fans}]);
+  | refreshChart();
 
   | createChart('container_interactions', 'Interacciones', [#{@dates}]);
   | addSerie('Total de usuarios unicos', [#{@unique_users}]);
@@ -57,18 +58,22 @@ script
   | addSerie('Descargas', [#{@downloads}]);
   | addSerie('Numero de comentarios', [#{@comment}]);
   | addSerie('Fotos subidas', [#{@photos}]);
+  | refreshChart();
 
   | createChart('container_reach', 'Alcance', [#{@dates}]);
   | addSerie('Impresiones de la pagina', [#{@page_prints}]);
+  | refreshChart();
 
   | createChart('container_investment', 'Inversiones', [#{@dates}]);
   | addSerie('Inversion agencia', [#{@agency_investment}]);
   | addSerie('Inversion nuevas acciones', [#{@actions_investment}]);
   | addSerie('Inversion anuncios', [#{@ads_investment}]);
   | addSerie('Inversion Total', [#{@total_investment}]);
+  | refreshChart();
 
   | createChart('container_costs', 'Costes', [#{@dates}]);
   | addSerie('Coste Fan', [#{@fan_cost}]);
+  | refreshChart();
 
 section.sectionInformation
   .estilo_tabs

@@ -52,9 +52,11 @@ script
   | createChart('container_distribution', 'Distribucion de los comentarios en canales', [#{@dates}]);
   - @theme_datum.each do |datum|
     |addSerie('#{datum[:name]}',#{datum[:data]});
+  | refreshChart();
   | createChart('container_typology', 'Tipologia de los comentarios', [#{@dates}]);
   - @channel_datum.each do |datum|
     |addSerie('#{datum[:name]}',#{datum[:data]});
+  | refreshChart();
 
 section.sectionInformation
   .estilo_tabs

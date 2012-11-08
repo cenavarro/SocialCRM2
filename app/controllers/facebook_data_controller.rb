@@ -15,6 +15,7 @@ class FacebookDataController < ApplicationController
     end
 
     @chart = create_chart_data(@facebook_data)
+    p @chart
 
   end
 
@@ -105,6 +106,7 @@ class FacebookDataController < ApplicationController
     chart_values['coste_interactions'] = data.collect { |fd| FacebookDatum.get_coste_interaction(fd) }.join(', ')
     chart_values['brand_total_interactions'] = data.collect { |fd| FacebookDatum.get_total_interactions(fd)}.join(', ')
     chart_values['investment'] = data.collect { |fd| FacebookDatum.get_total_investment(fd) }.join(', ')
+    return chart_values
   end
 
   def calc_facebook_values(facebook_id,facebook_data_keys)

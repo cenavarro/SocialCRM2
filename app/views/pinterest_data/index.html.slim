@@ -56,16 +56,19 @@ script
   | addSerie('# Followers',[#{@total_followers}]);
   | addSerie('# boards',[#{@boards}]);
   | addSerie('# pins',[#{@pins}]);
+  | refreshChart();
 
   | createChart('container_interactions', 'Interactividad', [#{@dates}]);
   | addSerie('# liked',[#{@liked}]);
   | addSerie('#repin',[#{@repin}]);
   | addSerie('#comments',[#{@comment}]);
   | addSerie('# community boards',[#{@community_boards}]);
+  | refreshChart();
 
   | createChart('container_investment', 'Inversion', [#{@dates}]);
   | addSerie('# nuevos followers',[#{@new_followers}]);
   | addSerie('Inversion Total',[#{@total_investment}]);
+  | refreshChart();
 
 section.sectionInformation
   .estilo_tabs

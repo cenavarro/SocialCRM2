@@ -53,15 +53,18 @@ script
   | createChart('container_community', 'Comunidad', [#{@dates}]);
   | addSerie('# nuevos contactos',[#{@new_contacts}]);
   | addSerie('# contactos',[#{@total_contacts}]);
+  | refreshChart();
 
   | createChart('container_interactions', 'Interactividad', [#{@dates}]);
   | addSerie('# Visitas',[#{@visits}]);
   | addSerie('# Comentarios',[#{@comment}]);
   | addSerie('# Favoritos',[#{@favorites}]);
+  | refreshChart();
 
   | createChart('container_investment', 'Inversion', [#{@dates}]);
   | addSerie('# nuevos contactos',[#{@new_contacts}]);
   | addSerie('Inversion Total',[#{@total_investment}]);
+  | refreshChart();
 
 section.sectionInformation
   .estilo_tabs

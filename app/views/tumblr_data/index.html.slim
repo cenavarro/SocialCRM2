@@ -52,14 +52,17 @@ script
   | createChart('container_followers', 'Followers', [#{@dates}]);
   | addSerie('# nuevos followers',[#{@new_followers}]);
   | addSerie('# followers',[#{@total_followers}]);
+  | refreshChart();
 
   | createChart('container_interactivity', 'Interactividad', [#{@dates}]);
   | addSerie('# like',[#{@likes}]);
   | addSerie('# reblogged',[#{@reblogged}]);
+  | refreshChart();
 
   | createChart('container_investment', 'Inversion', [#{@dates}]);
   | addSerie('# nuevos followers',[#{@new_followers}]);
   | addSerie('Inversion Total',[#{@total_investment}]);
+  | refreshChart();
 section.sectionInformation
   .estilo_tabs
     ul.nav.nav-tabs id="myTab"

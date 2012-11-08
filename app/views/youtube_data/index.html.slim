@@ -50,6 +50,7 @@ script
   | createChart('container_community', 'Comunidad', [#{@dates}]);
   | addSerie('Suscriptores nuevos',[#{@new_subscribers}]);
   | addSerie('Suscriptores totales',[#{@total_subscribers}]);
+  | refreshChart();
 
   | createChart('container_interactions', 'Interactividad', [#{@dates}]);
   | addSerie('Reproducciones videos durante el periodo',[#{@total_views}]);
@@ -63,6 +64,7 @@ script
   | addSerie('Otra paginas de Youtube',[#{@others}]);
   | addSerie('Suscripciones de Youtube',[#{@subscriptions}]);
   | addSerie('Publicidad de Youtube',[#{@youtube_ads}]);
+  | refreshChart();
 section.sectionInformation
   .estilo_tabs
     ul.nav.nav-tabs id="myTab"
