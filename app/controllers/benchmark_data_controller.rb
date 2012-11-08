@@ -78,13 +78,13 @@ class BenchmarkDataController < ApplicationController
   def create_chart_data
     competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
     @x_axis = []
-    competitor_data.each do
-      @x_axis.push('Blogs')
-      @x_axis.push('Foros')
-      @x_axis.push('Videos')
-      @x_axis.push('Twitter')
-      @x_axis.push('Facebook')
-      @x_axis.push('Otros')
+    competitor_data.each do |data|
+      @x_axis.push("Blogs")
+      @x_axis.push("Foros   #{data.start_date.strftime("%d %b")}")
+      @x_axis.push("Videos   al")
+      @x_axis.push("Twitter   #{data.end_date.strftime("%d %b")}")
+      @x_axis.push("Facebook")
+      @x_axis.push("Otros")
     end
     @blogs = []
     @forums = []
