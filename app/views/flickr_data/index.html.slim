@@ -14,8 +14,7 @@ br
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Flickr Logo' height='100' width='200'>").html_safe
-    = @image
+    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=flickr_new_path(params[:idc],2) id="btnNewData" style="width: 168px"
     |Nueva Entrada de Datos
@@ -50,20 +49,20 @@ br
 
 
 script
-  | createChart('container_community', 'Comunidad', [#{@dates}]);
-  | addSerie('# nuevos contactos',[#{@new_contacts}]);
-  | addSerie('# contactos',[#{@total_contacts}]);
+  | createChart('container_community', 'Comunidad', #{raw @flickr['dates']});
+  | addSerie('# nuevos contactos',#{@flickr['new_contacts']});
+  | addSerie('# contactos',#{@flickr['total_contacts']});
   | refreshChart();
 
-  | createChart('container_interactions', 'Interactividad', [#{@dates}]);
-  | addSerie('# Visitas',[#{@visits}]);
-  | addSerie('# Comentarios',[#{@comment}]);
-  | addSerie('# Favoritos',[#{@favorites}]);
+  | createChart('container_interactions', 'Interactividad', #{raw @flickr['dates']});
+  | addSerie('# Visitas',#{@flickr['visits']});
+  | addSerie('# Comentarios',#{@flickr['comments']});
+  | addSerie('# Favoritos',#{@flickr['favorites']});
   | refreshChart();
 
-  | createChart('container_investment', 'Inversion', [#{@dates}]);
-  | addSerie('# nuevos contactos',[#{@new_contacts}]);
-  | addSerie('Inversion Total',[#{@total_investment}]);
+  | createChart('container_investment', 'Inversion', #{raw @flickr['dates']});
+  | addSerie('# nuevos contactos',#{@flickr['new_contacts']});
+  | addSerie('Inversion Total',#{@flickr['total_investment']});
   | refreshChart();
 
 section.sectionInformation

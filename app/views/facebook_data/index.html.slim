@@ -13,8 +13,7 @@
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Facebook Logo' height='100' width='200'>").html_safe
-    = @image
+    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=facebook_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     |Nueva Entrada de Datos

@@ -19,8 +19,7 @@ script
     h2
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Campaign Logo' height='100' width='200'>").html_safe
-    = @image
+    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=campaign_new_path(params[:idc],params[:id_social]) style="width: 168px" id="btnNewData"
     |Nueva Entrada de Datos

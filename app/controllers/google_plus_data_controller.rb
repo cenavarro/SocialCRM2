@@ -13,7 +13,7 @@ class GooglePlusDataController < ApplicationController
       fechaFinal = params[:end_date].to_date
       @google_plus_datum = GooglePlusDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
     end
-    create_chart_data
+    @google = select_chart_data
     respond_to do |format|
       format.html
     end
@@ -79,14 +79,16 @@ class GooglePlusDataController < ApplicationController
 
   private
 
-  def create_chart_data
-    @dates = @google_plus_datum.collect {|ld| "'" + ld.start_date.strftime('%d %b') + "-" + ld.end_date.strftime('%d %b') + "'"}.join(', ')
-    @new_followers = @google_plus_datum.collect(&:new_followers).join(', ')
-    @total_followers = @google_plus_datum.collect(&:total_followers).join(', ')
-    @plus = @google_plus_datum.collect(&:plus).join(', ')
-    @content_shared = @google_plus_datum.collect(&:content_shared).join(', ')
-    @total_interactions = @google_plus_datum.collect{ |fd| GooglePlusDatum.get_total_interactions(fd)}.join(', ')
-    @total_investment = @google_plus_datum.collect{ |fd| GooglePlusDatum.get_total_investment(fd)}.join(', ')
+  def select_chart_data
+    chart_data = {}
+    chart_data['dates'] = @google_plus_datum.collect {|gd| "#{gd.start_date.strftime('%d %b')} - #{gd.end_date.strftime('%d %b')}"}
+    chart_data['new_followers'] = @google_plus_datum.collect(&:new_followers)
+    chart_data['total_followers'] = @google_plus_datum.collect(&:total_followers)
+    chart_data['plus'] = @google_plus_datum.collect(&:plus)
+    chart_data['content_shared'] = @google_plus_datum.collect(&:content_shared)
+    chart_data['total_interactions'] = @google_plus_datum.collect{ |gd| GooglePlusDatum.get_total_interactions(gd)}
+    chart_data['total_investment'] = @google_plus_datum.collect{ |gd| GooglePlusDatum.get_total_investment(gd)}
+    return chart_data
   end
 
 end

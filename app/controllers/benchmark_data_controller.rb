@@ -6,8 +6,7 @@ class BenchmarkDataController < ApplicationController
     if !has_comments_table?(BenchmarkComment, params[:id_social])
       BenchmarkComment.new(:social_network_id => params[:id_social].to_i).save! 
     end
-    @benchmark_competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:id_social]).order("name ASC")
-    create_chart_data
+    @benchmark = select_benchmark_data
     respond_to do |format|
       format.html
     end
@@ -75,23 +74,57 @@ class BenchmarkDataController < ApplicationController
 
   private
 
-  def create_chart_data
-    competitor_data = BenchmarkDatum.where(:benchmark_competitor_id => @benchmark_competitors.first.id).order("start_date ASC") if @benchmark_competitors != nil
-    @x_axis = []
-    competitor_data.each do |data|
-      @x_axis.push("Blogs")
-      @x_axis.push("Foros   #{data.start_date.strftime("%d %b")}")
-      @x_axis.push("Videos   al")
-      @x_axis.push("Twitter   #{data.end_date.strftime("%d %b")}")
-      @x_axis.push("Facebook")
-      @x_axis.push("Otros")
+  def select_benchmark_data
+    benchmark_data = { "x_axis" => [] }
+    competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:id_social]).order("name ASC")
+    benchmark_data['competitors'] = competitors.map(&:name)
+    competitors.each do |competitor|
+      competitor_data = data_of_competitor(competitor.id)
+      benchmark_data['dates'] ||= competitor_data.collect { |data| "#{data.start_date.strftime("%d %b")} - #{data.end_date.strftime("%d %b")}"}
+      benchmark_data['ids'] ||= competitor_data.map(&:id)
+      benchmark_data[competitor.name] = []
+      competitor_data.each do |datum|
+        benchmark_keys.each do |key|
+          benchmark_data[competitor.name].push(datum[key])
+        end
+      end
+      start_date = competitor_data.first.start_date
+      end_date = competitor_data.first.end_date
+      benchmark_data['x_axis'].concat(x_axis_array(start_date, end_date))
     end
-    @blogs = []
-    @forums = []
-    @videos = []
-    @twitter = []
-    @facebook = []
-    @others = []
+    return benchmark_data
+  end
+
+  def data_of_competitor(id)
+    if get_data_in_range? 
+      data = BenchmarkDatum.where('start_date = ? and end_date = ? and benchmark_competitor_id = ?', params[:start_date].to_date, params[:end_date].to_date, id).order("start_date ASC") 
+    else
+      data = BenchmarkDatum.where(:benchmark_competitor_id => id).order("start_date ASC")
+    end
+  end
+
+  def get_data_in_range?
+    (params.has_key?(:start_date) && params.has_key?(:end_date)) ? (true) : (false)
+  end
+
+  def benchmark_keys
+    ['blogs',
+      'forums',
+      'videos',
+      'twitter',
+      'facebook',
+      'others'
+    ]
+  end
+
+  def x_axis_array(start_date, end_date)
+    ['Blogs', 
+      "Foros   #{start_date.strftime("%d %b")}",
+      "Videos   al",
+      "Twitter   #{end_date.strftime("%d %b")}",
+      "Facebook",
+      "Otros"
+    ]
   end
 
 end

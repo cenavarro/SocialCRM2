@@ -78,16 +78,24 @@ class CampaignDataController < ApplicationController
     row_data = []
     rows_campaign = RowsCampaign.where('social_network_id = ?', params[:id_social].to_i)
     rows_campaign.each do |row|
-      if params.has_key?('start_date')
-        row_data = RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', row.id, params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
-      else
-        row_data = RowDatum.where('rows_campaign_id = ?', row.id).order("start_date ASC")
-      end
+      row_data = select_row_data(row.id)
       values = row_data.map(&:value)
       @campaign_data['data'] << {"#{row.name}" => values}
     end
     @campaign_data['ids'] = row_data.map(&:id)
     row_data.collect{ |datum| @campaign_data['dates'] << datum.start_date.strftime("%d %b ") + datum.end_date.strftime("- %d %b")}.join(', ')
+  end
+
+  def select_row_data(id)
+    if data_in_range?
+      row_data = RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', id, params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
+    else
+      row_data = RowDatum.where('rows_campaign_id = ?', id).order("start_date ASC")
+    end
+  end
+
+  def data_in_range?
+    (params.has_key?('start_date') && params.has_key?(:end_date)) ? (true) : (false)
   end
 
 end

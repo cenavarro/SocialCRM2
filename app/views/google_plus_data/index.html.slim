@@ -13,8 +13,7 @@
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='GooglePlus Logo' height='100' width='200'>").html_safe
-    = @image
+    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=google_plus_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     |Nueva Entrada de Datos
@@ -49,20 +48,20 @@
 
 
 script
-  | createChart('container_community', 'Comunidad', [#{@dates}]);
-  | addSerie('# nuevos contactos',[#{@new_followers}]);
-  | addSerie('# contactos',[#{@total_followers}]);
+  | createChart('container_community', 'Comunidad', #{raw @google['dates']});
+  | addSerie('# nuevos contactos',#{@google['new_followers']});
+  | addSerie('# contactos',#{@google['total_followers']});
   | refreshChart();
 
-  | createChart('container_interactions', 'Interactividad', [#{@dates}]);
-  | addSerie('# Visitas',[#{@plus}]);
-  | addSerie('# Comentarios',[#{@content_shared}]);
-  | addSerie('# Favoritos',[#{@total_interactions}]);
+  | createChart('container_interactions', 'Interactividad', #{raw @google['dates']});
+  | addSerie('# Visitas',#{@google['plus']});
+  | addSerie('# Comentarios',#{@google['content_shared']});
+  | addSerie('# Favoritos',#{@google['total_interactions']});
   | refreshChart();
 
-  | createChart('container_investment', 'Inversion', [#{@dates}]);
-  | addSerie('# nuevos contactos',[#{@new_followers}]);
-  | addSerie('Inversion Total',[#{@total_investment}]);
+  | createChart('container_investment', 'Inversion', #{raw @google['dates']});
+  | addSerie('# nuevos contactos',#{@google['new_followers']});
+  | addSerie('Inversion Total',#{@google['total_investment']});
   | refreshChart();
 
 section.sectionInformation

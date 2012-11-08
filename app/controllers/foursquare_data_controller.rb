@@ -9,11 +9,9 @@ class FoursquareDataController < ApplicationController
     if !getDataDateRange?(params)
       @foursquare_datum = FoursquareDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
-      fechaInicio = params[:start_date].to_date
-      fechaFinal = params[:end_date].to_date
-      @foursquare_datum = FoursquareDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
+      @foursquare_datum = FoursquareDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
-    create_chart_data
+    @foursquare = select_chart_data
     respond_to do |format|
       format.html
     end
@@ -79,12 +77,21 @@ class FoursquareDataController < ApplicationController
 
   private
 
-  def create_chart_data
-    @dates = @foursquare_datum.collect {|ld| "'" + ld.start_date.strftime('%d %b') + "-" + ld.end_date.strftime('%d %b') + "'"}.join(', ')
-    @followers = @foursquare_datum.collect(&:new_followers).join(', ')
-    @total_followers = @foursquare_datum.collect(&:total_followers).join(', ')
-    @unlocks = @foursquare_datum.collect(&:total_unlocks).join(', ')
-    @visits = @foursquare_datum.collect(&:total_visits).join(', ')
+  def select_chart_data
+    chart_data = {}
+    chart_data['dates'] = @foursquare_datum.collect {|fd| "#{fd.start_date.strftime('%d %b')} - #{fd.end_date.strftime('%d %b')}"}
+    foursquare_keys.each do |key|
+      chart_data[key] = @foursquare_datum.map(&:"#{key}")
+    end
+    return chart_data
+  end
+
+  def foursquare_keys
+    ['new_followers',
+      'total_followers',
+      'total_unlocks',
+      'total_visits'
+    ]
   end
 
 end

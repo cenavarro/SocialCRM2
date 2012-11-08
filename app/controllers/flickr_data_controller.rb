@@ -12,9 +12,7 @@ class FlickrDataController < ApplicationController
       @flickr_datum = FlickrDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], 
          params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
-
-    create_chart_data
-
+    @flickr = select_chart_data
   end
 
   def new
@@ -78,14 +76,23 @@ class FlickrDataController < ApplicationController
 
   private
 
-  def create_chart_data
-    @dates = @flickr_datum.collect {|ld| "'" + ld.start_date.strftime('%d %b') + "-" + ld.end_date.strftime('%d %b') + "'"}.join(', ')
-    @new_contacts = @flickr_datum.collect(&:new_contacts).join(', ')
-    @total_contacts = @flickr_datum.collect(&:total_contacts).join(', ')
-    @visits = @flickr_datum.collect(&:visits).join(', ')
-    @comment = @flickr_datum.collect(&:comments).join(', ')
-    @favorites = @flickr_datum.collect(&:favorites).join(', ')
-    @total_investment = @flickr_datum.collect{ |fd| FlickrDatum.get_total_investment(fd)}.join(', ')
+  def select_chart_data
+    chart_data = {}
+    flickr_keys.each do |key|
+      chart_data[key] = @flickr_datum.map(&:"#{key}")
+    end
+    chart_data['dates'] = @flickr_datum.collect {|fd| "#{fd.start_date.strftime('%d %b')} - #{fd.end_date.strftime('%d %b')}"}
+    chart_data['total_investment'] = @flickr_datum.collect{ |fd| FlickrDatum.get_total_investment(fd)}
+    return chart_data
+  end
+
+  def flickr_keys
+    ['new_contacts',
+      'total_contacts',
+      'visits',
+      'comments',
+      'favorites'
+    ]
   end
 
 end

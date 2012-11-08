@@ -14,8 +14,7 @@ br
     h1
       = @socialNetwork.name
     br
-    - @image = ("<img class='content' src='"+@socialNetwork.image.url+"' alt='Foursquare Logo' height='100' width='200'>").html_safe
-    = @image
+    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=foursquare_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     |Nueva Entrada de Datos
@@ -50,14 +49,14 @@ br
 
 
 script
-  | createChart('container_followers', 'Followers', [#{@dates}]);
-  | addSerie('# nuevos followers',[#{@followers}]);
-  | addSerie('# followers',[#{@total_followers}]);
+  | createChart('container_followers', 'Followers', #{raw @foursquare['dates']});
+  | addSerie('# nuevos followers',#{@foursquare['new_followers']});
+  | addSerie('# followers',#{@foursquare['total_followers']});
   | refreshChart();
 
-  | createChart('container_deals', 'Ofertas', [#{@dates}]);
-  | addSerie('# unlocks total de las ofertas',[#{@unlocks}]);
-  | addSerie('# visitas total de las ofertas',[#{@visits}]);
+  | createChart('container_deals', 'Ofertas', #{raw @foursquare['dates']});
+  | addSerie('# unlocks total de las ofertas',#{@foursquare['total_unlocks']});
+  | addSerie('# visitas total de las ofertas',#{@foursquare['total_visits']});
   | refreshChart();
 
 section.sectionInformation
