@@ -8,13 +8,11 @@ class YoutubeDataController < ApplicationController
     end
     if !getDataDateRange?(params)
       @youtube_datum = YoutubeDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
-    else
-      fechaInicio = params[:start_date].to_date
-      fechaFinal = params[:end_date].to_date
-      @youtube_datum = YoutubeDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
+    else 
+      @youtube_datum = YoutubeDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',
+        params[:id_social], params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
-
-    create_chart_data
+    @youtube = select_chart_data
   end
 
   def new
@@ -75,21 +73,30 @@ class YoutubeDataController < ApplicationController
 
   private
 
-  def create_chart_data
-    @dates = @youtube_datum.collect { |ld| "'" + ld.start_date.mday().to_s + " " + ld.start_date.strftime('%b') + "-" + ld.end_date.mday().to_s + " " + ld.end_date.strftime('%b') + "'" }.join(', ')
-    @new_subscribers = @youtube_datum.collect(&:new_subscriber).join(', ')
-    @total_subscribers = @youtube_datum.collect(&:total_subscriber).join(', ')
-    @total_views = @youtube_datum.collect(&:total_video_views).join(', ')
-    @inserted_player = @youtube_datum.collect(&:inserted_player).join(', ')
-    @mobile = @youtube_datum.collect(&:mobile_devise).join(', ')
-    @youtube_search = @youtube_datum.collect(&:youtube_search).join(', ')
-    @youtube_suggest = @youtube_datum.collect(&:youtube_suggestion).join(', ')
-    @canal_page = @youtube_datum.collect(&:youtube_page).join(', ')
-    @external_site = @youtube_datum.collect(&:external_web_site).join(', ')
-    @google_search = @youtube_datum.collect(&:google_search).join(', ')
-    @others = @youtube_datum.collect(&:youtube_others).join(', ')
-    @subscriptions = @youtube_datum.collect(&:youtube_subscriptions).join(', ')
-    @youtube_ads = @youtube_datum.collect(&:youtube_ads).join(', ')
+  def select_chart_data
+    chart_data = {}
+    chart_data['dates'] = @youtube_datum.collect{|yd| "#{yd.start_date.strftime('%d %b')} - #{yd.end_date.strftime('%d %b')}"}
+    youtube_keys.each do |key|
+      chart_data[key] = @youtube_datum.map(&:"#{key}")
+    end
+    return chart_data
+  end
+
+  def youtube_keys
+    ['new_subscriber',
+      'total_subscriber',
+      'total_video_views',
+      'inserted_player',
+      'mobile_devise',
+      'youtube_search',
+      'youtube_suggestion',
+      'youtube_page',
+      'external_web_site',
+      'google_search',
+      'youtube_others',
+      'youtube_subscriptions',
+      'youtube_ads'
+    ]
   end
 
 end

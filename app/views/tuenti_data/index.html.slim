@@ -45,33 +45,33 @@
       input.btn.btn-primary type="submit" value="Obtener Datos"
     br
 script
-  | createChart('container_fans', 'Fans', [#{@dates}]);
-  | addSerie('# nuevos fans',[#{@new_fans}]);
-  | addSerie('# Fans Reales',[#{@real_fans}]);
-  | addSerie('Objetivo Fans',[#{@goal_fans}]);
+  | createChart('container_fans', 'Fans', #{raw @tuenti['dates']});
+  | addSerie('# nuevos fans', #{@tuenti['new_fans']});
+  | addSerie('# Fans Reales', #{@tuenti['real_fans']});
+  | addSerie('Objetivo Fans', #{@tuenti['goal_fans']});
   | refreshChart();
 
-  | createChart('container_interactions', 'Interacciones', [#{@dates}]);
-  | addSerie('Total de usuarios unicos', [#{@unique_users}]);
-  | addSerie('Clicks', [#{@clics}]);
-  | addSerie('Descargas', [#{@downloads}]);
-  | addSerie('Numero de comentarios', [#{@comment}]);
-  | addSerie('Fotos subidas', [#{@photos}]);
+  | createChart('container_interactions', 'Interacciones', #{raw @tuenti['dates']});
+  | addSerie('Total de usuarios unicos', #{@tuenti['unique_total_users']});
+  | addSerie('Clicks', #{@tuenti['clics']});
+  | addSerie('Descargas', #{@tuenti['downloads']});
+  | addSerie('Numero de comentarios', #{@tuenti['comments']});
+  | addSerie('Fotos subidas', #{@tuenti['upload_photos']});
   | refreshChart();
 
-  | createChart('container_reach', 'Alcance', [#{@dates}]);
-  | addSerie('Impresiones de la pagina', [#{@page_prints}]);
+  | createChart('container_reach', 'Alcance', #{raw @tuenti['dates']});
+  | addSerie('Impresiones de la pagina', #{@tuenti['page_prints']});
   | refreshChart();
 
-  | createChart('container_investment', 'Inversiones', [#{@dates}]);
-  | addSerie('Inversion agencia', [#{@agency_investment}]);
-  | addSerie('Inversion nuevas acciones', [#{@actions_investment}]);
-  | addSerie('Inversion anuncios', [#{@ads_investment}]);
-  | addSerie('Inversion Total', [#{@total_investment}]);
+  | createChart('container_investment', 'Inversiones', #{raw @tuenti['dates']});
+  | addSerie('Inversion agencia', #{@tuenti['investment_agency']});
+  | addSerie('Inversion nuevas acciones', #{@tuenti['investment_actions']});
+  | addSerie('Inversion anuncios', #{@tuenti['investment_ads']});
+  | addSerie('Inversion Total', #{@tuenti['total_investment']});
   | refreshChart();
 
-  | createChart('container_costs', 'Costes', [#{@dates}]);
-  | addSerie('Coste Fan', [#{@fan_cost}]);
+  | createChart('container_costs', 'Costes', #{raw @tuenti['dates']});
+  | addSerie('Coste Fan', #{@tuenti['cost_fan']});
   | refreshChart();
 
 section.sectionInformation

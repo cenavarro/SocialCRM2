@@ -13,20 +13,11 @@ class PinterestDataController < ApplicationController
       fechaFinal = params[:end_date].to_date
       @pinterest_datum = PinterestDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
     end
-
-    create_chart_data
-
-    respond_to do |format|
-      format.html
-    end
+    @pinterest = select_chart_data
   end
 
   def new
     @pinterest_datum = PinterestDatum.new
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit
@@ -82,17 +73,26 @@ class PinterestDataController < ApplicationController
 
   private
 
-  def create_chart_data
-    @dates = @pinterest_datum.collect { |ld| "'" + ld.start_date.mday().to_s + " " + ld.start_date.strftime('%b') + "-" + ld.end_date.mday().to_s + " " + ld.end_date.strftime('%b') + "'" }.join(', ')
-    @new_followers = @pinterest_datum.collect(&:new_followers).join(', ')
-    @total_followers = @pinterest_datum.collect(&:total_followers).join(', ')
-    @boards = @pinterest_datum.collect(&:boards).join(', ')
-    @pins = @pinterest_datum.collect(&:pins).join(', ')
-    @liked = @pinterest_datum.collect(&:liked).join(', ')
-    @repin = @pinterest_datum.collect(&:repin).join(', ')
-    @comment = @pinterest_datum.collect(&:comments).join(', ')
-    @community_boards = @pinterest_datum.collect(&:community_boards).join(', ')
-    @total_investment = @pinterest_datum.collect{ |pd| PinterestDatum.get_total_investment(pd) }.join(', ')
+  def select_chart_data
+    chart_data = {}
+    chart_data['dates'] = @pinterest_datum.collect{|pd| "#{pd.start_date.strftime('%d %b')} - #{pd.end_date.strftime('%d %b')}"}
+    pinterest_keys.each do |key|
+      chart_data[key] = @pinterest_datum.map(&:"#{key}")
+    end
+    chart_data['total_investment'] = @pinterest_datum.collect{|pd| PinterestDatum.get_total_investment(pd)}
+    return chart_data
+  end
+
+  def pinterest_keys
+    ['new_followers',
+      'total_followers',
+      'boards',
+      'pins',
+      'liked',
+      'repin',
+      'comments',
+      'community_boards'
+    ]
   end
 
 end

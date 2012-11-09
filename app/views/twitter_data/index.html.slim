@@ -45,30 +45,30 @@
       input.btn.btn-primary type="submit" value="Obtener Datos"
     br
 script
-  | createChart('container_comunidad', 'Comunidad', [#{@dates}]);
-  | addSerie('# Nuevos Followers', [#{@new_followers}]);
-  | addSerie('# Followers', [#{@total_followers}]);
-  | addSerie('# Objetivo Followers', [#{@goal_followers}]);
+  | createChart('container_comunidad', 'Comunidad', #{raw @twitter['dates']});
+  | addSerie('# Nuevos Followers', #{@twitter['new_followers']});
+  | addSerie('# Followers', #{@twitter['total_followers']});
+  | addSerie('# Objetivo Followers', #{@twitter['goal_followers']});
   | refreshChart();
 
-  | createChart('container_interacciones', 'Interactividad', [#{@dates}]);
-  | addSerie('# Menciones', [#{@mentions}]);
-  | addSerie('# Retweets', [#{@retweets}]);
-  | addSerie('Clicks Enlaces', [#{@clics}]);
-  | addSerie('# Interacciones en twitter ads', [#{@interactions_ads}]);
-  | addSerie('Interacciones Totales', [#{@total_interactions}]);
+  | createChart('container_interacciones', 'Interactividad', #{raw @twitter['dates']});
+  | addSerie('# Menciones', #{@twitter['total_mentions']});
+  | addSerie('# Retweets', #{@twitter['ret_tweets']});
+  | addSerie('Clicks Enlaces', #{@twitter['total_clicks']});
+  | addSerie('# Interacciones en twitter ads', #{@twitter['interactions_ads']});
+  | addSerie('Interacciones Totales', #{@twitter['total_interactions']});
   | refreshChart();
 
-  | createChart('container_inversion', 'Inversion', [#{@dates}]);
-  | addSerie('# nuevos followers', [#{@new_followers}]);
-  | addSerie('Inversion Total', [#{@total_investment}]);
+  | createChart('container_inversion', 'Inversion', #{raw @twitter['dates']});
+  | addSerie('# nuevos followers', #{@twitter['new_followers']});
+  | addSerie('Inversion Total', #{@twitter['total_investment']});
   | refreshChart();
 
-  | createChart('container_costes', 'Costest', [#{@dates}]);
-  | addSerie('Costes', [#{@cost_follower}]);
-  | addSerie('Cost per engagement twitter ads', [#{@cost_per_engagement}]);
-  | addSerie('Coste por mil impresiones', [#{@cost_prints}]);
-  | addSerie('Coste por interaccion', [#{@cost_interactions}]);
+  | createChart('container_costes', 'Costest', #{raw @twitter['dates']});
+  | addSerie('Costes', #{@twitter['cost_follower']});
+  | addSerie('Cost per engagement twitter ads', #{@twitter['cost_twitter_ads']});
+  | addSerie('Coste por mil impresiones', #{@twitter['cost_prints']});
+  | addSerie('Coste por interaccion', #{@twitter['cost_interactions']});
   | refreshChart();
 section.sectionInformation
   .estilo_tabs

@@ -14,19 +14,11 @@ class TumblrDataController < ApplicationController
       @tumblr_datum = TumblrDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
     end
 
-    create_chart_data
-
-    respond_to do |format|
-      format.html
-    end
+    @tumblr = select_chart_data
   end
 
   def new
     @tumblr_datum = TumblrDatum.new
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit
@@ -82,13 +74,15 @@ class TumblrDataController < ApplicationController
 
   private
 
-  def create_chart_data
-    @dates = @tumblr_datum.collect {|ld| "'" + ld.start_date.strftime('%d %b') + "-" + ld.end_date.strftime('%d %b') + "'"}.join(', ')
-    @new_followers = @tumblr_datum.collect(&:new_followers).join(', ')
-    @total_followers = @tumblr_datum.collect(&:total_followers).join(', ')
-    @likes = @tumblr_datum.collect(&:likes).join(', ')
-    @reblogged = @tumblr_datum.collect(&:reblogged).join(', ')
-    @total_investment = @tumblr_datum.collect{ |fd| TumblrDatum.get_total_investment(fd)}.join(', ')
+  def select_chart_data
+    chart_data = {
+      "dates" => @tumblr_datum.collect {|td| "#{td.start_date.strftime('%d %b')} - #{td.end_date.strftime('%d %b')}"},
+      "new_followers" => @tumblr_datum.map(&:new_followers),
+      "total_followers" => @tumblr_datum.map(&:total_followers),
+      "likes" => @tumblr_datum.map(&:likes),
+      "reblogged" => @tumblr_datum.map(&:reblogged),
+      "total_investment" => @tumblr_datum.collect{ |td| TumblrDatum.get_total_investment(td)}
+    }
   end
 
 end

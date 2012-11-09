@@ -8,12 +8,10 @@ class TwitterDataController < ApplicationController
     end
     if !getDataDateRange?(params)
       @twitter_data = TwitterDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
-    else
-      fechaInicio = params[:start_date].to_date
-      fechaFinal = params[:end_date].to_date
-      @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? and social_network_id = ?', fechaInicio,fechaFinal,params[:id_social]]).order("start_date ASC")
+    else 
+      @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? and social_network_id = ?', params[:start_date].to_date,params[:end_date].to_date,params[:id_social]]).order("start_date ASC")
     end
-    create_chart_data
+    @twitter = select_chart_data
   end
 
   def new
@@ -77,25 +75,34 @@ class TwitterDataController < ApplicationController
 
   private
 
-  def create_chart_data
-    @dates = @twitter_data.collect { |td| "'" + td.start_date.mday().to_s + " " + td.start_date.strftime('%b') + "-" + td.end_date.mday().to_s + " " + td.end_date.strftime('%b') + "'" }.join(', ')
-    @new_followers = @twitter_data.collect(&:new_followers).join(', ')
-    @total_followers = @twitter_data.collect(&:total_followers).join(', ')
-    @goal_followers = @twitter_data.collect(&:goal_followers).join(', ')
-    @mentions = @twitter_data.collect(&:total_mentions).join(', ')
-    @retweets = @twitter_data.collect(&:ret_tweets).join(', ')
-    @clics = @twitter_data.collect(&:total_clicks).join(', ')
-    @interactions_ads = @twitter_data.collect(&:interactions_ads).join(', ')
-    @total_interactions = @twitter_data.collect(&:total_interactions).join(', ')
-    @total_investment = @twitter_data.collect { |td| TwitterDatum.get_total_investment(td)}.join(', ')
-    @cost_per_engagement = @twitter_data.collect(&:cost_twitter_ads).join(', ')
-    @cost_follower = @twitter_data.collect {|td| TwitterDatum.get_cost_follower(td)}.join(', ')
-    @cost_prints = @twitter_data.collect {|td| TwitterDatum.get_cost_per_prints(td)}.join(', ')
-    @cost_interactions = @twitter_data.collect {|td| TwitterDatum.get_cost_per_interaction(td)}.join(', ')
+  def select_chart_data
+    chart_data = {}
+    chart_data['dates'] = @twitter_data.collect{|td| "#{td.start_date.strftime('%d %b')} - #{td.end_date.strftime('%d %b')}"}
+    chart_data['total_investment'] = @twitter_data.collect { |td| TwitterDatum.get_total_investment(td)}
+    chart_data['cost_follower'] = @twitter_data.collect {|td| TwitterDatum.get_cost_follower(td)}
+    chart_data['cost_prints'] = @twitter_data.collect {|td| TwitterDatum.get_cost_per_prints(td)}
+    chart_data['cost_interactions'] = @twitter_data.collect {|td| TwitterDatum.get_cost_per_interaction(td)}
+    twitter_keys.each do |key|
+      chart_data[key] = @twitter_data.map(&:"#{key}")
+    end
+    return chart_data
   end
 
   def getDataFromTwitter?
     (params[:opcion].to_i == 1) ? (return true) : (return false)
+  end
+
+  def twitter_keys
+    ['new_followers',
+      'total_followers',
+      'goal_followers',
+      'total_mentions',
+      'ret_tweets',
+      'total_clicks',
+      'interactions_ads',
+      'total_interactions',
+      'cost_twitter_ads'
+    ]
   end
 
 end

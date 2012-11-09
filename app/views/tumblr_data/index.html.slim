@@ -48,19 +48,19 @@
 
 
 script
-  | createChart('container_followers', 'Followers', [#{@dates}]);
-  | addSerie('# nuevos followers',[#{@new_followers}]);
-  | addSerie('# followers',[#{@total_followers}]);
+  | createChart('container_followers', 'Followers', #{raw @tumblr['dates']});
+  | addSerie('# nuevos followers',#{@tumblr['new_followers']});
+  | addSerie('# followers',#{@tumblr['total_followers']});
   | refreshChart();
 
-  | createChart('container_interactivity', 'Interactividad', [#{@dates}]);
-  | addSerie('# like',[#{@likes}]);
-  | addSerie('# reblogged',[#{@reblogged}]);
+  | createChart('container_interactivity', 'Interactividad', #{raw @tumblr['dates']});
+  | addSerie('# like',#{@tumblr['likes']});
+  | addSerie('# reblogged',#{@tumblr['reblogged']});
   | refreshChart();
 
-  | createChart('container_investment', 'Inversion', [#{@dates}]);
-  | addSerie('# nuevos followers',[#{@new_followers}]);
-  | addSerie('Inversion Total',[#{@total_investment}]);
+  | createChart('container_investment', 'Inversion', #{raw @tumblr['dates']});
+  | addSerie('# nuevos followers',#{@tumblr['new_followers']});
+  | addSerie('Inversion Total',#{@tumblr['total_investment']});
   | refreshChart();
 section.sectionInformation
   .estilo_tabs

@@ -47,20 +47,20 @@
 
 
 script 
-  | createChart('container_followers', 'Seguidores', [#{@dates}]);
-  | addSerie('# Nuevos Followers', [#{@new_followers}]);
-  | addSerie('# Followers', [#{@total_followers}]);
+  | createChart('container_followers', 'Seguidores', #{ raw @linkedin['dates']});
+  | addSerie('# Nuevos Followers', #{@linkedin['new_followers']});
+  | addSerie('# Followers', #{@linkedin['total_followers']});
   | refreshChart();
 
-  | createChart('container_interactions', 'Interactividad', [#{@dates}]);
-  | addSerie('Resumen',[#{@summary}]);
-  | addSerie('Empleo',[#{@employment}]);
-  | addSerie('Productos y Servicios',[#{@products_services}]);
-  | addSerie('Impresiones',[#{@prints}]);
-  | addSerie('Clicks',[#{@clics}]);
-  | addSerie('% interes',[#{@interest}]);
-  | addSerie('Recomendacion',[#{@recommendation}]);
-  | addSerie('Compartidos',[#{@shared}]);
+  | createChart('container_interactions', 'Interactividad', #{raw @linkedin['dates']});
+  | addSerie('Resumen',#{@linkedin['summary']});
+  | addSerie('Empleo',#{@linkedin['employment']});
+  | addSerie('Productos y Servicios',#{@linkedin['products_services']});
+  | addSerie('Impresiones',#{@linkedin['prints']});
+  | addSerie('Clicks',#{@linkedin['clics']});
+  | addSerie('% interes',#{@linkedin['interest']});
+  | addSerie('Recomendacion',#{@linkedin['recommendation']});
+  | addSerie('Compartidos',#{@linkedin['shared']});
   | refreshChart();
 
 section.sectionInformation

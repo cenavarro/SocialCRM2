@@ -13,20 +13,11 @@ class LinkedinDataController < ApplicationController
       fechaFinal = params[:end_date].to_date
       @linkedin_data = LinkedinDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
     end
-
-    create_chart_data
-
-    respond_to do |format|
-      format.html
-    end
+    @linkedin = select_chart_data
   end
 
   def new
     @linkedin_data = LinkedinDatum.new
-
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit
@@ -80,18 +71,27 @@ class LinkedinDataController < ApplicationController
 
   private
 
-  def create_chart_data
-    @dates = @linkedin_data.collect {|ld| "'" + ld.start_date.strftime('%d %b') + "-" + ld.end_date.strftime('%d %b') + "'"}.join(', ')
-    @new_followers = @linkedin_data.collect(&:new_followers).join(', ')
-    @total_followers = @linkedin_data.collect(&:total_followers).join(', ')
-    @summary = @linkedin_data.collect(&:summary).join(', ')
-    @employment = @linkedin_data.collect(&:employment).join(', ')
-    @products_services = @linkedin_data.collect(&:products_services).join(', ')
-    @prints = @linkedin_data.collect(&:prints).join(', ')
-    @clics = @linkedin_data.collect(&:clics).join(', ')
-    @recommendation = @linkedin_data.collect(&:recommendation).join(', ')
-    @shared = @linkedin_data.collect(&:shared).join(', ')
-    @interest = @linkedin_data.collect(&:interest).join(', ')
+  def select_chart_data
+    chart_data = {}
+    chart_data['dates'] = @linkedin_data.collect {|ld| "#{ld.start_date.strftime('%d %b')} - #{ld.end_date.strftime('%d %b')}"}
+    linkedin_keys.each do |key|
+      chart_data[key] = @linkedin_data.map(&:"#{key}")
+    end
+    return chart_data
+  end
+
+  def linkedin_keys
+    ['new_followers',
+      'total_followers',
+      'summary',
+      'employment',
+      'products_services',
+      'prints',
+      'clics',
+      'recommendation',
+      'shared',
+      'interest'
+    ]
   end
 
 end

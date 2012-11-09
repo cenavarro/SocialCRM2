@@ -50,23 +50,23 @@ center
       input.btn.btn-primary type="submit" value="Obtener Datos"
 
 script
-  | createChart('container_community', 'Comunidad', [#{@dates}]);
-  | addSerie('# Nuevos Followers',[#{@new_followers}]);
-  | addSerie('# Followers',[#{@total_followers}]);
-  | addSerie('# boards',[#{@boards}]);
-  | addSerie('# pins',[#{@pins}]);
+  | createChart('container_community', 'Comunidad', #{raw @pinterest['dates']});
+  | addSerie('# Nuevos Followers',#{@pinterest['new_followers']});
+  | addSerie('# Followers',#{@pinterest['total_followers']});
+  | addSerie('# boards',#{@pinterest['boards']});
+  | addSerie('# pins', #{@pinterest['pins']});
   | refreshChart();
 
-  | createChart('container_interactions', 'Interactividad', [#{@dates}]);
-  | addSerie('# liked',[#{@liked}]);
-  | addSerie('#repin',[#{@repin}]);
-  | addSerie('#comments',[#{@comment}]);
-  | addSerie('# community boards',[#{@community_boards}]);
+  | createChart('container_interactions', 'Interactividad', #{raw @pinterest['dates']});
+  | addSerie('# liked',#{@pinterest['liked']});
+  | addSerie('#repin',#{@pinterest['repin']});
+  | addSerie('#comments',#{@pinterest['comments']});
+  | addSerie('# community boards',#{@pinterest['community_boards']});
   | refreshChart();
 
-  | createChart('container_investment', 'Inversion', [#{@dates}]);
-  | addSerie('# nuevos followers',[#{@new_followers}]);
-  | addSerie('Inversion Total',[#{@total_investment}]);
+  | createChart('container_investment', 'Inversion', #{raw @pinterest['dates']});
+  | addSerie('# nuevos followers',#{@pinterest['new_followers']});
+  | addSerie('Inversion Total',#{@pinterest['total_investment']});
   | refreshChart();
 
 section.sectionInformation
