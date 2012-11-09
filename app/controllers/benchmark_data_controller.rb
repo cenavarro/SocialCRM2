@@ -84,13 +84,13 @@ class BenchmarkDataController < ApplicationController
       benchmark_data['ids'] ||= competitor_data.map(&:id)
       benchmark_data[competitor.name] = []
       competitor_data.each do |datum|
+        benchmark_data['x_axis'].concat(x_axis_array(datum.start_date, datum.end_date))
         benchmark_keys.each do |key|
           benchmark_data[competitor.name].push(datum[key])
         end
       end
       start_date = competitor_data.first.start_date
       end_date = competitor_data.first.end_date
-      benchmark_data['x_axis'].concat(x_axis_array(start_date, end_date))
     end
     return benchmark_data
   end
