@@ -42,7 +42,7 @@ production:
   database: socialcrm 
   pool: 50
   username: root
-  password: MysqlPernix
+  password: mclQghHgRI1Ajk
   socket: /var/run/mysqld/mysqld.sock
 
 #production:
