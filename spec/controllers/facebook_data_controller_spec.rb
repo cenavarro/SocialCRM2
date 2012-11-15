@@ -180,7 +180,7 @@ describe FacebookDataController do
   describe "#callback" do
     it "gets access token from facebook" do
       http_request = mock('http_request', :read => 'access_token=o4piurousfhasdhfoasidhfa23w4q324&others_params')
-      URI.should_receive(:escape).with("https://graph.facebook.com/oauth/access_token?client_id=441436639234798&redirect_uri=http://test.host/en/facebook_data/callback/1/1/01-01-2012/15-01-2012/&code=code_from_facebook&client_secret=26df47c99d81ecb606fe2eb59669476d").and_return("http://test.com")
+      URI.should_receive(:escape).with("https://graph.facebook.com/oauth/access_token?client_id=#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']}&redirect_uri=http://test.host/en/facebook_data/callback/1/1/01-01-2012/15-01-2012/&code=code_from_facebook&client_secret=#{SOCIAL_NETWORKS_CONFIG['facebook']['client_secret']}").and_return("http://test.com")
       @controller.stub(:open).and_return(http_request)
       get :callback, :idc => 1, :id_social => 1, :locale => :en, :start_date => "01-01-2012", :end_date => "15-01-2012", :code => "code_from_facebook"
     end

@@ -51,6 +51,7 @@ script
   | createChart('container_distribution', 'Distribucion de los comentarios en canales', #{raw @benchmark['x_axis']});
   - @benchmark['competitors'].each do |competitor|
     | addSerie('#{competitor}', #{@benchmark[competitor]});
+  | addPlotLines(#{@benchmark['dates'].size});
   | refreshChart(12);
 
 section.sectionInformation
@@ -93,21 +94,23 @@ section.sectionInformation
                 td.columnsTableBenchmark
                   |Totales
           tbody
+            - totals = {}
             - @benchmark['competitors'].each do |competitor|
               tr
                 td
                   = competitor
+                  - total = []
                   - index = 0
                   - @benchmark['dates'].each do
-                    - total = 0
                     - data = @benchmark[competitor]
                     - for i in (0..5) do
                       td.columnsTableBenchmark
                         = data[index + i]
-                        - total = total+data[index + i]
                     td.columnsTableBenchmark
-                      = total
+                      = data[index..index+5].inject(:+) 
+                      - total << data[index..index+5].inject(:+) 
                     - index = index + 6
+                  - totals[competitor] = total 
             tr id="buttons"
               td.nilValue
                 |Opciones
@@ -130,6 +133,11 @@ section.sectionInformation
             | Guardar
           .result
 
+      script
+        | createChart('container_totals', 'Totales', #{raw @benchmark['dates']});
+        - @benchmark['competitors'].each do |competitor|
+          | addSerie('#{competitor}', #{totals[competitor]});
+        | refreshChart();
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
@@ -144,6 +152,19 @@ section.sectionInformation
           form  id="distribution" onsubmit="return saveChartComment('#distribution',#{@socialNetwork.id},'distribution' ,'#{params[:locale]}','#{@benchmark_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.distribution
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_totals
+        .comment
+          .title
+            h4
+              | Comentario Grafico Totales
+          form  id="totals" onsubmit="return saveChartComment('#totals',#{@socialNetwork.id},'totals' ,'#{params[:locale]}','#{@benchmark_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.totals
             br
             button.btn.btn-success
               | Guardar

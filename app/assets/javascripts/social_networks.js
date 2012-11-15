@@ -51,19 +51,23 @@ $(document).ready(function(){
       chart : { renderTo : container, type : 'line', marginRight : 130, marginBottom : 45, width : 806 },
       title : { text : title, x: -20 },
       xAxis : {
-        categories : categorie,
+        categories : categorie
       },
       yAxis : {
         title : { text : '' },
-        plotLines : [ { value : 0, width : 1, color : '#808080' }] },
+        plotLines : [ { value : 0, width : 1, color : '#808080' }] 
+      },
       tooltip : {
         formatter : function() {
           return '<b>'+ this.series.name +'</b><br/>'+
           this.x +': '+ this.y; } },
-      legend : { layout : 'vertical', align : 'right', verticalAlign : 'top', x : -10, y : 100, borderWidth : 0 },
-      navigator : { enabled : false},
+      legend : { layout : 'vertical', align : 'right', verticalAlign : 'top', x : -10, y : 100, borderWidth : 0 
+      },
+      navigator : { enabled : false
+      },
       series : [ ],
-      scrollbar : { enabled : true }
+      scrollbar : { enabled : true 
+      }
     });
     var maxSeries;
   },
@@ -76,6 +80,16 @@ $(document).ready(function(){
       maxSeries = serie.data.length;
     }
   },
+
+  addPlotLines = function(lines){
+    for(var i=1; i<(lines+1); i++){
+      chart.xAxis[0].addPlotLine({
+        color: '#C0C0C0',
+        width: 1,
+        value: ((i*6)-0.5)
+      });
+    }
+  }
 
   refreshChart = function(xMax){
     chart.setSize(806, 400, false);
@@ -116,5 +130,11 @@ function refreshChart(xAxisMax){
   $(function(){
     xAxisM = typeof xAxisMax !== 'undefined' ? xAxisMax : null; 
     refreshChart(xAxisM)
+  })
+}
+
+function addPlotLines(lines){
+  $(function(){
+    addPlotLines(lines)
   })
 }

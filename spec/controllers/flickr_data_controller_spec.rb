@@ -24,12 +24,19 @@ describe FlickrDataController do
 
     it "assigns flickr_data as @flickr_data in a date range" do
       flickr_datum = FlickrDatum.create! valid_attributes
-      get :index, :locale => :es, :id_social => 1, :idc => 1, :opcion => 1, :start_date => "01-01-2012", :end_date => "31-01-2012"
+      get :index, :locale => :es, :id_social => 1, :idc => 1, :opcion => 2, :start_date => "01-01-2012", :end_date => "31-01-2012"
       assigns(:flickr_datum).should eq([flickr_datum])
+    end
+
+    it "assigns flickr as data for the charts" do
+      FlickrDatum.create! valid_attributes
+      get :index, :locale => :es, :id_social => 1, :idc => 1, :opcion => 1, :start_date => "01-01-2012", :end_date => "31-01-2012"
+      assigns(:flickr).should eq({"new_contacts" => [100], "total_contacts" => [200], "visits" => [500], "comments" => [150], 
+                                 "favorites" => [30], "dates" => ["01 Jan - 31 Jan"], "total_investment" => [370.0]})
     end
   end
 
-  describe "GET show" do
+  describe "#show" do
     it "assigns the requested flickr_datum as @flickr_datum" do
       flickr_datum = FlickrDatum.create! valid_attributes
       get :show, {:id => flickr_datum.to_param}, valid_session
@@ -37,14 +44,14 @@ describe FlickrDataController do
     end
   end
 
-  describe "GET new" do
+  describe "#new" do
     it "assigns a new flickr_datum as @flickr_datum" do
       get :new, {}, valid_session
       assigns(:flickr_datum).should be_a_new(FlickrDatum)
     end
   end
 
-  describe "GET edit" do
+  describe "#edit" do
     it "assigns the requested flickr_datum as @flickr_datum" do
       flickr_datum = FlickrDatum.create! valid_attributes
       get :edit, {:id => flickr_datum.to_param}, valid_session
@@ -52,7 +59,7 @@ describe FlickrDataController do
     end
   end
 
-  describe "POST create" do
+  describe "#create" do
     describe "with valid params" do
       it "creates a new FlickrDatum" do
         expect {
@@ -72,31 +79,26 @@ describe FlickrDataController do
       end
     end
 
-    #describe "with invalid params" do
-    #  it "assigns a newly created but unsaved flickr_datum as @flickr_datum" do
-    #    # Trigger the behavior that occurs when invalid params are submitted
-    #    FlickrDatum.any_instance.stub(:save).and_return(false)
-    #    post :create, {:flickr_datum => {}}, valid_session
-    #    assigns(:flickr_datum).should be_a_new(FlickrDatum)
-    #  end
-
-    #  it "re-renders the 'new' template" do
+    describe "with invalid params" do
+      it "assigns a newly created but unsaved flickr_datum as @flickr_datum" do
         # Trigger the behavior that occurs when invalid params are submitted
-    #    FlickrDatum.any_instance.stub(:save).and_return(false)
-    #    post :create, {:flickr_datum => {}}, valid_session
-    #    response.should render_template("new")
-    #  end
-    #end
+        FlickrDatum.any_instance.stub(:save).and_return(false)
+        post :create, {:flickr_datum => {}}, valid_session
+        assigns(:flickr_datum).should be_a_new(FlickrDatum)
+      end
+
+      it "re-renders the 'new' template" do
+        FlickrDatum.any_instance.stub(:save).and_return(false)
+        post :create, {:flickr_datum => {}}, valid_session
+        response.should render_template("new")
+      end
+    end
   end
 
-  describe "PUT update" do
+  describe "#update" do
     describe "with valid params" do
       it "updates the requested flickr_datum" do
         flickr_datum = FlickrDatum.create! valid_attributes
-        # Assuming there are no other flickr_data in the database, this
-        # specifies that the FlickrDatum created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         FlickrDatum.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, {:id => flickr_datum.to_param, :flickr_datum => {'these' => 'params'}}, valid_session
       end
@@ -117,7 +119,6 @@ describe FlickrDataController do
     describe "with invalid params" do
       it "assigns the flickr_datum as @flickr_datum" do
         flickr_datum = FlickrDatum.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         FlickrDatum.any_instance.stub(:save).and_return(false)
         put :update, {:id => flickr_datum.to_param, :flickr_datum => {}}, valid_session
         assigns(:flickr_datum).should eq(flickr_datum)
@@ -125,7 +126,6 @@ describe FlickrDataController do
 
       it "re-renders the 'edit' template" do
         flickr_datum = FlickrDatum.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         FlickrDatum.any_instance.stub(:save).and_return(false)
         put :update, {:id => flickr_datum.to_param, :flickr_datum => {}}, valid_session
         response.should render_template("edit")
@@ -133,7 +133,7 @@ describe FlickrDataController do
     end
   end
 
-  describe "DELETE destroy" do
+  describe "#destroy" do
     it "destroys the requested flickr_datum" do
       flickr_datum = FlickrDatum.create! valid_attributes
       expect {

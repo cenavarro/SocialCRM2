@@ -1,5 +1,4 @@
 class BlogDataController < ApplicationController
-  require "axlsx"
   before_filter :authenticate_user!
   before_filter :has_admin_credentials?, :except => [:index]
 
@@ -10,24 +9,17 @@ class BlogDataController < ApplicationController
     if !getDataDateRange?(params)
       @blog_datum = BlogDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
-      fechaInicio = params[:start_date].to_date
-      fechaFinal = params[:end_date].to_date
-      @blog_datum = BlogDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
+      @blog_datum = BlogDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], 
+        params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
     create_chart_data
     @report = Axlsx::Package.new
     BlogDatum.generate_excel(@report, params[:id_social], "01-01-2012", "31-12-2012")
     @report.serialize('reporte.xlsx')
-    respond_to do |format|
-      format.html
-    end
   end
 
   def new
     @blog_datum = BlogDatum.new
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit

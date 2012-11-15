@@ -20,7 +20,7 @@ describe BenchmarkDataController do
       benchmark_competitor = BenchmarkCompetitor.create! valid_attributes_competitor
       competitor_data = BenchmarkDatum.create! valid_attributes_datum
       get :index, :locale => :es, :opcion => 1, :idc => 1, :id_social => 1
-      assigns(:benchmark_competitors).should eq([benchmark_competitor])
+      assigns(:benchmark)["Competitor 1"].should eq([1,2,3,4,5,6])
     end
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121107195051) do
+ActiveRecord::Schema.define(:version => 20121113224141) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20121107195051) do
     t.text     "distribution"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "totals"
   end
 
   create_table "benchmark_competitors", :force => true do |t|

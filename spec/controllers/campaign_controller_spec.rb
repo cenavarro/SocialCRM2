@@ -21,7 +21,7 @@ describe CampaignDataController do
   end
 
   def attributes_rows_campaign_2
-    {:name => "Criterio 1", :social_network_id => 1}
+    {:name => "Criterio 2", :social_network_id => 1}
   end
 
   def create_test_data
@@ -36,7 +36,7 @@ describe CampaignDataController do
     it "assigns all rows_campaign as @rows_campaign for a specific Campaign" do
       rows_campaign = RowsCampaign.where('social_network_id = ?', 1)
       get :index, :locale => :es, :idc => 1, :opcion => 1, :id_social => 1
-      assigns(:rows_campaign).should eq(rows_campaign)
+      assigns(:campaign_data).should eq({"dates"=>["01 Jan - 15 Jan"], "data"=>[{"Criterio 1"=>[5]}, {"Criterio 2"=>[10]}], "ids"=>[2]})
     end
   end
 

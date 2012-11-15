@@ -7,16 +7,10 @@ class BenchmarkDataController < ApplicationController
       BenchmarkComment.new(:social_network_id => params[:id_social].to_i).save! 
     end
     @benchmark = select_benchmark_data
-    respond_to do |format|
-      format.html
-    end
   end
 
   def new
     @benchmark_competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:id_social]).order("name ASC")
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit
@@ -89,8 +83,6 @@ class BenchmarkDataController < ApplicationController
           benchmark_data[competitor.name].push(datum[key])
         end
       end
-      start_date = competitor_data.first.start_date
-      end_date = competitor_data.first.end_date
     end
     return benchmark_data
   end
@@ -119,9 +111,9 @@ class BenchmarkDataController < ApplicationController
 
   def x_axis_array(start_date, end_date)
     ['Blogs', 
-      "Foros   #{start_date.strftime("%d %b")}",
+      "Foros      #{start_date.strftime("%d %b")}",
       "Videos   al",
-      "Twitter   #{end_date.strftime("%d %b")}",
+      "Twitter     #{end_date.strftime("%d %b")}",
       "Facebook",
       "Otros"
     ]
