@@ -21,6 +21,7 @@ class PinterestDataController < ApplicationController
     FoursquareDatum.generate_excel(@report, 6, "01-01-2012", "31-12-2012")
     GooglePlusDatum.generate_excel(@report, 7, "01-01-2012", "31-12-2012")
     LinkedinDatum.generate_excel(@report, 8, "01-01-2012", "08-11-2012")
+    PinterestDatum.generate_excel(@report, 10, "01-01-2012", "31-12-2012")
     @report.serialize('reporte.xlsx')
   end
 
