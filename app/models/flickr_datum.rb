@@ -26,7 +26,7 @@ class FlickrDatum < ActiveRecord::Base
         report_data = select_report_data(social_id, start_date, end_date)
         styles = create_report_styles(wb, report_data['size'])
         add_rows_report(sheet, 2)
-        sheet.add_row ["","PAGINA DE BLOG"], :style => 3
+        sheet.add_row ["","PAGINA FLICKR"], :style => 3
         add_table(sheet, report_data, styles)
         add_rows_report(sheet, 15)
         add_charts(sheet, report_data['size'])
@@ -47,27 +47,10 @@ class FlickrDatum < ActiveRecord::Base
     return data
   end
 
-  def self.add_table(sheet, report_data, styles)
-    add_rows_report(sheet, 2)
-    report_data['table'].each do |key, data|
-      if key.include?("header") || (key=="actions")
-        sheet.add_row data, :style => styles['header'], :height => height_cell, :widths => report_data['widths']
-      elsif key.include?("dates")
-        sheet.add_row data, :style => styles['dates'], :height => height_cell
-      else
-        sheet.add_row data, :style => styles['basic'], :height => height_cell
-      end
-    end
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.table]
-  end
-
   def self.add_charts(sheet, size)
     @end_letter = (65 + size).chr
     @labels = sheet["C6:#{@end_letter}6"]
-    sheet.add_row ["","GRAFICOS BLOG"], :style => 3
+    sheet.add_row ["","GRAFICOS FLICKR"], :style => 3
     add_rows_report(sheet, 2)
     insert_community_chart(sheet)
     insert_interactivity_chart(sheet)

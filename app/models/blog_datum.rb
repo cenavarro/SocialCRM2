@@ -51,23 +51,6 @@ class BlogDatum < ActiveRecord::Base
     return data
   end
 
-  def self.add_table(sheet, report_data, styles)
-    add_rows_report(sheet, 2)
-    report_data['table'].each do |key, data|
-      if key.include?("header") || (key=="actions")
-        sheet.add_row data, :style => styles['header'], :height => height_cell, :widths => report_data['widths']
-      elsif key.include?("dates")
-        sheet.add_row data, :style => styles['dates'], :height => height_cell
-      else
-        sheet.add_row data, :style => styles['basic'], :height => height_cell
-      end
-    end
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.table]
-  end
-
   def self.add_charts(sheet, size)
     @end_letter = (65 + size).chr
     @labels = sheet["C6:#{@end_letter}6"]
@@ -95,8 +78,8 @@ class BlogDatum < ActiveRecord::Base
         data['table'][key] << value
       end
       data['table']['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
-      data['table']['diff_visits'] << BlogDatum.get_diff_unique_visits(datum).round(2)
-      data['table']['diff_view'] << BlogDatum.get_diff_views_pages(datum).round(2)
+      data['table']['diff_visits'] << get_diff_unique_visits(datum).round(2)
+      data['table']['diff_view'] << get_diff_views_pages(datum).round(2)
       data['widths'] << 9
     end
   end

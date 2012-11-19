@@ -129,23 +129,6 @@ class FacebookDatum < ActiveRecord::Base
     return data
   end
 
-  def self.add_table(sheet, report_data, styles)
-    add_rows_report(sheet, 2)
-    report_data['table'].each do |key, data| 
-      if key.include?("header") || (key=="actions")
-        sheet.add_row data, :style => styles['header'], :height => height_cell, :widths => report_data['widths']
-      elsif key.include?("dates")
-        sheet.add_row data, :style => styles['dates'], :height => height_cell
-      else
-        sheet.add_row data, :style => styles['basic'], :height => height_cell
-      end
-    end
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.table]
-  end
-
   def self.add_charts(sheet, size)
     @end_letter = (65 + size).chr
     @labels = sheet["C6:#{@end_letter}6"]
@@ -187,16 +170,16 @@ class FacebookDatum < ActiveRecord::Base
       end
       data['widths'] << 9
       data['table']['dates'] << datum.start_date.strftime('%d %b') + "-" + datum.end_date.strftime("%d %b")
-      data['table']['total_investment'] << FacebookDatum.get_total_investment(datum).round(2)
-      data['table']['growth_fans'] << FacebookDatum.get_fan_growth_percentage(datum).round(2)
-      data['table']['change_total_reach'] << FacebookDatum.percentage_total_reach(datum).round(2)
-      data['table']['total_interactions_platform'] << FacebookDatum.get_total_interactions(datum).round(2)
-      data['table']['change_interactions'] << FacebookDatum.percentage_change_interactions(datum).round(2)
-      data['table']['total_prints'] << FacebookDatum.get_total_prints(datum).round(2)
-      data['table']['change_prints'] << FacebookDatum.percentage_change_prints(datum).round(2)
-      data['table']['cpm_general'] << FacebookDatum.get_cpm_general(datum).round(2)
-      data['table']['cost_per_iteraction'] << FacebookDatum.get_coste_interaction(datum).round(2)
-      data['table']['cost_per_fan'] << FacebookDatum.get_fan_cost(datum).round(2)
+      data['table']['total_investment'] << get_total_investment(datum).round(2)
+      data['table']['growth_fans'] << get_fan_growth_percentage(datum).round(2)
+      data['table']['change_total_reach'] << percentage_total_reach(datum).round(2)
+      data['table']['total_interactions_platform'] << get_total_interactions(datum).round(2)
+      data['table']['change_interactions'] << percentage_change_interactions(datum).round(2)
+      data['table']['total_prints'] << get_total_prints(datum).round(2)
+      data['table']['change_prints'] << percentage_change_prints(datum).round(2)
+      data['table']['cpm_general'] << get_cpm_general(datum).round(2)
+      data['table']['cost_per_iteraction'] << get_coste_interaction(datum).round(2)
+      data['table']['cost_per_fan'] << get_fan_cost(datum).round(2)
     end
   end
 

@@ -81,4 +81,21 @@ module ApplicationHelper
     return 20
   end
 
+  def add_table(sheet, report_data, styles)
+    add_rows_report(sheet, 2)
+    report_data['table'].each do |key, data|
+      if key.include?("header") || (key=="actions")
+        sheet.add_row data, :style => styles['header'], :height => height_cell, :widths => report_data['widths']
+      elsif key.include?("dates")
+        sheet.add_row data, :style => styles['dates'], :height => height_cell
+      else
+        sheet.add_row data, :style => styles['basic'], :height => height_cell
+      end
+    end
+    add_rows_report(sheet, 1)
+    sheet.add_row ["", "Comentario"], :style => 3
+    add_rows_report(sheet, 1)
+    sheet.add_row ["", @comments.table]
+  end
+
 end

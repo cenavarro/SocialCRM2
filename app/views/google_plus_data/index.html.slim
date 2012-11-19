@@ -54,9 +54,9 @@ script
   | refreshChart();
 
   | createChart('container_interactions', 'Interactividad', #{raw @google['dates']});
-  | addSerie('# Visitas',#{@google['plus']});
-  | addSerie('# Comentarios',#{@google['content_shared']});
-  | addSerie('# Favoritos',#{@google['total_interactions']});
+  | addSerie('(+1s)',#{@google['plus']});
+  | addSerie('Compartir Contenido',#{@google['content_shared']});
+  | addSerie('Total Interacciones',#{@google['total_interactions']});
   | refreshChart();
 
   | createChart('container_investment', 'Inversion', #{raw @google['dates']});

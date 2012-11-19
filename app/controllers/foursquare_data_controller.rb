@@ -12,16 +12,10 @@ class FoursquareDataController < ApplicationController
       @foursquare_datum = FoursquareDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
     @foursquare = select_chart_data
-    respond_to do |format|
-      format.html
-    end
   end
 
   def new
     @foursquare_datum = FoursquareDatum.new
-    respond_to do |format|
-      format.html
-    end
   end
 
   def edit
