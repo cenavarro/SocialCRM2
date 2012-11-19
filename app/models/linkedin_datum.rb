@@ -1,4 +1,5 @@
 class LinkedinDatum < ActiveRecord::Base
+  extend ApplicationHelper
   belongs_to :social_network
 
   def self.get_new_followers(datum)
