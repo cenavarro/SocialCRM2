@@ -14,6 +14,14 @@ class PinterestDataController < ApplicationController
       @pinterest_datum = PinterestDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
     end
     @pinterest = select_chart_data
+    @report = Axlsx::Package.new
+    FacebookDatum.generate_excel(@report, 2, "01-01-2012", "31-12-2012")
+    BlogDatum.generate_excel(@report, 4, "01-01-2012", "31-12-2012")
+    FlickrDatum.generate_excel(@report, 1, "01-01-2012", "31-12-2012")
+    FoursquareDatum.generate_excel(@report, 6, "01-01-2012", "31-12-2012")
+    GooglePlusDatum.generate_excel(@report, 7, "01-01-2012", "31-12-2012")
+    LinkedinDatum.generate_excel(@report, 8, "01-01-2012", "08-11-2012")
+    @report.serialize('reporte.xlsx')
   end
 
   def new
