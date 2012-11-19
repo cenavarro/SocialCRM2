@@ -13,6 +13,11 @@ class FlickrDataController < ApplicationController
          params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
     @flickr = select_chart_data
+    @report = Axlsx::Package.new
+    FacebookDatum.generate_excel(@report, 2, "01-01-2012", "31-12-2012")
+    BlogDatum.generate_excel(@report, 4, "01-01-2012", "31-12-2012")
+    FlickrDatum.generate_excel(@report, params[:id_social], "01-01-2012", "31-12-2012")
+    @report.serialize('reporte.xlsx')
   end
 
   def new

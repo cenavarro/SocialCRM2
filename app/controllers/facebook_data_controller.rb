@@ -15,12 +15,6 @@ class FacebookDataController < ApplicationController
     end
 
     @chart = create_chart_data(@facebook_data)
-=begin
-    @report = Axlsx::Package.new
-    FacebookDatum.generate_excel(@report, 2, "01-01-2012", "31-12-2012")
-    BlogDatum.generate_excel(@report, 4, "01-01-2012", "31-12-2012")
-    @report.serialize('reporte.xlsx')
-=end
   end
 
   def callback
