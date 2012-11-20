@@ -73,7 +73,6 @@ class PinterestDatum < ActiveRecord::Base
     linkedin_datum.each do |datum|
       linkedin_keys.each do |key|
         key.include?("header") ? (value = nil) : (value = datum[key])
-        p key
         data['table'][key] << value
       end
       data['table']['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"

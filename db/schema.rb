@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121113224141) do
+ActiveRecord::Schema.define(:version => 20121119205429) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -383,7 +383,7 @@ ActiveRecord::Schema.define(:version => 20121113224141) do
     t.integer  "upload_photos"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "actions_text"
+    t.string   "actions"
   end
 
   create_table "tumblr_comments", :force => true do |t|

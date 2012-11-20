@@ -9,7 +9,8 @@ class TwitterDataController < ApplicationController
     if !getDataDateRange?(params)
       @twitter_data = TwitterDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else 
-      @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? and social_network_id = ?', params[:start_date].to_date,params[:end_date].to_date,params[:id_social]]).order("start_date ASC")
+      @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? and social_network_id = ?', 
+                                         params[:start_date].to_date,params[:end_date].to_date,params[:id_social]]).order("start_date ASC")
     end
     @twitter = select_chart_data
   end

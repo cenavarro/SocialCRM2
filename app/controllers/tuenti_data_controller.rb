@@ -9,9 +9,8 @@ class TuentiDataController < ApplicationController
     if !getDataDateRange?(params)
       @tuenti_datum = TuentiDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
-      fechaInicio = params[:start_date].to_date
-      fechaFinal = params[:end_date].to_date
-      @tuenti_datum = TuentiDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
+      @tuenti_datum = TuentiDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',
+                                        params[:id_social], params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
     @tuenti = select_chart_data
   end

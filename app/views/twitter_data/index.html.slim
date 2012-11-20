@@ -48,7 +48,7 @@ script
   | createChart('container_comunidad', 'Comunidad', #{raw @twitter['dates']});
   | addSerie('# Nuevos Followers', #{@twitter['new_followers']});
   | addSerie('# Followers', #{@twitter['total_followers']});
-  | addSerie('# Objetivo Followers', #{@twitter['goal_followers']});
+  | addSerie('Objetivo Followers', #{@twitter['goal_followers']});
   | refreshChart();
 
   | createChart('container_interacciones', 'Interactividad', #{raw @twitter['dates']});
@@ -64,7 +64,7 @@ script
   | addSerie('Inversion Total', #{@twitter['total_investment']});
   | refreshChart();
 
-  | createChart('container_costes', 'Costest', #{raw @twitter['dates']});
+  | createChart('container_costes', 'Costes', #{raw @twitter['dates']});
   | addSerie('Costes', #{@twitter['cost_follower']});
   | addSerie('Cost per engagement twitter ads', #{@twitter['cost_twitter_ads']});
   | addSerie('Coste por mil impresiones', #{@twitter['cost_prints']});
@@ -366,7 +366,7 @@ section.sectionInformation
         .comment
           .title
             h4
-              | Comentario Grafico Comnidad
+              | Comentario Grafico Comunidad
           form  id="comunity" onsubmit="return saveChartComment('#comunity',#{@socialNetwork.id},'comunity','#{params[:locale]}', '#{@twitter_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.comunity

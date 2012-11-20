@@ -102,7 +102,7 @@ section.sectionInformation
                 |Acciones Durante el periodo
               - @tuenti_datum.each do | tuenti_datum |
                 td
-                  = tuenti_datum.actions_text
+                  = tuenti_datum.actions
             tr.titlesRows
               td colspan=100
                 |Fans 
@@ -130,42 +130,6 @@ section.sectionInformation
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = TuentiDatum.get_grown_fans_percent(tuenti_datum)
-            tr.titlesRows
-              td colspan=100
-                | Inversion
-            tr
-              td
-                | Inversion Agencia
-              - @tuenti_datum.each do |tuenti_datum|
-                td
-                  = tuenti_datum.investment_agency
-            tr
-              td
-                | Inversion nuevas acciones
-              - @tuenti_datum.each do |tuenti_datum|
-                td
-                  = tuenti_datum.investment_actions
-            tr
-              td
-                | Inversion anuncios
-              - @tuenti_datum.each do |tuenti_datum|
-                td
-                  = tuenti_datum.investment_ads
-            tr
-              td
-                | Inversion Total
-              - @tuenti_datum.each do |tuenti_datum|
-                td
-                  = TuentiDatum.get_total_investment(tuenti_datum)
-            tr.titlesRows
-              td colspan=100
-                |Costes
-            tr
-              td
-                |Coste Fan
-              - @tuenti_datum.each do | tuenti_datum |
-                td
-                  = tuenti_datum.cost_fan
             tr.titlesRows
               td colspan=100
                 |Pagina de empresa
@@ -217,6 +181,42 @@ section.sectionInformation
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = tuenti_datum.upload_photos
+            tr.titlesRows
+              td colspan=100
+                | Inversion
+            tr
+              td
+                | Inversion Agencia
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.investment_agency
+            tr
+              td
+                | Inversion nuevas acciones
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.investment_actions
+            tr
+              td
+                | Inversion anuncios
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = tuenti_datum.investment_ads
+            tr
+              td
+                | Inversion Total
+              - @tuenti_datum.each do |tuenti_datum|
+                td
+                  = TuentiDatum.get_total_investment(tuenti_datum)
+            tr.titlesRows
+              td colspan=100
+                |Costes
+            tr
+              td
+                |Coste Fan
+              - @tuenti_datum.each do | tuenti_datum |
+                td
+                  = tuenti_datum.cost_fan.round(2)
             tr id="buttons"
               td.nilValue
                 |Opciones
