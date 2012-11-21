@@ -19,6 +19,7 @@ class SocialNetwork < ActiveRecord::Base
   has_many :benchmark_comment, :dependent => :destroy
   has_many :images_social_network, :dependent => :destroy
 
+  has_many :benchmark_data, :dependent => :destroy
   has_many :blog_data, :dependent => :destroy
   has_many :facebook_data, :dependent => :destroy
   has_many :flickr_data, :dependent => :destroy

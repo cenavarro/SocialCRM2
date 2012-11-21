@@ -59,6 +59,7 @@ module ApplicationHelper
                                    :border => {:style => :thin, :color => "#FF000000"}, :sz => 9, :font_name => "Calibri")
     basic_style = styles.add_style(:border => {:style => :thin, :color => "#00000000"}, :sz => 11, :font_name => "Calibri")
     none_style = styles.add_style()
+    date_benchmark_style = styles.add_style(:size => 5, :font_name => "Calibri")
     styles_hash = {"title"=> [none_style], "header"=> [none_style], "dates"=> [none_style], "basic"=> [none_style]}
     for i in (1..size) do
       styles_hash['title'] << title_style
@@ -87,9 +88,9 @@ module ApplicationHelper
       if key.include?("header") || (key=="actions")
         sheet.add_row data, :style => styles['header'], :height => height_cell, :widths => report_data['widths']
       elsif key.include?("dates")
-        sheet.add_row data, :style => styles['dates'], :height => height_cell
+        sheet.add_row data, :style => styles['dates'], :height => height_cell, :widths => report_data['widths']
       else
-        sheet.add_row data, :style => styles['basic'], :height => height_cell
+        sheet.add_row data, :style => styles['basic'], :height => height_cell, :widths => report_data['widths']
       end
     end
     add_rows_report(sheet, 1)

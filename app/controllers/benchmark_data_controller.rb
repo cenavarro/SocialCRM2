@@ -7,6 +7,22 @@ class BenchmarkDataController < ApplicationController
       BenchmarkComment.new(:social_network_id => params[:id_social].to_i).save! 
     end
     @benchmark = select_benchmark_data
+    @report = Axlsx::Package.new
+    start_date = "01-01-2012"
+    end_date = "31-12-2012"
+    BenchmarkDatum.generate_excel(@report, 3, start_date, "30-11-2012")
+    BlogDatum.generate_excel(@report, 4, start_date, end_date)
+    FacebookDatum.generate_excel(@report, 2, start_date, end_date)
+    FlickrDatum.generate_excel(@report, 1, start_date, end_date)
+    FoursquareDatum.generate_excel(@report, 6, start_date, end_date)
+    GooglePlusDatum.generate_excel(@report, 7, start_date, end_date)
+    LinkedinDatum.generate_excel(@report, 8, start_date, "08-11-2012")
+    PinterestDatum.generate_excel(@report, 10, start_date, end_date)
+    TuentiDatum.generate_excel(@report, 11, start_date, end_date)
+    TumblrDatum.generate_excel(@report, 12, start_date, end_date)
+    TwitterDatum.generate_excel(@report, 13, start_date, end_date)
+    YoutubeDatum.generate_excel(@report, 14, start_date, end_date)
+    @report.serialize('reporte.xlsx')
   end
 
   def new
@@ -73,50 +89,18 @@ class BenchmarkDataController < ApplicationController
     competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:id_social]).order("name ASC")
     benchmark_data['competitors'] = competitors.map(&:name)
     competitors.each do |competitor|
-      competitor_data = data_of_competitor(competitor.id)
+      competitor_data = BenchmarkDatum.data_of_competitor(competitor.id, params[:start_date], params[:end_date])
       benchmark_data['dates'] ||= competitor_data.collect { |data| "#{data.start_date.strftime("%d %b")} - #{data.end_date.strftime("%d %b")}"}
       benchmark_data['ids'] ||= competitor_data.map(&:id)
       benchmark_data[competitor.name] = []
       competitor_data.each do |datum|
-        benchmark_data['x_axis'].concat(x_axis_array(datum.start_date, datum.end_date))
-        benchmark_keys.each do |key|
+        benchmark_data['x_axis'].concat(BenchmarkDatum.x_axis_array_with_dates(datum.start_date, datum.end_date))
+        BenchmarkDatum.benchmark_keys.each do |key|
           benchmark_data[competitor.name].push(datum[key])
         end
       end
     end
     return benchmark_data
-  end
-
-  def data_of_competitor(id)
-    if get_data_in_range? 
-      data = BenchmarkDatum.where('start_date = ? and end_date = ? and benchmark_competitor_id = ?', params[:start_date].to_date, params[:end_date].to_date, id).order("start_date ASC") 
-    else
-      data = BenchmarkDatum.where(:benchmark_competitor_id => id).order("start_date ASC")
-    end
-  end
-
-  def get_data_in_range?
-    (params.has_key?(:start_date) && params.has_key?(:end_date)) ? (true) : (false)
-  end
-
-  def benchmark_keys
-    ['blogs',
-      'forums',
-      'videos',
-      'twitter',
-      'facebook',
-      'others'
-    ]
-  end
-
-  def x_axis_array(start_date, end_date)
-    ['Blogs', 
-      "Foros      #{start_date.strftime("%d %b")}",
-      "Videos   al",
-      "Twitter     #{end_date.strftime("%d %b")}",
-      "Facebook",
-      "Otros"
-    ]
   end
 
 end
