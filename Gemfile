@@ -29,6 +29,7 @@ group :development do
   gem 'guard', "= 1.3.0"
   gem 'guard-livereload', "= 1.0.0"
   gem "rspec-rails", "= 2.11.0"
+  gem "debugger"
 end
 
 group :test do

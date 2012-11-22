@@ -1,27 +1,11 @@
 class BlogDatum < ActiveRecord::Base
+  include Datum
+
   extend ApplicationHelper
   belongs_to :social_network
 
-  def self.get_diff_unique_visits(datum)
-    if !first_data?(datum)
-      previous_data = BlogDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).last
-      return ((datum.unique_visits-previous_data.unique_visits).to_f/previous_data.unique_visits.to_f)*100 if previous_data.unique_visits != 0
-    end
-    return 0 
-  end
-
-  def self.get_diff_views_pages(datum)
-    if !first_data?(datum)
-      previous_data = BlogDatum.where('end_date < ? and social_network_id = ?', datum.start_date.to_date, datum.social_network_id).last
-      return ((datum.view_pages-previous_data.view_pages).to_f/previous_data.view_pages.to_f)*100 if previous_data.view_pages != 0
-    end
-    return 0
-  end
-
-  def self.first_data?(datum)
-    previous_data = BlogDatum.where('end_date < ? and social_network_id = ?',datum.start_date.to_date, datum.social_network_id).last
-		(previous_data == nil) ? (return true) : (return false)
-  end
+  set_type :blog_data
+  comparable_metrics :unique_visits, :view_pages
 
   def self.generate_excel(document, social_id, start_date, end_date)
     document.workbook do | wb |
@@ -43,7 +27,7 @@ class BlogDatum < ActiveRecord::Base
   private
 
   def self.select_report_data(social_id, start_date, end_date)
-    blog_datum = BlogDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?', social_id, start_date.to_date, end_date.to_date).order("start_date ASC")
+    blog_datum = social_network.blog_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
     data = table_rows
     data['widths'] = [1, 32]
     data['size'] = (blog_datum.size+1)
@@ -79,7 +63,7 @@ class BlogDatum < ActiveRecord::Base
       end
       data['table']['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
       data['table']['diff_visits'] << get_diff_unique_visits(datum).round(2)
-      data['table']['diff_view'] << get_diff_views_pages(datum).round(2)
+      data['table']['diff_view'] << get_diff_view_pages(datum).round(2)
       data['widths'] << 9
     end
   end

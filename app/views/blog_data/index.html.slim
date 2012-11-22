@@ -110,7 +110,7 @@ section.sectionInformation
               td
                 |% diferencia
               - @blog_datum.each do |blog_datum|
-                - value = BlogDatum.get_diff_views_pages(blog_datum)
+                - value = BlogDatum.get_diff_view_pages(blog_datum)
                 - if value >= 0.0
                   td.positiveValue
                     = %{#{value.round(3)}%}
