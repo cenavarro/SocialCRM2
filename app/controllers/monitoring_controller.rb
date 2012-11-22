@@ -10,11 +10,33 @@ class MonitoringController < ApplicationController
     themes = Monitoring.where('social_network_id = ? and isTheme = ?', params[:id_social], true).order("name ASC")
     channels = Monitoring.where('social_network_id = ? and isTheme = ?', params[:id_social], false).order("name ASC")
     if getDataDateRange?(params)
-      @datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, themes.first.id).order('start_date ASC')
+      @datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', 
+                                    params[:start_date].to_date, params[:end_date].to_date, themes.first.id).order('start_date ASC')
     else
       @datum = MonitoringData.where('monitoring_id = ?', themes.first.id).order('start_date ASC')
     end
     create_all_data(themes, channels)
+    @report = Axlsx::Package.new
+    start_date = "01-01-2012"
+    end_date = "31-12-2012"
+=begin
+    BenchmarkDatum.generate_excel(@report, 3, start_date, "30-11-2012")
+    BlogDatum.generate_excel(@report, 4, start_date, end_date)
+    FacebookDatum.generate_excel(@report, 2, start_date, end_date)
+    FlickrDatum.generate_excel(@report, 1, start_date, end_date)
+    FoursquareDatum.generate_excel(@report, 6, start_date, end_date)
+    GooglePlusDatum.generate_excel(@report, 7, start_date, end_date)
+    LinkedinDatum.generate_excel(@report, 8, start_date, "08-11-2012")
+    Monitoring.generate_excel(@report, 17, start_date, end_date)
+    PinterestDatum.generate_excel(@report, 10, start_date, end_date)
+    RowsCampaign.generate_excel(@report, 5, start_date, end_date)
+    TuentiDatum.generate_excel(@report, 11, start_date, end_date)
+    TumblrDatum.generate_excel(@report, 12, start_date, end_date)
+    TwitterDatum.generate_excel(@report, 13, start_date, end_date)
+    YoutubeDatum.generate_excel(@report, 14, start_date, end_date)
+=end
+    Monitoring.generate_excel(@report, 17, start_date, end_date)
+    @report.serialize('reporte.xlsx')
   end
 
   def new
@@ -88,11 +110,7 @@ class MonitoringController < ApplicationController
 
   def create_theme_datum(themes)
     themes.each do |theme|
-      if getDataDateRange?(params)
-        @themes_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, theme.id).order('start_date ASC')
-      else
-        @themes_datum = MonitoringData.where('monitoring_id = ?', theme.id).order('start_date ASC')
-      end
+      @themes_datum = get_monitoring_data(theme.id)
       data = []
       index = 0
       @themes_datum.each do |datum|
@@ -107,11 +125,7 @@ class MonitoringController < ApplicationController
 
   def create_channel_datum(channels)
     channels.each do |channel|
-      if getDataDateRange?(params)
-        @channels_datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', params[:start_date].to_date, params[:end_date].to_date, channel.id).order('start_date ASC')
-      else
-        @channels_datum = MonitoringData.where('monitoring_id = ?', channel.id).order('start_date ASC')
-      end
+      @channels_datum = get_monitoring_data(channel.id)
       data = []
       index = 0
       @channels_datum.each do |datum|
@@ -125,6 +139,15 @@ class MonitoringController < ApplicationController
       end
       @monitoring_data['channel_datum'] << {:name => channel.name, :data => data}
     end
+  end
+
+  def get_monitoring_data(id)
+      if getDataDateRange?(params)
+        MonitoringData.where('start_date >= ? and end_date <= ? and monitoring_id = ?', 
+                                               params[:start_date].to_date, params[:end_date].to_date, id).order('start_date ASC')
+      else
+        MonitoringData.where('monitoring_id = ?', id).order('start_date ASC')
+      end
   end
 
 end

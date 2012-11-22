@@ -5,7 +5,7 @@ DemoComentarios::Application.routes.draw do
   scope ':locale' do
 
     get "monitoring_data/new/:idc/:id_social" => "monitoring#new", :as => "monitoring_new"
-    post "monitoring/save_comment" => "monitoring#save_comment", :as => "monitoring_save_comment"
+    post "monitoring_data/save_comment" => "monitoring#save_comment", :as => "monitoring_save_comment"
     get "monitoring_data/:id/edit/:idc/:id_social" => "monitoring#edit", :as => "monitoring_edit"
     post "monitoring/:idc/:id_social" => "monitoring#create", :as => "monitoring"
     post "monitoring" => "monitoring#update", :as => "monitoring_update"

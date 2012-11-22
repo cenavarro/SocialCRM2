@@ -10,7 +10,7 @@ class BenchmarkDatum < ActiveRecord::Base
         @report_data = select_report_data(social_id, start_date, end_date)
         styles = create_report_styles(wb, @report_data['size'])
         add_rows_report(sheet, 2)
-        sheet.add_row ['', "PAGINA DE BLOG"], :style => 3
+        sheet.add_row ['', "PAGINA DE BENCHMARK"], :style => 3
         add_table_benchmark(sheet, @report_data, styles)
         add_rows_report(sheet, 5)
         add_charts(sheet, @report_data['size'] - 1)
@@ -86,7 +86,7 @@ class BenchmarkDatum < ActiveRecord::Base
 
   def self.add_charts(sheet, size)
     size = size * 7
-    sheet.add_row ["","GRAFICOS BLOG"], :style => 3
+    sheet.add_row ["","GRAFICOS BENCHMAR"], :style => 3
     add_rows_report(sheet, 2)
     insert_distribution_chart(sheet, size)
     insert_totals_chart(sheet, size)
