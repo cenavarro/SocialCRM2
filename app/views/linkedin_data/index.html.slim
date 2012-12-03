@@ -105,7 +105,7 @@ section.sectionInformation
               td
                 | % Crecimiento
               - @linkedin_data.each do |linkedin_datum|
-                - percentFollowers = LinkedinDatum.get_growth_followers(linkedin_datum)
+                - percentFollowers = linkedin_datum.get_percentage_difference_from_previous_total_followers.round(3)
                 - if percentFollowers >= 0.0 
                   td.positiveValue
                     = %{#{percentFollowers.round(2)}%}
@@ -120,7 +120,7 @@ section.sectionInformation
                 | # Visualizaciones de paginas
               - @linkedin_data.each do | datum |
                 td
-                  = LinkedinDatum.get_views_page(datum) 
+                  = datum.views_page
             tr
               td
                 | Resumen
@@ -195,7 +195,7 @@ section.sectionInformation
                 | Inversion Total
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = LinkedinDatum.get_total_investment(linkedin_datum)
+                  = linkedin_datum.total_investment.round(3)
             tr id="buttons"
               td.nilValue
                 |Opciones

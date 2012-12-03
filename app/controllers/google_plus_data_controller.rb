@@ -26,7 +26,6 @@ class GooglePlusDataController < ApplicationController
 
   def create
     @google_plus_datum = GooglePlusDatum.new(params[:google_plus_datum])
-    @google_plus_datum.new_followers = GooglePlusDatum.get_new_followers(@google_plus_datum)
 
     respond_to do |format|
       if @google_plus_datum.save
@@ -42,8 +41,6 @@ class GooglePlusDataController < ApplicationController
 
     respond_to do |format|
       if @google_plus_datum.update_attributes(params[:google_plus_datum])
-        @google_plus_datum.new_followers = GooglePlusDatum.get_new_followers(@google_plus_datum)
-        @google_plus_datum.save!
         format.html { redirect_to google_plus_index_path(@google_plus_datum.client_id,1,@google_plus_datum.social_network_id), notice: 'La informacion ha sido actualizada exitosamente.' }
       else
         format.html { render action: "edit" }
@@ -76,12 +73,12 @@ class GooglePlusDataController < ApplicationController
   def select_chart_data
     chart_data = {}
     chart_data['dates'] = @google_plus_datum.collect {|gd| "#{gd.start_date.strftime('%d %b')} - #{gd.end_date.strftime('%d %b')}"}
-    chart_data['new_followers'] = @google_plus_datum.collect(&:new_followers)
+    chart_data['new_followers'] = @google_plus_datum.collect { |gd| gd.new_followers }
     chart_data['total_followers'] = @google_plus_datum.collect(&:total_followers)
     chart_data['plus'] = @google_plus_datum.collect(&:plus)
     chart_data['content_shared'] = @google_plus_datum.collect(&:content_shared)
-    chart_data['total_interactions'] = @google_plus_datum.collect{ |gd| GooglePlusDatum.get_total_interactions(gd)}
-    chart_data['total_investment'] = @google_plus_datum.collect{ |gd| GooglePlusDatum.get_total_investment(gd)}
+    chart_data['total_interactions'] = @google_plus_datum.collect{ |gd| gd.total_interactions }
+    chart_data['total_investment'] = @google_plus_datum.collect{ |gd| gd.total_investment }
     return chart_data
   end
 

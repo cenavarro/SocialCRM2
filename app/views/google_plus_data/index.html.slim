@@ -107,7 +107,7 @@ section.sectionInformation
                 |% crecimiento seguidores
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = GooglePlusDatum.get_grown_followers(google_plus_datum).round(3)
+                  = google_plus_datum.get_percentage_difference_from_previous_total_followers.round(3)
             tr.titlesRows
               td colspan=100
                 |Interactividad
@@ -128,13 +128,13 @@ section.sectionInformation
                 |Total de interacciones
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = GooglePlusDatum.get_total_interactions(google_plus_datum)
+                  = google_plus_datum.total_interactions
             tr
               td
                 |% cambio en interacciones
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = GooglePlusDatum.get_change_interactions(google_plus_datum).round(3)
+                  = google_plus_datum.get_percentage_difference_from_previous_total_interactions.round(3)
             tr.titlesRows
               td colspan=100
                 | Inversion
@@ -161,7 +161,7 @@ section.sectionInformation
                 | Inversion Total
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = GooglePlusDatum.get_total_investment(google_plus_datum)
+                  = google_plus_datum.total_investment
             tr id="buttons"
               td.nilValue
                 |Opciones

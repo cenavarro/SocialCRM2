@@ -13,9 +13,6 @@ class BlogDataController < ApplicationController
         params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
     create_chart_data
-    @report = Axlsx::Package.new
-    BlogDatum.generate_excel(@report, params[:id_social], "01-01-2012", "31-12-2012")
-    @report.serialize('reporte.xlsx')
   end
 
   def new

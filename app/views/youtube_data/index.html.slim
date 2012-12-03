@@ -47,7 +47,7 @@
     br
 script
   | createChart('container_community', 'Comunidad', #{raw @youtube['dates']});
-  | addSerie('Suscriptores nuevos',#{@youtube['new_subscriber']});
+  | addSerie('Suscriptores nuevos',#{@youtube['new_subscribers']});
   | addSerie('Suscriptores totales',#{@youtube['total_subscriber']});
   | refreshChart();
 
@@ -95,7 +95,7 @@ section.sectionInformation
                 |Suscriptores nuevos
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.new_subscriber
+                  = youtube_datum.new_subscribers
             tr
               td
                 |Suscriptores totales
@@ -198,7 +198,7 @@ section.sectionInformation
                 | Inversion Total
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = YoutubeDatum.get_total_investment(youtube_datum)
+                  = youtube_datum.total_investment.round(3)
             tr id="buttons"
               td.nilValue
                 |Opciones

@@ -16,7 +16,7 @@ gem "omniauth-twitter"
 gem 'jquery-rails', "= 1.0.19"
 gem "devise", ">= 1.4.4"
 gem "slim-rails", "= 1.0.3"
-gem 'axlsx', github: 'randym/axlsx'
+gem 'axlsx', github: 'randym/axlsx', :require => "axlsx"
 
 group :assets do
   gem 'sass-rails', "  ~> 3.1.0"

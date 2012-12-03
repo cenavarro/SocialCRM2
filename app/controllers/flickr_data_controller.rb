@@ -25,7 +25,6 @@ class FlickrDataController < ApplicationController
 
   def create
     @flickr_datum = FlickrDatum.new(params[:flickr_datum])
-    @flickr_datum.new_contacts = FlickrDatum.get_new_contacts(@flickr_datum)
     respond_to do |format|
       if @flickr_datum.save
         format.html { redirect_to flickr_index_path(@flickr_datum.client_id,1,@flickr_datum.social_network_id), notice: 'La informacion se ha ingresado exitosamente.' }
@@ -42,7 +41,6 @@ class FlickrDataController < ApplicationController
 
     respond_to do |format|
       if @flickr_datum.update_attributes(params[:flickr_datum])
-        @flickr_datum.new_contacts = FlickrDatum.get_new_contacts(@flickr_datum)
         @flickr_datum.save!
         format.html { redirect_to flickr_index_path(@flickr_datum.client_id,1,@flickr_datum.social_network_id), notice: 'La informacion ha sido actualizada exitosamente.' }
         format.json { head :ok }
@@ -82,13 +80,13 @@ class FlickrDataController < ApplicationController
       chart_data[key] = @flickr_datum.map(&:"#{key}")
     end
     chart_data['dates'] = @flickr_datum.collect {|fd| "#{fd.start_date.strftime('%d %b')} - #{fd.end_date.strftime('%d %b')}"}
-    chart_data['total_investment'] = @flickr_datum.collect{ |fd| FlickrDatum.get_total_investment(fd)}
+    chart_data['new_contacts'] = @flickr_datum.collect { |fd| fd.new_contacts } 
+    chart_data['total_investment'] = @flickr_datum.collect{ |fd| fd.total_investment }
     return chart_data
   end
 
   def flickr_keys
-    ['new_contacts',
-      'total_contacts',
+   [ 'total_contacts',
       'visits',
       'comments',
       'favorites'

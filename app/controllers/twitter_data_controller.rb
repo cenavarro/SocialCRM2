@@ -25,9 +25,6 @@ class TwitterDataController < ApplicationController
 
   def create
     @twitter_datum = TwitterDatum.new(params[:twitter_datum])
-    @twitter_datum.new_followers = TwitterDatum.get_new_followers(@twitter_datum)
-    @twitter_datum.total_interactions = TwitterDatum.get_total_interactions(@twitter_datum)
-    @twitter_datum.cost_follower = TwitterDatum.get_cost_follower(@twitter_datum)
 
     respond_to do |format|
       if @twitter_datum.save
@@ -43,10 +40,6 @@ class TwitterDataController < ApplicationController
 
     respond_to do |format|
       if @twitter_datum.update_attributes(params[:twitter_datum])
-        @twitter_datum.new_followers = TwitterDatum.get_new_followers(@twitter_datum)
-        @twitter_datum.total_interactions = TwitterDatum.get_total_interactions(@twitter_datum)
-        @twitter_datum.cost_follower = TwitterDatum.get_cost_follower(@twitter_datum)
-        @twitter_datum.save!
         format.html { redirect_to twitter_index_path(@twitter_datum.client_id, 1, @twitter_datum.social_network_id), notice: 'La informacion ha sido actualizada exitosamente.' }
       else
         format.html { render action: "edit" }
@@ -79,10 +72,12 @@ class TwitterDataController < ApplicationController
   def select_chart_data
     chart_data = {}
     chart_data['dates'] = @twitter_data.collect{|td| "#{td.start_date.strftime('%d %b')} - #{td.end_date.strftime('%d %b')}"}
-    chart_data['total_investment'] = @twitter_data.collect { |td| TwitterDatum.get_total_investment(td)}
-    chart_data['cost_follower'] = @twitter_data.collect {|td| TwitterDatum.get_cost_follower(td)}
-    chart_data['cost_prints'] = @twitter_data.collect {|td| TwitterDatum.get_cost_per_prints(td)}
-    chart_data['cost_interactions'] = @twitter_data.collect {|td| TwitterDatum.get_cost_per_interaction(td)}
+    chart_data['total_investment'] = @twitter_data.collect { |td| td.total_investment }
+    chart_data['cost_follower'] = @twitter_data.collect {|td| td.cost_follower }
+    chart_data['cost_prints'] = @twitter_data.collect {|td| td.cost_per_prints }
+    chart_data['cost_interactions'] = @twitter_data.collect {|td| td.cost_per_interaction }
+    chart_data['new_followers'] = @twitter_data.collect {|td| td.new_followers }
+    chart_data['total_interactions'] = @twitter_data.collect {|td| td.total_interactions }
     twitter_keys.each do |key|
       chart_data[key] = @twitter_data.map(&:"#{key}")
     end
@@ -94,14 +89,12 @@ class TwitterDataController < ApplicationController
   end
 
   def twitter_keys
-    ['new_followers',
-      'total_followers',
+    [ 'total_followers',
       'goal_followers',
       'total_mentions',
       'ret_tweets',
       'total_clicks',
       'interactions_ads',
-      'total_interactions',
       'cost_twitter_ads'
     ]
   end

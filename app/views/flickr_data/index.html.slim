@@ -150,7 +150,7 @@ section.sectionInformation
                 | Inversion Total
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = FlickrDatum.get_total_investment(flickr_datum)
+                  = flickr_datum.total_investment.round(3)
             tr id="buttons"
               td.nilValue
                 |Opciones

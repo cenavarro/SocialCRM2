@@ -24,7 +24,6 @@ class FoursquareDataController < ApplicationController
 
   def create
     @foursquare_datum = FoursquareDatum.new(params[:foursquare_datum])
-    @foursquare_datum.new_followers = FoursquareDatum.get_new_followers(@foursquare_datum)
 
     respond_to do |format|
       if @foursquare_datum.save
@@ -40,8 +39,6 @@ class FoursquareDataController < ApplicationController
 
     respond_to do |format|
       if @foursquare_datum.update_attributes(params[:foursquare_datum])
-        @foursquare_datum.new_followers = FoursquareDatum.get_new_followers(@foursquare_datum)
-        @foursquare_datum.save!
         format.html { redirect_to foursquare_index_path(@foursquare_datum.client_id, 1, @foursquare_datum.social_network_id), notice: 'La informacion ha sido actualizada exitosamente.' }
       else
         format.html { render action: "edit" }
@@ -74,6 +71,7 @@ class FoursquareDataController < ApplicationController
   def select_chart_data
     chart_data = {}
     chart_data['dates'] = @foursquare_datum.collect {|fd| "#{fd.start_date.strftime('%d %b')} - #{fd.end_date.strftime('%d %b')}"}
+    chart_data['new_followers'] = @foursquare_datum.collect { |fd| fd.new_followers }
     foursquare_keys.each do |key|
       chart_data[key] = @foursquare_datum.map(&:"#{key}")
     end
@@ -81,8 +79,7 @@ class FoursquareDataController < ApplicationController
   end
 
   def foursquare_keys
-    ['new_followers',
-      'total_followers',
+    [ 'total_followers',
       'total_unlocks',
       'total_visits'
     ]

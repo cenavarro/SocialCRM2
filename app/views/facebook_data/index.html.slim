@@ -125,7 +125,7 @@ section.sectionInformation
               td
                 | % Crecimiento
               - @facebook_data.each do |facebook_datum|
-                - valueGrowthPercent = FacebookDatum.get_fan_growth_percentage(facebook_datum)
+                - valueGrowthPercent = facebook_datum.get_percentage_difference_from_previous_total_fans
                 - if !valueGrowthPercent.nil?
                   - if valueGrowthPercent >= 0.0 
                     td.positiveValue
@@ -183,7 +183,7 @@ section.sectionInformation
               td
                 | % cambio en Alcance Total (comparado con el periodo anterior)
               - @facebook_data.each do | datum |
-                - valueTotalReach = FacebookDatum.percentage_total_reach(datum)
+                - valueTotalReach = datum.get_percentage_difference_from_previous_total_reach
                 - if !valueTotalReach.nil?
                   - if valueTotalReach >= 0.0
                     td.positiveValue
@@ -227,12 +227,12 @@ section.sectionInformation
                 | Interacciones totales de la marca en plataforma
               - @facebook_data.each do |facebook_datum|
                 td
-                  = FacebookDatum.get_total_interactions(facebook_datum)
+                  = facebook_datum.brand_total_interactions
             tr
               td
                 | % cambio en interacciones
               - @facebook_data.each do | datum |
-                - valueChangeInteractions = FacebookDatum.percentage_change_interactions(datum)
+                - valueChangeInteractions = datum.get_percentage_difference_from_previous_total_interactions
                 - if !valueChangeInteractions.nil?
                   - if valueChangeInteractions >= 0.0
                     td.positiveValue
@@ -248,12 +248,12 @@ section.sectionInformation
                 | Impresiones totales de la marca en plataforma
               - @facebook_data.each do |facebook_datum|
                 td
-                  = FacebookDatum.get_total_prints(facebook_datum)
+                  = facebook_datum.total_prints
             tr
               td
                 | % cambio en impresiones
               - @facebook_data.each do | datum |
-                - valChangePrints = FacebookDatum.percentage_change_prints(datum)
+                - valChangePrints = datum.get_percentage_difference_from_previous_total_prints
                 - if !valChangePrints.nil?
                   - if valChangePrints >= 0.0
                     td.positiveValue
@@ -290,7 +290,7 @@ section.sectionInformation
                 | Inversion total
               - @facebook_data.each do |facebook_datum|
                 td
-                  = FacebookDatum.get_total_investment(facebook_datum).round(2)
+                  = facebook_datum.total_investment.round(2)
             tr.titlesRows
               td colspan=100
                 |Costes
@@ -317,19 +317,19 @@ section.sectionInformation
                 | CPM General
               - @facebook_data.each do | datum |
                 td
-                  = FacebookDatum.get_cpm_general(datum).round(3)
+                  = datum.cpm_general.round(3)
             tr
               td
                 | Coste por Interaccion
               - @facebook_data.each do | datum |
                 td
-                  = FacebookDatum.get_coste_interaction(datum).round(3)
+                  = datum.coste_interactions.round(3)
             tr
               td
                 | Coste por Fan
               - @facebook_data.each do | datum |
                 td
-                  = FacebookDatum.get_fan_cost(datum).round(3)
+                  = datum.fan_cost.round(3)
             tr id="buttons"
               td.nilValue
                 |Opciones

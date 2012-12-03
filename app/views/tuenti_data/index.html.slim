@@ -129,7 +129,7 @@ section.sectionInformation
                 | Porcentaje crecimiento fans 
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = TuentiDatum.get_grown_fans_percent(tuenti_datum)
+                  = tuenti_datum.get_percentage_difference_from_previous_real_fans.round(3)
             tr.titlesRows
               td colspan=100
                 |Pagina de empresa
@@ -207,7 +207,7 @@ section.sectionInformation
                 | Inversion Total
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = TuentiDatum.get_total_investment(tuenti_datum)
+                  = tuenti_datum.total_investment.round(3)
             tr.titlesRows
               td colspan=100
                 |Costes

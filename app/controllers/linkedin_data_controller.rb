@@ -26,7 +26,6 @@ class LinkedinDataController < ApplicationController
 
   def create
     @linkedin_data = LinkedinDatum.new(params[:linkedin_datum])
-    @linkedin_data.new_followers = LinkedinDatum.get_new_followers(@linkedin_data)
     respond_to do |format|
       if @linkedin_data.save
         format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1,@linkedin_data.social_network_id), notice: 'La informacion se ha ingresado exitosamente.' }
@@ -40,8 +39,6 @@ class LinkedinDataController < ApplicationController
     @linkedin_data = LinkedinDatum.find(params[:id])
     respond_to do |format|
       if @linkedin_data.update_attributes(params[:linkedin_datum])
-        @linkedin_data.new_followers = LinkedinDatum.get_new_followers(@linkedin_data)
-        @linkedin_data.save!
         format.html { redirect_to linkedin_index_path(@linkedin_data.client_id,1,@linkedin_data.social_network_id), notice: 'La informacion ha sido actualizada exitosamente.' }
       else
         format.html { render action: "edit" }
@@ -74,6 +71,7 @@ class LinkedinDataController < ApplicationController
   def select_chart_data
     chart_data = {}
     chart_data['dates'] = @linkedin_data.collect {|ld| "#{ld.start_date.strftime('%d %b')} - #{ld.end_date.strftime('%d %b')}"}
+    chart_data['new_followers'] = @linkedin_data.collect {|ld| ld.new_followers }
     linkedin_keys.each do |key|
       chart_data[key] = @linkedin_data.map(&:"#{key}")
     end
@@ -81,8 +79,7 @@ class LinkedinDataController < ApplicationController
   end
 
   def linkedin_keys
-    ['new_followers',
-      'total_followers',
+    [ 'total_followers',
       'summary',
       'employment',
       'products_services',

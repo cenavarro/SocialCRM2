@@ -41,7 +41,6 @@ class FacebookDataController < ApplicationController
 
   def create
     @facebook_datum = FacebookDatum.new(params[:facebook_datum])
-    @facebook_datum.new_fans = FacebookDatum.get_new_fans(@facebook_datum)
 
     respond_to do |format|
       if @facebook_datum.save
@@ -57,7 +56,6 @@ class FacebookDataController < ApplicationController
 
     respond_to do |format|
       if @facebook_datum.update_attributes(params[:facebook_datum])
-        @facebook_datum.new_fans = FacebookDatum.get_new_fans(@facebook_datum)
         @facebook_datum.save!
         format.html { redirect_to facebook_index_path(@facebook_datum.client_id,1,@facebook_datum.social_network_id), notice: 'La informacion ha sido actualizada con exitosamente.' }
       else
@@ -98,12 +96,9 @@ class FacebookDataController < ApplicationController
       chart_values[key] = data.collect(&:"#{key}").join(', ')
     end
     chart_values['dates'] =  data.collect { |fd| "'#{fd.start_date.strftime('%d %b')} - #{fd.end_date.strftime('%d %b')}'" }.join(', ')
-    chart_values['cpm_general'] = data.collect {|fd| FacebookDatum.get_cpm_general(fd)}.join(', ')
-    chart_values['coste_fan'] = data.collect {|fd| FacebookDatum.get_fan_cost(fd)}.join(', ')
-    chart_values['prints'] = data.collect{ |fd| FacebookDatum.get_total_prints(fd) }.join(', ')
-    chart_values['coste_interactions'] = data.collect { |fd| FacebookDatum.get_coste_interaction(fd) }.join(', ')
-    chart_values['brand_total_interactions'] = data.collect { |fd| FacebookDatum.get_total_interactions(fd)}.join(', ')
-    chart_values['investment'] = data.collect { |fd| FacebookDatum.get_total_investment(fd) }.join(', ')
+    chart_values['coste_fan'] = data.collect {|fd| fd.fan_cost}.join(', ')
+    chart_values['prints'] = data.collect{ |fd| fd.total_prints }.join(', ')
+    chart_values['investment'] = data.collect { |fd| fd.total_investment }.join(', ')
     return chart_values
   end
 
@@ -137,12 +132,15 @@ class FacebookDataController < ApplicationController
       'total_fans',
       'goal_fans',
       'total_interactions',
+      'coste_interactions',
       'total_clicks_anno',
       'ctr_anno',
       'cpc_anno',
       'cpm_anno',
+      'cpm_general',
       'total_reach',
       'potential_reach',
+      'brand_total_interactions'
     ]
   end
 

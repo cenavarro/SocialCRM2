@@ -141,7 +141,7 @@ section.sectionInformation
                 | Inversion Total
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = TumblrDatum.get_total_investment(tumblr_datum)
+                  = tumblr_datum.total_investment.round(3)
             tr id="buttons"
               td.nilValue
                 |Opciones

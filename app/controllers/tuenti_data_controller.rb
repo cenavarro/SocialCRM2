@@ -29,9 +29,6 @@ class TuentiDataController < ApplicationController
 
     respond_to do |format|
       if @tuenti_datum.save
-        @tuenti_datum.new_fans = TuentiDatum.get_new_fans(@tuenti_datum)
-        @tuenti_datum.cost_fan = TuentiDatum.get_cost_fan(@tuenti_datum)
-        @tuenti_datum.save!
         format.html { redirect_to tuenti_index_path(@tuenti_datum.client_id,1,@tuenti_datum.social_network_id), notice: 'La informacion se ha ingresado exitosamente.' }
       else
         format.html { render action: "new" }
@@ -44,9 +41,6 @@ class TuentiDataController < ApplicationController
 
     respond_to do |format|
       if @tuenti_datum.update_attributes(params[:tuenti_datum])
-        @tuenti_datum.new_fans = TuentiDatum.get_new_fans(@tuenti_datum)
-        @tuenti_datum.cost_fan = TuentiDatum.get_cost_fan(@tuenti_datum)
-        @tuenti_datum.save!
         format.html { redirect_to tuenti_index_path(@tuenti_datum.client_id,1,@tuenti_datum.social_network_id), notice: 'La informacion se ha actualizada exitosamente.' }
       else
         format.html { render action: "edit" }
@@ -78,16 +72,17 @@ class TuentiDataController < ApplicationController
   def select_chart_data
     chart_data = {}
     chart_data['dates'] = @tuenti_datum.collect{|td| "#{td.start_date.strftime('%d %b')} - #{td.end_date.strftime('%d %b')}"}
+    chart_data['new_fans'] = @tuenti_datum.collect{|td| td.new_fans }
+    chart_data['cost_fan'] = @tuenti_datum.collect{|td| td.cost_fan.round(3) }
+    chart_data['total_investment'] = @tuenti_datum.collect{|td| td.total_investment.round(3) }
     tuenti_keys.each do |key|
       chart_data[key] = @tuenti_datum.map(&:"#{key}")
     end
-    chart_data['total_investment'] = @tuenti_datum.collect{|td| TuentiDatum.get_total_investment(td)}
     return chart_data
   end
 
   def tuenti_keys
-    ['new_fans',
-      'real_fans',
+    [ 'real_fans',
       'goal_fans',
       'unique_total_users',
       'clics',
@@ -97,8 +92,7 @@ class TuentiDataController < ApplicationController
       'page_prints',
       'investment_agency',
       'investment_actions',
-      'investment_ads',
-      'cost_fan'
+      'investment_ads'
     ]
   end
 

@@ -28,8 +28,6 @@ class PinterestDataController < ApplicationController
     @pinterest_datum = PinterestDatum.new(params[:pinterest_datum])
     respond_to do |format|
       if @pinterest_datum.save
-        @pinterest_datum.new_followers = PinterestDatum.get_new_followers(@pinterest_datum)
-        @pinterest_datum.save!
         format.html { redirect_to pinterest_index_path(@pinterest_datum.client_id,1,@pinterest_datum.social_network_id), notice: 'La informacion se ha ingresado exitosamente.' }
       else
         format.html { render action: "new" }
@@ -42,8 +40,6 @@ class PinterestDataController < ApplicationController
 
     respond_to do |format|
       if @pinterest_datum.update_attributes(params[:pinterest_datum])
-        @pinterest_datum.new_followers = PinterestDatum.get_new_followers(@pinterest_datum)
-        @pinterest_datum.save!
         format.html { redirect_to pinterest_index_path(@pinterest_datum.client_id,1,@pinterest_datum.social_network_id), notice: 'La informacion se ha actualizada exitosamente.' }
       else
         format.html { render action: "edit" }
@@ -76,16 +72,16 @@ class PinterestDataController < ApplicationController
   def select_chart_data
     chart_data = {}
     chart_data['dates'] = @pinterest_datum.collect{|pd| "#{pd.start_date.strftime('%d %b')} - #{pd.end_date.strftime('%d %b')}"}
+    chart_data['new_followers'] = @pinterest_datum.collect{|pd| pd.new_followers }
+    chart_data['total_investment'] = @pinterest_datum.collect{|pd| pd.total_investment }
     pinterest_keys.each do |key|
       chart_data[key] = @pinterest_datum.map(&:"#{key}")
     end
-    chart_data['total_investment'] = @pinterest_datum.collect{|pd| PinterestDatum.get_total_investment(pd)}
     return chart_data
   end
 
   def pinterest_keys
-    ['new_followers',
-      'total_followers',
+    ['total_followers',
       'boards',
       'pins',
       'liked',

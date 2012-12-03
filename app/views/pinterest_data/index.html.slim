@@ -172,7 +172,7 @@ section.sectionInformation
                 | Inversion Total
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = PinterestDatum.get_total_investment(pinterest_datum)
+                  = pinterest_datum.total_investment.round(3)
             tr id="buttons"
               td.nilValue
                 |Opciones

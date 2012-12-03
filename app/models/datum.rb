@@ -4,6 +4,7 @@ module Datum
     ((send(metric)-other_datum.send(metric)).to_f/other_datum.send(metric).to_f)*100
   end
 
+
   def previous_datum
     social_network.send(type).where("end_date <= ? and id != ?", end_date.to_date, id).last
   end
@@ -31,8 +32,8 @@ module Datum
           compare_metric(metric, other_datum)
         end
 
-        define_singleton_method "get_diff_#{metric.to_s}" do |datum|
-          datum.send("#{metric.to_s}_compared_to", datum.previous_datum)
+        define_method "get_percentage_difference_from_previous_#{metric.to_s}" do
+          send("#{metric.to_s}_compared_to", previous_datum)
         end
       end
     end

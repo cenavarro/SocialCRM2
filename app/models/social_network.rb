@@ -4,6 +4,7 @@ class SocialNetwork < ActiveRecord::Base
   validate :image, :attachment_presence => true
 
   has_many :blog_comment, :dependent => :destroy
+  has_many :benchmark_comment, :dependent => :destroy
   has_many :facebook_comment, :dependent => :destroy
   has_many :flickr_comment, :dependent => :destroy
   has_many :google_plus_comment, :dependent => :destroy
@@ -37,4 +38,9 @@ class SocialNetwork < ActiveRecord::Base
 
   attr_accessible :name, :client_id, :info_social_network_id, :id_object, :image
 
+  def data_types
+    [FacebookDatum, Monitoring, BlogDatum, FlickrDatum, FoursquareDatum, GooglePlusDatum,
+      LinkedinDatum, PinterestDatum, TuentiDatum, TumblrDatum, TwitterDatum, YoutubeDatum
+    ]
+  end
 end

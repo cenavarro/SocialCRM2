@@ -16,27 +16,6 @@ class MonitoringController < ApplicationController
       @datum = MonitoringData.where('monitoring_id = ?', themes.first.id).order('start_date ASC')
     end
     create_all_data(themes, channels)
-    @report = Axlsx::Package.new
-    start_date = "01-01-2012"
-    end_date = "31-12-2012"
-=begin
-    BenchmarkDatum.generate_excel(@report, 3, start_date, "30-11-2012")
-    BlogDatum.generate_excel(@report, 4, start_date, end_date)
-    FacebookDatum.generate_excel(@report, 2, start_date, end_date)
-    FlickrDatum.generate_excel(@report, 1, start_date, end_date)
-    FoursquareDatum.generate_excel(@report, 6, start_date, end_date)
-    GooglePlusDatum.generate_excel(@report, 7, start_date, end_date)
-    LinkedinDatum.generate_excel(@report, 8, start_date, "08-11-2012")
-    Monitoring.generate_excel(@report, 17, start_date, end_date)
-    PinterestDatum.generate_excel(@report, 10, start_date, end_date)
-    RowsCampaign.generate_excel(@report, 5, start_date, end_date)
-    TuentiDatum.generate_excel(@report, 11, start_date, end_date)
-    TumblrDatum.generate_excel(@report, 12, start_date, end_date)
-    TwitterDatum.generate_excel(@report, 13, start_date, end_date)
-    YoutubeDatum.generate_excel(@report, 14, start_date, end_date)
-=end
-    Monitoring.generate_excel(@report, 17, start_date, end_date)
-    @report.serialize('reporte.xlsx')
   end
 
   def new

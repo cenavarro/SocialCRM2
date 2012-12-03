@@ -28,8 +28,6 @@ class YoutubeDataController < ApplicationController
 
     respond_to do |format|
       if @youtube_datum.save
-        @youtube_datum.new_subscriber = YoutubeDatum.get_new_subscribers(@youtube_datum)
-        @youtube_datum.save!
         format.html { redirect_to youtube_index_path(@youtube_datum.client_id,1,@youtube_datum.social_network_id), notice: 'La informacion se ha ingresado exitosamente.' }
       else
         format.html { render action: "new" }
@@ -42,8 +40,6 @@ class YoutubeDataController < ApplicationController
 
     respond_to do |format|
       if @youtube_datum.update_attributes(params[:youtube_datum])
-        @youtube_datum.new_subscriber = YoutubeDatum.get_new_subscribers(@youtube_datum)
-        @youtube_datum.save!
         format.html { redirect_to youtube_index_path(@youtube_datum.client_id,1,@youtube_datum.social_network_id), notice: 'La informacion se ha actualizada exitosamente.' }
       else
         format.html { render action: "edit" }
@@ -76,6 +72,7 @@ class YoutubeDataController < ApplicationController
   def select_chart_data
     chart_data = {}
     chart_data['dates'] = @youtube_datum.collect{|yd| "#{yd.start_date.strftime('%d %b')} - #{yd.end_date.strftime('%d %b')}"}
+    chart_data['new_subscribers'] = @youtube_datum.collect{|yd| yd.new_subscribers }
     youtube_keys.each do |key|
       chart_data[key] = @youtube_datum.map(&:"#{key}")
     end
@@ -83,8 +80,7 @@ class YoutubeDataController < ApplicationController
   end
 
   def youtube_keys
-    ['new_subscriber',
-      'total_subscriber',
+    [ 'total_subscriber',
       'total_video_views',
       'inserted_player',
       'mobile_devise',

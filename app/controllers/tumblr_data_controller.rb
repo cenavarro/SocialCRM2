@@ -26,7 +26,6 @@ class TumblrDataController < ApplicationController
 
   def create
     @tumblr_datum = TumblrDatum.new(params[:tumblr_datum])
-    @tumblr_datum.new_followers = TumblrDatum.get_new_followers(@tumblr_datum)
 
     respond_to do |format|
       if @tumblr_datum.save
@@ -42,8 +41,6 @@ class TumblrDataController < ApplicationController
 
     respond_to do |format|
       if @tumblr_datum.update_attributes(params[:tumblr_datum])
-        @tumblr_datum.new_followers = TumblrDatum.get_new_followers(@tumblr_datum)
-        @tumblr_datum.save!
         format.html { redirect_to tumblr_index_path(@tumblr_datum.client_id, 1, @tumblr_datum.social_network_id), notice: 'La informacion ha sido actualizada exitosamente.' }
       else
         format.html { render action: "edit" }
@@ -76,11 +73,11 @@ class TumblrDataController < ApplicationController
   def select_chart_data
     chart_data = {
       "dates" => @tumblr_datum.collect {|td| "#{td.start_date.strftime('%d %b')} - #{td.end_date.strftime('%d %b')}"},
-      "new_followers" => @tumblr_datum.map(&:new_followers),
+      "new_followers" => @tumblr_datum.collect{ |td| td.new_followers },
       "total_followers" => @tumblr_datum.map(&:total_followers),
       "likes" => @tumblr_datum.map(&:likes),
       "reblogged" => @tumblr_datum.map(&:reblogged),
-      "total_investment" => @tumblr_datum.collect{ |td| TumblrDatum.get_total_investment(td)}
+      "total_investment" => @tumblr_datum.collect{ |td| td.total_investment.round(3) }
     }
   end
 

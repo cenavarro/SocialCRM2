@@ -109,7 +109,6 @@ class ClientsController < ApplicationController
     JSON.parse(result_of_get(uri))
   end
 
-
   def facebook
     access_token = getAccessToken(params[:code])
     pages = getPagesFacebook(access_token)
@@ -134,6 +133,12 @@ class ClientsController < ApplicationController
       format.html
       format.json { head :ok }
     end
+  end
+
+  def reports
+    date_range = OpenStruct.new(start_date: 2.weeks.ago, end_date: Date.today)
+    @reports = client.build_reports(date_range)
+    @reports.serialize("report.xlsx")
   end
 
 end
