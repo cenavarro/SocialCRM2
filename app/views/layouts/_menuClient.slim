@@ -15,6 +15,9 @@
             li
               a href=clients_social_networks_path(session[:client_id].to_i)
                 |Listar Redes Sociales
+            li
+              a href=client_reports_path
+                = t 'menu.client.report'
         li style="float: right"
           = render 'devise/menu/login_items'
         li.dropdown style="float: right"

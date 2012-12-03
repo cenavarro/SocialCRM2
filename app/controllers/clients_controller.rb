@@ -1,6 +1,6 @@
 class ClientsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :has_admin_credentials?, :except => [:social_networks]
+  before_filter :has_admin_credentials?, :except => [:social_networks, :reports, :generate_report]
 
   require 'open-uri'
 
