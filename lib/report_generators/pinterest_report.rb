@@ -9,7 +9,7 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
   	if !pinterest_datum.empty?
 	    document.workbook do | wb |
 	      wb.add_worksheet(:name => "Pinterest", :page_margins => margins, :page_setup => page_setup) do |sheet|
-	        @comments = social_network.pinterest_comment.first
+	        @comments = social_network.pinterest_comment.where("social_network_id = ?", social_network.id).first
 	        report_data = select_report_data(pinterest_datum)
 	        styles = create_report_styles(wb, report_data['size'])
 	        add_rows_report(sheet, 7)

@@ -73,18 +73,53 @@ class BenchmarkDataController < ApplicationController
     competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:id_social]).order("name ASC")
     benchmark_data['competitors'] = competitors.map(&:name)
     competitors.each do |competitor|
-      competitor_data = BenchmarkDatum.data_of_competitor(competitor.id, params[:start_date], params[:end_date])
+      competitor_data = data_of_competitor(competitor.id, params[:start_date], params[:end_date])
       benchmark_data['dates'] ||= competitor_data.collect { |data| "#{data.start_date.strftime("%d %b")} - #{data.end_date.strftime("%d %b")}"}
       benchmark_data['ids'] ||= competitor_data.map(&:id)
       benchmark_data[competitor.name] = []
       competitor_data.each do |datum|
-        benchmark_data['x_axis'].concat(BenchmarkDatum.x_axis_array_with_dates(datum.start_date, datum.end_date))
-        BenchmarkDatum.benchmark_keys.each do |key|
+        benchmark_keys.each do |key|
           benchmark_data[competitor.name].push(datum[key])
         end
       end
     end
+    benchmark_data['dates'].each do |date|
+      benchmark_data['x_axis'].concat(x_axis_array_with_dates(date[0..5], date[9..date.size]))
+    end
     return benchmark_data
+  end
+
+  def data_of_competitor(id, start_date, end_date)
+    if data_in_range?(start_date, end_date) 
+      data = BenchmarkDatum.where('start_date >= ? and end_date <= ? and benchmark_competitor_id = ?', 
+                                  start_date.to_date, end_date.to_date, id).order("start_date ASC") 
+    else
+      data = BenchmarkDatum.where(:benchmark_competitor_id => id).order("start_date ASC")
+    end
+  end
+
+  def data_in_range?(start_date, end_date)
+    (start_date && end_date) ? (true) : (false)
+  end
+
+  def x_axis_array_with_dates(start_date, end_date)
+    ['Blogs', 
+      "Foros      #{start_date}",
+      "Videos   al",
+      "Twitter     #{end_date}",
+      "Facebook",
+      "Otros"
+    ]
+  end
+
+  def benchmark_keys
+    ['blogs',
+      'forums',
+      'videos',
+      'twitter',
+      'facebook',
+      'others'
+    ]
   end
 
 end

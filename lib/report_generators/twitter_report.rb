@@ -7,7 +7,7 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
   def add_to(document)
     twitter_datum = social_network.twitter_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
     if !twitter_datum.empty?
-      @comments = social_network.twitter_comment.first
+      @comments = social_network.twitter_comment.where("social_network_id = ?", social_network.id).first
       document.workbook do | wb |
         wb.add_worksheet(:name => "Twitter", :page_margins => margins, :page_setup => page_setup) do |sheet|
           report_data = select_report_data(twitter_datum)

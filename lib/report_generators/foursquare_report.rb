@@ -9,7 +9,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     if !foursquare_datum.empty?
       document.workbook do | wb |
         wb.add_worksheet(:name => "Foursquare", :page_margins => margins, :page_setup => page_setup) do |sheet|
-          @comments = social_network.foursquare_comment.first
+          @comments = social_network.foursquare_comment.where("social_network_id = ?", social_network.id).first
           report_data = select_report_data(foursquare_datum)
           styles = create_report_styles(wb, report_data['size'])
           add_rows_report(sheet, 7)
