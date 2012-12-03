@@ -136,9 +136,19 @@ class ClientsController < ApplicationController
   end
 
   def reports
-    date_range = OpenStruct.new(start_date: 2.weeks.ago, end_date: Date.today)
-    @reports = client.build_reports(date_range)
-    @reports.serialize("report.xlsx")
+    current_user.rol_id == 1 ? @clients = Client.all : @clients = [Client.find(current_user.client_id)]
+  end
+
+  def generate_report
+    client = Client.find(params[:client_id])
+    date = Time.now.strftime("%d-%b-%Y")
+    file_name = "Reporte_#{date}.xlsx"
+    date_range = OpenStruct.new(start_date: params[:start_date], end_date: params[:end_date])
+    reports = client.build_reports(date_range)
+    reports.serialize(file_name)
+    file_path = Rails.root.join(file_name)
+    send_file file_path, :type => "application/vnd.ms-excel"
+    #File.delete(file_path)
   end
 
 end
