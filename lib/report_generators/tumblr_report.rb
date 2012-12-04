@@ -1,6 +1,6 @@
 class ReportGenerators::TumblrReport < ReportGenerators::Base
 
-	def self.can_process? type
+  def self.can_process? type
     type == TumblrDatum
   end
 
@@ -9,7 +9,7 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
   	tumblr_datum = social_network.tumblr_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
   	if !tumblr_datum.empty?
 	    document.workbook do | wb |
-	      wb.add_worksheet(:name => "Tumblr", :page_margins => margins, :page_setup => page_setup) do |sheet|
+	      wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
 	        @comments = social_network.tumblr_comment.where("social_network_id = ?", social_network.id).first
 	        report_data = select_report_data(tumblr_datum)
 	        styles = create_report_styles(wb, report_data['size'])

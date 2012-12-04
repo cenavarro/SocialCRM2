@@ -9,7 +9,7 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
     if !twitter_datum.empty?
       @comments = social_network.twitter_comment.where("social_network_id = ?", social_network.id).first
       document.workbook do | wb |
-        wb.add_worksheet(:name => "Twitter", :page_margins => margins, :page_setup => page_setup) do |sheet|
+        wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
           report_data = select_report_data(twitter_datum)
           styles = create_report_styles(wb, report_data['size'])
           add_rows_report(sheet, 7)

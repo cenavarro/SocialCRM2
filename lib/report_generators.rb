@@ -128,7 +128,8 @@ module ReportGenerators
       TumblrReport,
       TwitterReport,
       YoutubeReport,
-      BenchmarkReport
+      BenchmarkReport,
+      CampaignReport
     ]
   end
 
@@ -152,3 +153,4 @@ require 'report_generators/tumblr_report'
 require 'report_generators/twitter_report'
 require 'report_generators/youtube_report'
 require 'report_generators/benchmark_report'
+require 'report_generators/campaign_report'

@@ -78,12 +78,24 @@ class CampaignDataController < ApplicationController
     row_data = []
     rows_campaign = RowsCampaign.where('social_network_id = ?', params[:id_social].to_i)
     rows_campaign.each do |row|
-      row_data = RowsCampaign.select_row_data(row.id, params[:start_date], params[:end_date])
+      row_data = select_row_data(row.id, params[:start_date], params[:end_date])
       values = row_data.map(&:value)
       @campaign_data['data'] << {"#{row.name}" => values}
     end
     @campaign_data['ids'] = row_data.map(&:id)
     row_data.collect{ |datum| @campaign_data['dates'] << datum.start_date.strftime("%d %b ") + datum.end_date.strftime("- %d %b")}.join(', ')
+  end
+
+  def select_row_data(id, start_date, end_date)
+    if data_in_range?(start_date, end_date)
+      row_data = RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', id, start_date.to_date, end_date.to_date).order("start_date ASC")
+    else
+      row_data = RowDatum.where('rows_campaign_id = ?', id).order("start_date ASC")
+    end
+  end
+
+  def data_in_range?(start_date, end_date)
+    (start_date && end_date) ? (true) : (false)
   end
 
 end

@@ -8,7 +8,7 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     facebook_datum = social_network.facebook_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
     if !facebook_datum.empty?
       document.workbook do | wb |
-        wb.add_worksheet(:name => "Facebook", :page_margins => margins, :page_setup => page_setup) do |sheet|
+        wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
           @comments = social_network.facebook_comment.where("social_network_id = ?", social_network.id).first
           @report_data = select_report_data(facebook_datum)
           styles = create_report_styles(wb, @report_data['size'])

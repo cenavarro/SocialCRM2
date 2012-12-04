@@ -1,4 +1,6 @@
 class Monitoring < ActiveRecord::Base
-  extend ApplicationHelper
+  include Datum
+
   has_many "monitoring_data", :dependent => :destroy
+
 end

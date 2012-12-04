@@ -4,27 +4,27 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
 		type == YoutubeDatum
 	end
 
-	def add_to(document)
-		youtube_datum = social_network.youtube_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
-		if !youtube_datum.empty?
-	    @comments = social_network.youtube_comment.where("social_network_id = ?", social_network.id).first
-	    document.workbook do | wb |
-	      wb.add_worksheet(:name => "Youtube", :page_margins => margins, :page_setup => page_setup) do |sheet|
-	        report_data = select_report_data(youtube_datum)
-	        styles = create_report_styles(wb, report_data['size'])
-	        add_rows_report(sheet, 7)
-	        sheet.add_row ["","PAGINA DE YOUTUBE"], :style => 3
-	        add_table(sheet, report_data, styles)
-	        add_rows_report(sheet, 45)
-	        add_charts(sheet, report_data['size'])
-	        add_rows_report(sheet, 15)
-	        add_images_report(sheet, 157, social_network.id, styles)
-	        header(sheet, 0)
-	        footer(sheet, 72)
-	        sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
-	      end
-	    end
-	  end
+  def add_to(document)
+    youtube_datum = social_network.youtube_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
+    if !youtube_datum.empty?
+      @comments = social_network.youtube_comment.where("social_network_id = ?", social_network.id).first
+      document.workbook do | wb |
+        wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
+        report_data = select_report_data(youtube_datum)
+        styles = create_report_styles(wb, report_data['size'])
+        add_rows_report(sheet, 7)
+        sheet.add_row ["","PAGINA DE YOUTUBE"], :style => 3
+        add_table(sheet, report_data, styles)
+        add_rows_report(sheet, 45)
+        add_charts(sheet, report_data['size'])
+        add_rows_report(sheet, 15)
+        add_images_report(sheet, 157, social_network.id, styles)
+        header(sheet, 0)
+        footer(sheet, 72)
+        sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
+        end
+      end
+    end
   end
 
   private

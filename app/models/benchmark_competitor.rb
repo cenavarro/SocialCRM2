@@ -1,3 +1,4 @@
 class BenchmarkCompetitor < ActiveRecord::Base
-  has_many :benchmark_data
+  belongs_to :social_network
+  has_many :benchmark_data, :dependent => :destroy
 end

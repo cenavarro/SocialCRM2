@@ -4,29 +4,23 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     type == BenchmarkDatum
   end
 
-  def add_rows(sheet, amount)
-    @row = @row + amount
-    add_rows_report(sheet, amount)
-  end
-
   def add_to(document)
     competitors = BenchmarkCompetitor.where('social_network_id = ?', social_network.id).order("name ASC")
     if !competitors.empty?
       document.workbook do | wb |
-        wb.add_worksheet(:name => "Benchmark", :page_margins => margins, :page_setup => {:orientation => :landscape, :paper_size => 9,  :fit_to_width => 1, 
+        wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => {:orientation => :landscape, :paper_size => 9,  :fit_to_width => 1, 
                          :fit_to_height => 10}) do |sheet|
           @comments = social_network.benchmark_comment.where("social_network_id = ?", social_network.id).first
           @report_data = select_report_data(social_network.id, start_date, end_date)
-          @row = 0
           styles = create_report_styles(wb, @report_data['size'])
-          add_rows(sheet, 7)
+          add_rows_report(sheet, 7)
           sheet.add_row ['', "PAGINA DE BENCHMARK"], :style => 3
-          @row = @row + 1
+          @row = 8
           add_table_benchmark(sheet, @report_data, styles)
-          add_rows(sheet, (54-@row))
+          add_rows_report(sheet, (54-@row))
           add_charts(sheet, @report_data['size'] - 1)
-          add_rows(sheet, (168-@row))
-          add_images_benchmark_report(sheet, social_network.id, styles)
+          add_rows_report(sheet, 20)
+          add_images_benchmark_report(sheet, 165, social_network.id, styles)
           header(sheet, 0, 1267)
           footer(sheet, 53, 1267)
           args = [4, 27]
@@ -42,47 +36,45 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
   private
 
   def add_table_benchmark(sheet, report_data, styles)
-    add_rows(sheet, 2)
+    add_rows_report(sheet, 2)
     report_data['x_axis'].unshift('')
     report_data['x_axis'].unshift('')
     dates = dates_array(report_data['dates'])
     sheet.add_row dates, :style => 8, :height => height_cell
     sheet.add_row report_data['x_axis'], :style => 4, :height => height_cell
-    @row = @row + 2
     report_data['competitors'].each do |competitor|
-      sheet.add_row report_data[competitor]['data'].unshift(competitor).unshift(''), :style => 6, :height => height_cell
+      sheet.add_row report_data[competitor]['data'].unshift(competitor).unshift(''), :style => 6, :height => 13 
       @row = @row + 1
     end
-    @row = @row - ((report_data['competitor'].size)/2)
-    add_rows(sheet, 1)
+    add_rows_report(sheet, 1)
     sheet.add_row ["", "Comentario"], :style => 3
-    add_rows(sheet, 1)
+    add_rows_report(sheet, 1)
     sheet.add_row ["", @comments.table]
-    @row = @row + 2
+    @row = @row + 8
   end
 
-  def add_images_benchmark_report(document, social_id, styles)
+  def add_images_benchmark_report(document, y_pos, social_id, styles)
     images = ImagesSocialNetwork.where(:social_network_id => social_id)
     images.each do |image|
-      header(document, @row, 1267)
-      add_rows(document, 7)
+      header(document, y_pos, 1267)
+      add_rows_report(document, 7)
       document.add_row ["",image.title], :style => styles['title'][1]
-      @row = @row + 1
-      add_rows(document, 2)
+      add_rows_report(document, 2)
+      y_pos = y_pos + 10 
       img = File.expand_path(image.attachment.path, __FILE__)
       document.add_image(:image_src => img) do |sheet_image|
         sheet_image.width = 600
         sheet_image.height = 400
-        sheet_image.start_at 1, @row
+        sheet_image.start_at 1, y_pos
       end
-      add_rows(document, 24)
+      add_rows_report(document, 24)
       document.add_row ["", "Comentario"], :style => 3
-      add_rows(document, 1)
+      add_rows_report(document, 1)
       document.add_row ["", image.comment]
-      add_rows(document, 19)
-      @row = @row + 2
-      footer(document, @row, 1267)
-      add_rows(document, 1)
+      add_rows_report(document, 18)
+      y_pos = y_pos + 43
+      footer(document, y_pos, 1267)
+      y_pos = y_pos + 2 
     end
   end
 
@@ -114,21 +106,20 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
 
   def add_charts(sheet, size)
     size = size * 7
-    add_rows(sheet, 7)
+    add_rows_report(sheet, 7)
     sheet.add_row ["","GRAFICOS BENCHMAR"], :style => 3
-    @row = @row + 1
-    add_rows(sheet, 2)
+    add_rows_report(sheet, 2)
     insert_distribution_chart(sheet, size)
-    add_rows(sheet, 14)
+    add_rows_report(sheet, 14)
     insert_totals_chart(sheet, size)
     header(sheet, 54, 1267)
-    footer(sheet, 110, 1267)
-    header(sheet, 111, 1267)
-    footer(sheet, 167, 1267)
+    footer(sheet, 108, 1267)
+    header(sheet, 109, 1267)
+    footer(sheet, 164, 1267)
   end
 
   def insert_distribution_chart(sheet, size)
-    chart = create_chart(sheet, 64, "Distribucion", size)
+    chart = create_chart(sheet, 64, "Distribucion", 18)
     @report_data['x_axis'].shift
     @report_data['x_axis'].shift
     @report_data['competitors'].each do |competitor|
@@ -136,23 +127,21 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       @report_data[competitor]['data'].shift
       add_serie(chart, @report_data[competitor]['data'], @report_data['x_axis'], competitor)
     end
-    add_rows(sheet, 24)
+    add_rows_report(sheet, 24)
     sheet.add_row ["", "Comentario"], :style => 3
-    add_rows(sheet, 1)
+    add_rows_report(sheet, 1)
     sheet.add_row ["", @comments.distribution]
-    @row = @row + 2
   end
 
   def insert_totals_chart(sheet, size)
-    chart = create_chart(sheet, 118, "Totales", size)
+    chart = create_chart(sheet, 118, "Totales", 18)
     @report_data['competitors'].each do |competitor|
       add_serie(chart, @report_data[competitor]['totals'], @report_data['dates'], competitor)
     end
-    add_rows(sheet, 37)
+    add_rows_report(sheet, 37)
     sheet.add_row ["", "Comentario"], :style => 3
-    add_rows(sheet, 1)
+    add_rows_report(sheet, 1)
     sheet.add_row ["", @comments.totals]
-    @row = @row + 2
   end
 
   def data_of_competitor(id, start_date, end_date)

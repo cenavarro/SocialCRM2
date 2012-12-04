@@ -8,7 +8,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
     blog_datum = social_network.blog_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
     if !blog_datum.empty?
       document.workbook do | wb |
-        wb.add_worksheet(:name => "Blog", :page_margins => margins, :page_setup => page_setup) do |sheet|
+        wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
           @comments = social_network.blog_comment.where("social_network_id = ?", social_network.id).first
           report_data = select_report_data(blog_datum)
           styles = create_report_styles(wb, report_data['size'])
