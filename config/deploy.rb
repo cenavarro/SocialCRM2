@@ -1,6 +1,6 @@
 set :application, "socialcrm"
 set :scm, :git
-set :repository,  "https://cenavarro@github.com/cenavarro/SocialCRM2.git"
+set :repository,  "https://cenavarro@github.com/cenavarro/SocialCRM.git"
 server "50.57.169.40", :app, :web, :db, :primary => true
 set :scm_username, "cenavarro"
 set :user, "root/Administrator"
