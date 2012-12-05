@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119205429) do
+ActiveRecord::Schema.define(:version => 20121205170618) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(:version => 20121119205429) do
     t.text     "deals"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "interactivity"
   end
 
   create_table "foursquare_data", :force => true do |t|
@@ -175,6 +176,9 @@ ActiveRecord::Schema.define(:version => 20121119205429) do
     t.integer  "total_visits"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "clients"
+    t.integer  "likes"
+    t.integer  "checkins"
   end
 
   create_table "google_plus_comments", :force => true do |t|

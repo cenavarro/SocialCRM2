@@ -49,14 +49,20 @@ br
 
 
 script
-  | createChart('container_followers', 'Followers', #{raw @foursquare['dates']});
+  | createChart('container_followers', 'Comunidad', #{raw @foursquare['dates']});
   | addSerie('# nuevos followers',#{@foursquare['new_followers']});
   | addSerie('# followers',#{@foursquare['total_followers']});
   | refreshChart();
 
-  | createChart('container_deals', 'Ofertas', #{raw @foursquare['dates']});
-  | addSerie('# unlocks total de las ofertas',#{@foursquare['total_unlocks']});
-  | addSerie('# visitas total de las ofertas',#{@foursquare['total_visits']});
+  | createChart('container_interactivity', 'Interactividad', #{raw @foursquare['dates']});
+  | addSerie('#clientes',#{@foursquare['clients']});
+  | addSerie('#me gusta',#{@foursquare['likes']});
+  | addSerie('#check-ins',#{@foursquare['checkins']});
+  | refreshChart();
+
+  | createChart('container_deals', 'Interactividad (Ofertas)', #{raw @foursquare['dates']});
+  | addSerie('# unlocks total',#{@foursquare['total_unlocks']});
+  | addSerie('# visitas total',#{@foursquare['total_visits']});
   | refreshChart();
 
 section.sectionInformation
@@ -97,6 +103,48 @@ section.sectionInformation
               - @foursquare_datum.each do |foursquare_datum|
                 td
                   = foursquare_datum.total_followers
+            tr.titlesRows
+              td colspan=100
+                | Interactividad
+            tr
+              td
+                |# clientes
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.clients
+            tr
+              td
+                |% diferencia
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.get_percentage_difference_from_previous_clients
+            tr
+              td
+                |#me gusta
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.likes
+            tr
+              td
+                |% diferencia
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.get_percentage_difference_from_previous_likes
+            tr
+              td
+                |# check-ins
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.checkins
+            tr
+              td
+                |% diferencia
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.get_percentage_difference_from_previous_checkins
+            tr.titlesRows
+              td colspan=100
+                | Campaña
             tr
               td
                 |# unlocks total de las ofertas
@@ -105,10 +153,22 @@ section.sectionInformation
                   = foursquare_datum.total_unlocks
             tr
               td
+                |% diferencia
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.get_percentage_difference_from_previous_total_unlocks
+            tr
+              td
                 |# visitas total de las ofertas
               - @foursquare_datum.each do |foursquare_datum|
                 td
                   = foursquare_datum.total_visits
+            tr
+              td
+                |% diferencia
+              - @foursquare_datum.each do |foursquare_datum|
+                td
+                  = foursquare_datum.get_percentage_difference_from_previous_total_visits
             tr id="buttons"
               td.nilValue
                 |Opciones
@@ -145,6 +205,19 @@ section.sectionInformation
           form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},'followers' ,'#{params[:locale]}','#{@foursquare_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.followers
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_interactivity
+        .comment
+          .title
+            h4
+              | Comentario Grafico Interactividad
+          form  id="interactivity" onsubmit="return saveChartComment('#interactivity',#{@socialNetwork.id},'interactivity' ,'#{params[:locale]}','#{@foursquare_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.interactivity
             br
             button.btn.btn-success
               | Guardar

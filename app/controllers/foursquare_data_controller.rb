@@ -80,6 +80,9 @@ class FoursquareDataController < ApplicationController
 
   def foursquare_keys
     [ 'total_followers',
+      'clients',
+      'checkins',
+      'likes',
       'total_unlocks',
       'total_visits'
     ]

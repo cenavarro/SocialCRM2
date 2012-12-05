@@ -11,7 +11,7 @@ javascript:
         - @foursquare_datum.errors.full_messages.each do |message|
           li = message
 
-  .form-horizontal.sectionInformation style="height: 650px;"
+  .form-horizontal.sectionInformation style="height: 750px;"
     .box.informationFoursquare
       | Informacion
       br
@@ -38,8 +38,26 @@ javascript:
           i.icon-th
       br
       br
-      = f.label "# Followers"
+      = f.label "#followers"
       = f.text_field :total_followers, {:class => "validate[required,custom[number]]"}
+    .box.interactivity-foursquare
+      | Interactividad 
+      br
+      br
+      = f.label "#clientes"
+      = f.text_field :clients, {:class => "validate[required, custom[number]]"}
+      br
+      br
+      = f.label "#me gusta"
+      = f.text_field :likes, {:class => "validate[required, custom[number]]"}
+      br
+      br
+      = f.label "#check-ins"
+      = f.text_field :checkins, {:class => "validate[required, custom[number]]"}
+      br
+      br
+    .box.campaign-foursquare
+      | Campaña
       br
       br
       = f.label "# unlocks totales de las ofertas"

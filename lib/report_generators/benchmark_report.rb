@@ -132,7 +132,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     sheet.add_row ["", @comments.totals]
   end
 
-  def data_of_competitor(id)
+  def data_of_competitor id
       BenchmarkDatum.where('start_date >= ? and end_date <= ? and benchmark_competitor_id = ?', 
                            start_date.to_date, end_date.to_date, id).limit(3).order("start_date ASC") 
   end
