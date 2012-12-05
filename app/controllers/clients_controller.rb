@@ -145,8 +145,8 @@ class ClientsController < ApplicationController
     file_name = "Reporte_#{date}.xlsx"
     date_range = OpenStruct.new(start_date: params[:start_date], end_date: params[:end_date])
     reports = client.build_reports(date_range)
-    reports.serialize(file_name)
     file_path = Rails.root.join(file_name)
+    reports.serialize(file_path)
     send_file file_path, :type => "application/vnd.ms-excel"
     #File.delete(file_path)
   end
