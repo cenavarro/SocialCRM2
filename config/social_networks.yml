@@ -1,3 +1,7 @@
+facebook:
+  client_id: 167476766731637
+  client_secret: 62cc1f787f7d81bed12d7cd94ef4f67c
+
 facebook_server:
   client_id: 330159117080546
   client_secret: 7761f33bb9830ee3f33252e93e0a0ee6
@@ -6,6 +10,6 @@ facebook_pernix:
   client_id: 417226721668029
   client_secret: a622591870c428777fdbf65903e40ecf
 
-facebook:
+facebook_local:
   client_id: 441436639234798
   client_secret: 26df47c99d81ecb606fe2eb59669476d
