@@ -148,7 +148,7 @@ class ClientsController < ApplicationController
     file_path = Rails.root.join(file_name)
     reports.serialize(file_path)
     send_file file_path, :type => "application/vnd.ms-excel"
-    #File.delete(file_path)
+    File.delete(file_path) if File.exist? file_path
   end
 
 end
