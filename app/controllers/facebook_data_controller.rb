@@ -30,7 +30,7 @@ class FacebookDataController < ApplicationController
     @facebook = Hash.new(0)
     if data_from_facebook?
       facebook_id = SocialNetwork.find_by_id_and_client_id(params[:id_social], params[:idc]).id_object.to_s
-      @facebook = calc_facebook_values(facebook_id,facebook_data_keys)
+      @facebook = calc_facebook_values(facebook_id)
     end
     @facebook_datum = FacebookDatum.new
   end
@@ -102,14 +102,18 @@ class FacebookDataController < ApplicationController
     return chart_values
   end
 
-  def calc_facebook_values(facebook_id,facebook_data_keys)
-    facebook_values = {}
+  def calc_facebook_values(facebook_id)
+    flash[:notice] = "Usted no tiene privilegios para obtener informacion de esta pagina de facebook! Pero el ingreso manual si es permitido"
+    facebook_values = Hash.new(0) 
     facebook_data_keys.each do |key|
       data = http_get(facebook_id, key, params[:start_date],params[:end_date],params[:access_token])
-      if key != 'page_friends_of_fans'
-        facebook_values[key] = data['data'][0]['values'].inject(0){|sum, val| sum + val['value']}
-      else
-        facebook_values[key] = data['data'][0]['values'].last['value']
+      if !data.nil? && !data['data'].empty?
+        if key != 'page_friends_of_fans'
+          facebook_values[key] = data['data'][0]['values'].inject(0){|sum, val| sum + val['value']}
+        else
+          facebook_values[key] = data['data'][0]['values'].last['value']
+        end
+        flash[:notice] = nil
       end
     end 
     facebook_values
@@ -145,11 +149,17 @@ class FacebookDataController < ApplicationController
   end
 
   def http_get(object_id,command,start_date,end_date,access_token)
-    start_date = start_date.to_time.to_i.to_s
-    end_date = end_date.to_time.to_i.to_s
-    uri = 'https://graph.facebook.com/'+object_id+'/insights/'+command+'/day/?since='+start_date+'&until='+end_date+'&access_token='+access_token
-    result = URI.parse(URI.escape(uri))
-    json_object = JSON.parse(open(result).read)
+    json_object = nil 
+    begin
+      start_date = start_date.to_time.to_i.to_s
+      end_date = end_date.to_time.to_i.to_s
+      uri = 'https://graph.facebook.com/'+object_id+'/insights/'+command+'/day/?since='+start_date+'&until='+end_date+'&access_token='+access_token
+      result = URI.parse(URI.escape(uri))
+      json_object = JSON.parse(open(result).read)
+    rescue
+      flash[:notice] = "Ha ocurrido un error a la hora de obtener los datos con el servidor!"
+    end
+    json_object
   end
 
   def access_token_url

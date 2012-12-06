@@ -98,16 +98,11 @@ $(document).ready(function(){
     }
     chart.xAxis[0].setExtremes(0, (maxSeries - 1), true, false);
   }
-
-  $("#start_date_picker").datepicker({ format: 'dd-mm-yyyy' });
-  $("#end_date_picker").datepicker({ format: 'dd-mm-yyyy' });
-  var startDate = new Date(2012,0,01);
-  var endDate = new Date(2012,0,01);
-  $("#start_date_picker").datepicker()
+  $("#start_date_picker").datepicker({ format: 'dd-mm-yyyy' })
     .on('changeDate', function(ev){
       $("#start_date_picker").datepicker('hide');
     });
-  $("#end_date_picker").datepicker()
+  $("#end_date_picker").datepicker({ format: 'dd-mm-yyyy' })
     .on('changeDate', function(ev){
       $("#end_date_picker").datepicker('hide');
     });

@@ -1,4 +1,4 @@
-facebook:
+facebook_hydra:
   client_id: 167476766731637
   client_secret: 62cc1f787f7d81bed12d7cd94ef4f67c
 
@@ -10,6 +10,6 @@ facebook_pernix:
   client_id: 417226721668029
   client_secret: a622591870c428777fdbf65903e40ecf
 
-facebook_local:
+facebook:
   client_id: 441436639234798
   client_secret: 26df47c99d81ecb606fe2eb59669476d
