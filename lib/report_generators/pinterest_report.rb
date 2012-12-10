@@ -18,7 +18,7 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
 	        add_rows_report(sheet, 10)
 	        add_charts(sheet, report_data['size'])
 	        add_rows_report(sheet, 15)
-	        add_images_report(sheet, 159, social_network.id, styles)
+	        add_images_report(sheet, 159, styles)
 	        header(sheet, 0)
 	        footer(sheet, 32)
 	        sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9

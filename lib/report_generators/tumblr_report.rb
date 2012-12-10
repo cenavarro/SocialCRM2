@@ -6,26 +6,26 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
 
 
   def add_to(document)
-  	tumblr_datum = social_network.tumblr_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
-  	if !tumblr_datum.empty?
-	    document.workbook do | wb |
-	      wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
-	        @comments = social_network.tumblr_comment.where("social_network_id = ?", social_network.id).first
-	        report_data = select_report_data(tumblr_datum)
-	        styles = create_report_styles(wb, report_data['size'])
-	        add_rows_report(sheet, 7)
-	        sheet.add_row ["","PAGINA DE TUMBLR"], :style => 3
-	        add_table(sheet, report_data, styles)
-	        add_rows_report(sheet, 16)
-	        add_charts(sheet, report_data['size'])
-	        add_rows_report(sheet, 15)
-	        add_images_report(sheet, 161, social_network.id, styles)
-	        header(sheet, 0)
-	        footer(sheet, 34)
-	        sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
-	      end
-	    end
-	  end
+    tumblr_datum = social_network.tumblr_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
+    if !tumblr_datum.empty?
+      document.workbook do | wb |
+        wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
+        @comments = social_network.tumblr_comment.where("social_network_id = ?", social_network.id).first
+        report_data = select_report_data(tumblr_datum)
+        styles = create_report_styles(wb, report_data['size'])
+        add_rows_report(sheet, 7)
+        sheet.add_row ["","PAGINA DE TUMBLR"], :style => 3
+        add_table(sheet, report_data, styles)
+        add_rows_report(sheet, 16)
+        add_charts(sheet, report_data['size'])
+        add_rows_report(sheet, 15)
+        add_images_report(sheet, 161, styles)
+        header(sheet, 0)
+        footer(sheet, 34)
+        sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
+        end
+      end
+    end
   end
 
   private

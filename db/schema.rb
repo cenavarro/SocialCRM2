@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121205170618) do
+ActiveRecord::Schema.define(:version => 20121206210406) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -238,10 +238,10 @@ ActiveRecord::Schema.define(:version => 20121205170618) do
     t.text     "interaction"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "pages_views"
   end
 
   create_table "linkedin_data", :force => true do |t|
-    t.integer  "new_followers"
     t.integer  "total_followers"
     t.integer  "summary"
     t.integer  "employment"
@@ -249,7 +249,6 @@ ActiveRecord::Schema.define(:version => 20121205170618) do
     t.integer  "prints"
     t.integer  "clics"
     t.integer  "recommendation"
-    t.integer  "shared"
     t.float    "investment_agency"
     t.float    "investment_actions"
     t.float    "investment_anno"
@@ -260,6 +259,7 @@ ActiveRecord::Schema.define(:version => 20121205170618) do
     t.date     "end_date"
     t.float    "interest"
     t.integer  "social_network_id"
+    t.text     "actions"
   end
 
   create_table "monitoring_comments", :force => true do |t|

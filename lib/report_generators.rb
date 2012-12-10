@@ -1,6 +1,6 @@
 module ReportGenerators
   class Base
-    attr :social_network, :date_range, :comments
+    attr :social_network, :date_range, :comments, :worksheet, :workbook
     delegate :start_date, :end_date, :to => :date_range
 
     def initialize(social_network, date_range)
@@ -8,7 +8,7 @@ module ReportGenerators
       @date_range = date_range
     end
 
-    def create_chart(document, y_pos,title, chart_width = 7, height_chart = 23)
+    def create_chart(document, y_pos,title, chart_width = 9, height_chart = 23)
       new_chart = (document.add_chart(Axlsx::Line3DChart, :start_at => [1, y_pos], :end_at => [chart_width, y_pos+height_chart], :title => title, :rotX => 0, :rotY => 0))
       new_chart.catAxis.gridlines = false
       new_chart.serAxis.delete = true
@@ -19,14 +19,14 @@ module ReportGenerators
       chart.add_series :data => data, :labels => labels, :title => title, :style => style
     end
 
-    def add_rows_report(document, amount)
+    def add_rows_report(document, amount = 1)
       for i in (1..amount)
         document.add_row
       end
     end
 
-    def add_images_report(document, y_pos, social_id, styles)
-      images = ImagesSocialNetwork.where(:social_network_id => social_id)
+    def add_images_report(document, y_pos, styles)
+      images = ImagesSocialNetwork.where(:social_network_id => social_network.id)
       images.each do |image|
         header(document, y_pos)
         y_pos = y_pos + 10
@@ -82,11 +82,11 @@ module ReportGenerators
       add_rows_report(sheet, 2)
       report_data['table'].each do |key, data|
         if key.include?("header") || (key=="actions")
-          sheet.add_row data, :style => styles['header'], :height => height_cell, :widths => report_data['widths']
+          sheet.add_row data, :style => styles['header'], :height => height_cell
         elsif key.include?("dates")
-          sheet.add_row data, :style => styles['dates'], :height => height_cell, :widths => report_data['widths']
+          sheet.add_row data, :style => styles['dates'], :height => height_cell
         else
-          sheet.add_row data, :style => styles['basic'], :height => height_cell, :widths => report_data['widths']
+          sheet.add_row data, :style => styles['basic'], :height => height_cell
         end
       end
       add_rows_report(sheet, 1)
@@ -110,6 +110,12 @@ module ReportGenerators
         image.height = 16
         image.width = width
         image.start_at 1, y_axis
+      end
+    end
+
+    def append_rows_to_report rows=1
+      for i in (1..rows)
+        @worksheet.add_row
       end
     end
 

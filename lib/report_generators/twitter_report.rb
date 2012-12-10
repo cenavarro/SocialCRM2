@@ -18,7 +18,7 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
           add_rows_report(sheet, 26)
           add_charts(sheet, report_data['size'])
           add_rows_report(sheet, 15)
-          add_images_report(sheet, 235, social_network.id, styles)
+          add_images_report(sheet, 235, styles)
           header(sheet, 0)
           footer(sheet, 66)
           sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9

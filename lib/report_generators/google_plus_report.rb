@@ -18,7 +18,7 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
           add_rows_report(sheet, 12)
           add_charts(sheet, report_data['size'])
           add_rows_report(sheet, 15)
-          add_images_report(sheet, 160, social_network.id, styles)
+          add_images_report(sheet, 160, styles)
           header(sheet, 0)
           footer(sheet, 33)
           sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9

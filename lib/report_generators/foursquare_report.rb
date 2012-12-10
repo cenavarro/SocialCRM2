@@ -17,7 +17,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
           add_table(sheet, report_data, styles)
           add_charts(sheet, report_data['size'])
           add_rows_report(sheet, 15)
-          add_images_report(sheet, 159, social_network.id, styles)
+          add_images_report(sheet, 159, styles)
           sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
           add_headers_and_footers(sheet)
         end
@@ -64,7 +64,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
   def create_data_table(data, foursquare_datum)
     foursquare_datum.each do |datum|
       foursquare_keys.each do |key|
-        key.include?("header") ? (value = nil; p "key: #{key}" ) : (value = datum[key])
+        key.include?("header") ? (value = nil) : (value = datum[key])
         data['table'][key] << value
       end
       data['table']['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"

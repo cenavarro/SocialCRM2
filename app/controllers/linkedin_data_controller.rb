@@ -72,6 +72,7 @@ class LinkedinDataController < ApplicationController
     chart_data = {}
     chart_data['dates'] = @linkedin_data.collect {|ld| "#{ld.start_date.strftime('%d %b')} - #{ld.end_date.strftime('%d %b')}"}
     chart_data['new_followers'] = @linkedin_data.collect {|ld| ld.new_followers }
+    chart_data['total_views'] = @linkedin_data.collect {|ld| ld.views_page }
     linkedin_keys.each do |key|
       chart_data[key] = @linkedin_data.map(&:"#{key}")
     end
@@ -80,14 +81,10 @@ class LinkedinDataController < ApplicationController
 
   def linkedin_keys
     [ 'total_followers',
-      'summary',
-      'employment',
-      'products_services',
       'prints',
       'clics',
-      'recommendation',
-      'shared',
-      'interest'
+      'interest',
+      'recommendation'
     ]
   end
 

@@ -4,111 +4,136 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     type == LinkedinDatum
   end
 
+  def create_report(document)
+    @workbook = document.workbook
+    @worksheet = @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup)
+    styles = create_report_styles(@workbook, linkedin_datum.size+1)
+    append_rows_to_report(8)
+    @worksheet.add_row ["","PAGINA DE LINKEDIN"], :style => 3
+    append_rows_to_report
+    add_table(@worksheet,  @report_data, styles)
+    append_charts_to_report
+    append_rows_to_report(15)
+    add_images_report(@worksheet, 199, styles)
+    @worksheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
+    append_headers_and_footers
+  end
+
+  def linkedin_datum
+    @data ||= social_network.linkedin_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
+  end
+
   def add_to(document)
-    linkedin_datum = social_network.linkedin_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
     if !linkedin_datum.empty?
-	    document.workbook do | wb |
-	      wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
-	      	@comments = social_network.linkedin_comment.where("social_network_id = ?", social_network.id).first
-	        report_data = select_report_data(linkedin_datum)
-	        styles = create_report_styles(wb, report_data['size'])
-          add_rows_report(sheet, 8)
-          sheet.add_row ["","PAGINA DE LINKEDIN"], :style => 3
-          add_table(sheet, report_data, styles)
-          add_charts(sheet, report_data['size'])
-          add_rows_report(sheet, 15)
-          add_images_report(sheet, 157, social_network.id, styles)
-          header(sheet, 0)
-          footer(sheet, 72)
-          sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
-	      end
-	    end
-	end
+      @comments = social_network.linkedin_comment.where("social_network_id = ?", social_network.id).first
+      @report_data = select_report_data
+      create_report(document)
+    end
   end
 
   private
 
-  def select_report_data(linkedin_datum)
-    data = table_rows
-    data['widths'] = [1, 32]
-    data['size'] = (linkedin_datum.size+1)
-    create_data_table(data, linkedin_datum)
-    return data
+  def remove_cells_report_table
+    @report_data['table'].each do |key, data|
+      2.times do
+        data.shift
+      end
+    end
   end
 
-  def add_charts(sheet, size)
-    @end_letter = (65 + size).chr
-    @labels = sheet["C12:#{@end_letter}12"]
-    add_rows_report(sheet, 45)
-    sheet.add_row ["","GRAFICOS LINKEDIN"], :style => 3
-    add_rows_report(sheet, 2)
-    insert_followers_chart(sheet)
-    insert_interactivity_chart(sheet)
-    header(sheet, 73)
-    footer(sheet, 114)
-    header(sheet, 115)
-    footer(sheet, 156)
+  def append_charts_to_report
+    remove_cells_report_table
+    append_rows_to_report(44)
+    @worksheet.add_row ["","GRAFICOS LINKEDIN"], :style => 3
+    append_rows_to_report(2)
+    append_followers_chart(83)
+    append_interactivity_chart(122)
+    append_views_pages_chart(164)
   end
 
   def table_rows
     {
       'table' => {
-        'dates' => ['',''], 'community_header' => ['','Comunidad'], 'new_followers' => ['','# Nuevos Followers'], 'total_followers' => ['','# Followers'], 
-        'growth_followers' => ['', '% Crecimiento'], 'interactions_header' => ['', 'Interactividad'], 
-        'views_pages' => ['', '# Visualizaciones de paginas'], 'summary' => ['', 'Resumen'],
-        'employment' => ['', 'Empleo'], 'products_services' => ['','Productos y Servicios'], 'prints' => ['','Impresiones'],
-        'clics' => ['','Clicks'], 'interest' => ['','% de interes'], 'recommendation' => ['','Recomendacion'], 'shared' => ['','Compartidos'],
-        'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 'investment_actions' => ['','Inversion nuevas acciones'],
+        'dates' => ['',''], 'actions' => ['','Acciones durante periodo'], 'community_header' => ['','Comunidad'], 
+        'new_followers' => ['','# nuevos seguidores'], 'total_followers' => ['','# seguidores reales'], 
+        'growth_followers' => ['', '% crecimiento seguidores'], 'interactions_header' => ['', 'Interactividad'], 
+        'summary' => ['', 'Resumen'], 'employment' => ['', 'Empleo'], 'products_services' => ['','Productos y Servicios'], 
+        'views_pages' => ['', '# Visualizaciones de paginas(total)'], 'prints' => ['','Impresiones'],
+        'clics' => ['','Clicks'], 'interest' => ['','% de interes'], 'recommendation' => ['','Recomendacion'],
+        'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 
+        'investment_actions' => ['','Inversion nuevas acciones'],
         'investment_anno' => ['','Inversion anuncios'], 'total_investment' => ['','Inversion Total']
-      }
+      },
     }
   end
 
-  def create_data_table(data, linkedin_datum)
+  def select_report_data
+    table = table_rows
     linkedin_datum.each do |datum|
       linkedin_keys.each do |key|
         key.include?("header") ? (value = nil) : (value = datum[key])
-        data['table'][key] << value
+        table['table'][key] << value
       end
-      data['table']['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
-      data['table']['new_followers'] << datum.new_followers
-      data['table']['growth_followers'] << datum.get_percentage_difference_from_previous_total_followers.round(3)
-      data['table']['views_pages'] << datum.views_page
-      data['table']['total_investment'] << datum.total_investment.round(2)
-      data['widths'] << 9
+      table['table']['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
+      table['table']['new_followers'] << datum.new_followers
+      table['table']['growth_followers'] << datum.get_percentage_difference_from_previous_total_followers.round(3)
+      table['table']['views_pages'] << datum.views_page
+      table['table']['total_investment'] << datum.total_investment.round(2)
     end
+    table
   end
 
   def linkedin_keys
     ['community_header', 'total_followers', 'interactions_header', 'summary', 'employment', 'products_services', 
-      'prints', 'clics', 'interest', 'recommendation', 'shared', 'investment_header', 'investment_agency', 'investment_actions',
-        'investment_anno']
+      'prints', 'clics', 'interest', 'recommendation', 'investment_header', 'investment_agency', 'investment_actions',
+        'investment_anno', 'actions']
   end
 
-  def insert_followers_chart(sheet)
-    chart = create_chart(sheet, 83, "Seguidores")
-    add_serie(chart, sheet["C14:#{@end_letter}14"], @labels, '# Nuevos Followers')
-    add_serie(chart, sheet["C15:#{@end_letter}15"], @labels, '# Followers')
-    add_rows_report(sheet, 24)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.comunity]
+  def append_followers_chart position
+    chart = create_chart(@worksheet, position, "Seguidores")
+    add_serie(chart, @report_data['table']['new_followers'], @report_data['table']['dates'], '# nuevos seguidores')
+    add_serie(chart, @report_data['table']['total_followers'], @report_data['table']['dates'], '# seguidores reales')
+    append_rows_to_report(24)
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report(1)
+    @worksheet.add_row ["", @comments.comunity]
   end
 
-  def insert_interactivity_chart(sheet)
-    chart = create_chart(sheet, 122, "Interactividad")
-    add_serie(chart, sheet["C19:#{@end_letter}19"], @labels, 'Resumen')
-    add_serie(chart, sheet["C20:#{@end_letter}20"], @labels, 'Empleo')
-    add_serie(chart, sheet["C21:#{@end_letter}21"], @labels, 'Productos y Servicios')
-    add_serie(chart, sheet["C22:#{@end_letter}22"], @labels, 'Impresiones')
-    add_serie(chart, sheet["C23:#{@end_letter}23"], @labels, 'Clicks')
-    add_serie(chart, sheet["C24:#{@end_letter}24"], @labels, '% interest')
-    add_serie(chart, sheet["C25:#{@end_letter}25"], @labels, 'Recomendacion')
-    add_serie(chart, sheet["C26:#{@end_letter}26"], @labels, 'Compartidos')
-    add_rows_report(sheet, 36)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.interaction]
+  def append_interactivity_chart position
+    chart = create_chart(@worksheet, position, "Interactividad")
+    add_serie(chart, @report_data['table']['prints'], @report_data['table']['dates'], 'Impresiones')
+    add_serie(chart, @report_data['table']['clics'], @report_data['table']['dates'], 'Clicks')
+    add_serie(chart, @report_data['table']['interest'], @report_data['table']['dates'], '% interest')
+    add_serie(chart, @report_data['table']['recommendation'], @report_data['table']['dates'], 'Recomendacion')
+    append_rows_to_report(36)
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report
+    @worksheet.add_row ["", @comments.interaction]
+  end
+
+  def append_views_pages_chart position
+    chart = create_chart(@worksheet, position, "Visualizaciones de paginas")
+    add_serie(chart, @report_data['table']['views_pages'], @report_data['table']['dates'], '# Visualizaciones de paginas')
+    add_serie(chart, [], @report_data['table']['dates'], '')
+    append_rows_to_report(39)
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report
+    @worksheet.add_row ["", @comments.pages_views]
+  end
+
+  def headers
+    @headers ||= [0, 73, 115, 157]
+  end
+
+  def footers
+    @footers ||= [72, 114, 156, 198]
+  end
+
+  def append_headers_and_footers
+    for i in (0..headers.size-1)
+      header(@worksheet, headers[i])
+      footer(@worksheet, footers[i])
+    end
   end
 
 end

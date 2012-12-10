@@ -17,7 +17,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
           add_table(sheet, report_data, styles)
           add_charts(sheet, report_data['size'])
           add_rows_report(sheet, 14)
-          add_images_report(sheet, 120, social_network.id, styles)
+          add_images_report(sheet, 120, styles)
           header(sheet, 0)
           footer(sheet, 35)
           sheet.column_widths 4, 27, 9, 9, 9, 9, 9, 9

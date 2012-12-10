@@ -18,7 +18,7 @@ class ReportGenerators::FlickrReport < ReportGenerators::Base
           p report_data['size']
           add_charts(sheet, report_data['size'])
           add_rows_report(sheet, 15)
-          add_images_report(sheet, 161, social_network.id, styles)
+          add_images_report(sheet, 161, styles)
           header(sheet, 0)
           footer(sheet, 34)
           sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9

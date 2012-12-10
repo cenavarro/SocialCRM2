@@ -17,7 +17,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
         add_table_campaign(sheet, styles)
         add_rows_report(sheet, (41-@row))
         add_charts(sheet)
-        add_images_campaign_report(sheet, 83, social_network.id, styles)
+        add_images_campaign_report(sheet, 83, styles)
         header(sheet, 0)
         footer(sheet, 40)
         sheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
@@ -46,8 +46,8 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
     @row = @row + 8
   end
 
-  def add_images_campaign_report(document, y_pos, social_id, styles)
-    images = ImagesSocialNetwork.where(:social_network_id => social_id)
+  def add_images_campaign_report(document, y_pos, styles)
+    images = ImagesSocialNetwork.where(:social_network_id => social_network.id)
     images.each do |image|
       header(document, y_pos)
       add_rows_report(document, 12)

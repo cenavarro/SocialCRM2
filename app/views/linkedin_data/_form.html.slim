@@ -41,6 +41,10 @@ javascript:
       | Comunidad
       br
       br
+      = f.label "Acciones durante periodo"
+      = f.text_field :actions, {:class => "validate[required]"}
+      br
+      br
       = f.label "Seguidores"
       = f.text_field :total_followers, {:class => "validate[required,custom[number]]"}
 
@@ -74,10 +78,6 @@ javascript:
       br
       = f.label "Recomendacion"
       = f.text_field :recommendation, {:class => "validate[required,custom[number]]"}
-      br
-      br
-      = f.label "Compartidos"
-      = f.text_field :shared, {:class => "validate[required,custom[number]]"}
 
     .box.investmentLinkedin
       |Inversion

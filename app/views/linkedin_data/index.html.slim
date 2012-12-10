@@ -48,20 +48,19 @@
 
 script 
   | createChart('container_followers', 'Seguidores', #{ raw @linkedin['dates']});
-  | addSerie('# Nuevos Followers', #{@linkedin['new_followers']});
-  | addSerie('# Followers', #{@linkedin['total_followers']});
+  | addSerie('# nuevos seguidores', #{@linkedin['new_followers']});
+  | addSerie('# seguidores reales', #{@linkedin['total_followers']});
   | refreshChart();
 
   | createChart('container_interactions', 'Interactividad', #{raw @linkedin['dates']});
-  | addSerie('Resumen',#{@linkedin['summary']});
-  | addSerie('Empleo',#{@linkedin['employment']});
-  | addSerie('Productos y Servicios',#{@linkedin['products_services']});
   | addSerie('Impresiones',#{@linkedin['prints']});
   | addSerie('Clicks',#{@linkedin['clics']});
   | addSerie('% interes',#{@linkedin['interest']});
   | addSerie('Recomendacion',#{@linkedin['recommendation']});
-  | addSerie('Compartidos',#{@linkedin['shared']});
   | refreshChart();
+
+  | createChart('container_views_page', 'Visualizaciones de la pagina', #{raw @linkedin['dates']});
+  | addSerie('# Visualizaciones de paginas',#{@linkedin['total_views']});
 
 section.sectionInformation
   .estilo_tabs
@@ -87,23 +86,29 @@ section.sectionInformation
                   = linkedin_datum.start_date.strftime('%d %b') + "-" + linkedin_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
+              td
+                | Acciones durante periodo
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = linkedin_datum.actions
+            tr.titlesRows
               td colspan=100
                 | Comunidad 
             tr
               td.estiloCelda
-                |# Nuevos Followers
+                |# nuevos seguidores
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = linkedin_datum.new_followers
             tr
               td
-                |# Followers
+                |# seguidores reales 
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = linkedin_datum.total_followers
             tr
               td
-                | % Crecimiento
+                |% crecimiento seguidores
               - @linkedin_data.each do |linkedin_datum|
                 - percentFollowers = linkedin_datum.get_percentage_difference_from_previous_total_followers.round(3)
                 - if percentFollowers >= 0.0 
@@ -115,12 +120,6 @@ section.sectionInformation
             tr.titlesRows
               td colspan=100
                 |Interactividad
-            tr
-              td
-                | # Visualizaciones de paginas
-              - @linkedin_data.each do | datum |
-                td
-                  = datum.views_page
             tr
               td
                 | Resumen
@@ -139,6 +138,12 @@ section.sectionInformation
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = linkedin_datum.products_services
+            tr
+              td
+                | # Visualizaciones de paginas(total)
+              - @linkedin_data.each do | datum |
+                td
+                  = datum.views_page
             tr
               td
                 | Impresiones
@@ -163,12 +168,6 @@ section.sectionInformation
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = linkedin_datum.recommendation
-            tr
-              td
-                | Compartidos
-              - @linkedin_data.each do |linkedin_datum|
-                td
-                  = linkedin_datum.shared
             tr.titlesRows
               td colspan=100
                 | Inversion
@@ -245,6 +244,19 @@ section.sectionInformation
           form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},'interaction','#{params[:locale]}','#{@linkedin_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interaction
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_views_page
+        .comment
+          .title
+            h4
+              | Comentario Grafico Visualizaciones de Paginas 
+          form  id="pages_views" onsubmit="return saveChartComment('#pages_views',#{@socialNetwork.id},'pages_views','#{params[:locale]}','#{@linkedin_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.pages_views
             br
             button.btn.btn-success
               | Guardar

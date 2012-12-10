@@ -48,7 +48,7 @@ $(document).ready(function(){
   var chart = null;
   createChart = function(container, title, categorie){
     chart = new Highcharts.Chart({
-      chart : { renderTo : container, type : 'line', marginRight : 130, marginBottom : 45, width : 806 },
+      chart : { renderTo : container, type : 'line', marginRight : 30, marginBottom : 100, width : 806 },
       title : { text : title, x: -20 },
       xAxis : {
         categories : categorie
@@ -61,13 +61,12 @@ $(document).ready(function(){
         formatter : function() {
           return '<b>'+ this.series.name +'</b><br/>'+
           this.x +': '+ this.y; } },
-      legend : { layout : 'vertical', align : 'right', verticalAlign : 'top', x : -10, y : 100, borderWidth : 0 
-      },
-      navigator : { enabled : false
+      legend : {
+        itemMarginBottom: 50,
+        borderWidth : 0
       },
       series : [ ],
-      scrollbar : { enabled : true 
-      }
+      scrollbar : { enabled : true }
     });
     var maxSeries;
   },
