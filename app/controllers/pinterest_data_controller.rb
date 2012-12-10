@@ -72,7 +72,6 @@ class PinterestDataController < ApplicationController
   def select_chart_data
     chart_data = {}
     chart_data['dates'] = @pinterest_datum.collect{|pd| "#{pd.start_date.strftime('%d %b')} - #{pd.end_date.strftime('%d %b')}"}
-    chart_data['new_followers'] = @pinterest_datum.collect{|pd| pd.new_followers }
     chart_data['total_investment'] = @pinterest_datum.collect{|pd| pd.total_investment }
     pinterest_keys.each do |key|
       chart_data[key] = @pinterest_datum.map(&:"#{key}")

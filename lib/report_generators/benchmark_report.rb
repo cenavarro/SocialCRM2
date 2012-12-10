@@ -6,67 +6,70 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
 
   def add_to(document)
     if !competitors.empty?
-      document.workbook do | wb |
-        wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => {:orientation => :landscape, :paper_size => 9,  :fit_to_width => 1, 
-                         :fit_to_height => 10}) do |sheet|
-          @comments = social_network.benchmark_comment.where("social_network_id = ?", social_network.id).first
-          @report_data = select_report_data
-          styles = create_report_styles(wb, @report_data['size'])
-          add_rows_report(sheet, 7)
-          sheet.add_row ['', "PAGINA DE BENCHMARK"], :style => 3
-          @row = 8
-          add_table_benchmark(sheet, styles)
-          add_rows_report(sheet, (54-@row))
-          add_charts(sheet, @report_data['size'] - 1)
-          add_rows_report(sheet, 20)
-          add_images_benchmark_report(sheet, 165, styles)
-          sheet.column_widths *columns_sizes
-          add_headers_and_footers(sheet)
-        end
-      end
+      @comments = social_network.benchmark_comment.where("social_network_id = ?", social_network.id).first
+      @report_data = select_report_data
+      set_headers_and_footers
+      create_report(document)
+      append_headers_and_footers(1267)
     end
+  end
+
+  def create_report(document)
+      @workbook = document.workbook
+      @worksheet =  @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => {:orientation => :landscape, :paper_size => 9,  :fit_to_width => 1, 
+                                            :fit_to_height => 10})
+      create_report_styles(@report_data['size'])
+      append_rows_to_report(7)
+      @worksheet.add_row ['', "PAGINA DE BENCHMARK"], :style => 3
+      @row = 8
+      append_benchmark_table
+      append_rows_to_report(54-@row)
+      append_charts_to_report
+      append_rows_to_report(20)
+      append_images_benchmark_to_report(165)
+      @worksheet.column_widths *columns_sizes
   end
 
   private
 
-  def add_table_benchmark(sheet, styles)
-    add_rows_report(sheet, 2)
+  def append_benchmark_table
+    append_rows_to_report(2)
     unshift_array(@report_data['x_axis'], ' ', 2)
     dates = dates_array(@report_data['dates'])
-    sheet.add_row dates, :style => 8, :height => height_cell
-    sheet.add_row @report_data['x_axis'], :style => 4, :height => height_cell
+    @worksheet.add_row dates, :style => 8, :height => height_cell
+    @worksheet.add_row @report_data['x_axis'], :style => 4, :height => height_cell
     @report_data['competitors'].each do |competitor|
-      sheet.add_row @report_data[competitor]['data'].unshift(competitor).unshift(''), :style => 6, :height => 13 
+      @worksheet.add_row @report_data[competitor]['data'].unshift(competitor).unshift(''), :style => 6, :height => 13 
       @row = @row + 1
     end
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.table]
+    append_rows_to_report
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report
+    @worksheet.add_row ["", @comments.table]
     @row = @row + 8
   end
 
-  def add_images_benchmark_report(document, y_pos, styles)
+  def append_images_benchmark_to_report position
     images = ImagesSocialNetwork.where(:social_network_id => social_network.id)
     images.each do |image|
-      headers << y_pos
-      add_rows_report(document, 7)
-      document.add_row ["",image.title], :style => styles['title'][1]
-      add_rows_report(document, 2)
-      y_pos = y_pos + 10 
+      @headers << position
+      append_rows_to_report(7)
+      @worksheet.add_row ["",image.title], :style => @styles['title'][1]
+      append_rows_to_report(2)
+      position = position + 10 
       img = File.expand_path(image.attachment.path, __FILE__)
-      document.add_image(:image_src => img) do |sheet_image|
-        sheet_image.width = 600
+      @worksheet.add_image(:image_src => img) do |sheet_image|
+        sheet_image.width = 998
         sheet_image.height = 400
-        sheet_image.start_at 1, y_pos
+        sheet_image.start_at 1, position
       end
-      add_rows_report(document, 24)
-      document.add_row ["", "Comentario"], :style => 3
-      add_rows_report(document, 1)
-      document.add_row ["", image.comment]
-      add_rows_report(document, 18)
-      y_pos = y_pos + 45
-      footers << (y_pos - 2)
+      append_rows_to_report(24)
+      @worksheet.add_row ["", "Comentario"], :style => 3
+      append_rows_to_report
+      @worksheet.add_row ["", image.comment]
+      append_rows_to_report(18)
+      position = position + 45
+      @footers << (position - 2)
     end
   end
 
@@ -96,40 +99,40 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     return report_data
   end
 
-  def add_charts(sheet, size)
-    size = size * 7
-    add_rows_report(sheet, 7)
-    sheet.add_row ["","GRAFICOS BENCHMAR"], :style => 3
-    add_rows_report(sheet, 2)
-    insert_distribution_chart(sheet, size)
-    add_rows_report(sheet, 14)
-    insert_totals_chart(sheet, size)
+  def append_charts_to_report
+    size = (@report_data['size'] - 1) * 7
+    append_rows_to_report 7
+    @worksheet.add_row ["","GRAFICOS BENCHMAR"], :style => 3
+    append_rows_to_report 2
+    insert_distribution_chart size
+    append_rows_to_report 14
+    insert_totals_chart size
   end
 
-  def insert_distribution_chart(sheet, size)
-    chart = create_chart(sheet, 64, "Distribucion", 18)
+  def insert_distribution_chart size
+    chart = create_chart(64, "Distribucion", 18)
     shift_array(@report_data['x_axis'], 2)
     @report_data['competitors'].each do |competitor|
       shift_array(@report_data[competitor]['data'], 2)
       add_serie(chart, @report_data[competitor]['data'], @report_data['x_axis'], competitor)
       add_serie(chart, [0], @report_data['x_axis'], "")
     end
-    add_rows_report(sheet, 24)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.distribution]
+    append_rows_to_report 24
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report
+    @worksheet.add_row ["", @comments.distribution]
   end
 
-  def insert_totals_chart(sheet, size)
-    chart = create_chart(sheet, 118, "Totales", 18)
+  def insert_totals_chart size
+    chart = create_chart(118, "Totales", 18)
     @report_data['competitors'].each do |competitor|
       add_serie(chart, @report_data[competitor]['totals'], @report_data['dates'], competitor)
       add_serie(chart, [0], @report_data['x_axis'], "")
     end
-    add_rows_report(sheet, 37)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.totals]
+    append_rows_to_report 37
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report
+    @worksheet.add_row ["", @comments.totals]
   end
 
   def data_of_competitor id
@@ -159,19 +162,9 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     array
   end
 
-  def headers
-    @header_positions ||= [0, 54, 109]
-  end
-
-  def footers
-    @footer_positions ||= [53, 108, 164]
-  end
-
-  def add_headers_and_footers(sheet)
-    for i in (0..headers.size-1)
-      header(sheet, headers[i], 1267)
-      footer(sheet, footers[i], 1267)
-    end
+  def set_headers_and_footers
+    @headers ||= [0, 54, 109]
+    @footers ||= [53, 108, 164]
   end
 
   def columns_sizes

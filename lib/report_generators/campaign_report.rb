@@ -5,7 +5,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
 
   def add_to(document)
     rows_campaign = social_network.rows_campaign
-    if !rows_campaign.empty?
+    if !rows_campaign.empty? and !rows_campaign.first.row_data.empty?
       document.workbook do | wb |
         wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
         @comments = social_network.campaign_comment.where("social_network_id = ?", social_network.id).first

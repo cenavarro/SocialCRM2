@@ -4,19 +4,19 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
   end
 
   def is_empty?
-    themes.empty? && channels.empty?
+    themes.empty? && channels.empty? 
   end
 
   def themes
-    themes = social_network.monitoring.where('isTheme = ?', true).order("name ASC")
+    social_network.monitoring.where('isTheme = ?', true).order("name ASC")
   end
 
   def channels
-    channels = social_network.monitoring.where('isTheme = ?', false).order("name ASC")
+    social_network.monitoring.where('isTheme = ?', false).order("name ASC")
   end
 
   def add_to(document)
-    if !is_empty?
+    if !is_empty? && !themes.first.monitoring_data.empty? 
       @comments = social_network.monitoring_comment.first
       params = {themes: themes, channels: channels, start_date: start_date, end_date: end_date, datum: monitoring_datum}
       document.workbook do | wb |

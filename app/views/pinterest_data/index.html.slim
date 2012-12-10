@@ -51,8 +51,7 @@ center
 
 script
   | createChart('container_community', 'Comunidad', #{raw @pinterest['dates']});
-  | addSerie('# Nuevos Followers',#{@pinterest['new_followers']});
-  | addSerie('# Followers',#{@pinterest['total_followers']});
+  | addSerie('# followers',#{@pinterest['total_followers']});
   | addSerie('# boards',#{@pinterest['boards']});
   | addSerie('# pins', #{@pinterest['pins']});
   | refreshChart();
@@ -65,7 +64,6 @@ script
   | refreshChart();
 
   | createChart('container_investment', 'Inversion', #{raw @pinterest['dates']});
-  | addSerie('# nuevos followers',#{@pinterest['new_followers']});
   | addSerie('Inversion Total',#{@pinterest['total_investment']});
   | refreshChart();
 
@@ -97,16 +95,16 @@ section.sectionInformation
                 | Comunidad 
             tr
               td.estiloCelda
-                |# Nuevos Followers
-              - @pinterest_datum.each do |pinterest_datum|
-                td
-                  = pinterest_datum.new_followers
-            tr
-              td
-                |# Followers
+                |#followers
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = pinterest_datum.total_followers
+            tr
+              td
+                | % de crecimiento 
+              - @pinterest_datum.each do |pinterest_datum|
+                td
+                  = pinterest_datum.get_percentage_difference_from_previous_total_followers
             tr
               td
                 | # boards
@@ -130,10 +128,22 @@ section.sectionInformation
                   = pinterest_datum.liked
             tr
               td
+                | % de cambio
+              - @pinterest_datum.each do |pinterest_datum|
+                td
+                  = pinterest_datum.get_percentage_difference_from_previous_liked
+            tr
+              td
                 | # repin
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = pinterest_datum.repin
+            tr
+              td
+                | % de cambio
+              - @pinterest_datum.each do |pinterest_datum|
+                td
+                  = pinterest_datum.get_percentage_difference_from_previous_repin
             tr
               td
                 | # comments
@@ -142,10 +152,22 @@ section.sectionInformation
                   = pinterest_datum.comments
             tr
               td
+                | % de cambio
+              - @pinterest_datum.each do |pinterest_datum|
+                td
+                  = pinterest_datum.get_percentage_difference_from_previous_comments
+            tr
+              td
                 | # community boards
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = pinterest_datum.community_boards
+            tr
+              td
+                | % de cambio
+              - @pinterest_datum.each do |pinterest_datum|
+                td
+                  = pinterest_datum.get_percentage_difference_from_previous_community_boards
             tr.titlesRows
               td colspan=100
                 | Inversion
@@ -163,7 +185,7 @@ section.sectionInformation
                   = pinterest_datum.investment_actions
             tr
               td
-                | Inversion anuncios
+                | Inversion anuncios ads
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = pinterest_datum.investment_ads
@@ -173,6 +195,12 @@ section.sectionInformation
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = pinterest_datum.total_investment.round(3)
+            tr
+              td
+                | Coste Fan
+              - @pinterest_datum.each do |pinterest_datum|
+                td
+                  = pinterest_datum.coste_fan
             tr id="buttons"
               td.nilValue
                 |Opciones

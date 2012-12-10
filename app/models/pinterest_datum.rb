@@ -5,12 +5,14 @@ class PinterestDatum < ActiveRecord::Base
 
   set_type :pinterest_data
 
-  def new_followers
-    previous_datum.present? ? total_followers - previous_datum.total_followers : 0
-  end
+  comparable_metrics :total_followers, :liked, :repin, :comments, :community_boards
 
   def total_investment
     (investment_agency + investment_ads + investment_actions) 
+  end
+
+  def coste_fan
+    (total_investment.to_f / total_followers) 
   end
 
 end

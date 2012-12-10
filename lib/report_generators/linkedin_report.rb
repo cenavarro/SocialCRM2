@@ -4,41 +4,33 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     type == LinkedinDatum
   end
 
-  def create_report(document)
-    @workbook = document.workbook
-    @worksheet = @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup)
-    styles = create_report_styles(@workbook, linkedin_datum.size+1)
-    append_rows_to_report(8)
-    @worksheet.add_row ["","PAGINA DE LINKEDIN"], :style => 3
-    append_rows_to_report
-    add_table(@worksheet,  @report_data, styles)
-    append_charts_to_report
-    append_rows_to_report(15)
-    add_images_report(@worksheet, 199, styles)
-    @worksheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
-    append_headers_and_footers
-  end
-
-  def linkedin_datum
-    @data ||= social_network.linkedin_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
-  end
-
   def add_to(document)
     if !linkedin_datum.empty?
       @comments = social_network.linkedin_comment.where("social_network_id = ?", social_network.id).first
       @report_data = select_report_data
+      set_headers_and_footers
       create_report(document)
+      append_headers_and_footers
     end
   end
 
   private
 
-  def remove_cells_report_table
-    @report_data['table'].each do |key, data|
-      2.times do
-        data.shift
-      end
-    end
+  def linkedin_datum
+    social_network.linkedin_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
+  end
+
+  def create_report(document)
+    set_workbook_and_worksheet(document)
+    create_report_styles(linkedin_datum.size+1)
+    append_rows_to_report(8)
+    @worksheet.add_row ["","PAGINA DE LINKEDIN"], :style => 3
+    append_rows_to_report
+    add_table_to_report
+    append_charts_to_report
+    append_rows_to_report(15)
+    add_images_report(199)
+    @worksheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
   end
 
   def append_charts_to_report
@@ -90,7 +82,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
   end
 
   def append_followers_chart position
-    chart = create_chart(@worksheet, position, "Seguidores")
+    chart = create_chart(position, "Seguidores")
     add_serie(chart, @report_data['table']['new_followers'], @report_data['table']['dates'], '# nuevos seguidores')
     add_serie(chart, @report_data['table']['total_followers'], @report_data['table']['dates'], '# seguidores reales')
     append_rows_to_report(24)
@@ -100,7 +92,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
   end
 
   def append_interactivity_chart position
-    chart = create_chart(@worksheet, position, "Interactividad")
+    chart = create_chart(position, "Interactividad")
     add_serie(chart, @report_data['table']['prints'], @report_data['table']['dates'], 'Impresiones')
     add_serie(chart, @report_data['table']['clics'], @report_data['table']['dates'], 'Clicks')
     add_serie(chart, @report_data['table']['interest'], @report_data['table']['dates'], '% interest')
@@ -112,7 +104,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
   end
 
   def append_views_pages_chart position
-    chart = create_chart(@worksheet, position, "Visualizaciones de paginas")
+    chart = create_chart(position, "Visualizaciones de paginas")
     add_serie(chart, @report_data['table']['views_pages'], @report_data['table']['dates'], '# Visualizaciones de paginas')
     add_serie(chart, [], @report_data['table']['dates'], '')
     append_rows_to_report(39)
@@ -121,19 +113,9 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     @worksheet.add_row ["", @comments.pages_views]
   end
 
-  def headers
+  def set_headers_and_footers
     @headers ||= [0, 73, 115, 157]
-  end
-
-  def footers
     @footers ||= [72, 114, 156, 198]
-  end
-
-  def append_headers_and_footers
-    for i in (0..headers.size-1)
-      header(@worksheet, headers[i])
-      footer(@worksheet, footers[i])
-    end
   end
 
 end
