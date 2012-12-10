@@ -100,6 +100,12 @@ section.sectionInformation
               - @tumblr_datum.each do |tumblr_datum|
                 td
                   = tumblr_datum.total_followers
+            tr
+              td
+                |# Post
+              - @tumblr_datum.each do |tumblr_datum|
+                td
+                  = tumblr_datum.posts
             tr.titlesRows
               td colspan=100
                 |Inveractividad

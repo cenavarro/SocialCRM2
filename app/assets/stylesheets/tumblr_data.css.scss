@@ -14,25 +14,25 @@ $space: 400px;
 
 .interactionTumblr{
 	position:absolute;
-	top: -140 + ($top_position);
+	top: -120 + ($top_position);
 	left:$left_position;
 }
 
 .investmentTumblr{
 	position:absolute;
-	top: -200 + $top_position;
+	top: -150 + $top_position;
 	left:$left_position+$space;
 
 }
 
 .saveTumblr{
 	position:absolute;
-	top: 550px;
+	top: 570px;
 	left: 300px;
 }
 
 .backTumblr{
 	position:absolute;
-	top: 550px;
+	top: 570px;
 	left:500px;
 }
