@@ -482,6 +482,7 @@ ActiveRecord::Schema.define(:version => 20121210215148) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "interaction_2"
+    t.text     "investment"
   end
 
   create_table "youtube_data", :force => true do |t|

@@ -73,6 +73,11 @@ script
   | addSerie('# Compartidos',#{@youtube['shared']});
   | refreshChart();
 
+  | createChart('container_investment', 'Inversion', #{raw @youtube['dates']});
+  | addSerie('Subscriptores nuevos',#{@youtube['new_subscribers']});
+  | addSerie('Inversion Total',#{@youtube['total_investment']});
+  | refreshChart();
+
 section.sectionInformation
   .estilo_tabs
     ul.nav.nav-tabs id="myTab"
@@ -298,6 +303,19 @@ section.sectionInformation
           form  id="interactions_2" onsubmit="return saveChartComment('#interactions_2',#{@socialNetwork.id},'interaction_2','#{params[:locale]}','#{@youtube_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interaction_2
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_investment
+        .comment
+          .title
+            h4
+              | Comentario Grafico Inversion 
+          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},'investment','#{params[:locale]}','#{@youtube_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.investment
             br
             button.btn.btn-success
               | Guardar

@@ -73,6 +73,7 @@ class YoutubeDataController < ApplicationController
     chart_data = {}
     chart_data['dates'] = @youtube_datum.collect{|yd| "#{yd.start_date.strftime('%d %b')} - #{yd.end_date.strftime('%d %b')}"}
     chart_data['new_subscribers'] = @youtube_datum.collect{|yd| yd.new_subscribers }
+    chart_data['total_investment'] = @youtube_datum.collect{|yd| yd.total_investment }
     youtube_keys.each do |key|
       chart_data[key] = @youtube_datum.map(&:"#{key}")
     end

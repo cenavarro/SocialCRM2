@@ -7,6 +7,7 @@ class AddNewFieldsToYoutube < ActiveRecord::Migration
     add_column :youtube_data, :comments, :integer
     add_column :youtube_data, :shared, :integer
     add_column :youtube_comments, :interaction_2, :text
+    add_column :youtube_comments, :investment, :text
   end
 
   def down 
@@ -17,5 +18,6 @@ class AddNewFieldsToYoutube < ActiveRecord::Migration
     remove_column :youtube_data, :comments
     remove_column :youtube_data, :shared
     remove_column :youtube_comments, :interaction_2
+    remove_column :youtube_comments, :investment
   end
 end

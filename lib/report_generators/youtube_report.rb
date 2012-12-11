@@ -28,7 +28,7 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
     add_table_to_report
     append_charts_to_report
     append_rows_to_report 15
-    add_images_report 197
+    add_images_report 239
     @worksheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
   end
 
@@ -40,6 +40,7 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
     append_community_chart
     append_interactivity_chart
     append_interactivity_chart_2
+    append_investment_chart
   end
 
   def table_rows
@@ -124,9 +125,19 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
     @worksheet.add_row ["", @comments.interaction_2]
   end
 
+  def append_investment_chart
+    chart = create_chart(204, "Inversion")
+    add_serie(chart, @report_data['new_subscriber'], @report_data['dates'], 'Nuevos Suscriptores')
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion Total')
+    append_rows_to_report 39
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report 1
+    @worksheet.add_row ["", @comments.investment]
+  end
+
   def set_headers_and_footers
-    @headers ||= [0, 71, 113, 155]
-    @footers ||= [70, 112, 154, 196]
+    @headers ||= [0, 71, 113, 155, 197]
+    @footers ||= [70, 112, 154, 196, 238]
   end
 
 end
