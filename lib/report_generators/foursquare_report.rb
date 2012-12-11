@@ -37,9 +37,9 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     append_rows_to_report 10
     @worksheet.add_row ["","GRAFICOS FOURSQUARE"], :style => 3
     append_rows_to_report 2
-    insert_followers_chart
-    insert_interactivity_chart
-    insert_offers_chart
+    append_followers_chart
+    append_interactivity_chart
+    append_offers_chart
   end
 
   def table_rows
@@ -77,7 +77,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     [ 'community_header', 'interactivity_header', 'campaign_header', 'total_followers', 'total_unlocks', 'total_visits', 'clients', 'likes', 'checkins' ]
   end
 
-  def insert_followers_chart
+  def append_followers_chart
     chart = create_chart(43, "Comunidad")
     add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos followers')
     add_serie(chart, @report_data['total_followers'], @report_data['dates'], '# followers')
@@ -87,7 +87,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     @worksheet.add_row ["", @comments.followers]
   end
 
-  def insert_interactivity_chart
+  def append_interactivity_chart
     chart = create_chart(82, "Interactividad")
     add_serie(chart, @report_data['clients'], @report_data['dates'], '#clientes')
     add_serie(chart, @report_data['likes'], @report_data['dates'], '#me gusta')
@@ -98,7 +98,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     @worksheet.add_row ["", @comments.interactivity]
   end
 
-  def insert_offers_chart
+  def append_offers_chart
     chart = create_chart(124, "Interactividad (Ofertas)")
     add_serie(chart, @report_data['total_unlocks'], @report_data['dates'], '# unlocks  total de ofertas')
     add_serie(chart, @report_data['total_visits'], @report_data['dates'], '# visitas total de las ofertas')
