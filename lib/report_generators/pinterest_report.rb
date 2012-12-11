@@ -45,18 +45,16 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
 
   def table_rows
     {
-      'table' => {
-        'dates' => ['',''], 'community_header' => ['','Comunidad'], 'total_followers' => ['','# Followers'],
-        'diff_followers' => ['','% de crecimiento'], 'boards' => ['', '# boards'], 'pins' => ['', '# pins'], 
-        'interactions_header' => ['', 'Interactividad'], 
-        'liked' => ['','# liked'], 'diff_liked' => ['', '% cambio'],
-        'repin' => ['','# repin'], 'diff_repin' => ['', '% cambio'],
-        'comments' => ['','# comments'], 'diff_comments' => ['', '% cambio'],
-        'community_boards' => ['','# community boards'],'diff_community' => ['', '% cambio'],
-        'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 
-        'investment_actions' => ['','Inversion nuevas acciones'], 'investment_ads' => ['','Inversion anuncios'], 
-        'total_investment' => ['','Inversion Total'], 'coste_fan' => ['', 'Coste Fan']
-      }
+      'dates' => ['',''], 'community_header' => ['','Comunidad'], 'total_followers' => ['','# Followers'],
+      'diff_followers' => ['','% de crecimiento'], 'boards' => ['', '# boards'], 'pins' => ['', '# pins'], 
+      'interactions_header' => ['', 'Interactividad'], 
+      'liked' => ['','# liked'], 'diff_liked' => ['', '% cambio'],
+      'repin' => ['','# repin'], 'diff_repin' => ['', '% cambio'],
+      'comments' => ['','# comments'], 'diff_comments' => ['', '% cambio'],
+      'community_boards' => ['','# community boards'],'diff_community' => ['', '% cambio'],
+      'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 
+      'investment_actions' => ['','Inversion nuevas acciones'], 'investment_ads' => ['','Inversion anuncios'], 
+      'total_investment' => ['','Inversion Total'], 'coste_fan' => ['', 'Coste Fan']
     }
   end
 
@@ -65,16 +63,16 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
     pinterest_datum.each do |datum|
       pinterest_keys.each do |key|
         key.include?("header") ? (value = nil) : (value = datum[key])
-        table['table'][key] << value
+        table[key] << value
       end
-      table['table']['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
-      table['table']['diff_followers'] << datum.get_percentage_difference_from_previous_total_followers
-      table['table']['diff_liked'] << datum.get_percentage_difference_from_previous_liked
-      table['table']['diff_repin'] << datum.get_percentage_difference_from_previous_repin
-      table['table']['diff_comments'] << datum.get_percentage_difference_from_previous_comments
-      table['table']['diff_community'] << datum.get_percentage_difference_from_previous_community_boards
-      table['table']['coste_fan'] << datum.coste_fan
-      table['table']['total_investment'] << datum.total_investment.round(2)
+      table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
+      table['diff_followers'] << datum.get_percentage_difference_from_previous_total_followers
+      table['diff_liked'] << datum.get_percentage_difference_from_previous_liked
+      table['diff_repin'] << datum.get_percentage_difference_from_previous_repin
+      table['diff_comments'] << datum.get_percentage_difference_from_previous_comments
+      table['diff_community'] << datum.get_percentage_difference_from_previous_community_boards
+      table['coste_fan'] << datum.coste_fan
+      table['total_investment'] << datum.total_investment.round(2)
     end
     table
   end
@@ -87,9 +85,9 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
 
   def append_followers_chart
     chart = create_chart(83, "Comunidad")
-    add_serie(chart, @report_data['table']['total_folowers'], @report_data['table']['dates'], '# followers')
-    add_serie(chart, @report_data['table']['boards'], @report_data['table']['dates'], '# boards')
-    add_serie(chart, @report_data['table']['pins'], @report_data['table']['dates'], '# pins')
+    add_serie(chart, @report_data['total_folowers'], @report_data['dates'], '# followers')
+    add_serie(chart, @report_data['boards'], @report_data['dates'], '# boards')
+    add_serie(chart, @report_data['pins'], @report_data['dates'], '# pins')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
@@ -98,10 +96,10 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
 
   def append_interactivity_chart
     chart = create_chart(122, "Interactividad")
-    add_serie(chart, @report_data['table']['liked'], @report_data['table']['dates'], '# liked')
-    add_serie(chart, @report_data['table']['repin'], @report_data['table']['dates'], '# repin')
-    add_serie(chart, @report_data['table']['comments'], @report_data['table']['dates'], '# comments')
-    add_serie(chart, @report_data['table']['community_boards'], @report_data['table']['dates'], '# community boards')
+    add_serie(chart, @report_data['liked'], @report_data['dates'], '# liked')
+    add_serie(chart, @report_data['repin'], @report_data['dates'], '# repin')
+    add_serie(chart, @report_data['comments'], @report_data['dates'], '# comments')
+    add_serie(chart, @report_data['community_boards'], @report_data['dates'], '# community boards')
     append_rows_to_report 36
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
@@ -110,8 +108,8 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
 
   def append_investment_chart
     chart = create_chart(164, "Inversion")
-    add_serie(chart, @report_data['table']['total_investment'], @report_data['table']['dates'], 'Inversion Total')
-    add_serie(chart, [], @report_data['table']['dates'], '')
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion Total')
+    add_serie(chart, [], @report_data['dates'], '')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report

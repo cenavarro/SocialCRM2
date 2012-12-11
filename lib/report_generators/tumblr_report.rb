@@ -44,15 +44,13 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
 
   def table_rows
     {
-      'table' => {
-        'dates' => ['',''], 'community_header' => ['','Comunidad'], 
-        'new_followers' => ['','# nuevos followers'], 'total_followers' => ['','# followers'], 
-        'posts' => ['', '#Post'],
-        'interaction_header' => ['', 'Interactividad'], 'likes' => ['', '# like'],
-        'reblogged' => ['','# reblogged'], 'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 
-        'investment_actions' => ['','Inversion nuevas acciones'], 'investment_ads' => ['','Inversion anuncios'], 
-        'total_investment' => ['','Inversion Total'],
-      }
+      'dates' => ['',''], 'community_header' => ['','Comunidad'], 
+      'new_followers' => ['','# nuevos followers'], 'total_followers' => ['','# followers'], 
+      'posts' => ['', '#Post'],
+      'interaction_header' => ['', 'Interactividad'], 'likes' => ['', '# like'],
+      'reblogged' => ['','# reblogged'], 'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 
+      'investment_actions' => ['','Inversion nuevas acciones'], 'investment_ads' => ['','Inversion anuncios'], 
+      'total_investment' => ['','Inversion Total'],
     }
   end
 
@@ -61,11 +59,11 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
     tumblr_datum.each do |datum|
       tumblr_keys.each do |key|
         key.include?("header") ? (value = nil) : (value = datum[key])
-        table['table'][key] << value
+        table[key] << value
       end
-      table['table']['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
-      table['table']['total_investment'] << datum.total_investment.round(2)
-      table['table']['new_followers'] << datum.new_followers
+      table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
+      table['total_investment'] << datum.total_investment.round(2)
+      table['new_followers'] << datum.new_followers
     end
     table
   end
@@ -77,8 +75,8 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
 
   def append_followers_chart
     chart = create_chart(45, "Followers")
-    add_serie(chart, @report_data['table']['new_followers'], @report_data['table']['dates'], '# nuevos followers')
-    add_serie(chart, @report_data['table']['total_followers'], @report_data['table']['dates'], '# followers')
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos followers')
+    add_serie(chart, @report_data['total_followers'], @report_data['dates'], '# followers')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -87,8 +85,8 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
 
   def append_interactivity_chart
     chart = create_chart(84, "Interactividad")
-    add_serie(chart, @report_data['table']['likes'], @report_data['table']['dates'], '# like')
-    add_serie(chart, @report_data['table']['reblogged'], @report_data['table']['dates'], '# reblogged')
+    add_serie(chart, @report_data['likes'], @report_data['dates'], '# like')
+    add_serie(chart, @report_data['reblogged'], @report_data['dates'], '# reblogged')
     append_rows_to_report 36
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -97,8 +95,8 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
 
   def append_investment_chart
     chart = create_chart(126, "Inversion")
-    add_serie(chart, @report_data['table']['new_followers'], @report_data['table']['dates'], '# nuevos followers')
-    add_serie(chart, @report_data['table']['total_investment'], @report_data['table']['dates'], 'Inversion Total')
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos followers')
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion Total')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1

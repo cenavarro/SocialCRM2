@@ -64,6 +64,15 @@ script
   | addSerie('Suscripciones de Youtube',#{@youtube['youtube_subscriptions']});
   | addSerie('Publicidad de Youtube',#{@youtube['youtube_ads']});
   | refreshChart();
+
+  | createChart('container_interactions_2', 'Interactividad', #{raw @youtube['dates']});
+  | addSerie('# Me Gusta',#{@youtube['likes']});
+  | addSerie('# No Me Gusta',#{@youtube['no_likes']});
+  | addSerie('# Favoritos',#{@youtube['favorite']});
+  | addSerie('# Comentarios',#{@youtube['comments']});
+  | addSerie('# Compartidos',#{@youtube['shared']});
+  | refreshChart();
+
 section.sectionInformation
   .estilo_tabs
     ul.nav.nav-tabs id="myTab"
@@ -171,6 +180,36 @@ section.sectionInformation
               - @youtube_datum.each do |youtube_datum|
                 td
                   = youtube_datum.youtube_ads
+            tr
+              td
+                |# Me Gusta
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.likes
+            tr
+              td
+                |# No Me Gusta
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.no_likes
+            tr
+              td
+                |# Favoritos
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.favorite
+            tr
+              td
+                |# Comentarios
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.comments
+            tr
+              td
+                |# Compartidos
+              - @youtube_datum.each do |youtube_datum|
+                td
+                  = youtube_datum.shared
 
             tr.titlesRows
               td colspan=100
@@ -246,6 +285,19 @@ section.sectionInformation
           form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},'interaction','#{params[:locale]}','#{@youtube_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.interaction
+            br
+            button.btn.btn-success
+              | Guardar
+            .result
+        .estilo_graficos
+          #container_interactions_2
+        .comment
+          .title
+            h4
+              | Comentario Grafico Interacciones 2
+          form  id="interactions_2" onsubmit="return saveChartComment('#interactions_2',#{@socialNetwork.id},'interaction_2','#{params[:locale]}','#{@youtube_info.id_name}');"
+            textarea rows=10 id="comment"
+              = @comments.interaction_2
             br
             button.btn.btn-success
               | Guardar

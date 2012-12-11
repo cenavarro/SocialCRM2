@@ -91,7 +91,12 @@ class YoutubeDataController < ApplicationController
       'google_search',
       'youtube_others',
       'youtube_subscriptions',
-      'youtube_ads'
+      'youtube_ads',
+      'likes',
+      'no_likes',
+      'favorite',
+      'comments',
+      'shared'
     ]
   end
 

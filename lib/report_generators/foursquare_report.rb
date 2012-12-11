@@ -44,16 +44,14 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
 
   def table_rows
     {
-      'table' => {
-        'dates' => ['',''], 'community_header' => ['','Comunidad'], 
-        'new_followers' => ['','# nuevos followers'], 'total_followers' => ['','# followers'],
-        'interactivity_header' => ['', 'Interactividad'], 'clients' => ['','#clientes'], 
-        'diff_clients' => ['', '% diferencia'], 'likes' => ['', '#me gusta'], 'diff_likes' => ['', '% diferencia'], 
-        'checkins' => ['', '#check-ins'], 'diff_checkins' => ['', '% diferencia'],
-        'campaign_header' => ['','Campana'],
-        'total_unlocks' => ['','# unlocks total de las ofertas'], 'diff_unlocks' => ['', '% diferencia'],
-        'total_visits' => ['','# visitas total de las ofertas'], 'diff_visits' => ['', '% diferencia']
-      }
+      'dates' => ['',''], 'community_header' => ['','Comunidad'], 
+      'new_followers' => ['','# nuevos followers'], 'total_followers' => ['','# followers'],
+      'interactivity_header' => ['', 'Interactividad'], 'clients' => ['','#clientes'], 
+      'diff_clients' => ['', '% diferencia'], 'likes' => ['', '#me gusta'], 'diff_likes' => ['', '% diferencia'], 
+      'checkins' => ['', '#check-ins'], 'diff_checkins' => ['', '% diferencia'],
+      'campaign_header' => ['','Campana'],
+      'total_unlocks' => ['','# unlocks total de las ofertas'], 'diff_unlocks' => ['', '% diferencia'],
+      'total_visits' => ['','# visitas total de las ofertas'], 'diff_visits' => ['', '% diferencia']
     }
   end
 
@@ -62,15 +60,15 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     foursquare_datum.each do |datum|
       foursquare_keys.each do |key|
         key.include?("header") ? (value = nil) : (value = datum[key])
-        table['table'][key] << value
+        table[key] << value
       end
-      table['table']['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
-      table['table']['new_followers'] << datum.new_followers
-      table['table']['diff_clients'] << datum.get_percentage_difference_from_previous_clients
-      table['table']['diff_likes'] << datum.get_percentage_difference_from_previous_likes
-      table['table']['diff_checkins'] << datum.get_percentage_difference_from_previous_checkins
-      table['table']['diff_unlocks'] << datum.get_percentage_difference_from_previous_total_unlocks
-      table['table']['diff_visits'] << datum.get_percentage_difference_from_previous_total_visits
+      table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
+      table['new_followers'] << datum.new_followers
+      table['diff_clients'] << datum.get_percentage_difference_from_previous_clients
+      table['diff_likes'] << datum.get_percentage_difference_from_previous_likes
+      table['diff_checkins'] << datum.get_percentage_difference_from_previous_checkins
+      table['diff_unlocks'] << datum.get_percentage_difference_from_previous_total_unlocks
+      table['diff_visits'] << datum.get_percentage_difference_from_previous_total_visits
     end
     table
   end
@@ -81,8 +79,8 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
 
   def insert_followers_chart
     chart = create_chart(43, "Comunidad")
-    add_serie(chart, @report_data['table']['new_followers'], @report_data['table']['dates'], '# nuevos followers')
-    add_serie(chart, @report_data['table']['total_followers'], @report_data['table']['dates'], '# followers')
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos followers')
+    add_serie(chart, @report_data['total_followers'], @report_data['dates'], '# followers')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
@@ -91,9 +89,9 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
 
   def insert_interactivity_chart
     chart = create_chart(82, "Interactividad")
-    add_serie(chart, @report_data['table']['clients'], @report_data['table']['dates'], '#clientes')
-    add_serie(chart, @report_data['table']['likes'], @report_data['table']['dates'], '#me gusta')
-    add_serie(chart, @report_data['table']['checkins'], @report_data['table']['dates'], '#check-ins')
+    add_serie(chart, @report_data['clients'], @report_data['dates'], '#clientes')
+    add_serie(chart, @report_data['likes'], @report_data['dates'], '#me gusta')
+    add_serie(chart, @report_data['checkins'], @report_data['dates'], '#check-ins')
     append_rows_to_report 36
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
@@ -102,8 +100,8 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
 
   def insert_offers_chart
     chart = create_chart(124, "Interactividad (Ofertas)")
-    add_serie(chart, @report_data['table']['total_unlocks'], @report_data['table']['dates'], '# unlocks  total de ofertas')
-    add_serie(chart, @report_data['table']['total_visits'], @report_data['table']['dates'], '# visitas total de las ofertas')
+    add_serie(chart, @report_data['total_unlocks'], @report_data['dates'], '# unlocks  total de ofertas')
+    add_serie(chart, @report_data['total_visits'], @report_data['dates'], '# visitas total de las ofertas')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report

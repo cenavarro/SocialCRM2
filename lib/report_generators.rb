@@ -73,7 +73,7 @@ module ReportGenerators
 
     def add_table_to_report
       append_rows_to_report 2
-      @report_data['table'].each do |key, data|
+      @report_data.each do |key, data|
         if key.include?("header") || (key=="actions")
           @worksheet.add_row data, :style => @styles['header'], :height => height_cell
         elsif key.include?("dates")
@@ -113,7 +113,7 @@ module ReportGenerators
     end
 
     def remove_cells_report_table
-      @report_data['table'].each do |key, data|
+      @report_data.each do |key, data|
         2.times do
           data.shift
         end

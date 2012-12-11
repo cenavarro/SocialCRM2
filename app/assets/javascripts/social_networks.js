@@ -48,7 +48,7 @@ $(document).ready(function(){
   var chart = null;
   createChart = function(container, title, categorie){
     chart = new Highcharts.Chart({
-      chart : { renderTo : container, type : 'line', marginRight : 30, marginBottom : 100, width : 806 },
+      chart : { renderTo : container, type : 'line', marginRight : 30, width : 806 },
       title : { text : title, x: -20 },
       xAxis : {
         categories : categorie
@@ -62,7 +62,9 @@ $(document).ready(function(){
           return '<b>'+ this.series.name +'</b><br/>'+
           this.x +': '+ this.y; } },
       legend : {
-        itemMarginBottom: 50,
+        marginBottom: 200,
+        y: -50,
+        maxHeight: 50,
         borderWidth : 0
       },
       series : [ ],
@@ -97,6 +99,7 @@ $(document).ready(function(){
     }
     chart.xAxis[0].setExtremes(0, (maxSeries - 1), true, false);
   }
+
   $("#start_date_picker").datepicker({ format: 'dd-mm-yyyy' })
     .on('changeDate', function(ev){
       $("#start_date_picker").datepicker('hide');

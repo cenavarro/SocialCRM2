@@ -9,7 +9,7 @@ $space: 400px;
 
 .comunityYoutube{
 	position:absolute;
-  top: 100px;
+  top: 40px;
 	left: $left_position+$space;
 }
 
@@ -19,9 +19,15 @@ $space: 400px;
 	left:$left_position;
 }
 
+.interaction_2_youtube{
+	position:absolute;
+	top: -130 + ($top_position);
+  left:$left_position+$space;
+}
+
 .investmentYoutube{
 	position:absolute;
-	top: 320px;
+	top: $top_position + 350px;
   left:$left_position+$space;
 
 }

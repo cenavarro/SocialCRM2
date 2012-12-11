@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121210210956) do
+ActiveRecord::Schema.define(:version => 20121210215148) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -481,6 +481,7 @@ ActiveRecord::Schema.define(:version => 20121210210956) do
     t.text     "interaction"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "interaction_2"
   end
 
   create_table "youtube_data", :force => true do |t|
@@ -488,7 +489,6 @@ ActiveRecord::Schema.define(:version => 20121210210956) do
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "social_network_id"
-    t.integer  "new_subscriber"
     t.integer  "total_subscriber"
     t.integer  "total_video_views"
     t.integer  "inserted_player"
@@ -506,6 +506,11 @@ ActiveRecord::Schema.define(:version => 20121210210956) do
     t.float    "investment_anno"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "likes"
+    t.integer  "no_likes"
+    t.integer  "favorite"
+    t.integer  "comments"
+    t.integer  "shared"
   end
 
 end
