@@ -3,6 +3,19 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     type == Monitoring
   end
 
+  def add_to(document)
+    if !is_empty? && !themes.first.monitoring_data.empty? 
+      @comments = social_network.monitoring_comment.first
+      params = {themes: themes, channels: channels, start_date: start_date, end_date: end_date, datum: monitoring_datum}
+      @report_data = create_report_data(params)
+      set_headers_and_footers
+      create_report(document)
+      append_headers_and_footers
+    end
+  end
+
+  private
+
   def is_empty?
     themes.empty? && channels.empty? 
   end
@@ -15,35 +28,23 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     social_network.monitoring.where('isTheme = ?', false).order("name ASC")
   end
 
-  def add_to(document)
-    if !is_empty? && !themes.first.monitoring_data.empty? 
-      @comments = social_network.monitoring_comment.first
-      params = {themes: themes, channels: channels, start_date: start_date, end_date: end_date, datum: monitoring_datum}
-      document.workbook do | wb |
-        wb.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup) do |sheet|
-          @report_data = create_report_data(params)
-          styles = create_report_styles(wb, @report_data['size'])
-          add_rows_report(sheet, 6)
-          sheet.add_row ['', "PAGINA DE MONITORING"], :style => 3
-          @row = 7
-          add_table_monitoring(sheet, styles)
-          add_rows_report(sheet, 41-@row)
-          add_charts(sheet)
-          add_rows_report(sheet, 14)
-          add_images_monitoring_report(sheet, 125, styles)
-          sheet.column_widths 4, 27, 9, 9, 9, 9, 9, 9
-          header(sheet, 0)
-          footer(sheet, 40)
-        end
-      end
-    end 
-  end
-
-  private
-
   def monitoring_datum
     social_network.monitoring.first.monitoring_data.where('start_date >= ? and end_date <= ?',
                      start_date.to_date, end_date.to_date).order('start_date ASC')
+  end
+
+  def create_report(document)
+    set_workbook_and_worksheet(document)
+    create_report_styles(@report_data['size'])
+    append_rows_to_report 6
+    @worksheet.add_row ['', "PAGINA DE MONITORING"], :style => 3
+    @row = 7
+    add_table_monitoring
+    append_rows_to_report(41 - @row)
+    append_charts_to_report
+    append_rows_to_report 14
+    add_images_monitoring_report(125)
+    @worksheet.column_widths 4, 27, 9, 9, 9, 9, 9, 9
   end
 
   def create_report_data(params ={})
@@ -100,22 +101,22 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     monitoring_data
   end
 
-  def add_table_monitoring(sheet, styles)
-    add_rows_report(sheet, 1)
+  def add_table_monitoring
+    append_rows_to_report 1
     @report_data['dates'].unshift('').unshift('')
-    sheet.add_row @report_data['dates'], :style => styles['dates'], :height => height_cell, :widths => @report_data['widths']
-    sheet.add_row @report_data['theme_header'], :style => styles['header'], :height => 13
+    @worksheet.add_row @report_data['dates'], :style => @styles['dates'], :height => height_cell
+    @worksheet.add_row @report_data['theme_header'], :style => @styles['header'], :height => 13
     @report_data['theme_datum'].each do |datum|
-      sheet.add_row datum[:data].unshift(datum[:name]).unshift(''), :style => styles['basic'], :height => 13 
+      @worksheet.add_row datum[:data].unshift(datum[:name]).unshift(''), :style => @styles['basic'], :height => 13 
       @row = @row + 1
     end
-    sheet.add_row @report_data['theme_total_comment'], :style => styles['basic'], :height => 13
-    sheet.add_row @report_data['distribution_header'], :style => styles['header'], :height => 13
+    @worksheet.add_row @report_data['theme_total_comment'], :style => @styles['basic'], :height => 13
+    @worksheet.add_row @report_data['distribution_header'], :style => @styles['header'], :height => 13
     @report_data['channel_datum'].each do |datum|
-      sheet.add_row datum[:data].unshift(datum[:name]).unshift(''), :style => styles['basic'], :height => 13 
+      @worksheet.add_row datum[:data].unshift(datum[:name]).unshift(''), :style => @styles['basic'], :height => 13 
       @row = @row + 1
     end
-    sheet.add_row @report_data['channel_total_comment'], :style => styles['basic'], :height => 13 
+    @worksheet.add_row @report_data['channel_total_comment'], :style => @styles['basic'], :height => 13 
     for i in (3..@report_data['channel_total_comment'].size-1) do
       previous_data = @report_data['channel_total_comment'][i-1]
       actual_data = @report_data['channel_total_comment'][i]
@@ -125,53 +126,48 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     for i in (2..@report_data['channel_total_comment'].size-1)
       @report_data['daily_average'][i] = (@report_data['channel_total_comment'][i] / @report_data['total_days'][i]).round(2)
     end
-    sheet.add_row @report_data['change_volume_comments'], :style => styles['basic'], :height => 13 
-    sheet.add_row @report_data['daily_average'], :style => styles['basic'], :height => 13
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.table]
+    @worksheet.add_row @report_data['change_volume_comments'], :style => @styles['basic'], :height => 13 
+    @worksheet.add_row @report_data['daily_average'], :style => @styles['basic'], :height => 13
+    append_rows_to_report 1
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report 1
+    @worksheet.add_row ["", @comments.table]
     @row = @row + 14 
   end
 
-  def add_images_monitoring_report(document, y_pos, styles)
+  def add_images_monitoring_report(position)
     images = ImagesSocialNetwork.where(:social_network_id => social_network.id)
     images.each do |image|
-      header(document, y_pos)
-      y_pos = y_pos + 10 
-      document.add_row ["",image.title], :style => styles['title'][1]
+      @headers << position
+      position = position + 10
+      @worksheet.add_row ["",image.title], :style => @styles['title'][1]
       img = File.expand_path(image.attachment.path, __FILE__)
-      document.add_image(:image_src => img) do |sheet_image|
+      @worksheet.add_image(:image_src => img) do |sheet_image|
         sheet_image.width = 600
         sheet_image.height = 400
-        sheet_image.start_at 1, y_pos
+        sheet_image.start_at 1, position
       end
-      add_rows_report(document, 26)
-      document.add_row ["", "Comentario"], :style => 3
-      add_rows_report(document, 1)
-      document.add_row ["", image.comment]
-      y_pos = y_pos + 31
-      footer(document, y_pos)
-      add_rows_report(document, 12)
-      y_pos = y_pos + 1
+      append_rows_to_report 26
+      @worksheet.add_row ["", "Comentario"], :style => 3
+      append_rows_to_report 1
+      @worksheet.add_row ["", image.comment]
+      position = position + 32
+      @footers << (position - 1)
+      append_rows_to_report 12
     end
   end
 
-  def add_charts(sheet)
-    add_rows_report(sheet, 9)
-    sheet.add_row ["","GRAFICOS MONITORING"], :style => 3
-    add_rows_report(sheet, 2)
-    insert_themes_chart(sheet)
-    add_rows_report(sheet, 13)
-    insert_channels_chart(sheet)
-    header(sheet, 41)
-    footer(sheet, 82)
-    header(sheet, 83)
-    footer(sheet, 124)
+  def append_charts_to_report
+    append_rows_to_report 9
+    @worksheet.add_row ["","GRAFICOS MONITORING"], :style => 3
+    append_rows_to_report 2
+    append_themes_chart
+    append_rows_to_report 13
+    append_channels_chart
   end
 
-  def insert_themes_chart(sheet)
-    chart = create_chart(sheet, 51, "Distribucion de los comentarios en canales", 8)
+  def append_themes_chart
+    chart = create_chart(51, "Distribucion de los comentarios en canales", 8)
     @report_data['dates'].shift
     @report_data['dates'].shift
     @report_data['theme_datum'].each do |datum|
@@ -179,23 +175,25 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       datum[:data].shift
       add_serie(chart, datum[:data], @report_data['dates'], datum[:name])
     end
-    add_rows_report(sheet, 24)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.distributions]
+    add_serie(chart, [], @report_data['dates'], '') if @report_data['theme_datum'].size == 1
+    append_rows_to_report 24
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report 1
+    @worksheet.add_row ["", @comments.distributions]
   end
 
-  def insert_channels_chart(sheet)
-    chart = create_chart(sheet, 90, "Tipologia de comentarios", 8)
+  def append_channels_chart
+    chart = create_chart(90, "Tipologia de comentarios", 8)
     @report_data['channel_datum'].each do |datum|
       datum[:data].shift
       datum[:data].shift
       add_serie(chart, datum[:data], @report_data['dates'], datum[:name])
     end
-    add_rows_report(sheet, 24)
-    sheet.add_row ["", "Comentario"], :style => 3
-    add_rows_report(sheet, 1)
-    sheet.add_row ["", @comments.typology]
+    add_serie(chart, [], @report_data['dates'], '') if @report_data['channel_datum'].size == 1
+    append_rows_to_report 24
+    @worksheet.add_row ["", "Comentario"], :style => 3
+    append_rows_to_report 1
+    @worksheet.add_row ["", @comments.typology]
   end
 
   def monitoring_hash
@@ -211,5 +209,10 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       "distribution_header" => ['','Distribucion de canales'],
       "widths" => [1, 11]
     }
+  end
+
+  def set_headers_and_footers
+    @headers ||= [0, 41, 83]
+    @footers ||= [40, 83, 124]
   end
 end
