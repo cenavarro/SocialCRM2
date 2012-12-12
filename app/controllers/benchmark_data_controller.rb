@@ -104,9 +104,9 @@ class BenchmarkDataController < ApplicationController
 
   def x_axis_array_with_dates(start_date, end_date)
     ['Blogs', 
-      "Foros      #{start_date}",
-      "Videos   al",
-      "Twitter     #{end_date}",
+      "Foros <br><b>#{start_date}</b>",
+      "Videos<br><b>al</b>",
+      "Twitter<br><b>#{end_date}  </b>",
       "Facebook",
       "Otros"
     ]
