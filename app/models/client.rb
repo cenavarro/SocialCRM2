@@ -5,9 +5,11 @@ class Client < ActiveRecord::Base
   has_many :social_networks, :dependent => :destroy
   has_many :users, :dependent => :destroy
 
-  def build_reports(date_range)
+  def build_reports(date_range, social_network_id=nil)
     report = ::Axlsx::Package.new
-    social_networks.map do |social_network|
+    social_network_id ? (client_social_networks = social_networks.where("id = ?", social_network_id)) :
+      client_social_networks = social_networks
+    client_social_networks.map do |social_network|
       build_reporters_for(social_network, date_range)
     end.flatten.each do |reporter|
       reporter.add_to(report)

@@ -100,7 +100,7 @@ DemoComentarios::Application.routes.draw do
     get 'clients/social_networks/:idc' => 'clients#social_networks', :as => "clients_social_networks"
     get 'clients/facebook' => 'clients#facebook', :as => "client_facebook"
     post 'clients/insert_social_network' => 'clients#insert_social_network', :as => "clients_insert_social_network"
-    get 'clients/generate_report' => 'clients#generate_report', :as => "client_generate_report"
+    get 'clients/generate_report(/social_network_id)' => 'clients#generate_report', :as => "client_generate_report"
     get 'clients/reports' => 'clients#reports', :as => "client_reports"
 
     get "users/new/:option" => "users#new", :as => "new_user"

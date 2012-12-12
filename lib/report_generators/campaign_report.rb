@@ -92,7 +92,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
   end
 
   def select_row_data(id)
-  		RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', id, start_date.to_date, end_date.to_date).order("start_date ASC")
+  		RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', id, start_date.to_date, end_date.to_date).order("start_date ASC").limit(6)
   end
 
   def append_charts_to_report

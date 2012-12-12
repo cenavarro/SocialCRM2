@@ -17,7 +17,7 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
   private
 
   def facebook_datum
-    social_network.facebook_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
+    social_network.facebook_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC").limit(6)
   end
 
   def create_report(document)

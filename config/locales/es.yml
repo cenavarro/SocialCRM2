@@ -6,7 +6,7 @@ es:
       add_social_network: "Agregar Red Social"
       new: "Nuevo Cliente"
       edit: "Editar/Eliminar"
-      report: "Crear Reporte"
+      report: "Generar Reporte"
     social_network:
       title: "Redes Sociales"
       new_entry: "Nueva Entrada Datos"

@@ -17,7 +17,7 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
   private
 
   def youtube_datum
-    social_network.youtube_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC")
+    social_network.youtube_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC").limit(6)
   end
 
   def create_report(document)

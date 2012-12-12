@@ -1,0 +1,56 @@
+= form_tag(client_generate_report_path, :method => "get", :id => "form_report_modal") do
+  .modal.hide.fade id="report_social_network_modal" tabindex="-1" role="dialog" aria-hidden="true"
+    .modal-header
+      button.close type="button" data-dismiss="modal" aria-hidden="true"
+        |x
+      h2
+        | Reportes
+    .modal-body
+      center
+        h3
+          | Seleccione el rango de fechas 
+      .form_report style="width: 400px; margin: auto;"
+        br
+        br
+        = hidden_field_tag :client_id, params[:idc]
+        = hidden_field_tag :social_network_id, params[:id_social]
+        - start_date = get_start_date
+        - end_date = get_end_date
+        table
+          tr
+            td
+              = label_tag "Fecha Inicio"
+              br
+              .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker_report"
+                = text_field_tag :start_date, start_date, { :class => "span2",  :readonly => true } 
+                span.add-on
+                  i.icon-th
+            td
+              = label_tag "Fecha Final"
+              br
+              .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker_report"
+                = text_field_tag :end_date, end_date,  { :class => "span2", :readonly => true }
+                span.add-on
+                  i.icon-th
+      br
+      br
+    .modal-footer
+      span style="font-size: 8pt;"
+        |Nota: Para el reporte se descargara un maximo de 6 periodos, ya sean por quincena o mensuales.
+      br
+      button.btn.btn-primary id="btnNext" style="margin: 20px 30px 20px 0px;"
+        |Descargar Reporte
+      |               
+      button.btn.btn-inverse data-dismiss="modal" aria-hidden="true" style="margin: 20px 20px 20px 0px;"
+        |Cancelar
+javascript:
+  $(document).ready(function(){
+    $("#start_date_picker_report").datepicker({ format: 'dd-mm-yyyy' })
+      .on('changeDate', function(ev){
+        $("#start_date_picker_report").datepicker('hide');
+      });
+    $("#end_date_picker_report").datepicker({ format: 'dd-mm-yyyy' })
+      .on('changeDate', function(ev){
+        $("#end_date_picker_report").datepicker('hide');
+      });
+  });

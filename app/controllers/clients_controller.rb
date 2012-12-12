@@ -139,16 +139,20 @@ class ClientsController < ApplicationController
     current_user.rol_id == 1 ? @clients = Client.all : @clients = [Client.find(current_user.client_id)]
   end
 
-  def generate_report
-    client = Client.find(params[:client_id])
+  def report_full_path_with_name
     date = Time.now.strftime("%d-%b-%Y")
     file_name = "Reporte_#{date}.xlsx"
+    Rails.root.join(file_name)
+  end
+
+  def generate_report
+    client = Client.find(params[:client_id])
     date_range = OpenStruct.new(start_date: params[:start_date], end_date: params[:end_date])
-    reports = client.build_reports(date_range)
-    file_path = Rails.root.join(file_name)
-    reports.serialize(file_path)
-    send_file file_path, :type => "application/vnd.ms-excel"
-    File.delete(file_path) if File.exist? file_path
+    file_report = report_full_path_with_name
+    reports = client.build_reports(date_range, params[:social_network_id])
+    reports.serialize(file_report)
+    send_file file_report, :type => "application/vnd.ms-excel"
+    File.delete(file_report) if File.exist? file_report
   end
 
 end

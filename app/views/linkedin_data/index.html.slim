@@ -11,6 +11,10 @@
   center
     h1
       = @socialNetwork.name
+    a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
+      |Reporte  
+      i.icon-circle-arrow-down.icon-white
+    br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
