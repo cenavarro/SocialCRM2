@@ -166,10 +166,10 @@ section.sectionInformation
           textarea id="comment"
             = @comments.table
           br
+          .counter
           button.btn.btn-success
             | Guardar
           .result
-
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
@@ -185,6 +185,7 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.distributions
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
@@ -198,9 +199,14 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.typology
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
 
     .tab-pane.fade id="tabothers"
       == render 'layouts/uploadImage'
+script
+  | limit_characters_textarea_for_form('#table');
+  | limit_characters_textarea_for_form('#distribution');
+  | limit_characters_textarea_for_form('#typology');

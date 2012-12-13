@@ -352,6 +352,7 @@ section.sectionInformation
           textarea id="comment"
             = @comments.table
           br
+          .counter
           button.btn.btn-success
             | Guardar
           .result
@@ -370,10 +371,10 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.fans
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
-
         .estilo_graficos
           #container_interactivity
         .comment
@@ -381,14 +382,13 @@ section.sectionInformation
             h4
               | Comentario Grafico Interactividad
           form id="interaction" onsubmit="return saveChartComment('#interaction',#{@socialNetwork.id},'interaction', '#{params[:locale]}', '#{@facebook_info.id_name}');"
-
             textarea rows=10 id="comment"
               = @comments.interaction
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
-
         .estilo_graficos
           #container_reach
         .comment
@@ -399,10 +399,10 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.reach
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
-
         .estilo_graficos
           #container_investment_growth
         .comment
@@ -413,10 +413,10 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.investment
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
-
         .estilo_graficos
           #container_costs
         .comment
@@ -427,8 +427,16 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.cost
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
     .tab-pane.fade id="tabimagenes"
       == render 'layouts/uploadImage'
+script
+  | limit_characters_textarea_for_form('#table');
+  | limit_characters_textarea_for_form('#fans');
+  | limit_characters_textarea_for_form('#interaction');
+  | limit_characters_textarea_for_form('#reach');
+  | limit_characters_textarea_for_form('#investment');
+  | limit_characters_textarea_for_form('#costs');

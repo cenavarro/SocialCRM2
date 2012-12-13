@@ -265,6 +265,7 @@ section.sectionInformation
           textarea id="comment"
             = @comments.table
           br
+          .counter
           button.btn.btn-success
             | Guardar
           .result
@@ -278,10 +279,11 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Comunidad
-          form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},'community' ,'#{params[:locale]}','#{@youtube_info.id_name}');"
+          form id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},'community' ,'#{params[:locale]}','#{@youtube_info.id_name}');"
             textarea rows=10 id="comment"
               = @comments.community
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
@@ -295,6 +297,7 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.interaction
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
@@ -308,6 +311,7 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.interaction_2
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
@@ -321,8 +325,15 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.investment
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
     .tab-pane.fade id="tabothers"
       == render 'layouts/uploadImage'
+script
+  | limit_characters_textarea_for_form('#table');
+  | limit_characters_textarea_for_form('#followers');
+  | limit_characters_textarea_for_form('#interactions');
+  | limit_characters_textarea_for_form('#interactions_2');
+  | limit_characters_textarea_for_form('#investment');

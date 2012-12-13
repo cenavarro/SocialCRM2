@@ -134,6 +134,7 @@ section.sectionInformation
           textarea id="comment"
             = @comments.table
           br
+          .counter
           button.btn.btn-success
             | Guardar
           .result
@@ -158,6 +159,7 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.distribution
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
@@ -171,9 +173,14 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.totals
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
 
     .tab-pane.fade id="tabothers"
       == render 'layouts/uploadImage'
+script
+  | limit_characters_textarea_for_form('#table');
+  | limit_characters_textarea_for_form('#distribution');
+  | limit_characters_textarea_for_form('#totals');

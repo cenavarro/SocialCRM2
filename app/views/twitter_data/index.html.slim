@@ -358,6 +358,7 @@ section.sectionInformation
           textarea id="comment"
             = @comments.table
           br
+          .counter
           button.btn.btn-success
             | Guardar
           .result
@@ -375,6 +376,7 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.comunity
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
@@ -388,6 +390,7 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.interaction
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
@@ -401,6 +404,7 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.investment
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
@@ -414,8 +418,15 @@ section.sectionInformation
             textarea rows=10 id="comment"
               = @comments.cost
             br
+            .counter
             button.btn.btn-success
               | Guardar
             .result
     .tab-pane.fade id="tabothers"
       == render 'layouts/uploadImage'
+script
+  | limit_characters_textarea_for_form('#table');
+  | limit_characters_textarea_for_form('#comunity');
+  | limit_characters_textarea_for_form('#interactions');
+  | limit_characters_textarea_for_form('#investment');
+  | limit_characters_textarea_for_form('#cost');

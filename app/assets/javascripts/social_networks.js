@@ -135,3 +135,19 @@ function addPlotLines(lines){
     addPlotLines(lines)
   })
 }
+
+function limit_characters_textarea_for_form(form){
+  $(form).find('.counter').text($(form).find('textarea').val().length + " de 300 Caracteres");
+  $(form).find('textarea').keyup(function() { 
+    if($(this).val().length > 300){
+      $(this).val($(this).val().substr(0, 300));
+    }
+    $(form).find('.counter').text($(this).val().length + " de 300 Caracteres");
+  });
+  $(form).find('textarea').keydown(function() { 
+    if($(this).val().length > 300){
+      $(this).val($(this).val().substr(0, 300));
+    }
+    $(form).find('.counter').text($(this).val().length + " de 300 Caracteres");
+  });
+}
