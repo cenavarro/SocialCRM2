@@ -1,0 +1,37 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+- @summary_info = InfoSocialNetwork.find_by_id_name('summary')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
+      |Reporte  
+      i.icon-circle-arrow-down.icon-white
+    br
+    br
+    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+.margin
+  a.btn.btn-primary
+    |Nueva Entrada
+br
+br
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabInfo" data-toggle="tab"
+          | Informacion
+  .tab-content
+    .tab-pane.fade.in.active id="tabInfo"
+      - @summary_comments.each do |comment|
+        = comment.title
+        br
+        = comment.content
+        br
+        br

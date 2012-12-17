@@ -1,8 +1,14 @@
 DemoComentarios::Application.routes.draw do
 
+
   get "/:locale" => "home#index", :as => "language"
 
   scope ':locale' do
+
+    resources :summaries, :only => [:create, :destroy, :update]
+    get "summary_data/new/:idc/:opcion/:id_social" => "summaries#new", :as => "summary_new"
+    get "summary_data/:id/edit/:idc/:id_social" => "summaries#edit", :as => "summary_edit"
+    get "summary_data/:idc/:opcion/:id_social" => "summaries#index", :as => "summary_index"
 
     get "monitoring_data/new/:idc/:id_social" => "monitoring#new", :as => "monitoring_new"
     post "monitoring_data/save_comment" => "monitoring#save_comment", :as => "monitoring_save_comment"

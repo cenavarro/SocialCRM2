@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121210215148) do
+ActiveRecord::Schema.define(:version => 20121213210319) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -351,6 +351,21 @@ ActiveRecord::Schema.define(:version => 20121210215148) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+  end
+
+  create_table "summaries", :force => true do |t|
+    t.integer  "social_network_id"
+    t.integer  "client_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "summary_comments", :force => true do |t|
+    t.text     "title"
+    t.text     "content"
+    t.integer  "summary_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tuenti_comments", :force => true do |t|

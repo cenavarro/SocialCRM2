@@ -1,0 +1,9 @@
+= form_for @summary do |f|
+  - if @summary.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@summary.errors.count, "error")} prohibited this summary from being saved:"
+      ul
+        - @summary.errors.full_messages.each do |message|
+          li = message
+
+  .actions = f.submit 'Save'
