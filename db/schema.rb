@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20121210215148) do
     t.string   "name",                    :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "description",             :null => false
+    t.string   "description"
     t.string   "attachment_file_name"
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
@@ -229,6 +229,14 @@ ActiveRecord::Schema.define(:version => 20121210215148) do
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
     t.string   "id_name"
+  end
+
+  create_table "internal_monitoring_channels", :force => true do |t|
+    t.integer  "social_network_id"
+    t.integer  "channel_number"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "linkedin_comments", :force => true do |t|
@@ -441,25 +449,24 @@ ActiveRecord::Schema.define(:version => 20121210215148) do
     t.integer  "total_clicks"
     t.integer  "total_interactions"
     t.float    "agency_investment"
-    t.float    "cost_follower"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "investment_actions"
     t.integer  "interactions_ads"
     t.integer  "prints"
     t.integer  "prints_ads"
+    t.float    "investment_actions"
     t.float    "cost_twitter_ads"
     t.float    "investment_ads"
     t.integer  "social_network_id"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                 :default => "", :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
+    t.string   "email",                  :default => "", :null => false
+    t.string   "encrypted_password",     :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                         :default => 0
+    t.integer  "sign_in_count",          :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"

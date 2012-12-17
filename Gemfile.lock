@@ -146,7 +146,6 @@ GEM
     minitest (3.3.0)
     multi_json (1.2.0)
     multipart-post (1.1.5)
-    mysql2 (0.3.11)
     netrc (0.7.7)
     nokogiri (1.5.5)
     oauth (0.4.7)
@@ -293,7 +292,6 @@ DEPENDENCIES
   heroku (= 2.30.2)
   jquery-rails (= 1.0.19)
   minitest (= 3.3.0)
-  mysql2 (= 0.3.11)
   omniauth-facebook
   omniauth-google-oauth2
   omniauth-twitter
