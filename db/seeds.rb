@@ -29,5 +29,7 @@ social = InfoSocialNetwork.create! :name => 'Foursquare', :description => "Red S
 puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Monitoring Interno/Externo', :description => "Tabla de Monitoreo Interno/Externo", :id_name => 'monitoring', :attachment => File.new("#{Rails.root}/public/assets/images/social_network/monitoring.jpg")
 puts "Informacion Red Social Creada: " << social.name
-social = InfoSocialNetwork.create! :name => 'Benchmark', :description => "Benchmark", :id_name => 'benchmark', :attachment => File.new("#{Rails.root}/public/assets/images/social_network/benchmarks.jpg")
+social = InfoSocialNetwork.create! :name => 'Benchmark', :description => "Red Social Benchmark", :id_name => 'benchmark', :attachment => File.new("#{Rails.root}/public/assets/images/social_network/benchmarks.jpg")
+puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Resumen', :description => "Red Social Resumen", :id_name => 'summary', :attachment => File.new("#{Rails.root}/public/assets/images/social_network/summary.jpg")
 puts "Informacion Red Social Creada: " << social.name

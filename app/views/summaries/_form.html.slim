@@ -1,0 +1,25 @@
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#formEntradaDatos").validationEngine();
+    });
+
+= form_for @summary_comment, :url => summaries_path, :method => :post, :html => {:id => "formEntradaDatos"} do |f|
+  - if @summary_comment.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@summary_comment.errors.count, "error")} prohibited this summary from being saved:"
+      ul
+        - @summary_comment.errors.full_messages.each do |message|
+          li = message
+
+  = hidden_field_tag :idc, params[:idc]
+  = hidden_field_tag :id_social, params[:id_social]
+  .form-horizontal.sectionInformation style="height: 600px;"
+    .box.informationSummary
+      = f.label :title, "Titulo"
+      = f.text_field :title, {:class => "validate[required]"}
+      br
+      br
+      =f.label :content, "Contenido"
+      = f.text_area :content, {:class => "validate[required]", :style => "width: 800px; height: 360px;"} 
+    = f.submit 'Guardar Datos', {:class => "btn btn-success saveSummary"}
+

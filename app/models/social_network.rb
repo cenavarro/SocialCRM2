@@ -34,13 +34,14 @@ class SocialNetwork < ActiveRecord::Base
   has_many :benchmark_competitor, :dependent => :destroy
   has_many :rows_campaign, :dependent => :destroy
   has_many :monitoring, :dependent => :destroy
+  has_many :summaries, :dependent => :destroy
 
   attr_accessible :name, :client_id, :info_social_network_id, :id_object, :image
 
   def data_types
     [FacebookDatum, Monitoring, BlogDatum, FlickrDatum, FoursquareDatum, GooglePlusDatum,
       LinkedinDatum, PinterestDatum, TuentiDatum, TumblrDatum, TwitterDatum, YoutubeDatum,
-      BenchmarkDatum, RowsCampaign
+      BenchmarkDatum, RowsCampaign, Summary
     ]
   end
 end

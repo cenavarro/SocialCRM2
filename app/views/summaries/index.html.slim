@@ -1,0 +1,46 @@
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+- @summary_info = InfoSocialNetwork.find_by_id_name('summary')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    br
+    br
+    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+.margin
+  a.btn.btn-primary href=summary_new_path
+    |Nueva Entrada
+section.sectionInformation
+  .estilo_tabs
+    ul.nav.nav-tabs id="myTab"
+      li.active
+        a href="#tabInfo" data-toggle="tab"
+          | Informacion
+  .tab-content
+    .tab-pane.fade.in.active id="tabInfo"
+      center
+        h2
+          | Resumen del Reporte
+      .margin
+        - @summary_comments.each do |comment|
+          h3
+            = raw comment.title
+          .well
+            - comment.content.split(/\n/).each do |substring|
+              = substring[0..130]
+              br
+            br
+            br
+            .actions-buttons style="float: right;"
+              a.btn.btn-info href=summary_edit_path(comment.id, params[:idc], params[:id_social])
+                i.icon-pencil.icon-white
+              |  
+              a.btn.btn-danger data-method='delete' rel='nofollow' href=summary_delete_path(comment.id) data-confirm="Esta seguro que desea eliminar este entrada?"
+                i.icon-trash.icon-white
+            br

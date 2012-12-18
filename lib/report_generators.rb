@@ -129,6 +129,7 @@ module ReportGenerators
       for i in (0..@headers.size-1)
         header(@headers[i], width)
         footer(@footers[i], width)
+
       end
     end
 
@@ -148,7 +149,8 @@ module ReportGenerators
       TwitterReport,
       YoutubeReport,
       BenchmarkReport,
-      CampaignReport
+      CampaignReport,
+      SummaryReport
     ]
   end
 
@@ -173,3 +175,4 @@ require 'report_generators/twitter_report'
 require 'report_generators/youtube_report'
 require 'report_generators/benchmark_report'
 require 'report_generators/campaign_report'
+require 'report_generators/summary_report'
