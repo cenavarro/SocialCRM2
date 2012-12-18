@@ -15,14 +15,18 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
   def add_to(document)
     if is_summary?
       @summary_comments = summary.summary_comments
-      @workbook = document.workbook
-      @worksheet = @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => { :orientation => :landscape, :paper_size => 9, :fit_to_width => 1, :fit_to_height => 10})
-      create_report(document)
+      sets_workbook_and_worksheet(document)
+      create_report
       append_header(0)
     end
   end
 
-  def create_report(document)
+  def sets_workbook_and_worksheet(document)
+    @workbook = document.workbook
+    @worksheet = @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => { :orientation => :landscape, :paper_size => 9, :fit_to_width => 1, :fit_to_height => 10})
+  end
+
+  def create_report
     create_report_styles_for_summary
     append_rows_to_report 7
     @worksheet.add_row ["", "PAGINA DE REPORTE"], :style => 3
