@@ -41,7 +41,7 @@ class SocialNetwork < ActiveRecord::Base
   def data_types
     [FacebookDatum, Monitoring, BlogDatum, FlickrDatum, FoursquareDatum, GooglePlusDatum,
       LinkedinDatum, PinterestDatum, TuentiDatum, TumblrDatum, TwitterDatum, YoutubeDatum,
-      BenchmarkDatum, RowsCampaign
+      BenchmarkDatum, RowsCampaign, Summary
     ]
   end
 end

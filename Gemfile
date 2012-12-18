@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', "= 3.1.8"
 
 gem "therubyracer", :require => 'v8'
-gem 'mysql2', "= 0.3.11"
+#gem 'mysql2', "= 0.3.11"
 
 gem 'slim', "= 1.2.2"
 gem 'rake', ">= 0.9.2.2"

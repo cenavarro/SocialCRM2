@@ -10,17 +10,12 @@
   center
     h1
       = @socialNetwork.name
-    a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
-      i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
-  a.btn.btn-primary
+  a.btn.btn-primary href=summary_new_path
     |Nueva Entrada
-br
-br
 section.sectionInformation
   .estilo_tabs
     ul.nav.nav-tabs id="myTab"
@@ -29,9 +24,23 @@ section.sectionInformation
           | Informacion
   .tab-content
     .tab-pane.fade.in.active id="tabInfo"
-      - @summary_comments.each do |comment|
-        = comment.title
-        br
-        = comment.content
-        br
-        br
+      center
+        h2
+          | Resumen del Reporte
+      .margin
+        - @summary_comments.each do |comment|
+          h3
+            = raw comment.title
+          .well
+            - comment.content.split(/\n/).each do |substring|
+              = substring[0..130]
+              br
+            br
+            br
+            .actions-buttons style="float: right;"
+              a.btn.btn-info href=summary_edit_path(comment.id, params[:idc], params[:id_social])
+                i.icon-pencil.icon-white
+              |  
+              a.btn.btn-danger data-method='delete' rel='nofollow' href=summary_delete_path(comment.id) data-confirm="Esta seguro que desea eliminar este entrada?"
+                i.icon-trash.icon-white
+            br
