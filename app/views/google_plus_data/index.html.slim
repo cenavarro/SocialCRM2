@@ -99,19 +99,19 @@ section.sectionInformation
                 |# nuevos followers 
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.new_followers
+                  = number_with_delimiter(google_plus_datum.new_followers, delimiter: units_delimiter)
             tr
               td
                 |# followers
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.total_followers
+                  = number_with_delimiter(google_plus_datum.total_followers, delimiter: units_delimiter)
             tr
               td
                 |% crecimiento seguidores
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.get_percentage_difference_from_previous_total_followers.round(3)
+                  = number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_followers, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
                 |Interactividad
@@ -120,25 +120,25 @@ section.sectionInformation
                 |(+1s)
               - @google_plus_datum.each do | google_plus_datum |
                 td
-                  = google_plus_datum.plus
+                  = number_with_delimiter(google_plus_datum.plus, delimiter: units_delimiter)
             tr
               td
                 |Compartir contenido
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.content_shared
+                  = number_with_delimiter(google_plus_datum.content_shared, delimiter: units_delimiter)
             tr
               td
                 |Total de interacciones
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.total_interactions
+                  = number_with_delimiter(google_plus_datum.total_interactions, delimiter: units_delimiter)
             tr
               td
                 |% cambio en interacciones
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.get_percentage_difference_from_previous_total_interactions.round(3)
+                  = number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_interactions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
                 | Inversion
@@ -147,25 +147,25 @@ section.sectionInformation
                 | Inversion Agencia
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.investment_agency
+                  = number_with_precision(google_plus_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion nuevas acciones
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.investment_actions
+                  = number_with_precision(google_plus_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion anuncios
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.investment_ads
+                  = number_with_precision(google_plus_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion Total
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = google_plus_datum.total_investment
+                  = number_with_precision(google_plus_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
                 |Opciones

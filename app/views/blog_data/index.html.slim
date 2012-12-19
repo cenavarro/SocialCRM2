@@ -92,35 +92,35 @@ section.sectionInformation
                 |# visitas unicas
               - @blog_datum.each do |blog_datum|
                 td
-                  = blog_datum.unique_visits
+                  = number_with_delimiter(blog_datum.unique_visits, delimiter: units_delimiter)
             tr
               td
                 |% diferencia
               - @blog_datum.each do |blog_datum|
-                - value = blog_datum.get_percentage_difference_from_previous_unique_visits
-                - if value >= 0.0
+                - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_unique_visits, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
+                - if value.to_f >= 0.0
                   td.positiveValue
-                    = %{#{value.round(3)}%}
+                    = %{#{value}%}
                 - else
                   td.negativeValue
-                    = %{#{value.round(3)}%}
+                    = %{#{value}%}
             tr
               td
                 |# paginas vistas
               - @blog_datum.each do |blog_datum|
                 td
-                  = blog_datum.view_pages
+                  = number_with_delimiter(blog_datum.view_pages, delimiter: units_delimiter)
             tr
               td
                 |% diferencia
               - @blog_datum.each do |blog_datum|
-                - value = blog_datum.get_percentage_difference_from_previous_view_pages
-                - if value >= 0.0
+                - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_view_pages, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
+                - if value.to_f >= 0.0
                   td.positiveValue
-                    = %{#{value.round(3)}%}
+                    = %{#{value}%}
                 - else
                   td.negativeValue
-                    = %{#{value.round(3)}%}
+                    = %{#{value}%}
             tr.titlesRows
               td colspan=100
                 |Porcentajes
@@ -129,19 +129,19 @@ section.sectionInformation
                 |Porcentaje de Rebote
               - @blog_datum.each do | blog_datum |
                 td
-                  = blog_datum.rebound_percent
+                  = number_with_precision(blog_datum.rebound_percent, delimiter: units_delimiter, separator: decimal_separator, :precision => 2)
             tr
               td
                 |Porcentaje de visitas nuevas
               - @blog_datum.each do |blog_datum|
                 td
-                  = blog_datum.new_visits_percent
+                  = number_with_precision(blog_datum.new_visits_percent, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
             tr
               td
                 |# de posts
               - @blog_datum.each do |blog_datum|
                 td
-                  = blog_datum.total_posts
+                  = number_with_delimiter(blog_datum.total_posts, delimiter: units_delimiter)
             tr id="buttons"
               td.nilValue
                 |Opciones

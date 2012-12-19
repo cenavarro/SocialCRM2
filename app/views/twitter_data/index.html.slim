@@ -105,46 +105,42 @@ section.sectionInformation
                 |# Nuevos Followers
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.new_followers
+                  = number_with_delimiter(twitter_datum.new_followers, delimiter: units_delimiter)
             tr
               td
                 |# Followers
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.total_followers
+                  = number_with_delimiter(twitter_datum.total_followers, delimiter: units_delimiter)
             tr
               td
                 | % Crecimiento
               - @twitter_data.each do |twitter_datum|
-                - percentFollowers = twitter_datum.get_percentage_difference_from_previous_total_followers.round(3)
-                - if percentFollowers >= 0.0 
+                - percentage_followers = number_with_precision(twitter_datum.get_percentage_difference_from_previous_total_followers, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                - if percentage_followers.to_f >= 0.0 
                   td.positiveValue
-                    = %{#{percentFollowers.round(2)}%}
+                    = %{#{percentage_followers}%}
                 - else
                   td.negativeValue
-                    = %{#{percentFollowers.round(2)}%}
+                    = %{#{percentage_followers}%}
             tr
               td
                 | Objetivo Followers
               - @twitter_data.each do |twitter_datum|
-                - if twitter_datum.goal_followers.nil?
-                  td
-                    | - 
-                - else
-                  td
-                    = twitter_datum.goal_followers
+                td
+                  = number_with_delimiter(twitter_datum.goal_followers, delimiter: units_delimiter)
             tr
               td
                 | # numero tweets en total
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.total_tweets
+                  = number_with_delimiter(twitter_datum.total_tweets, delimiter: units_delimiter)
             tr
               td
                 | # tweets periodo
               - @twitter_data.each do | datum |
                 td
-                  = datum.period_tweets
+                  = number_with_delimiter(datum.period_tweets, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
                 |Interactividad
@@ -153,139 +149,115 @@ section.sectionInformation
                 | # Menciones
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.total_mentions
+                  = number_with_delimiter(twitter_datum.total_mentions, delimiter: units_delimiter)
             tr
               td
                 | % cambio en mensiones
               - @twitter_data.each do |twitter_datum|
-                - percentMentions = twitter_datum.get_percentage_difference_from_previous_total_mentions.round(3)
-                - if !percentMentions.nil?
-                  - if percentMentions >= 0.0 
-                    td.positiveValue
-                      = %{#{percentMentions.round(2)}%}
-                  - else
-                    td.negativeValue
-                      = %{#{percentMentions.round(2)}%}
-                - else
+                - percentage_mentions= number_with_precision(twitter_datum.get_percentage_difference_from_previous_total_mentions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                - if percentage_mentions.to_f >= 0.0 
                   td.positiveValue
-                    | 0%
+                    = %{#{percentage_mentions}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentage_mentions}%}
             tr
               td
                 | # Retweets
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.ret_tweets
+                  = number_with_delimiter(twitter_datum.ret_tweets, delimiter: units_delimiter)
             tr
               td
                 | % cambio en retweets
               - @twitter_data.each do |twitter_datum|
-                - percentRetweets = twitter_datum.get_percentage_difference_from_previous_ret_tweets.round(3)
-                - if !percentRetweets.nil?
-                  - if percentRetweets >= 0.0 
-                    td.positiveValue
-                      = %{#{percentRetweets.round(2)}%}
-                  - else
-                    td.negativeValue
-                      = %{#{percentRetweets.round(2)}%}
-                - else
+                - percentage_retweets= number_with_precision(twitter_datum.get_percentage_difference_from_previous_ret_tweets, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                - if percentage_retweets.to_f >= 0.0 
                   td.positiveValue
-                    | 0%
+                    = %{#{percentage_retweets}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentage_retweets}%}
             tr
               td
                 | Clicks enlaces
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.total_clicks
+                  = number_with_delimiter(twitter_datum.total_clicks, delimiter: units_delimiter)
             tr
               td
                 | % cambio en clics
               - @twitter_data.each do |twitter_datum|
-                - percentClicks = twitter_datum.get_percentage_difference_from_previous_total_clicks.round(3)
-                - if !percentClicks.nil?
-                  - if percentClicks >= 0.0 
-                    td.positiveValue
-                      = %{#{percentClicks.round(2)}%}
-                  - else
-                    td.negativeValue
-                      = %{#{percentClicks.round(2)}%}
-                - else
+                - percentage_clicks = number_with_precision(twitter_datum.get_percentage_difference_from_previous_total_clicks, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                - if percentage_clicks.to_f >= 0.0 
                   td.positiveValue
-                    | 0%
+                    = %{#{percentage_clicks}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentage_clicks}%}
             tr
               td
                 | Interacciones en twitter ads
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.interactions_ads
+                  = number_with_delimiter(twitter_datum.interactions_ads, delimiter: units_delimiter)
             tr
               td
                 | % cambio interacciones en twitter ads
               - @twitter_data.each do |twitter_datum|
-                - percentInteracAds = twitter_datum.get_percentage_difference_from_previous_interactions_ads.round(3)
-                - if !percentInteracAds.nil?
-                  - if percentInteracAds >= 0.0 
-                    td.positiveValue
-                      = %{#{percentInteracAds.round(2)}%}
-                  - else
-                    td.negativeValue
-                      = %{#{percentInteracAds.round(2)}%}
-                - else
+                - percentage_interactions_ads = number_with_precision(twitter_datum.get_percentage_difference_from_previous_interactions_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                - if percentage_interactions_ads.to_f >= 0.0 
                   td.positiveValue
-                    | 0%
+                    = %{#{percentage_interactions_ads}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentage_interactions_ads}%}
             tr
               td
                 | Interacciones en Total
               - @twitter_data.each do | datum |
                 td
-                  = datum.total_interactions
+                  = number_with_delimiter(datum.total_interactions, delimiter: units_delimiter)
             tr
               td
                 | % cambio en interacciones
               - @twitter_data.each do |twitter_datum|
-                - percentIteractions = twitter_datum.get_percentage_difference_from_previous_total_interactions.round(3)
-                - if !percentIteractions.nil?
-                  - if percentIteractions >= 0.0 
-                    td.positiveValue
-                      = %{#{percentIteractions.round(2)}%}
-                  - else
-                    td.negativeValue
-                      = %{#{percentIteractions.round(2)}%}
-                - else
+                - percentage_interactions = number_with_precision(twitter_datum.get_percentage_difference_from_previous_total_interactions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                - if percentage_interactions.to_f >= 0.0 
                   td.positiveValue
-                    | 0%
+                    = %{#{percentage_interactions}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentage_interactions}%}
             tr
               td
                 | # impresiones (tweetreach)
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.prints
+                  = number_with_delimiter(twitter_datum.prints, delimiter: units_delimiter)
             tr
               td
                 | # impresiones en twitter ads
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.prints_ads
+                  = number_with_delimiter(twitter_datum.prints_ads, delimiter: units_delimiter)
             tr
               td 
                 | impresiones en total
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.total_prints
+                  = number_with_delimiter(twitter_datum.total_prints, delimiter: units_delimiter)
             tr
               td
                 | % cambio en impresiones
               - @twitter_data.each do | datum |
-                - percentPrints = datum.get_percentage_difference_from_previous_total_prints.round(3)
-                - if !percentPrints.nil?
-                  - if percentPrints >= 0.0 
-                    td.positiveValue
-                      = %{#{percentPrints.round(2)}%}
-                  - else
-                    td.negativeValue
-                      = %{#{percentPrints.round(2)}%}
-                - else
+                - percentage_prints= number_with_precision(datum.get_percentage_difference_from_previous_total_prints, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                - if percentage_prints.to_f >= 0.0 
                   td.positiveValue
-                    | 0%
+                    = %{#{percentage_prints}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentage_prints}%}
             tr.titlesRows
               td colspan=100
                 | Inversion
@@ -294,25 +266,25 @@ section.sectionInformation
                 | Inversion Agencia
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.agency_investment
+                  = number_with_precision(twitter_datum.agency_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion nuevas acciones
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.investment_actions
+                  = number_with_precision(twitter_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion anuncios twitter ads
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.investment_ads
+                  = number_with_precision(twitter_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion Total
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.total_investment.round(3)
+                  = number_with_precision(twitter_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
                 | Costes
@@ -321,25 +293,25 @@ section.sectionInformation
                 | Cost per engagement twitter ads
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.cost_twitter_ads
+                  = number_with_precision(twitter_datum.cost_twitter_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Coste por mil impresiones
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.cost_per_prints.round(3)
+                  = number_with_precision(twitter_datum.cost_per_prints, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Coste por interaccion
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.cost_per_interaction.round(3)
+                  = number_with_precision(twitter_datum.cost_per_interaction, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Costes por follower
               - @twitter_data.each do |twitter_datum|
                 td
-                  = twitter_datum.cost_follower.round(3)
+                  = number_with_precision(twitter_datum.cost_follower, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
                 |Opciones

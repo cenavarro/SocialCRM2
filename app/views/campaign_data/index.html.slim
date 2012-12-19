@@ -88,7 +88,7 @@ section.sectionInformation
                   = data.keys.first
                 - data.values.first.each do |value|
                   td
-                    = value
+                    = number_with_delimiter(value, delimiter: units_delimiter)
             tr id="buttons"
               td.nilValue
                 |Opciones

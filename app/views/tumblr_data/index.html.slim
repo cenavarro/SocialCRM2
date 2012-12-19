@@ -97,19 +97,19 @@ section.sectionInformation
                 |# nuevos followers
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = tumblr_datum.new_followers
+                  =number_with_delimiter(tumblr_datum.new_followers, delimiter: units_delimiter)
             tr
               td
                 |# followers
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = tumblr_datum.total_followers
+                  = number_with_delimiter(tumblr_datum.total_followers, delimiter: units_delimiter)
             tr
               td
-                |# Post
+                |# post
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = tumblr_datum.posts
+                  = number_with_delimiter(tumblr_datum.posts, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
                 |Inveractividad
@@ -118,13 +118,13 @@ section.sectionInformation
                 |#like
               - @tumblr_datum.each do | tumblr_datum |
                 td
-                  = tumblr_datum.likes
+                  = number_with_delimiter(tumblr_datum.likes, delimiter: units_delimiter)
             tr
               td
                 |# reblogged
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = tumblr_datum.reblogged
+                  = number_with_delimiter(tumblr_datum.reblogged, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
                 | Inversion
@@ -133,25 +133,25 @@ section.sectionInformation
                 | Inversion Agencia
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = tumblr_datum.investment_agency
+                  = number_with_precision(tumblr_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion nuevas acciones
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = tumblr_datum.investment_actions
+                  = number_with_precision(tumblr_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion anuncios
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = tumblr_datum.investment_ads
+                  = number_with_precision(tumblr_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion Total
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = tumblr_datum.total_investment.round(3)
+                  = number_with_precision(tumblr_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
                 |Opciones

@@ -102,25 +102,25 @@ section.sectionInformation
                 |#followers
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.total_followers
+                  = number_with_delimiter(pinterest_datum.total_followers, delimiter: units_delimiter)
             tr
               td
                 | % de crecimiento 
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.get_percentage_difference_from_previous_total_followers
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_total_followers, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | # boards
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.boards
+                  = number_with_delimiter(pinterest_datum.boards, delimiter: units_delimiter)
             tr
               td
                 | # pins
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.pins
+                  = number_with_delimiter(pinterest_datum.pins, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
                 |Interactividad
@@ -129,49 +129,49 @@ section.sectionInformation
                 | # liked
               - @pinterest_datum.each do | pinterest_datum |
                 td
-                  = pinterest_datum.liked
+                  = number_with_delimiter(pinterest_datum.liked, delimiter: units_delimiter)
             tr
               td
                 | % de cambio
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.get_percentage_difference_from_previous_liked
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_liked, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | # repin
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.repin
+                  = number_with_delimiter(pinterest_datum.repin, delimiter: units_delimiter)
             tr
               td
                 | % de cambio
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.get_percentage_difference_from_previous_repin
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_repin, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | # comments
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.comments
+                  = number_with_delimiter(pinterest_datum.comments, delimiter: units_delimiter)
             tr
               td
                 | % de cambio
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.get_percentage_difference_from_previous_comments
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_comments, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | # community boards
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.community_boards
+                  = number_with_delimiter(pinterest_datum.community_boards, delimiter: units_delimiter)
             tr
               td
                 | % de cambio
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.get_percentage_difference_from_previous_community_boards
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_community_boards, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
                 | Inversion
@@ -180,31 +180,31 @@ section.sectionInformation
                 | Inversion Agencia
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.investment_agency
+                  = number_with_precision(pinterest_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion nuevas acciones
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.investment_actions
+                  = number_with_precision(pinterest_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion anuncios ads
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.investment_ads
+                  = number_with_precision(pinterest_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion Total
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.total_investment.round(3)
+                  = number_with_precision(pinterest_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Coste Fan
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = pinterest_datum.coste_fan
+                  = number_with_precision(pinterest_datum.coste_fan, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
                 |Opciones

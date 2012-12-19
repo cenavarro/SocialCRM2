@@ -115,25 +115,25 @@ section.sectionInformation
                 |# nuevos fans
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.new_fans
+                  = number_with_delimiter(tuenti_datum.new_fans, delimiter: units_delimiter)
             tr
               td
                 |# fans reales
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.real_fans
+                  = number_with_delimiter(tuenti_datum.real_fans, delimiter: units_delimiter)
             tr
               td
                 |# Objetivo fans
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.goal_fans
+                  = number_with_delimiter(tuenti_datum.goal_fans, delimiter: units_delimiter)
             tr
               td
                 | Porcentaje crecimiento fans 
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.get_percentage_difference_from_previous_real_fans.round(3)
+                  = number_with_precision(tuenti_datum.get_percentage_difference_from_previous_real_fans, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
                 |Pagina de empresa
@@ -142,49 +142,49 @@ section.sectionInformation
                 |Impresiones de la pagina
               - @tuenti_datum.each do | tuenti_datum |
                 td
-                  = tuenti_datum.page_prints
+                  = number_with_delimiter(tuenti_datum.page_prints, delimiter: units_delimiter)
             tr
               td
                 |Total de usuario unicos
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.unique_total_users
+                  = number_with_delimiter(tuenti_datum.unique_total_users, delimiter: units_delimiter)
             tr
               td
                 |Clics externos
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.external_clics
+                  = number_with_delimiter(tuenti_datum.external_clics, delimiter: units_delimiter)
             tr
               td
                 |Clicks
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.clics
+                  = number_with_delimiter(tuenti_datum.clics, delimiter: units_delimiter)
             tr
               td
                 |Descargas
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.downloads
+                  = number_with_delimiter(tuenti_datum.downloads, delimiter: units_delimiter)
             tr
               td
                 |Numero de comentarios
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.comments
+                  = number_with_delimiter(tuenti_datum.comments, delimiter: units_delimiter)
             tr
               td
                 |CTR % clic externos
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.ctr_external_clics
+                  = number_with_precision(tuenti_datum.ctr_external_clics, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 |Fotos subidas
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.upload_photos
+                  = number_with_delimiter(tuenti_datum.upload_photos, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
                 | Inversion
@@ -193,25 +193,25 @@ section.sectionInformation
                 | Inversion Agencia
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.investment_agency
+                  = number_with_precision(tuenti_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion nuevas acciones
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.investment_actions
+                  = number_with_precision(tuenti_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion anuncios
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.investment_ads
+                  = number_with_precision(tuenti_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion Total
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = tuenti_datum.total_investment.round(3)
+                  = number_with_precision(tuenti_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
                 |Costes
@@ -220,7 +220,7 @@ section.sectionInformation
                 |Coste Fan
               - @tuenti_datum.each do | tuenti_datum |
                 td
-                  = tuenti_datum.cost_fan.round(2)
+                  = number_with_precision(tuenti_datum.cost_fan, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
                 |Opciones

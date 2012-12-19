@@ -113,13 +113,13 @@ section.sectionInformation
                 |Suscriptores nuevos
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.new_subscribers
+                  = number_with_delimiter(youtube_datum.new_subscribers, delimiter: units_delimiter)
             tr
               td
                 |Suscriptores totales
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.total_subscriber
+                  = number_with_delimiter(youtube_datum.total_subscriber, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
                 |Interactividad
@@ -128,97 +128,97 @@ section.sectionInformation
                 |Reproducciones videos durante un periodo
               - @youtube_datum.each do | youtube_datum |
                 td
-                  = youtube_datum.total_video_views
+                  = number_with_delimiter(youtube_datum.total_video_views, delimiter: units_delimiter)
             tr
               td
                 |Reproductor insertado
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.inserted_player
+                  = number_with_delimiter(youtube_datum.inserted_player, delimiter: units_delimiter)
             tr
               td
                 |Dispositivos moviles
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.mobile_devise
+                  = number_with_delimiter(youtube_datum.mobile_devise, delimiter: units_delimiter)
             tr
               td
                 |Busqueda en Youtube
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.youtube_search
+                  = number_with_precision(youtube_datum.youtube_search, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 |Sugerencia de Youtube
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.youtube_suggestion
+                  = number_with_delimiter(youtube_datum.youtube_suggestion, delimiter: units_delimiter)
             tr
               td
                 |Pagina de canal de Youtube
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.youtube_page
+                  = number_with_precision(youtube_datum.youtube_page, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 |Sitio web externo
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.external_web_site
+                  = number_with_delimiter(youtube_datum.external_web_site, delimiter: units_delimiter)
             tr
               td
                 |Busqueda en Google
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.google_search
+                  = number_with_delimiter(youtube_datum.google_search, delimiter: units_delimiter)
             tr
               td
                 |Otras paginas de Youtube
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.youtube_others
+                  = number_with_delimiter(youtube_datum.youtube_others, delimiter: units_delimiter)
             tr
               td
                 |Suscripciones de Youtube
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.youtube_subscriptions
+                  = number_with_delimiter(youtube_datum.youtube_subscriptions, delimiter: units_delimiter)
             tr
               td
                 |Publicidad de Youtube
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.youtube_ads
+                  = number_with_delimiter(youtube_datum.youtube_ads, delimiter: units_delimiter)
             tr
               td
                 |# Me Gusta
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.likes
+                  = number_with_delimiter(youtube_datum.likes, delimiter: units_delimiter)
             tr
               td
                 |# No Me Gusta
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.no_likes
+                  = number_with_delimiter(youtube_datum.no_likes, delimiter: units_delimiter)
             tr
               td
                 |# Favoritos
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.favorite
+                  = number_with_delimiter(youtube_datum.favorite, delimiter: units_delimiter)
             tr
               td
                 |# Comentarios
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.comments
+                  = number_with_delimiter(youtube_datum.comments, delimiter: units_delimiter)
             tr
               td
                 |# Compartidos
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.shared
+                  = number_with_delimiter(youtube_datum.shared, delimiter: units_delimiter)
 
             tr.titlesRows
               td colspan=100
@@ -228,25 +228,25 @@ section.sectionInformation
                 | Inversion Agencia
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.investment_agency
+                  = number_with_precision(youtube_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion nuevas acciones
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.investment_actions
+                  = number_with_precision(youtube_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion anuncios
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.investment_anno
+                  = number_with_precision(youtube_datum.investment_anno, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion Total
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = youtube_datum.total_investment.round(3)
+                  = number_with_precision(youtube_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
                 |Opciones

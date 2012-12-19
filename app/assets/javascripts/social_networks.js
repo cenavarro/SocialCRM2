@@ -101,13 +101,21 @@ $(document).ready(function(){
   }
 
   $("#start_date_picker").datepicker({ format: 'dd-mm-yyyy' })
-    .on('changeDate', function(ev){
-      $("#start_date_picker").datepicker('hide');
-    });
+  .on('changeDate', function(ev){
+    $("#start_date_picker").datepicker('hide');
+  });
   $("#end_date_picker").datepicker({ format: 'dd-mm-yyyy' })
-    .on('changeDate', function(ev){
-      $("#end_date_picker").datepicker('hide');
+  .on('changeDate', function(ev){
+    $("#end_date_picker").datepicker('hide');
+  });
+  $("#formEntradaDatos").validationEngine();
+  $('input.number').autoNumeric({aSep:',', aPad: false, wEmpty: 'zero' });
+  $('input.decimal').autoNumeric({aSep:',', mDec: '2', wEmpty: 'zero' });
+  $('#formEntradaDatos').submit(function(){
+    $('input.[number, decimal]:input').each(function(){
+      $(this).val($(this).val().replace(/,/g, ''));
     });
+  });
 });
 
 function createChart(container, title, categories){

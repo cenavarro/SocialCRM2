@@ -14,4 +14,16 @@ module ApplicationHelper
   def has_admin_credentials?
     admin_user? ? (return true) : (redirect_to root_path, notice: "No tiene los permisos necesarios para realizar esta accion!")
   end
+
+  def units_delimiter
+    ','
+  end
+
+  def decimal_separator
+    '.'
+  end
+
+  def decimal_precision
+    2
+  end
 end

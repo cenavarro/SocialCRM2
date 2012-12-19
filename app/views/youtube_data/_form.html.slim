@@ -1,8 +1,3 @@
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });
-
 = form_for @youtube_datum, :html => {:class => "formNuevosDatosYoutube", :id => "formEntradaDatos"} do |f|
   - if @youtube_datum.errors.any?
     #error_explanation
@@ -18,12 +13,7 @@ javascript:
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
-      - start_date = get_start_date 
-      - start_date = params[:start_date] if params.has_key?(:start_date)
-      - start_date = @youtube_datum.start_date.strftime("%d-%m-%Y") if !@youtube_datum.start_date.nil?
-      - end_date = get_end_date 
-      - end_date = params[:end_date] if params.has_key?(:end_date)
-      - end_date = @youtube_datum.end_date.strftime("%d-%m-%Y") if !@youtube_datum.end_date.nil?
+      - !@youtube_datum.start_date.nil? ? start_date = @youtube_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
       = f.label "Fecha Inicio"
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
@@ -31,6 +21,7 @@ javascript:
           i.icon-th
       br
       br
+      - !@youtube_datum.end_date.nil? ? end_date = @youtube_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
       = f.label "Fecha Final"
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
@@ -42,92 +33,92 @@ javascript:
       br
       br
       = f.label "Subscriptores totales"
-      = f.text_field :total_subscriber, {:class => "validate[required,custom[number]]"}
+      = f.text_field :total_subscriber, {:class => "number validate[required]"}
 
     .box.interactionYoutube
       | Interactividad
       br
       br
       = f.label "Reproducciones videos durante el periodo"
-      = f.text_field :total_video_views, {:class => "validate[required,custom[number]]"}
+      = f.text_field :total_video_views, {:class => "number validate[required]"}
       br
       br
       = f.label "Reproductor insertado"
-      = f.text_field :inserted_player, {:class => "validate[required,custom[number]]"}
+      = f.text_field :inserted_player, {:class => "number validate[required]"}
       br
       br
       = f.label "Dispositivos mobiles"
-      = f.text_field :mobile_devise, {:class => "validate[required,custom[number]]"}
+      = f.text_field :mobile_devise, {:class => "number validate[required]"}
       br
       br
       = f.label "Busqueda en Youtube"
-      = f.text_field :youtube_search, {:class => "validate[required,custom[number]]"}
+      = f.text_field :youtube_search, {:class => "number validate[required]"}
       br
       br
       = f.label "Sugerencia de Youtube"
-      = f.text_field :youtube_suggestion, {:class => "validate[required,custom[number]]"}
+      = f.text_field :youtube_suggestion, {:class => "number validate[required]"}
       br
       br
       = f.label "Pagina de canal de Youtube"
-      = f.text_field :youtube_page, {:class => "validate[required,custom[number]]"}
+      = f.text_field :youtube_page, {:class => "number validate[required]"}
       br
       br
       = f.label "Sitio web externo"
-      = f.text_field :external_web_site, {:class => "validate[required,custom[number]]"}
+      = f.text_field :external_web_site, {:class => "number validate[required]"}
       br
       br
       = f.label "Busqueda en Google"
-      = f.text_field :google_search, {:class => "validate[required,custom[number]]"}
+      = f.text_field :google_search, {:class => "number validate[required]"}
       br
       br
       = f.label "Otras paginas de Youtube"
-      = f.text_field :youtube_others, {:class => "validate[required,custom[number]]"}
+      = f.text_field :youtube_others, {:class => "number validate[required]"}
       br
       br
       = f.label "Suscripciones de Youtube"
-      = f.text_field :youtube_subscriptions, {:class => "validate[required,custom[number]]"}
+      = f.text_field :youtube_subscriptions, {:class => "number validate[required]"}
       br
       br
       = f.label "Publicidad de Youtube"
-      = f.text_field :youtube_ads, {:class => "validate[required,custom[number]]"}
+      = f.text_field :youtube_ads, {:class => "number validate[required]"}
 
     .box.interaction_2_youtube
       | Interactividad
       br
       br
       = f.label "# Me Gusta"
-      = f.text_field :likes, {:class => "validate[required,custom[number]]"}
+      = f.text_field :likes, {:class => "number validate[required]"}
       br
       br
       = f.label "#No Me Gusta"
-      = f.text_field :no_likes, {:class => "validate[required,custom[number]]"}
+      = f.text_field :no_likes, {:class => "number validate[required]"}
       br
       br
       = f.label "# Favoritos"
-      = f.text_field :favorite, {:class => "validate[required,custom[number]]"}
+      = f.text_field :favorite, {:class => "number validate[required]"}
       br
       br
       = f.label "# Comentarios"
-      = f.text_field :comments, {:class => "validate[required,custom[number]]"}
+      = f.text_field :comments, {:class => "number validate[required]"}
       br
       br
       = f.label "# Compartidos"
-      = f.text_field :shared, {:class => "validate[required,custom[number]]"}
+      = f.text_field :shared, {:class => "number validate[required]"}
 
     .box.investmentYoutube
       |Inversion
       br
       br
       = f.label "Inversion Agencia"
-      = f.text_field :investment_agency, {:class => "validate[required,custom[number]]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion Nuevas Acciones "
-      = f.text_field :investment_actions, {:class => "validate[required,custom[number]]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion anuncios ads"
-      = f.text_field :investment_anno, { :class => "validate[required,custom[number]]"}
+      = f.text_field :investment_anno, { :class => "decimal validate[required]"}
 
     br
     br

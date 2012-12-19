@@ -1,8 +1,3 @@
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });
-
 = form_for @pinterest_datum, :html => {:class => "formNuevosDatosPinterest", :id => "formEntradaDatos"} do |f|
   - if @pinterest_datum.errors.any?
     #error_explanation
@@ -18,12 +13,7 @@ javascript:
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
-      - start_date = get_start_date 
-      - start_date = params[:start_date] if params.has_key?(:start_date)
-      - start_date = @pinterest_datum.start_date.strftime("%d-%m-%Y") if !@pinterest_datum.start_date.nil?
-      - end_date = get_end_date 
-      - end_date = params[:end_date] if params.has_key?(:end_date)
-      - end_date = @pinterest_datum.end_date.strftime("%d-%m-%Y") if !@pinterest_datum.end_date.nil?
+      - !@pinterest_datum.start_date.nil? ? start_date = @pinterest_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
       = f.label "Fecha Inicio"
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
@@ -31,6 +21,7 @@ javascript:
           i.icon-th
       br
       br
+      - !@pinterest_datum.end_date.nil? ? end_date = @pinterest_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
       = f.label "Fecha Final"
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
@@ -42,49 +33,49 @@ javascript:
       br
       br
       = f.label "Seguidores"
-      = f.text_field :total_followers, {:class => "validate[required,custom[number]]"}
+      = f.text_field :total_followers, {:class => "number validate[required]"}
       br
       br
       = f.label "# boards"
-      = f.text_field :boards, {:class => "validate[required,custom[number]]"}
+      = f.text_field :boards, {:class => "number validate[required]"}
       br
       br
       = f.label "# pins"
-      = f.text_field :pins, {:class => "validate[required,custom[number]]"}
+      = f.text_field :pins, {:class => "number validate[required]"}
 
     .box.interactionPinterest
       | Interactividad
       br
       br
       = f.label "# liked"
-      = f.text_field :liked, {:class => "validate[required,custom[number]]"}
+      = f.text_field :liked, {:class => "number validate[required]"}
       br
       br
       = f.label "# repin"
-      = f.text_field :repin, {:class => "validate[required,custom[number]]"}
+      = f.text_field :repin, {:class => "number validate[required]"}
       br
       br
       = f.label "# comments"
-      = f.text_field :comments, {:class => "validate[required,custom[number]]"}
+      = f.text_field :comments, {:class => "number validate[required]"}
       br
       br
       = f.label "#community_boards"
-      = f.text_field :community_boards, {:class => "validate[required,custom[number]]"}
+      = f.text_field :community_boards, {:class => "number validate[required]"}
 
     .box.investmentPinterest
       |Inversion
       br
       br
       = f.label "Inversion Agencia"
-      = f.text_field :investment_agency, {:class => "validate[required,custom[number]]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion Nuevas Acciones "
-      = f.text_field :investment_actions, {:class => "validate[required,custom[number]]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion anuncios ads"
-      = f.text_field :investment_ads, { :class => "validate[required,custom[number]]"}
+      = f.text_field :investment_ads, { :class => "decimal validate[required]"}
 
     br
     br

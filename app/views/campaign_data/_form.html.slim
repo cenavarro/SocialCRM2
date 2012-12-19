@@ -1,15 +1,9 @@
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });
-
 = form_tag campaign_data_path(params[:idc], params[:id_social]), :class => "formNuevosDatosCampaign", :id => "formEntradaDatos" do
   .box.informationCampaign
     | Informacion
     br
     = hidden_field_tag :rows_campaign_id, params[:id_social]
     - start_date = get_start_date 
-    - end_date = get_end_date 
     = label_tag "Fecha Inicio"
     .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
       = text_field_tag :start_date, start_date, {:class => "span2", :readonly => true}
@@ -17,6 +11,7 @@ javascript:
         i.icon-th
     br
     br
+    - end_date = get_end_date 
     = label_tag "Fecha Final"
     .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
       = text_field_tag :end_date, end_date, { :class => "span2", :readonly => true}
@@ -27,7 +22,7 @@ javascript:
     - @rows_campaign.each do | datum |
       = datum.name
       br
-      input type="text" id="criteria_#{datum.id}" name="criteria_#{datum.id}" class="validate[required, custom[number]]"
+      input type="text" id="criteria_#{datum.id}" name="criteria_#{datum.id}" class="number validate[required]"
       br
     br
   .buttons

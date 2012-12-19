@@ -93,7 +93,7 @@ section.sectionInformation
                   = datum[:name]
                 - datum[:data].each do |value|
                   td
-                    = value
+                    = number_with_delimiter(value, delimiter: units_delimiter)
             tr
               td
                 b Total Comentarios
@@ -101,10 +101,10 @@ section.sectionInformation
               - @monitoring_data['theme_total_comment'].each do |value|
                 - if @monitoring_data['channel_total_comment'][index] == @monitoring_data['theme_total_comment'][index]
                   td bgcolor="33CC33"
-                    = value
+                    = number_with_delimiter(value, delimiter: units_delimiter)
                 - else
                   td bgcolor="FF0000"
-                    = value
+                    = number_with_delimiter(value, delimiter: units_delimiter)
                 - index = index + 1
             tr.titlesRows
               td colspan=100
@@ -115,7 +115,7 @@ section.sectionInformation
                   = datum[:name]
                 - datum[:data].each do |value|
                   td
-                    = value
+                    = number_with_delimiter(value, delimiter: units_delimiter)
             tr
               td
                 b Total de Comentarios
@@ -123,27 +123,29 @@ section.sectionInformation
               - @monitoring_data['channel_total_comment'].each do |value|
                 - if @monitoring_data['channel_total_comment'][index] == @monitoring_data['theme_total_comment'][index]
                   td bgcolor="33CC33"
-                    = value
+                    = number_with_delimiter(value, delimiter: units_delimiter)
                 - else
                   td bgcolor="FF0000"
-                    = value
+                    = number_with_delimiter(value, delimiter: units_delimiter)
                 - index = index + 1
             tr
               td
                 b % cambio en volumen total de comentarios
                 - if !@monitoring_data['channel_total_comment'].empty?
                   td
-                    | 0 
+                    | 0.00
               - for i in (1..@monitoring_data['channel_total_comment'].length-1)
                 td
-                  = (((@monitoring_data['channel_total_comment'][i]-@monitoring_data['channel_total_comment'][i-1]).to_f/@monitoring_data['channel_total_comment'][i-1])*100).round(2)
+                  - change_total_comments = (((@monitoring_data['channel_total_comment'][i]-@monitoring_data['channel_total_comment'][i-1]).to_f/@monitoring_data['channel_total_comment'][i-1])*100).round(2)
+                  = number_with_precision(change_total_comments, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 b Promedio diario
               - index = 0
               - @monitoring_data['channel_total_comment'].each do |value|
                 td 
-                  = (value/@monitoring_data['total_days'][index]).round(2)
+                  - average = (value/@monitoring_data['total_days'][index])
+                  = number_with_precision(average, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                   - index = index + 1
             tr id="buttons"
               td.nilValue

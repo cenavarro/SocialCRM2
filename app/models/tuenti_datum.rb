@@ -16,7 +16,7 @@ class TuentiDatum < ActiveRecord::Base
   end
 
   def cost_fan
-    new_fans != 0 ? (total_investment.to_f/new_fans.to_f) : 0
+    (total_investment.to_f/real_fans.to_f)
   end
 
 end

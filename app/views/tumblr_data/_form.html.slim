@@ -1,8 +1,3 @@
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });
-
 = form_for @tumblr_datum, :html => {:class => "formNuevoDatoTumblr", :id => "formEntradaDatos"} do |f|
   - if @tumblr_datum.errors.any?
     #error_explanation
@@ -17,12 +12,7 @@ javascript:
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
-      - start_date = get_start_date
-      - start_date = params[:start_date] if params.has_key?(:start_date)
-      - start_date = @tumblr_datum.start_dat.strftime("%d-%m-%Y") if !@tumblr_datum.start_date.nil?
-      - end_date = get_end_date 
-      - end_date = params[:end_date] if params.has_key?(:end_date)
-      - end_date = @tumblr_datum.end_dat.strftime("%d-%m-%Y") if !@tumblr_datum.end_date.nil?
+      - !@tumblr_datum.start_date.nil? ? start_date = @tumblr_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
       = f.label "Fecha Inicio"
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
@@ -30,6 +20,7 @@ javascript:
           i.icon-th
       br
       br
+      - !@tumblr_datum.end_date.nil? ? end_date = @tumblr_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
       = f.label "Fecha Final"
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
@@ -40,35 +31,35 @@ javascript:
       br
       br
       = f.label "# Followers"
-      = f.text_field :total_followers, {:class => "validate[required,custom[number]]"}
+      = f.text_field :total_followers, {:class => "number validate[required]"}
       br
       br
       = f.label "# Post"
-      = f.text_field :posts, {:class => "validate[required,custom[number]]"}
+      = f.text_field :posts, {:class => "number validate[required]"}
     .box.interactionTumblr
       | Interactividad
       br
       br
       = f.label "# like"
-      = f.text_field :likes, {:class => "validate[required,custom[number]]"}
+      = f.text_field :likes, {:class => "number validate[required]"}
       br
       br
       = f.label "# reblogged"
-      = f.text_field :reblogged, {:class => "validate[required,custom[number]]"}
+      = f.text_field :reblogged, {:class => "number validate[required]"}
     .box.investmentTumblr
       |Inversiones
       br
       br
       = f.label "Inversion Agencia"
-      = f.text_field :investment_agency, {:class => "validate[required,custom[number]]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion Nuevas Acciones "
-      = f.text_field :investment_actions, {:class => "validate[required,custom[number]]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion anuncios tumblr ads"
-      = f.text_field :investment_ads, { :class => "validate[required,custom[number]]"}
+      = f.text_field :investment_ads, { :class => "decimal validate[required]"}
     br
     br
     = f.submit 'Guardar Datos', {:class => "btn btn-success saveTumblr" }

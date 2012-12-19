@@ -100,13 +100,13 @@ section.sectionInformation
                 |# nuevos contactos
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = flickr_datum.new_contacts
+                  = number_with_delimiter(flickr_datum.new_contacts, delimiter: units_delimiter)
             tr
               td
                 |# contactos
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = flickr_datum.total_contacts
+                  = number_with_delimiter(flickr_datum.total_contacts, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
                 |Interactividad
@@ -115,19 +115,19 @@ section.sectionInformation
                 |# Visitas
               - @flickr_datum.each do | flickr_datum |
                 td
-                  = flickr_datum.visits
+                  = number_with_delimiter(flickr_datum.visits, delimiter: units_delimiter)
             tr
               td
                 |# Comentarios
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = flickr_datum.comments
+                  = number_with_delimiter(flickr_datum.comments, delimiter: units_delimiter)
             tr
               td
                 |# Favoritos
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = flickr_datum.favorites
+                  = number_with_delimiter(flickr_datum.favorites, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
                 | Inversion
@@ -136,25 +136,25 @@ section.sectionInformation
                 | Inversion Agencia
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = flickr_datum.investment_agency
+                  = number_with_precision(flickr_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion nuevas acciones
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = flickr_datum.investment_actions
+                  = number_with_precision(flickr_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion anuncios
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = flickr_datum.investment_ads
+                  = number_with_precision(flickr_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
                 | Inversion Total
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = flickr_datum.total_investment.round(3)
+                  = number_with_precision(flickr_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
                 |Opciones

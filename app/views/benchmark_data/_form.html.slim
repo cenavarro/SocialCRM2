@@ -6,7 +6,6 @@
     = hidden_field_tag :client_id, params[:idc]
     = hidden_field_tag :social_network_id, params[:id_social]
     - @start_date.nil? ? (start_date = get_start_date) : (start_date = @start_date)
-    - @end_date.nil? ? (end_date = get_end_date) : (end_date = @end_date)
     = label_tag "Fecha Inicio"
     .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
       = text_field_tag :start_date, start_date, { :class => "span2",  :readonly => true } 
@@ -14,13 +13,16 @@
         i.icon-th
     br
     br
+    - @end_date.nil? ? (end_date = get_end_date) : (end_date = @end_date)
     = label_tag "Fecha Final"
     .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
       = text_field_tag :end_date, end_date,  { :class => "span2", :readonly => true }
       span.add-on
         i.icon-th
   .box.competitorsBenchmark
-    | Tabla de Informacion
+    h4
+      | Tabla de Informacion
+    br
     table.table.table-bordered
       thead
         tr.titlesRows
@@ -31,7 +33,7 @@
           td
             | Foros
           td
-            | Videos 
+            | Videos
           td
             | Twitter
           td
@@ -46,22 +48,17 @@
             td
               = competitor.name
             td
-              = text_field_tag "#{competitor.id}[blogs]", benchmark_data.blogs, {:style => "width:60px;", :class => "validate[required,custom[number]]"}
+              = text_field_tag "#{competitor.id}[blogs]", benchmark_data.blogs, {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[forums]", benchmark_data.forums, {:style => "width:60px;", :class => "validate[required,custom[number]]"}
+              = text_field_tag "#{competitor.id}[forums]", benchmark_data.forums, {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[videos]", benchmark_data.videos, {:style => "width:60px;", :class => "validate[required,custom[number]]"}
+              = text_field_tag "#{competitor.id}[videos]", benchmark_data.videos, {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[twitter]", benchmark_data.twitter, {:style => "width:60px;", :class => "validate[required,custom[number]]"}
+              = text_field_tag "#{competitor.id}[twitter]", benchmark_data.twitter, {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[facebook]", benchmark_data.facebook, {:style => "width:60px;", :class => "validate[required,custom[number]]"}
+              = text_field_tag "#{competitor.id}[facebook]", benchmark_data.facebook, {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[others]", benchmark_data.others, {:style => "width:60px;", :class => "validate[required,custom[number]]"}
+              = text_field_tag "#{competitor.id}[others]", benchmark_data.others, {:style => "width:60px;", :class => "number validate[required]"}
   .buttonsBenchmark
     = submit_tag 'Guardar Datos', {:class => "btn btn-success saveBenchmark"}
     = link_to 'Regresar', benchmark_index_path(params[:idc],1), :class => "btn btn-inverse backBenchmark"
-
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });

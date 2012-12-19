@@ -1,9 +1,3 @@
-javascript:
-
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });
-
 br
 center
   h1 Editando Entrada Datos Facebook 
@@ -21,8 +15,6 @@ br
     .box.informacion
       - start_date = @facebook_datum.start_date.strftime("%d-%m-%Y") if !@facebook_datum.nil?
       - start_date = params[:start_date] if params.has_key?(:start_date)
-      - end_date = @facebook_datum.end_date.strftime("%d-%m-%Y") if !@facebook_datum.nil?
-      - end_date = params[:end_date] if params.has_key?(:end_date)
       = f.label "Fecha Inicio"
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
@@ -30,6 +22,8 @@ br
           i.icon-th
       br
       br
+      - end_date = @facebook_datum.end_date.strftime("%d-%m-%Y") if !@facebook_datum.nil?
+      - end_date = params[:end_date] if params.has_key?(:end_date)
       = f.label "Fecha Final"
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
@@ -52,77 +46,77 @@ br
       br
       br
       = f.label "# total fans"
-      = f.text_field :total_fans, :class => "validate[required, custom[number]]"
+      = f.text_field :total_fans, :class => "number validate[required]"
       br
       br
       = f.label "Objetivo fans"
-      = f.text_field :goal_fans, :class => "validate[required, custom[number]]"
+      = f.text_field :goal_fans, :class => "number validate[required]"
       br
       br
       = f.label "Ranking Espana"
-      = f.text_field :ranking_espana, :class => "validate[required, custom[number]]"
+      = f.text_field :ranking_espana, :class => "number validate[required]"
       br
       br
       = f.label "Ranking Mundo"
-      = f.text_field :ranking_world, :class => "validate[required, custom[number]]"
+      = f.text_field :ranking_world, :class => "number validate[required]"
     .box.interaction
       |Interactividad
       br
       br
       = f.label "# impresiones"
-      = f.text_field :prints, :class => "validate[required, custom[number]]"
+      = f.text_field :prints, :class => "number validate[required]"
       br
       br
       = f.label "# interacciones"
-      = f.text_field :total_interactions, :class => "validate[required, custom[number]]"
+      = f.text_field :total_interactions, :class => "number validate[required]"
       br
       br
       = f.label "Alcance total"
-      = f.text_field :total_reach, :class => "validate[required, custom[number]]"
+      = f.text_field :total_reach, :class => "number validate[required]"
       br
       br
       = f.label "Alcance potencial"
-      = f.text_field :potential_reach, :class => "validate[required, custom[number]]"
+      = f.text_field :potential_reach, :class => "number validate[required]"
       br
       br
       = f.label "# impresiones anuncios"
-      = f.text_field :total_prints_per_anno, :class => "validate[required, custom[number]]"
+      = f.text_field :total_prints_per_anno, :class => "number validate[required]"
       br
       br
       = f.label "# clicks anuncios"
-      = f.text_field :total_clicks_anno, :class => "validate[required, custom[number]]"
+      = f.text_field :total_clicks_anno, :class => "number validate[required]"
       br
       br
       = f.label "# fans a traves de anuncios"
-      = f.text_field :fans_through_anno, :class => "validate[required, custom[number]]"
+      = f.text_field :fans_through_anno, :class => "number validate[required]"
     .box.inversion
       | Inversion
       br
       br
       = f.label "Inversion agencia"
-      = f.text_field :agency_investment, {:class => "validate[required, custom[number]]"}
+      = f.text_field :agency_investment, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion nuevas Acciones"
-      = f.text_field :new_stock_investment, {:class => "validate[required, custom[number]]"}
+      = f.text_field :new_stock_investment, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion anuncios"
-      = f.text_field :anno_investment, {:class => "validate[required, custom[number]]"}
+      = f.text_field :anno_investment, {:class => "decimal validate[required]"}
     .box.costes
       | Costes
       br
       br
       = f.label "CTR anuncios"
-      = f.text_field :ctr_anno, {:class => "validate[required, custom[number]]"}
+      = f.text_field :ctr_anno, {:class => "decimal validate[required]"}
       br
       br
       = f.label "CPM anuncios"
-      = f.text_field :cpm_anno, {:class => "validate[required, custom[number]]"}
+      = f.text_field :cpm_anno, {:class => "decimal validate[required]"}
       br
       br
       = f.label "CPC anuncios"
-      = f.text_field :cpc_anno, {:class => "validate[required, custom[number]]"}
+      = f.text_field :cpc_anno, {:class => "decimal validate[required]"}
     = f.submit 'Guardar Datos', {:class => "btn btn-success saveFacebook"}
     |     
     = link_to 'Regresar', facebook_index_path(params[:idc],1), :class => "btn btn-inverse backFacebook"

@@ -1,8 +1,3 @@
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });
-
 = form_for @linkedin_data, :html => {:class => "formNuevoDatosLinkedin", :id => "formEntradaDatos"} do |f|
   - if @linkedin_data.errors.any?
     #error_explanation
@@ -18,12 +13,7 @@ javascript:
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
-      - start_date = get_start_date 
-      - start_date = params[:start_date] if params.has_key?(:start_date)
-      - start_date = @linkedin_data.start_date.strftime("%d-%m-%Y") if !@linkedin_data.start_date.nil?
-      - end_date = get_end_date 
-      - end_date = params[:end_date] if params.has_key?(:end_date)
-      - end_date = @linkedin_data.end_date.strftime("%d-%m-%Y") if !@linkedin_data.end_date.nil?
+      - !@linkedin_data.start_date.nil? ? start_date = @linkedin_data.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
       = f.label "Fecha Inicio"
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
@@ -31,6 +21,7 @@ javascript:
           i.icon-th
       br
       br
+      - !@linkedin_data.end_date.nil? ? end_date = @linkedin_data.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
       = f.label "Fecha Final"
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
@@ -46,53 +37,53 @@ javascript:
       br
       br
       = f.label "Seguidores"
-      = f.text_field :total_followers, {:class => "validate[required,custom[number]]"}
+      = f.text_field :total_followers, {:class => "number validate[required]"}
 
     .box.interactionLinkedin
       | Interactividad
       br
       br
       = f.label "Resumen"
-      = f.text_field :summary, {:class => "validate[required,custom[number]]"}
+      = f.text_field :summary, {:class => "number validate[required]"}
       br
       br
       = f.label "Empleo"
-      = f.text_field :employment, {:class => "validate[required,custom[number]]"}
+      = f.text_field :employment, {:class => "number validate[required]"}
       br
       br
       = f.label "Productos y Servicios"
-      = f.text_field :products_services, {:class => "validate[required,custom[number]]"}
+      = f.text_field :products_services, {:class => "number validate[required]"}
       br
       br
       = f.label "Impresiones"
-      = f.text_field :prints, {:class => "validate[required,custom[number]]"}
+      = f.text_field :prints, {:class => "number validate[required]"}
       br
       br
       = f.label "Clicks"
-      = f.text_field :clics, {:class => "validate[required,custom[number]]"}
+      = f.text_field :clics, {:class => "number validate[required]"}
       br
       br
       = f.label "% de interes"
-      = f.text_field :interest, {:class => "validate[required,custom[number]]"}
+      = f.text_field :interest, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Recomendacion"
-      = f.text_field :recommendation, {:class => "validate[required,custom[number]]"}
+      = f.text_field :recommendation, {:class => "number validate[required]"}
 
     .box.investmentLinkedin
       |Inversion
       br
       br
       = f.label "Inversion Agencia"
-      = f.text_field :investment_agency, {:class => "validate[required,custom[number]]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion Nuevas Acciones "
-      = f.text_field :investment_actions, {:class => "validate[required,custom[number]]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
       = f.label "Inversion anuncios twitter ads"
-      = f.text_field :investment_anno, { :class => "validate[required,custom[number]]"}
+      = f.text_field :investment_anno, { :class => "decimal validate[required]"}
 
     br
     br
