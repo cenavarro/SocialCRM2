@@ -16,6 +16,10 @@ center
   center
     h1
       = @socialNetwork.name
+    a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
+      i.icon-circle-arrow-left.icon-white
+      |    
+      = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
       |Reporte  
       i.icon-circle-arrow-down.icon-white

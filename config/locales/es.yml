@@ -42,6 +42,7 @@ es:
     new_customer: "Crear Cliente"
     update_customer: "Actualizar Cliente"
     add_new_customer: "Agregar Nuevo Cliente"
+    back_social_network: "Regresar"
   messages:
     requireds: "Campos Requeridos"
     required: "Campo Requerido"

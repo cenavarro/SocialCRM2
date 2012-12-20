@@ -10,6 +10,10 @@
   center
     h1
       = @socialNetwork.name
+    a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
+      i.icon-circle-arrow-left.icon-white
+      |    
+      = t 'buttons.back_social_network'
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
