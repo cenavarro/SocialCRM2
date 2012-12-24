@@ -3,7 +3,28 @@ DemoComentarios::Application.routes.draw do
 
   get "/:locale" => "home#index", :as => "language"
 
+  def social_networks
+    ['benchmark', 'comment', 'foursquare', 'tumblr', 'blog', 'google_plus', 'youtube', 'pinterest', 'linkedin', 'twitter', 'facebook']
+  end
+
+
   scope ':locale' do
+
+=begin
+    social_networks.each do |social_network|
+      resource "#{social_network}_data".to_sym, :only => [:create, :destroy, :update]
+      post "#{social_network}_data/save_comment" => "#{social_network}_data#save_comment", :as => "#{social_network}_save_comment"
+      get "#{social_network}_data/new/:idc/:opcion/:id_social" => "#{social_network}#new", :as => "#{social_network}_new"
+      get "#{social_network}_data/:id/edit/:idc/:id_social" => "#{social_network}_data#edit", :as => "#{social_network}_edit"
+      get "#{social_network}_data/:idc/:opcion/:id_social" => "#{social_network}_data#index", :as => "#{social_network}_index"
+    end
+=end
+    post "comment" => "comment#create", :as => "comment"
+    put "comment" => "comment#update", :as => "comment_update"
+    get "comment_data/new/:idc/:opcion/:id_social" => "comment#new", :as => "comment_new"
+    get "comment_data/:idc/:opcion/:id_social" => "comment#index", :as => "comment_index"
+    get "comment/:id/edit/:idc/:id_social" => "comment#edit", :as => "comment_edit"
+    delete "comment/:id" => "comment#destroy", :as => "comment_destroy"
 
     resources :summaries, :only => [:create, :update]
     get "summary_data/new/:idc/:opcion/:id_social" => "summaries#new", :as => "summary_new"
@@ -93,15 +114,15 @@ DemoComentarios::Application.routes.draw do
     get "twitter_data/:id/edit/:idc/:id_social" => "twitter_data#edit", :as => "twitter_edit"
     get "twitter_data/:idc/:opcion/:id_social" => "twitter_data#index", :as => "twitter_index"
 
-    devise_for :users, :controllers => {:omniauth_callbacks => "auth"}
-
     resources :facebook_data, :only => [:create, :destroy, :update]
-    get "facebook_data/callback/:idc/:id_social/:start_date/:end_date" => "facebook_data#callback", :as => "facebook_callback_dates"
-    get "facebook_data/callback/:idc/:id_social" => "facebook#callback", :as => "facebook_callback"
     post "facebook_data/save_comment" => "facebook_data#save_comment", :as => "facebook_save_comment"
-    get "facebook_data/new/:idc/:opcion/:id_social(/:start_date/:end_date/:access_token)" => "facebook_data#new", :as => "facebook_new"
     get "facebook_data/:id/edit/:idc/:id_social" => "facebook_data#edit", :as => "facebook_edit"
     get "facebook_data/:idc/:opcion/:id_social" => "facebook_data#index", :as => "facebook_index"
+    get "facebook_data/new/:idc/:opcion/:id_social(/:start_date/:end_date/:access_token)" => "facebook_data#new", :as => "facebook_new"
+    get "facebook_data/callback/:idc/:id_social/:start_date/:end_date" => "facebook_data#callback", :as => "facebook_callback_dates"
+    get "facebook_data/callback/:idc/:id_social" => "facebook#callback", :as => "facebook_callback"
+
+    devise_for :users, :controllers => {:omniauth_callbacks => "auth"}
 
     resources :clients, :except => [:show]
     get 'clients/social_networks/:idc' => 'clients#social_networks', :as => "clients_social_networks"

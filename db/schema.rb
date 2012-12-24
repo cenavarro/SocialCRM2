@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121213210319) do
+ActiveRecord::Schema.define(:version => 20121224171259) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -83,6 +83,17 @@ ActiveRecord::Schema.define(:version => 20121213210319) do
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"
     t.datetime "attachment_updated_at"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "client_id"
+    t.integer  "social_network_id"
+    t.text     "social_network_name"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "comment_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "facebook_comments", :force => true do |t|
@@ -268,6 +279,24 @@ ActiveRecord::Schema.define(:version => 20121213210319) do
     t.float    "interest"
     t.integer  "social_network_id"
     t.text     "actions"
+  end
+
+  create_table "list_comments", :force => true do |t|
+    t.integer  "comment_id"
+    t.text     "content"
+    t.text     "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "list_comments", ["comment_id"], :name => "index_list_comments_on_comment_id"
+
+  create_table "list_of_comment", :force => true do |t|
+    t.integer  "comment_id"
+    t.text     "content"
+    t.text     "link"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "monitoring_comments", :force => true do |t|

@@ -35,6 +35,7 @@ class SocialNetwork < ActiveRecord::Base
   has_many :rows_campaign, :dependent => :destroy
   has_many :monitoring, :dependent => :destroy
   has_many :summaries, :dependent => :destroy
+  has_many :comments, :dependent => :destroy
 
   attr_accessible :name, :client_id, :info_social_network_id, :id_object, :image
 

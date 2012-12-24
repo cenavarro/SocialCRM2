@@ -33,3 +33,5 @@ social = InfoSocialNetwork.create! :name => 'Benchmark', :description => "Red So
 puts "Informacion Red Social Creada: " << social.name
 social = InfoSocialNetwork.create! :name => 'Resumen', :description => "Red Social Resumen", :id_name => 'summary', :attachment => File.new("#{Rails.root}/public/assets/images/social_network/summary.jpg")
 puts "Informacion Red Social Creada: " << social.name
+social = InfoSocialNetwork.create! :name => 'Comentarios', :description => "Red Social Comentarios", :id_name => 'comment', :attachment => File.new("#{Rails.root}/public/assets/images/social_network/comment.jpg")
+puts "Informacion Red Social Creada: " << social.name
