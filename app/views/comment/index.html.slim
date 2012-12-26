@@ -1,0 +1,78 @@
+h1
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+
+- @comment_info = InfoSocialNetwork.find_by_id_name('comment')
+- @socialNetwork = SocialNetwork.find(params[:id_social])
+
+.margin
+  center
+    h1
+      = @socialNetwork.name
+    a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
+      i.icon-circle-arrow-left.icon-white
+      |    
+      = t 'buttons.back_social_network'
+    br
+    br
+    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+.margin
+  a.btn.btn-primary href=comment_new_path
+    | Nuevo Comentario
+
+.margin
+  table.table.table-bordered
+    tbody
+      tr
+        td.positive_title
+        td.positive_title.main
+          |Comentarios Positivos
+        td.positive_title
+          |Link al Comentario
+      - @positive_comments.each do |comment|
+        tr
+          td.positive_secondary_title
+            a.btn.btn-mini.btn-info href=comment_edit_path(comment.id)
+              i.icon-pencil.icon-white
+            |    
+            a.btn.btn-mini.btn-danger data-method='delete' rel='nofollow' href=comment_destroy_path(comment.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+              i.icon-trash.icon-white
+          td.positive_secondary_title colspan="2"
+            = comment.social_network_name
+        - comment.list_comments.each do |list_comment|
+          tr
+            td
+              |
+            td
+              = list_comment.content
+            td
+              a.btn-link href=list_comment.link
+                = list_comment.link
+      tr
+        td.negative_title
+        td.negative_title
+          |Comentarios Negativos
+        td.negative_title
+          |Link al Comentario
+      - @negative_comments.each do |comment|
+        tr
+          td.negative_secondary_title.buttons
+            a.btn.btn-mini.btn-info href=comment_edit_path(comment.id)
+              i.icon-pencil.icon-white
+            |    
+            a.btn.btn-mini.btn-danger data-method='delete' rel='nofollow' href=comment_destroy_path(comment.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+              i.icon-trash.icon-white
+          td.negative_secondary_title colspan="2"
+            = comment.social_network_name
+        - comment.list_comments.each do |list_comment|
+          tr style="border: 1px solid;"
+            td
+              |
+            td
+              = list_comment.content
+            td
+              a.btn-link href=list_comment.link
+                = list_comment.link

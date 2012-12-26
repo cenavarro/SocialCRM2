@@ -1,0 +1,80 @@
+javascript:
+  var comentarios_array = [];
+  function addComment(object){
+    comentarios_array.push(object);
+  }
+br
+center
+  h1 Editando Entrada Comentario 
+br
+br
+= form_tag comment_update_path, :class => "form_new_comments", :id => "formEntradaDatos", :method => :put do
+  = hidden_field_tag :client_id, params[:idc]
+  = hidden_field_tag :social_network_id, params[:id_social]
+  = hidden_field_tag :id, @comment.id
+  .box style="width: 600px; margin: auto;"
+    .title_1 style="float: left; margin-left: 40px; padding-right: 90px;"
+      | Red Social:
+      br
+      = text_field_tag :social_network_name, @comment.social_network_name, :class => "validate[required]"
+      br
+      .select_option style="padding-top: 14px;"
+        |Tipo de los Comentarios:
+        br
+        = select_tag :comment_type, options_for_select([["Positivos", 1],["Negativos", 2]], @comment.comment_type)
+    .dates style="float:right: margin-right: 40px;"
+      - start_date = @comment.start_date.strftime("%d-%m-%Y")
+      |Fecha Inicio
+      .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
+        input.span2 type="text" name="start_date" value=start_date readonly="readonly"
+        span.add-on
+          i.icon-th
+      br
+      - end_date = @comment.end_date.strftime("%d-%m-%Y")
+      |Fecha Final
+      .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
+        input.span2 type="text" name="end_date" value=end_date readonly="readonly"
+        span.add-on
+          i.icon-th
+  br
+  br
+  .box style="clear: both; width: 830px;"
+    h3 style="margin-left: 40px;"
+      | Lista de Comentarios
+    br
+    .comentarios id="comentarios" style="margin-left: 40px;"
+    input type="hidden" value="" id="total_comentarios"
+  br
+  br
+  center
+    button.btn.btn-primary
+      | Guardar Comentarios
+- @comment.list_comments.each do |comment|
+  javascript:
+    addComment({id: #{comment.id}, comentario: "#{comment.content}", link: "#{comment.link}"});
+
+javascript:
+
+  function reDrawComments(){
+    document.getElementById('comentarios').innerHTML = "";
+    for(var i = 0; i < comentarios_array.length; i++){
+      var id = comentarios_array[i].id;
+      var new_html = "<p id=comentario_" + id + "> Comentario: <br/> " + 
+        "<input type='text' id='comment_" + id + "' name='comment_" + id + "' value='"+comentarios_array[i].comentario+"' style='width: 435px;' class='validate[required]'></p> " + 
+      "<p> Link: <br/>"+
+        "<input type='text' id='link_" + id + "' name='link_" + id + "' value='"+comentarios_array[i].link+"' style='width: 435px;' class='validate[required, custom[url]]'></p>"; 
+      document.getElementById('comentarios').innerHTML += new_html;
+    }
+  }
+
+  function findAndRemove(value){
+    $.each(comentarios_array, function(index, result){
+      if(result.id == value){
+        comentarios_array.splice(index, 1);
+        return false;
+      }
+    });
+    reDrawComments();
+  }
+
+  reDrawComments();

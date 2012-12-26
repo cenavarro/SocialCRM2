@@ -1,0 +1,36 @@
+// Place all the styles related to the Comment controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.border_table{
+  border: 1px solid;
+}
+
+.positive_title{
+  background-color: #4FD15A; 
+}
+
+.positive_title.main{
+  width: 650px;
+}
+
+.positive_content{
+  border: 1px solid;
+  background-color: #4FD15A;
+}
+
+.positive_content.buttons{
+  width: 60px;
+}
+
+.positive_secondary_title{
+  background-color: #3AF249;
+}
+
+.negative_title{
+  background-color: #F52A2A;
+}
+
+.negative_secondary_title{
+  background-color: #FCA2A2;
+}

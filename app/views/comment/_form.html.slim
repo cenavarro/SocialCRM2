@@ -1,0 +1,107 @@
+= form_tag comment_path, :class => "form_new_comments", :id => "formEntradaDatos" do
+  = hidden_field_tag :client_id, params[:idc]
+  = hidden_field_tag :social_network_id, params[:id_social]
+  .box style="width: 600px; margin: auto;"
+    .title_1 style="float: left; margin-left: 80px;"
+      | Red Social:
+      br
+      = text_field_tag :social_network_name, "", :class => "validate[required]"
+      br
+      .select_option style="padding-top: 14px;"
+        |Tipo de los Comentarios:
+        br
+        = select_tag :comment_type, options_for_select([["Positivos", 1],["Negativos", 2]])
+    .dates style="float: right; margin-right: 80px;"
+      |Fecha Inicio
+      .input-append.date data-date=get_start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
+        input.span2 type="text" name="start_date" value=get_start_date readonly="readonly"
+        span.add-on
+          i.icon-th
+      br
+      |Fecha Final
+      .input-append.date data-date=get_end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
+        input.span2 type="text" name="end_date" value=get_end_date readonly="readonly"
+        span.add-on
+          i.icon-th
+      br
+    .button_add_comment style="clear: both;"
+      center
+        a.btn.btn-primary href="#add_comment_modal" data-toggle="modal"
+          | Agregar Comentario 
+  br
+  br
+  .box style="clear: both; width: 830px;"
+    h3 style="margin-left: 40px;"
+      | Lista de Comentarios
+    br
+    .comentarios id="comentarios"
+    input type="hidden" value="" id="total_comentarios"
+  br
+  br
+  center
+    button.btn.btn-primary
+      | Guardar Comentarios
+
+.modal.hide.fade id="add_comment_modal" tabindex="-1" role="dialog" aria-hidden="true" style="width: 670px;"
+  .modal-header
+    button.close type="button" data-dismiss="modal" aria-hidden="true"
+      |x
+    h2
+      | Agregar Comentario
+    form id="add_comment" onsubmit="return addInput();"
+      .modal-body style="margin-left: 50px;"
+          br
+          | Comentario:
+          br
+          input type="text" id="txt_comentario" style="width: 435px;" class="validate[required]"
+          br
+          | Link:
+          br
+          input type="text" id="link_comentario" style="width: 435px;" class="validate[required, custom[url]]"
+      .modal-footer
+        input.btn.btn-primary id="add_comment_button" type="submit" value="Agregar"
+        |               
+        button.btn.btn-inverse data-dismiss="modal" aria-hidden="true"
+          |Cerrar
+
+javascript:
+  var comentarios_array = [];
+  var id_comentario = 0;
+  function addInput(){
+    var comentario = document.getElementById('txt_comentario');
+    var link = document.getElementById('link_comentario');
+    if((comentario.value != "") && (link.value != "")){
+      comentarios_array.push({id: id_comentario, comentario: comentario.value, link: link.value})
+      id_comentario++;
+      reDrawComments();
+      jQuery("#add_comment_modal").modal('hide');
+    }
+    return false;
+  }
+
+  function reDrawComments(){
+    document.getElementById('comentarios').innerHTML = "";
+    for(var i = 0; i < comentarios_array.length; i++){
+      var id = comentarios_array[i].id;
+      var new_html = "<div class='well'><p> <b> Comentario:</b> <br/>" + comentarios_array[i].comentario + "</p> " + 
+        " <p><b> Link: </b><br/>"+ comentarios_array[i].link +"</p>" +
+        "<button class='btn btn-danger' onclick='findAndRemove("+id+")' style='float:right;'><i class='icon-trash icon-white'></i></button><br/>" + 
+        "<input type='hidden' id='comment_" + i + "' name='comment_" + i + "' value='"+comentarios_array[i].comentario+"'>" + 
+        "<input type='hidden' id='link_" + i + "' name='link_" + i + "' value='"+comentarios_array[i].link+"'></div>";
+      document.getElementById('comentarios').innerHTML += new_html;
+    }
+  }
+
+  function findAndRemove(value){
+    $.each(comentarios_array, function(index, result){
+      if(result.id == value){
+        comentarios_array.splice(index, 1);
+        return false;
+      }
+    });
+    reDrawComments();
+  }
+
+  jQuery(document).ready(function(){
+    jQuery("#add_comment").validationEngine();
+  });
