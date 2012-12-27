@@ -137,19 +137,20 @@ module ReportGenerators
 
   def self.all
     [FacebookReport, 
-      MonitoringReport,
-      BlogReport,
-      FlickrReport,
-      FoursquareReport,
-      GooglePlusReport,
-      LinkedinReport,
-      PinterestReport,
-      TuentiReport,
-      TumblrReport,
       TwitterReport,
+      LinkedinReport,
+      BlogReport,
+      TuentiReport,
       YoutubeReport,
+      FoursquareReport,
+      PinterestReport,
+      GooglePlusReport,
+      FlickrReport,
+      TumblrReport,
+      MonitoringReport,
       BenchmarkReport,
       CampaignReport,
+      CommentReport,
       SummaryReport
     ]
   end
@@ -176,3 +177,4 @@ require 'report_generators/youtube_report'
 require 'report_generators/benchmark_report'
 require 'report_generators/campaign_report'
 require 'report_generators/summary_report'
+require 'report_generators/comment_report'

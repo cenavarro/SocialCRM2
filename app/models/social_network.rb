@@ -40,9 +40,9 @@ class SocialNetwork < ActiveRecord::Base
   attr_accessible :name, :client_id, :info_social_network_id, :id_object, :image
 
   def data_types
-    [FacebookDatum, Monitoring, BlogDatum, FlickrDatum, FoursquareDatum, GooglePlusDatum,
-      LinkedinDatum, PinterestDatum, TuentiDatum, TumblrDatum, TwitterDatum, YoutubeDatum,
-      BenchmarkDatum, RowsCampaign, Summary
+    [FacebookDatum, TwitterDatum, LinkedinDatum, BlogDatum, TuentiDatum, YoutubeDatum, 
+      FoursquareDatum, PinterestDatum, GooglePlusDatum, FlickrDatum, TumblrDatum, Monitoring,
+      BenchmarkDatum, RowsCampaign, Comment, Summary
     ]
   end
 end

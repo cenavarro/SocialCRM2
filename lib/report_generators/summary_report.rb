@@ -8,12 +8,12 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
     social_network.summaries.where("social_network_id = ?", social_network.id).first
   end
 
-  def is_summary?
+  def summary_has_data?
     !summary.nil? && !summary.summary_comments.empty?
   end
 
   def add_to(document)
-    if is_summary?
+    if summary_has_data?
       @summary_comments = summary.summary_comments
       sets_workbook_and_worksheet(document)
       create_report
