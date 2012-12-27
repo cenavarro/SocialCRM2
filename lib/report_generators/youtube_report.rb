@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::YoutubeReport < ReportGenerators::Base
 
 	def self.can_process? type
@@ -48,15 +49,15 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
       'dates' => ['',''], 'community_header' => ['','Comunidad'], 'new_subscriber' => ['','Suscriptores nuevos'], 
       'total_subscriber' => ['','Suscriptores totales'], 'interactivity_header' => ['', 'Interactividad'],
       'total_video_views' => ['','Reproducciones videos durante un periodo'], 'inserted_player' => ['', 'Reproductor insertado'],
-      'mobile_devise' => ['', 'Dispositivos moviles'], 'youtube_search' => ['', 'Busqueda en Youtube'],
-      'youtube_suggestion' => ['', 'Sugerencia de Youtube'], 'youtube_page' => ['', 'Pagina de canal de Youtube'],
-      'external_web_site' => ['', 'Sitio web externo'], 'google_search' => ['', 'Busqueda en Google'],
-      'youtube_others' => ['', 'Otras paginas de Youtube'], 'youtube_subscriptions' => ['', 'Suscripciones de Youtube'],
-      'youtube_ads' => ['', 'Publicidad de Youtube'], 'likes' => ['','# Me Gusta'],
-      'no_likes' => ['','# No Me Gusta'], 'favorite' => ['','# Favoritos'], 'comments' => ['', '# Comentarios'],
-      'shared' => ['','# Compartidos'], 'investment_header' => ['','Inversion'], 
-      'investment_agency' => ['', 'Inversion Agencia'], 'investment_actions' => ['','Inversion nuevas acciones'], 
-      'investment_anno' => ['','Inversion anuncios'], 'total_investment' => ['','Inversion Total']
+      'mobile_devise' => ['', 'Dispositivos móviles'], 'youtube_search' => ['', 'Búsqueda en Youtube'],
+      'youtube_suggestion' => ['', 'Sugerencia de Youtube'], 'youtube_page' => ['', 'Página de canal de Youtube'],
+      'external_web_site' => ['', 'Sitio web externo'], 'google_search' => ['', 'Búsqueda en Google'],
+      'youtube_others' => ['', 'Otras páginas de Youtube'], 'youtube_subscriptions' => ['', 'Suscripciones de Youtube'],
+      'youtube_ads' => ['', 'Publicidad de Youtube'], 'likes' => ['','Me gusta'],
+      'no_likes' => ['','No me gusta'], 'favorite' => ['','Favoritos'], 'comments' => ['', 'Comentarios'],
+      'shared' => ['','Compartidos'], 'investment_header' => ['','Inversión'], 
+      'investment_agency' => ['', 'Inversión agencia'], 'investment_actions' => ['','Inversión nuevas acciones'], 
+      'investment_anno' => ['','Inversión anuncios'], 'total_investment' => ['','Inversión total']
     }
   end
 
@@ -86,7 +87,7 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
   def append_community_chart
     chart = create_chart(81, "Comunidad")
     add_serie(chart, @report_data['new_subscriber'], @report_data['dates'], 'Suscriptores nuevos')
-    add_serie(chart, @report_data['total_subscriber'], @report_data['dates'], '# followers')
+    add_serie(chart, @report_data['total_subscriber'], @report_data['dates'], 'Suscriptores totales')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -97,13 +98,13 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
     chart = create_chart(120, "Interactividad")
     add_serie(chart, @report_data['total_video_views'], @report_data['dates'], 'Reproducciones videos en el periodo')
     add_serie(chart, @report_data['inserted_player'], @report_data['dates'], 'Reproductor insertado')
-    add_serie(chart, @report_data['mobile_devise'], @report_data['dates'], 'Dispositivos moviles')
+    add_serie(chart, @report_data['mobile_devise'], @report_data['dates'], 'Dispositivos móviles')
     add_serie(chart, @report_data['youtube_search'], @report_data['dates'], 'Busqueda de Youtube')
     add_serie(chart, @report_data['youtube_suggestion'], @report_data['dates'], 'Sugerencia de Youtube')
-    add_serie(chart, @report_data['youtube_page'], @report_data['dates'], 'Pagina de canal de Youtube')
+    add_serie(chart, @report_data['youtube_page'], @report_data['dates'], 'Página de canal de Youtube')
     add_serie(chart, @report_data['external_web_site'], @report_data['dates'], 'Sitio externo a Youtube')
-    add_serie(chart, @report_data['google_search'], @report_data['dates'], 'Busqueda de Google')
-    add_serie(chart, @report_data['youtube_others'], @report_data['dates'], 'Otras paginas de Youtube')
+    add_serie(chart, @report_data['google_search'], @report_data['dates'], 'Búsqueda de Google')
+    add_serie(chart, @report_data['youtube_others'], @report_data['dates'], 'Otras páginas de Youtube')
     add_serie(chart, @report_data['youtube_subscriptions'], @report_data['dates'], 'Suscripciones de Youtube')
     add_serie(chart, @report_data['youtube_ads'], @report_data['dates'], 'Publicidad de Youtube')
     append_rows_to_report 36
@@ -114,11 +115,11 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
 
   def append_interactivity_chart_2
     chart = create_chart(162, "Interactividad")
-    add_serie(chart, @report_data['likes'], @report_data['dates'], '# Me Gusta')
-    add_serie(chart, @report_data['no_likes'], @report_data['dates'], '# No Me Gusta')
-    add_serie(chart, @report_data['favorite'], @report_data['dates'], '# Favoritos')
-    add_serie(chart, @report_data['comments'], @report_data['dates'], '# Comentarios')
-    add_serie(chart, @report_data['shared'], @report_data['dates'], '# Compartidos')
+    add_serie(chart, @report_data['likes'], @report_data['dates'], 'Me gusta')
+    add_serie(chart, @report_data['no_likes'], @report_data['dates'], 'No me gusta')
+    add_serie(chart, @report_data['favorite'], @report_data['dates'], 'Favoritos')
+    add_serie(chart, @report_data['comments'], @report_data['dates'], 'Comentarios')
+    add_serie(chart, @report_data['shared'], @report_data['dates'], 'Compartidos')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -126,9 +127,9 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
   end
 
   def append_investment_chart
-    chart = create_chart(204, "Inversion")
-    add_serie(chart, @report_data['new_subscriber'], @report_data['dates'], 'Nuevos Suscriptores')
-    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion Total')
+    chart = create_chart(204, "Inversión")
+    add_serie(chart, @report_data['new_subscriber'], @report_data['dates'], 'Suscriptores nuevos')
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversión total')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1

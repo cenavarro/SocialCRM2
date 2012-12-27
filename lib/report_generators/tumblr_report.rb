@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::TumblrReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -45,12 +46,12 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
   def table_rows
     {
       'dates' => ['',''], 'community_header' => ['','Comunidad'], 
-      'new_followers' => ['','# nuevos followers'], 'total_followers' => ['','# followers'], 
-      'posts' => ['', '#Post'],
-      'interaction_header' => ['', 'Interactividad'], 'likes' => ['', '# like'],
-      'reblogged' => ['','# reblogged'], 'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 
-      'investment_actions' => ['','Inversion nuevas acciones'], 'investment_ads' => ['','Inversion anuncios'], 
-      'total_investment' => ['','Inversion Total'],
+      'new_followers' => ['','Nuevos followers'], 'total_followers' => ['','Followers'], 
+      'posts' => ['', 'Post'],
+      'interaction_header' => ['', 'Interactividad'], 'likes' => ['', 'Like'],
+      'reblogged' => ['','Reblogged'], 'investment_header' => ['','Inversión'], 'investment_agency' => ['', 'Inversión agencia'], 
+      'investment_actions' => ['','Inversión nuevas acciones'], 'investment_ads' => ['','Inversión anuncios'], 
+      'total_investment' => ['','Inversión total'],
     }
   end
 
@@ -75,8 +76,8 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
 
   def append_followers_chart
     chart = create_chart(45, "Followers")
-    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos followers')
-    add_serie(chart, @report_data['total_followers'], @report_data['dates'], '# followers')
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], 'Nuevos followers')
+    add_serie(chart, @report_data['total_followers'], @report_data['dates'], 'Followers')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -85,8 +86,8 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
 
   def append_interactivity_chart
     chart = create_chart(84, "Interactividad")
-    add_serie(chart, @report_data['likes'], @report_data['dates'], '# like')
-    add_serie(chart, @report_data['reblogged'], @report_data['dates'], '# reblogged')
+    add_serie(chart, @report_data['likes'], @report_data['dates'], 'Like')
+    add_serie(chart, @report_data['reblogged'], @report_data['dates'], 'Reblogged')
     append_rows_to_report 36
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -94,9 +95,9 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
   end
 
   def append_investment_chart
-    chart = create_chart(126, "Inversion")
-    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos followers')
-    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion Total')
+    chart = create_chart(126, "Inversión")
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], 'Nuevos followers')
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversión total')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1

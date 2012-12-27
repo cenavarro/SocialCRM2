@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::FacebookReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -46,20 +47,20 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
 
   def table_rows
     {
-      'dates'=> ['', ''], 'actions'=> ['', 'Acciones durantes el periodo'], 'new_fans' => ['', '# new fans'], 
-      'total_fans' =>['', '# fans reales'], 'growth_fans' => ['', '% crecimiento fans'], 'goal_fans' => ['', 'Objetivo fans'], 
-      'ranking_espana' => ['', 'Ranking en Espana'], 'ranking_world' => ['', 'Ranking Mundial'], 
-      'interactivity_header' => ['', 'Interactividad y Alcance'],'prints' => ['', '# impresiones'], 
-      'total_interactions' => ['', '# interacciones'], 'total_reach' => ['', 'Alcance Total'], 
-      'change_total_reach' => ['', '% cambio en Alcance Total'], 'potential_reach' => ['', 'Alcance Potencial'],
-      'total_prints_per_anno' => ['', '# impresiones anuncios'], 'total_clicks_anno' => ['', '# clics Anuncios'],
-      'fans_through_anno' => ['', '# fans a traves de anuncios'], 'total_interactions_platform' => ['', 'Interacciones totales de la marca en plataforma'], 
+      'dates'=> ['', ''], 'actions'=> ['', 'Acciones durantes el periodo'], 'new_fans' => ['', 'Nuevos fans'], 
+      'total_fans' =>['', 'Fans totales'], 'growth_fans' => ['', '% Crecimiento'], 'goal_fans' => ['', 'Objetivo fans'], 
+      'ranking_espana' => ['', 'Ranking en Espana'], 'ranking_world' => ['', 'Ranking mundial'], 
+      'interactivity_header' => ['', 'Interactividad y Alcance'],'prints' => ['', 'Impresiones'], 
+      'total_interactions' => ['', 'Interacciones'], 'total_reach' => ['', 'Alcance total'], 
+      'change_total_reach' => ['', '% cambio en Alcance Total'], 'potential_reach' => ['', 'Alcance potencial'],
+      'total_prints_per_anno' => ['', 'Impresiones anuncios'], 'total_clicks_anno' => ['', 'Clics anuncios'],
+      'fans_through_anno' => ['', '# Fans a través de anuncios'], 'total_interactions_platform' => ['', 'Interacciones totales de la marca en plataforma'], 
       'change_interactions' => ['', '% cambio en interacciones'],'total_prints' => ['', 'Impresiones totales de la marca en plataforma'], 
-      'change_prints' => ['', '% cambio en impresiones'],'investment_header' => ['', 'Inversion'], 
-      'agency_investment' => ['', 'Inversion agencia'], 'new_stock_investment' => ['', 'Inversion nuevas acciones'], 
-      'anno_investment' => ['', 'Inversion de anuncios'], 'total_investment' => ['', 'Inversion Total'],
-      'costs_header' => ['', 'Costes'], 'ctr_anno' => ['', 'CTR Anuncios'], 'cpm_anno' => ['', 'CPM Anuncios'], 'cpc_anno' => ['', 'CPC Anuncios'],
-      'cpm_general' => ['', 'CPM General'], 'cost_per_iteraction'=> ['', 'Coste por Interaccion'], 'cost_per_fan'=> ['', 'Coste por Fan']
+      'change_prints' => ['', '% cambio en impresiones'],'investment_header' => ['', 'Inversión'], 
+      'agency_investment' => ['', 'Inversión agencia'], 'new_stock_investment' => ['', 'Inversión nuevas acciones'], 
+      'anno_investment' => ['', 'Inversión de anuncios'], 'total_investment' => ['', 'Inversión total'],
+      'costs_header' => ['', 'Costes'], 'ctr_anno' => ['', 'CTR anuncios'], 'cpm_anno' => ['', 'CPM anuncios'], 'cpc_anno' => ['', 'CPC anuncios'],
+      'cpm_general' => ['', 'CPM general'], 'cost_per_iteraction'=> ['', 'Coste por iteración'], 'cost_per_fan'=> ['', 'Coste por fan']
     }
   end
 
@@ -95,9 +96,9 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
 
   def append_community_chart
     chart = create_chart(77, "Comunidad")
-    add_serie(chart, @report_data['new_fans'], @report_data['dates'], 'Nuevos Fans')
-    add_serie(chart, @report_data['total_fans'], @report_data['dates'], 'Fans Totales')
-    add_serie(chart, @report_data['goal_fans'], @report_data['dates'], 'Objetivo Fans')
+    add_serie(chart, @report_data['new_fans'], @report_data['dates'], 'Nuevos fans')
+    add_serie(chart, @report_data['total_fans'], @report_data['dates'], 'Fans fotales')
+    add_serie(chart, @report_data['goal_fans'], @report_data['dates'], 'Objetivo fans')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -106,9 +107,9 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
 
   def append_interactivity_chart
     chart = create_chart(116, "Interactividad")
-    add_serie(chart, @report_data['total_interactions'], @report_data['dates'], '# Interacciones')
-    add_serie(chart, @report_data['total_clicks_anno'], @report_data['dates'], '# clics Anuncios')
-    add_serie(chart, @report_data['total_interactions_platform'], @report_data['dates'], 'Interacciones Total Marca Plataforma')
+    add_serie(chart, @report_data['total_interactions'], @report_data['dates'], 'Interacciones')
+    add_serie(chart, @report_data['total_clicks_anno'], @report_data['dates'], 'Clics anuncios')
+    add_serie(chart, @report_data['total_interactions_platform'], @report_data['dates'], 'Interacciones total marca plataforma')
     append_rows_to_report 36
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -117,9 +118,9 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
 
   def append_reach_chart
     chart = create_chart(158, "Alcance")
-    add_serie(chart, @report_data['prints'], @report_data['dates'], '# Impresiones')
-    add_serie(chart, @report_data['total_reach'], @report_data['dates'], 'Alcance Total')
-    add_serie(chart, @report_data['potential_reach'], @report_data['dates'], 'Alcance Potencial')
+    add_serie(chart, @report_data['prints'], @report_data['dates'], 'Impresiones')
+    add_serie(chart, @report_data['total_reach'], @report_data['dates'], 'Alcance total')
+    add_serie(chart, @report_data['potential_reach'], @report_data['dates'], 'Alcance potencial')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -128,8 +129,8 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
 
   def append_investment_chart
     chart = create_chart(200, "Inversiones")
-    add_serie(chart, @report_data['new_fans'], @report_data['dates'], '# Nuevos Fans')
-    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion total')
+    add_serie(chart, @report_data['new_fans'], @report_data['dates'], 'Nuevos fans')
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversión total')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -138,11 +139,11 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
 
   def append_costs_chart
     chart = create_chart(242, "Costes")
-    add_serie(chart, @report_data['ctr_anno'], @report_data['dates'], 'CTR Anuncios')
+    add_serie(chart, @report_data['ctr_anno'], @report_data['dates'], 'CTR anuncios')
     add_serie(chart, @report_data['cpc_anno'], @report_data['dates'], 'CPC anuncios')
-    add_serie(chart, @report_data['cost_per_interaction'], @report_data['dates'], 'Coste por iteracion')
-    add_serie(chart, @report_data['cpm_anno'], @report_data['dates'], 'CPM Anuncios')
-    add_serie(chart, @report_data['cmp_general'], @report_data['dates'], 'CPM General')
+    add_serie(chart, @report_data['cost_per_interaction'], @report_data['dates'], 'Coste por iteración')
+    add_serie(chart, @report_data['cpm_anno'], @report_data['dates'], 'CPM anuncios')
+    add_serie(chart, @report_data['cmp_general'], @report_data['dates'], 'CPM general')
     add_serie(chart, @report_data['coste_per_fan'], @report_data['dates'], 'Coste por fan')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3

@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::GooglePlusReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -44,11 +45,11 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
 
   def table_rows
     {
-      'dates' => ['',''], 'community_header' => ['','Comunidad'], 'new_followers' => ['','# nuevos followers'], 'total_followers' => ['','# followers'], 
-      'growth_followers' => ['', '% crecimiento seguidores'], 'interactions_header' => ['', 'Interactividad'], 'plus' => ['', '(+1s)'],
-      'content_shared' => ['', 'Compartir contenido'], 'total_interactions' => ['','Total de Interacciones'], 'change_interactions' => ['','% cambio en interacciones'],
-      'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 'investment_actions' => ['','Inversion nuevas acciones'],
-      'investment_ads' => ['','Inversion anuncios'], 'total_investment' => ['','Inversion Total']
+      'dates' => ['',''], 'community_header' => ['','Comunidad'], 'new_followers' => ['','Nuevos followers'], 'total_followers' => ['','Followers'], 
+      'growth_followers' => ['', '% Crecimiento seguidores'], 'interactions_header' => ['', 'Interactividad'], 'plus' => ['', '(+1s)'],
+      'content_shared' => ['', 'Compartir contenido'], 'total_interactions' => ['','Total de interacciones'], 'change_interactions' => ['','% Cambio en interacciones'],
+      'investment_header' => ['','Inversión'], 'investment_agency' => ['', 'Inversión agencia'], 'investment_actions' => ['','Inversión nuevas acciones'],
+      'investment_ads' => ['','Inversión anuncios'], 'total_investment' => ['','Inversión total']
     }
   end
 
@@ -76,8 +77,8 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
 
   def append_community_chart
     chart = create_chart(44, "Comunidad")
-    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos followers')
-    add_serie(chart, @report_data['total_followers'], @report_data['dates'], '# followers')
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], 'Nuevos followers')
+    add_serie(chart, @report_data['total_followers'], @report_data['dates'], 'Followers')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -87,8 +88,8 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
   def append_interactivity_chart
     chart = create_chart(83, "Interactividad")
     add_serie(chart, @report_data['plus'], @report_data['dates'], '(+1s)')
-    add_serie(chart, @report_data['content_shared'], @report_data['dates'], 'Compartir Contenido')
-    add_serie(chart, @report_data['total_interactions'], @report_data['dates'], 'Total Interacciones')
+    add_serie(chart, @report_data['content_shared'], @report_data['dates'], 'Compartir contenido')
+    add_serie(chart, @report_data['total_interactions'], @report_data['dates'], 'Total interacciones')
     append_rows_to_report 36
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -96,9 +97,9 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
   end
 
   def append_investment_chart
-    chart = create_chart(125, "Inversion")
-    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos contactos')
-    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion Total')
+    chart = create_chart(125, "Inversión")
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], 'Nuevos followers')
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversión total')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1

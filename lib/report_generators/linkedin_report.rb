@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::LinkedinReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -46,14 +47,15 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
   def table_rows
     {
       'dates' => ['',''], 'actions' => ['','Acciones durante periodo'], 'community_header' => ['','Comunidad'], 
-      'new_followers' => ['','# nuevos seguidores'], 'total_followers' => ['','# seguidores reales'], 
-      'growth_followers' => ['', '% crecimiento seguidores'], 'interactions_header' => ['', 'Interactividad'], 
-      'summary' => ['', 'Resumen'], 'employment' => ['', 'Empleo'], 'products_services' => ['','Productos y Servicios'], 
-      'views_pages' => ['', '# Visualizaciones de paginas(total)'], 'prints' => ['','Impresiones'],
-      'clics' => ['','Clicks'], 'interest' => ['','% de interes'], 'recommendation' => ['','Recomendacion'],
-      'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 
-      'investment_actions' => ['','Inversion nuevas acciones'],
-      'investment_anno' => ['','Inversion anuncios'], 'total_investment' => ['','Inversion Total']
+      'new_followers' => ['','Nuevos seguidores'], 'total_followers' => ['','Seguidores totales'], 
+      'growth_followers' => ['', '% Crecimiento seguidores'], 'interactions_header' => ['', 'Interactividad'], 
+      'views_pages' => ['', 'Número de visualizaciones de páginas'], 
+      'summary' => ['', 'Resumen'], 'employment' => ['', 'Empleo'], 'products_services' => ['','Productos y servicios'], 
+      'prints' => ['','Impresiones'],
+      'clics' => ['','Clicks'], 'interest' => ['','% Interés'], 'recommendation' => ['','Recomendación'],
+      'investment_header' => ['','Inversión'], 'investment_agency' => ['', 'Inversión agencia'], 
+      'investment_actions' => ['','Inversión nuevas acciones'],
+      'investment_anno' => ['','Inversión anuncios'], 'total_investment' => ['','Inversión total']
     }
   end
 
@@ -81,8 +83,8 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
 
   def append_followers_chart position
     chart = create_chart(position, "Seguidores")
-    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos seguidores')
-    add_serie(chart, @report_data['total_followers'], @report_data['dates'], '# seguidores reales')
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], 'Nuevos seguidores')
+    add_serie(chart, @report_data['total_followers'], @report_data['dates'], 'Seguidores totales')
     append_rows_to_report(24)
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report(1)
@@ -93,8 +95,8 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     chart = create_chart(position, "Interactividad")
     add_serie(chart, @report_data['prints'], @report_data['dates'], 'Impresiones')
     add_serie(chart, @report_data['clics'], @report_data['dates'], 'Clicks')
-    add_serie(chart, @report_data['interest'], @report_data['dates'], '% interest')
-    add_serie(chart, @report_data['recommendation'], @report_data['dates'], 'Recomendacion')
+    add_serie(chart, @report_data['interest'], @report_data['dates'], '% Interés')
+    add_serie(chart, @report_data['recommendation'], @report_data['dates'], 'Recomendación')
     append_rows_to_report(36)
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
@@ -103,7 +105,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
 
   def append_views_pages_chart position
     chart = create_chart(position, "Visualizaciones de paginas")
-    add_serie(chart, @report_data['views_pages'], @report_data['dates'], '# Visualizaciones de paginas')
+    add_serie(chart, @report_data['views_pages'], @report_data['dates'], 'Número de visualizaciones de páginas')
     add_serie(chart, [], @report_data['dates'], '')
     append_rows_to_report(39)
     @worksheet.add_row ["", "Comentario"], :style => 3

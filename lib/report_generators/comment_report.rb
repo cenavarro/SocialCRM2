@@ -32,7 +32,7 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
   end
 
   def append_positive_comments
-    @worksheet.add_row ["", "Comentarios Positivos", "Link al comentario"], :style => [nil, @positive_title_style, @positive_title_style], :height => height_cell
+    @worksheet.add_row ["", "Comentarios positivos", "Link al comentario"], :style => [nil, @positive_title_style, @positive_title_style], :height => height_cell
     positive_comments = comments.where("comment_type = 1")
     positive_comments.each do |positive_comment|
       @worksheet.add_row ["", positive_comment.social_network_name, ""], :style => [nil, @positive_subtitle_style, @positive_subtitle_style], :height => height_cell
@@ -43,7 +43,7 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
   end
 
   def append_negative_comments
-    @worksheet.add_row ["", "Comentarios Negativos", "Link al comentario"], :style => [nil, @negative_title_style, @negative_title_style], :height => height_cell
+    @worksheet.add_row ["", "Comentarios negativos", "Link al comentario"], :style => [nil, @negative_title_style, @negative_title_style], :height => height_cell
     negative_comments = comments.where("comment_type = 2")
     negative_comments.each do |negative_comment|
       @worksheet.add_row ["", negative_comment.social_network_name, ""], :style => [nil, @negative_subtitle_style, @negative_subtitle_style], :height => height_cell
