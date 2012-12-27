@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::TwitterReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -45,21 +46,21 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
 
   def table_rows
     {
-      'dates' => ['',''], 'community_header' => ['','Comunidad'], 'new_followers' => ['','# nuevos followers'], 
-      'total_followers' => ['','# followers'], 'growth_follower' => ['', '% Crecimiento'], 'goal_followers' => ['', 'Objetivo Followers'], 
-      'total_tweets' => ['', '# numero tweets en total'], 'tweets_period' => ['', '# tweets periodo'],
-      'interaction_header' => ['', 'Interactividad'], 'total_mentions' => ['', '# Menciones'], 'change_mentions' => ['', '% cambio en mensiones'],
-      'ret_tweets' => ['', '# Retweets'], 'change_retweets' => ['', '% cambio en retweets'], 'total_clicks' => ['', 'Clicks enlaces'],
-      'change_clics' => ['', '% cambio en clics'], 'interactions_ads' => ['', 'Interacciones en twitter ads'] ,
-      'change_interactions_ads' => ['', '% cambio interacciones en twitter ads'], 'total_interactions' => ['', 'Interacciones en Total'],
-      'change_interaction' => ['', '% cambio en interacciones'], 'prints' => ['', '# impresiones(tweetreach)'],
-      'prints_ads' => ['', '# impreiones en twitter ads'], 'total_prints' => ['', 'impresiones en total'],
-      'change_prints' => ['', '% cambio en impresiones'],
-      'investment_header' => ['','Inversion'], 'agency_investment' => ['', 'Inversion Agencia'], 
-      'investment_actions' => ['','Inversion nuevas acciones'], 'investment_ads' => ['','Inversion anuncios'], 
-      'total_investment' => ['','Inversion Total'],
-      'costs_header' => ['', 'Costes'], 'cost_twitter_ads' => ['', 'Cost per engagement twitter ads'],
-      'cost_per_prints' => ['', 'Coste por mil impresiones'], 'cost_interaction' => ['', 'Coste por interaccion'],
+      'dates' => ['',''], 'community_header' => ['','Comunidad'], 'new_followers' => ['','Nuevos followers'], 
+      'total_followers' => ['','Followers'], 'growth_follower' => ['', '% Crecimiento'], 'goal_followers' => ['', 'Objetivo followers'], 
+      'total_tweets' => ['', 'Número tweets en total'], 'tweets_period' => ['', 'Tweets por periodo'],
+      'interaction_header' => ['', 'Interactividad'], 'total_mentions' => ['', 'Menciones'], 'change_mentions' => ['', '% Cambio en mensiones'],
+      'ret_tweets' => ['', 'Retweets'], 'change_retweets' => ['', '% Cambio en retweets'], 'total_clicks' => ['', 'Clics enlaces'],
+      'change_clics' => ['', '% Cambio en clics'], 'interactions_ads' => ['', 'Interacciones en Twitter Ads'] ,
+      'change_interactions_ads' => ['', '% Cambio interacciones en Twitter Ads'], 'total_interactions' => ['', 'Interacciones en total'],
+      'change_interaction' => ['', '% Cambio en interacciones'], 'prints' => ['', 'Impresiones(tweetreach)'],
+      'prints_ads' => ['', 'Impresiones en Twitter Ads'], 'total_prints' => ['', 'Impresiones en total'],
+      'change_prints' => ['', '% Cambio en impresiones'],
+      'investment_header' => ['','Inversión'], 'agency_investment' => ['', 'Inversión agencia'], 
+      'investment_actions' => ['','Inversión nuevas acciones'], 'investment_ads' => ['','Inversión anuncios'], 
+      'total_investment' => ['','Inversión total'],
+      'costs_header' => ['', 'Costes'], 'cost_twitter_ads' => ['', 'Cost per engagement Twitter Ads'],
+      'cost_per_prints' => ['', 'Coste por mil impresiones'], 'cost_interaction' => ['', 'Coste por interacción'],
       'cost_follower' => ['', 'Costes por follower']
     }
   end
@@ -100,9 +101,9 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
 
   def append_followers_chart
     chart = create_chart(76, "Comunidad")
-    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos followers')
-    add_serie(chart, @report_data['total_followers'], @report_data['dates'], '# followers')
-    add_serie(chart, @report_data['goal_followers'], @report_data['dates'], 'Objetivos Followers')
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], 'Nuevos followers')
+    add_serie(chart, @report_data['total_followers'], @report_data['dates'], 'Followers')
+    add_serie(chart, @report_data['goal_followers'], @report_data['dates'], 'Objetivo followers')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -111,11 +112,11 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
 
   def append_interactivity_chart
     chart = create_chart(116, "Interactividad")
-    add_serie(chart, @report_data['total_mentions'], @report_data['dates'], '# menciones')
-    add_serie(chart, @report_data['ret_tweets'], @report_data['dates'], '# retweets')
-    add_serie(chart, @report_data['total_clicks'], @report_data['dates'], 'Clicks Enlaces')
-    add_serie(chart, @report_data['interactions_ads'], @report_data['dates'], '# Interacciones en twitter ads')
-    add_serie(chart, @report_data['total_interactions'], @report_data['dates'], 'Interacciones en Total')
+    add_serie(chart, @report_data['total_mentions'], @report_data['dates'], 'Menciones')
+    add_serie(chart, @report_data['ret_tweets'], @report_data['dates'], 'Retweets')
+    add_serie(chart, @report_data['total_clicks'], @report_data['dates'], 'Clics enlaces')
+    add_serie(chart, @report_data['interactions_ads'], @report_data['dates'], '# Interacciones en Twitter Ads')
+    add_serie(chart, @report_data['total_interactions'], @report_data['dates'], 'Interacciones en total')
     append_rows_to_report 37
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -123,9 +124,9 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
   end
 
   def append_investment_chart
-    chart = create_chart(158, "Inversion")
-    add_serie(chart, @report_data['new_followers'], @report_data['dates'], '# nuevos followers')
-    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion Total')
+    chart = create_chart(158, "Inversión")
+    add_serie(chart, @report_data['new_followers'], @report_data['dates'], 'Nuevos followers')
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversión total')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -135,9 +136,9 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
   def append_cost_chart
     chart = create_chart(200, "Costes")
     add_serie(chart, @report_data['cost_follower'], @report_data['dates'], 'Costes')
-    add_serie(chart, @report_data['cost_twitter_ads'], @report_data['dates'], 'Cost per engagement twitter ads')
+    add_serie(chart, @report_data['cost_twitter_ads'], @report_data['dates'], 'Cost per engagement Twitter Ads')
     add_serie(chart, @report_data['cost_per_prints'], @report_data['dates'], 'Coste por mil impresiones')
-    add_serie(chart, @report_data['cost_interaction'], @report_data['dates'], 'Coste por interaccion')
+    add_serie(chart, @report_data['cost_interaction'], @report_data['dates'], 'Coste por interacción')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1

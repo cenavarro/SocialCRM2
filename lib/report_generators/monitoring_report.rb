@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::MonitoringReport < ReportGenerators::Base
   def self.can_process? type
     type == Monitoring
@@ -201,12 +202,12 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       "total_days" => ['',''],
       "theme_datum" => [],
       "channel_datum" => [],
-      "change_volume_comments" => ['',' % cambio volumen total comentarios', '0'],
-      "daily_average" => ['','Promedio Diario'],
-      "theme_total_comment" => ['','Total Comentarios'],
-      "channel_total_comment" => ['', 'Total Comentarios'],
+      "change_volume_comments" => ['',' % Cambio volumen total comentarios', '0'],
+      "daily_average" => ['','Promedio diario'],
+      "theme_total_comment" => ['','Total comentarios'],
+      "channel_total_comment" => ['', 'Total comentarios'],
       "theme_header" => ['','Temas'],
-      "distribution_header" => ['','Distribucion de canales'],
+      "distribution_header" => ['','Distribución de canales'],
       "widths" => [1, 11]
     }
   end

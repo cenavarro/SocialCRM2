@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::PinterestReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -45,16 +46,16 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
 
   def table_rows
     {
-      'dates' => ['',''], 'community_header' => ['','Comunidad'], 'total_followers' => ['','# Followers'],
-      'diff_followers' => ['','% de crecimiento'], 'boards' => ['', '# boards'], 'pins' => ['', '# pins'], 
+      'dates' => ['',''], 'community_header' => ['','Comunidad'], 'total_followers' => ['','Followers'],
+      'diff_followers' => ['','% Crecimiento'], 'boards' => ['', 'Boards'], 'pins' => ['', 'Pins'], 
       'interactions_header' => ['', 'Interactividad'], 
-      'liked' => ['','# liked'], 'diff_liked' => ['', '% cambio'],
-      'repin' => ['','# repin'], 'diff_repin' => ['', '% cambio'],
-      'comments' => ['','# comments'], 'diff_comments' => ['', '% cambio'],
-      'community_boards' => ['','# community boards'],'diff_community' => ['', '% cambio'],
-      'investment_header' => ['','Inversion'], 'investment_agency' => ['', 'Inversion Agencia'], 
-      'investment_actions' => ['','Inversion nuevas acciones'], 'investment_ads' => ['','Inversion anuncios'], 
-      'total_investment' => ['','Inversion Total'], 'coste_fan' => ['', 'Coste Fan']
+      'liked' => ['','Liked'], 'diff_liked' => ['', '% Cambio'],
+      'repin' => ['','Repin'], 'diff_repin' => ['', '% Cambio'],
+      'comments' => ['','Comments'], 'diff_comments' => ['', '% Cambio'],
+      'community_boards' => ['','Community boards'],'diff_community' => ['', '% Cambio'],
+      'investment_header' => ['','Inversión'], 'investment_agency' => ['', 'Inversión agencia'], 
+      'investment_actions' => ['','Inversión nuevas acciones'], 'investment_ads' => ['','Inversión anuncios'], 
+      'total_investment' => ['','Inversión total'], 'coste_fan' => ['', 'Coste fan']
     }
   end
 
@@ -85,9 +86,9 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
 
   def append_followers_chart
     chart = create_chart(83, "Comunidad")
-    add_serie(chart, @report_data['total_folowers'], @report_data['dates'], '# followers')
-    add_serie(chart, @report_data['boards'], @report_data['dates'], '# boards')
-    add_serie(chart, @report_data['pins'], @report_data['dates'], '# pins')
+    add_serie(chart, @report_data['total_folowers'], @report_data['dates'], 'Followers')
+    add_serie(chart, @report_data['boards'], @report_data['dates'], 'Boards')
+    add_serie(chart, @report_data['pins'], @report_data['dates'], 'Pins')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
@@ -96,10 +97,10 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
 
   def append_interactivity_chart
     chart = create_chart(122, "Interactividad")
-    add_serie(chart, @report_data['liked'], @report_data['dates'], '# liked')
-    add_serie(chart, @report_data['repin'], @report_data['dates'], '# repin')
-    add_serie(chart, @report_data['comments'], @report_data['dates'], '# comments')
-    add_serie(chart, @report_data['community_boards'], @report_data['dates'], '# community boards')
+    add_serie(chart, @report_data['liked'], @report_data['dates'], 'Liked')
+    add_serie(chart, @report_data['repin'], @report_data['dates'], 'Repin')
+    add_serie(chart, @report_data['comments'], @report_data['dates'], 'Comments')
+    add_serie(chart, @report_data['community_boards'], @report_data['dates'], 'Community boards')
     append_rows_to_report 36
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
@@ -107,8 +108,8 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
   end
 
   def append_investment_chart
-    chart = create_chart(164, "Inversion")
-    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion Total')
+    chart = create_chart(164, "Inversión")
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversión total')
     add_serie(chart, [], @report_data['dates'], '')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3

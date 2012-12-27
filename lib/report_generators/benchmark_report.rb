@@ -10,7 +10,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       @report_data = select_report_data
       set_headers_and_footers
       create_report(document)
-      append_headers_and_footers(1267)
+      append_headers_and_footers(1625)
     end
   end
 
@@ -18,15 +18,16 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       @workbook = document.workbook
       @worksheet =  @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => {:orientation => :landscape, :paper_size => 9,  :fit_to_width => 1, 
                                             :fit_to_height => 10})
+      size = (@report_data['size'] - 1) * 7
       create_report_styles(@report_data['size'])
       append_rows_to_report(7)
       @worksheet.add_row ['', "PAGINA DE BENCHMARK"], :style => 3
       @row = 8
       append_benchmark_table
-      append_rows_to_report(54-@row)
+      append_rows_to_report(68-@row)
       append_charts_to_report
-      append_rows_to_report(20)
-      append_images_benchmark_to_report(165)
+      append_rows_to_report(36)
+      append_images_benchmark_to_report(207)
       @worksheet.column_widths *columns_sizes
   end
 
@@ -37,9 +38,9 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     unshift_array(@report_data['x_axis'], ' ', 2)
     dates = dates_array(@report_data['dates'])
     @worksheet.add_row dates, :style => 8, :height => height_cell
-    @worksheet.add_row @report_data['x_axis'], :style => 4, :height => height_cell
+    @worksheet.add_row @report_data['x_axis'], :style => 6, :height => height_cell
     @report_data['competitors'].each do |competitor|
-      @worksheet.add_row @report_data[competitor]['data'].unshift(competitor).unshift(''), :style => 6, :height => 13 
+      @worksheet.add_row @report_data[competitor]['data'].unshift(competitor).unshift(''), :style => 8, :height => 13 
       @row = @row + 1
     end
     append_rows_to_report
@@ -67,8 +68,8 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       @worksheet.add_row ["", "Comentario"], :style => 3
       append_rows_to_report
       @worksheet.add_row ["", image.comment]
-      append_rows_to_report(18)
-      position = position + 45
+      append_rows_to_report(32)
+      position = position + 59 
       @footers << (position - 2)
     end
   end
@@ -105,12 +106,12 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     @worksheet.add_row ["","GRAFICOS BENCHMAR"], :style => 3
     append_rows_to_report 2
     insert_distribution_chart size
-    append_rows_to_report 14
+    append_rows_to_report 26 
     insert_totals_chart size
   end
 
   def insert_distribution_chart size
-    chart = create_chart(64, "Distribucion", 18)
+    chart = create_chart(78, "Distribucion", 18)
     shift_array(@report_data['x_axis'], 2)
     @report_data['competitors'].each do |competitor|
       shift_array(@report_data[competitor]['data'], 2)
@@ -124,7 +125,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
   end
 
   def insert_totals_chart size
-    chart = create_chart(118, "Totales", 18)
+    chart = create_chart(144, "Totales", 18)
     @report_data['competitors'].each do |competitor|
       add_serie(chart, @report_data[competitor]['totals'], @report_data['dates'], competitor)
       add_serie(chart, [0], @report_data['x_axis'], "")
@@ -154,8 +155,9 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       array << date[0,6]
       array << ''
       array << "al"
+      array << ''
       array << date[8,date.size]
-      for i in (1..3)
+      for i in (1..2)
         array << ''
       end
     end
@@ -163,14 +165,14 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
   end
 
   def set_headers_and_footers
-    @headers ||= [0, 54, 109]
-    @footers ||= [53, 108, 164]
+    @headers ||= [0, 68, 137]
+    @footers ||= [67, 136, 206]
   end
 
   def columns_sizes
     sizes = [4, 27]
     for i in (1..21)
-      sizes << 5
+      sizes << 7
     end
     sizes
   end

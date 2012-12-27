@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::BlogReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -43,8 +44,8 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
 
   def table_rows
     {
-      'dates' => ['',''], 'visits_header' => ['','Visitas'], 'unique_visits' => ['','# visitas unicas'], 
-      'diff_visits' => ['','% diferencia'], 'view_pages' => ['','# paginas vistas'], 'diff_view' => ['','% diferencia'],
+      'dates' => ['',''], 'visits_header' => ['','Visitas'], 'unique_visits' => ['','Visitas únicas'],
+      'diff_visits' => ['','% Crecimiento'], 'view_pages' => ['','Páginas vistas'], 'diff_view' => ['','% Crecimiento'],
       'percentage_header' => ['','Porcentajes'], 'rebound_percent' => ['','Porcentaje de Rebote'],
       'new_visits_percent' => ['','Porcentaje de visitas nuevas'], 'total_posts' => ['','# de posts']
     }

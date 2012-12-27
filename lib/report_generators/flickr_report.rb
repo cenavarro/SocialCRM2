@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::FlickrReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -43,11 +44,11 @@ class ReportGenerators::FlickrReport < ReportGenerators::Base
 
   def table_rows
     {
-      'dates' => ['',''], 'community_header' => ['','Comunidad'], 'new_contacts' => ['','# nuevos contactos'], 
-      'total_contacts' => ['','# contactos'], 'interactivity_header' => ['','Interactividad'], 'visits' => ['','# Visitas'],
-      'comments' => ['','# Comentarios'], 'favorites' => ['', '# Favoritos'], 'investment_header' => ['','Inversion'], 
-      'investment_agency' => ['','Inversion Agencia'], 'investment_actions' => ['', 'Inversion nuevas acciones'],
-      'investment_ads' => ['','Inversion anuncios'], 'total_investment' => ['','Inversion Total']
+      'dates' => ['',''], 'community_header' => ['','Comunidad'], 'new_contacts' => ['','Nuevos contactos'], 
+      'total_contacts' => ['','Contactos'], 'interactivity_header' => ['','Interactividad'], 'visits' => ['','Visitas'],
+      'comments' => ['','Comentarios'], 'favorites' => ['', 'Favoritos'], 'investment_header' => ['','Inversión'], 
+      'investment_agency' => ['','Inversión agencia'], 'investment_actions' => ['', 'Inversión nuevas acciones'],
+      'investment_ads' => ['','Inversión anuncios'], 'total_investment' => ['','Inversión total']
     }
   end
 
@@ -72,8 +73,8 @@ class ReportGenerators::FlickrReport < ReportGenerators::Base
 
   def append_community_chart
     chart = create_chart(45, "Comunidad")
-    add_serie(chart, @report_data['new_contacts'], @report_data['dates'], '# nuevos contactos')
-    add_serie(chart, @report_data['total_contacts'], @report_data['dates'], '# contactos')
+    add_serie(chart, @report_data['new_contacts'], @report_data['dates'], 'Nuevos contactos')
+    add_serie(chart, @report_data['total_contacts'], @report_data['dates'], 'Contactos')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -82,9 +83,9 @@ class ReportGenerators::FlickrReport < ReportGenerators::Base
 
   def append_interactivity_chart
     chart = create_chart(84, "Interactividad")
-    add_serie(chart, @report_data['visits'], @report_data['dates'], '# Visitas')
-    add_serie(chart, @report_data['comments'], @report_data['dates'], '# Comentarios')
-    add_serie(chart, @report_data['favorites'], @report_data['dates'], '# Favorios') 
+    add_serie(chart, @report_data['visits'], @report_data['dates'], 'Visitas')
+    add_serie(chart, @report_data['comments'], @report_data['dates'], 'Comentarios')
+    add_serie(chart, @report_data['favorites'], @report_data['dates'], 'Favorios') 
     append_rows_to_report 36
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -92,9 +93,9 @@ class ReportGenerators::FlickrReport < ReportGenerators::Base
   end
 
   def append_investment_chart
-    chart = create_chart(126, "Inversion")
-    add_serie(chart, @report_data['new_contacts'], @report_data['dates'], '# nuevos contactos')
-    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversion Total')
+    chart = create_chart(126, "Inversión")
+    add_serie(chart, @report_data['new_contacts'], @report_data['dates'], 'Nuevos contactos')
+    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversión total')
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
