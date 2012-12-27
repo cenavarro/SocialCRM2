@@ -1,24 +1,9 @@
 DemoComentarios::Application.routes.draw do
 
-
   get "/:locale" => "home#index", :as => "language"
-
-  def social_networks
-    ['benchmark', 'comment', 'foursquare', 'tumblr', 'blog', 'google_plus', 'youtube', 'pinterest', 'linkedin', 'twitter', 'facebook']
-  end
-
 
   scope ':locale' do
 
-=begin
-    social_networks.each do |social_network|
-      resource "#{social_network}_data".to_sym, :only => [:create, :destroy, :update]
-      post "#{social_network}_data/save_comment" => "#{social_network}_data#save_comment", :as => "#{social_network}_save_comment"
-      get "#{social_network}_data/new/:idc/:opcion/:id_social" => "#{social_network}#new", :as => "#{social_network}_new"
-      get "#{social_network}_data/:id/edit/:idc/:id_social" => "#{social_network}_data#edit", :as => "#{social_network}_edit"
-      get "#{social_network}_data/:idc/:opcion/:id_social" => "#{social_network}_data#index", :as => "#{social_network}_index"
-    end
-=end
     post "comment" => "comment#create", :as => "comment"
     put "comment" => "comment#update", :as => "comment_update"
     get "comment_data/new/:idc/:opcion/:id_social" => "comment#new", :as => "comment_new"
@@ -157,10 +142,10 @@ DemoComentarios::Application.routes.draw do
     delete "social_networks/destroy_image/:id" => "social_networks#destroy_image", :as => "social_networks_destroy_image"
     post "social_networks/change_image/:id" => "social_networks#change_image", :as => "social_networks_change_image"
 
+  end
+
     get "validate_user/" => "home#validate_user", :as => "validate_user"
     get "/" => "home#index", :as => "root2"
 
-  end
-
-  root :to => "home#index"
+    root :to => "home#index"
 end

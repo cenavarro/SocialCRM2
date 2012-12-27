@@ -16,11 +16,11 @@ module ApplicationHelper
   end
 
   def units_delimiter
-    ','
+    '.'
   end
 
   def decimal_separator
-    '.'
+    ','
   end
 
   def decimal_precision
