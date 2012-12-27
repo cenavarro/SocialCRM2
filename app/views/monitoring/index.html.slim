@@ -17,18 +17,19 @@
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      |    
+      = t 'buttons.report'
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=monitoring_new_path(params[:idc],params[:id_social]) style="width: 168px" id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -37,21 +38,20 @@
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
       input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 
 
@@ -90,7 +90,7 @@ section.sectionInformation
           tbody
             tr.titlesRows
               td colspan=100
-                | Temas
+                = t 'monitoring.themes'
             - @monitoring_data['theme_datum'].each do |datum|
               tr
                 td
@@ -100,7 +100,7 @@ section.sectionInformation
                     = number_with_delimiter(value, delimiter: units_delimiter)
             tr
               td
-                b Total Comentarios
+                b = t 'monitoring.total_comments'
               - index = 0
               - @monitoring_data['theme_total_comment'].each do |value|
                 - if @monitoring_data['channel_total_comment'][index] == @monitoring_data['theme_total_comment'][index]
@@ -112,7 +112,7 @@ section.sectionInformation
                 - index = index + 1
             tr.titlesRows
               td colspan=100
-                | Distribucion de canales
+                = t 'monitoring.channels_distribution'
             - @monitoring_data['channel_datum'].each do |datum|
               tr
                 td
@@ -122,7 +122,7 @@ section.sectionInformation
                     = number_with_delimiter(value, delimiter: units_delimiter)
             tr
               td
-                b Total de Comentarios
+                b = t 'monitoring.total_comments'
               - index = 0
               - @monitoring_data['channel_total_comment'].each do |value|
                 - if @monitoring_data['channel_total_comment'][index] == @monitoring_data['theme_total_comment'][index]
@@ -134,7 +134,7 @@ section.sectionInformation
                 - index = index + 1
             tr
               td
-                b % cambio en volumen total de comentarios
+                b = t 'monitoring.change_volume_comments_percentage' 
                 - if !@monitoring_data['channel_total_comment'].empty?
                   td
                     | 0.00
@@ -144,7 +144,7 @@ section.sectionInformation
                   = number_with_precision(change_total_comments, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                b Promedio diario
+                b = t 'monitoring.daily_average' 
               - index = 0
               - @monitoring_data['channel_total_comment'].each do |value|
                 td 
@@ -153,7 +153,7 @@ section.sectionInformation
                   - index = index + 1
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               - @datum.each do |data|
                 td.celdaOpciones
                   a.btn.btn-info href=monitoring_edit_path(data.id)
@@ -161,9 +161,9 @@ section.sectionInformation
                   |  
                   a.btn.btn-danger data-method='delete' rel='nofollow' href=monitoring_datum_path(params[:idc], params[:id_social], data.id) data-confirm="Esta seguro?"
                     i.icon-trash.icon-white
-        b Nota
+        b = t 'global.note' 
         br
-        | El campo de total de comentarios de Temas y Canales deben ser iguales( rojo = incorrectos y verde = correctos)
+        = t 'monitoring.note'
       .comment
         .title
           h4
@@ -174,7 +174,7 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
 
     .tab-pane.fade id="tabcharts"

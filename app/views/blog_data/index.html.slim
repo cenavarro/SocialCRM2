@@ -17,18 +17,19 @@
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
+      |    
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=blog_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -42,7 +43,6 @@
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
       span.add-on
         i.icon-th
-    br
     br
     |Fecha Final
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
@@ -90,16 +90,16 @@ section.sectionInformation
           tbody
             tr.titlesRows
               td colspan=100
-                | Visitas 
+                = t 'blog.title_visits'
             tr
               td.estiloCelda
-                |# visitas unicas
+                = t 'blog.unique_visits'
               - @blog_datum.each do |blog_datum|
                 td
                   = number_with_delimiter(blog_datum.unique_visits, delimiter: units_delimiter)
             tr
               td
-                |% diferencia
+                = t 'global.difference'
               - @blog_datum.each do |blog_datum|
                 - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_unique_visits, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
                 - if value.to_f >= 0.0
@@ -110,13 +110,13 @@ section.sectionInformation
                     = %{#{value}%}
             tr
               td
-                |# paginas vistas
+                = t 'blog.view_pages'
               - @blog_datum.each do |blog_datum|
                 td
                   = number_with_delimiter(blog_datum.view_pages, delimiter: units_delimiter)
             tr
               td
-                |% diferencia
+                = t 'global.difference'
               - @blog_datum.each do |blog_datum|
                 - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_view_pages, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
                 - if value.to_f >= 0.0
@@ -127,28 +127,28 @@ section.sectionInformation
                     = %{#{value}%}
             tr.titlesRows
               td colspan=100
-                |Porcentajes
+                = t 'blog.title_percentage'
             tr
               td
-                |Porcentaje de Rebote
+                = t 'blog.rebound_percentage'
               - @blog_datum.each do | blog_datum |
                 td
                   = number_with_precision(blog_datum.rebound_percent, delimiter: units_delimiter, separator: decimal_separator, :precision => 2)
             tr
               td
-                |Porcentaje de visitas nuevas
+                = t 'blog.new_visits_percentage'
               - @blog_datum.each do |blog_datum|
                 td
                   = number_with_precision(blog_datum.new_visits_percent, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
             tr
               td
-                |# de posts
+                = t 'blog.num_posts'
               - @blog_datum.each do |blog_datum|
                 td
                   = number_with_delimiter(blog_datum.total_posts, delimiter: units_delimiter)
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               -@blog_datum.each do |blog_datum|
                 td.celdaOpciones
                   a.btn.btn-info href=blog_edit_path(blog_datum.id) id=%{edit_#{blog_datum.id}}
@@ -159,14 +159,14 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la Tabla:
+            = (t 'global.title_table_comment') + ":"
         form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@blog_info.id_name}');"
           textarea id="comment"
             = @comments.table
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
 
 

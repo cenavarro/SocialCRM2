@@ -16,18 +16,19 @@
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
+      |    
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=linkedin_new_path(params[:idc],2) style="width: 168px"id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -36,23 +37,21 @@
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
+    = t 'global.end_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
       input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
-
 
 script 
   | createChart('container_followers', 'Seguidores', #{ raw @linkedin['dates']});
@@ -95,28 +94,28 @@ section.sectionInformation
           tbody
             tr.titlesRows
               td
-                | Acciones durante periodo
+                = t 'linkedin.actions_title'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = linkedin_datum.actions
             tr.titlesRows
               td colspan=100
-                | Comunidad 
+                = t 'linkedin.community_title'
             tr
               td.estiloCelda
-                |# nuevos seguidores
+                = t 'linkedin.new_followers'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_delimiter(linkedin_datum.new_followers, delimiter: units_delimiter)
             tr
               td
-                |# seguidores reales 
+                = t 'linkedin.total_followers'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_delimiter(linkedin_datum.total_followers, delimiter: units_delimiter)
             tr
               td
-                |% crecimiento seguidores
+                = t 'global.percentage_growth'
               - @linkedin_data.each do |linkedin_datum|
                 - percentFollowers = number_with_precision(linkedin_datum.get_percentage_difference_from_previous_total_followers, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if percentFollowers.to_f >= 0.0 
@@ -127,85 +126,85 @@ section.sectionInformation
                     = %{#{percentFollowers}%}
             tr.titlesRows
               td colspan=100
-                |Interactividad
+                = t 'global.interactivity_title'
             tr
               td
-                | Resumen
+                = t 'linkedin.summary'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_delimiter(linkedin_datum.summary, delimiter: units_delimiter)
             tr
               td
-                | Empleo
+                = t 'linkedin.employ'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_delimiter(linkedin_datum.employment, delimiter: units_delimiter)
             tr
               td
-                | Productos y Servicios
+                = t 'linkedin.products_services'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_delimiter(linkedin_datum.products_services, delimiter: units_delimiter)
             tr
               td
-                | # Visualizaciones de paginas(total)
+                = t 'linkedin.view_pages'
               - @linkedin_data.each do | datum |
                 td
                   = number_with_delimiter(datum.views_page, delimiter: units_delimiter)
             tr
               td
-                | Impresiones
+                = t 'linkedin.prints'
               - @linkedin_data.each do | linkedin_datum |
                 td
                   = number_with_delimiter(linkedin_datum.prints, delimiter: units_delimiter)
             tr
               td
-                | Clicks
+                = t 'linkedin.clics'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_delimiter(linkedin_datum.clics, delimiter: units_delimiter)
             tr
               td
-                | % de interes
+                = t 'linkedin.interest_percentage'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_precision(linkedin_datum.interest, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Recomendacion
+                = t 'linkedin.recommendations'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_delimiter(linkedin_datum.recommendation, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
-                | Inversion
+                = t 'global.investment_title'
             tr
               td
-                | Inversion Agencia
+                = t 'global.agency_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_precision(linkedin_datum.investment_agency, delimiter: units_delimiter, precision: decimal_precision, separator: decimal_separator)
             tr
               td
-                | Inversion nuevas acciones
+                = t 'global.new_actions_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_precision(linkedin_datum.investment_actions, delimiter: units_delimiter, precision: decimal_precision, separator: decimal_separator)
             tr
               td
-                | Inversion anuncios
+                = t 'global.ads_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_precision(linkedin_datum.investment_anno, delimiter: units_delimiter, precision: decimal_precision, separator: decimal_separator)
             tr
               td
-                | Inversion Total
+                = t 'global.total_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_precision(linkedin_datum.total_investment, delimiter: units_delimiter, precision: decimal_precision, separator: decimal_separator)
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               -@linkedin_data.each do |linkedin_datum|
                 td.celdaOpciones
                   a.btn.btn-info href=linkedin_edit_path(linkedin_datum.id,params[:idc]) id=%{edit_#{linkedin_datum.id}}
@@ -223,7 +222,7 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
 
     .tab-pane.fade id="tabcharts"

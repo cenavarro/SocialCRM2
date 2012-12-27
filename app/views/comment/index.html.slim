@@ -29,9 +29,9 @@ h1
       tr
         td.positive_title
         td.positive_title.main
-          |Comentarios Positivos
+          = t 'comment.title_positive'
         td.positive_title
-          |Link al Comentario
+          = t 'comment.link_to_comment'
       - @positive_comments.each do |comment|
         tr
           td.positive_secondary_title
@@ -54,9 +54,9 @@ h1
       tr
         td.negative_title
         td.negative_title
-          |Comentarios Negativos
+          = t 'comment.title_negative'
         td.negative_title
-          |Link al Comentario
+          = t 'comment.link_to_comment'
       - @negative_comments.each do |comment|
         tr
           td.negative_secondary_title.buttons

@@ -17,18 +17,19 @@
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
+      |    
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=facebook_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
@@ -38,21 +39,20 @@
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
+    = t 'global.end_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
       input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 
 script 
@@ -113,25 +113,25 @@ section.sectionInformation
           tbody
             tr.titlesRows
               td
-                | Acciones durante el periodo
+                = t 'facebook.actions_title'
               - @facebook_data.each do |facebook_datum|
                 td
                   = facebook_datum.actions
             tr
               td
-                | # nuevos fans
+                = t 'facebook.new_fans'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.new_fans, delimiter: units_delimiter)
             tr
               td
-                | # fans Totales
+                = t 'facebook.total_fans'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.total_fans, delimiter: units_delimiter)
             tr
               td
-                | % Crecimiento
+                = t 'global.percentage_growth'
               - @facebook_data.each do |facebook_datum|
                 - valueGrowthPercent = number_with_precision(facebook_datum.get_percentage_difference_from_previous_total_fans, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if valueGrowthPercent.to_f >= 0.0 
@@ -142,46 +142,46 @@ section.sectionInformation
                     = %{#{valueGrowthPercent}%}
             tr
               td
-                | Objetivo fans
+                = t 'facebook.goal_fans'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.goal_fans, delimiter: units_delimiter)
             tr
               td
-                | Ranking en España
+                = t 'facebook.spain_ranking'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.ranking_espana, delimiter: units_delimiter)
             tr
               td
-                | Ranking mundial
+                = t 'facebook.world_ranking'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.ranking_world, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
-                |Interactividad y Alcance
+                = t 'facebook.interactivity_title'
             tr
               td
-                | # impresiones
+                = t 'facebook.prints'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.prints, delimiter: units_delimiter)
             tr
               td
-                | # interacciones
+                = t 'facebook.interactions'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.total_interactions, delimiter: units_delimiter)
             tr
               td
-                | Alcance total
+                = t 'facebook.total_reach'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.total_reach, delimiter: units_delimiter)
             tr
               td
-                | % cambio en Alcance Total (comparado con el periodo anterior)
+                = t 'facebook.change_reach_percentage'
               - @facebook_data.each do | datum |
                 - valueTotalReach = number_with_precision(datum.get_percentage_difference_from_previous_total_reach, delimiter: units_delimiter, separator: decimal_separator , precision: decimal_precision)
                 - if valueTotalReach.to_f >= 0.0
@@ -192,39 +192,41 @@ section.sectionInformation
                     = %{#{valueTotalReach}%}
             tr
               td
-                | Alcance potencial
+                = t 'facebook.potential_reach'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.potential_reach, delimiter: units_delimiter)
+            tr.titlesRows
+              td colspan=100
+                = t 'facebook.interactivity_title'
             tr
               td
-                | # impresiones anuncios
+                = t 'facebook.ads_prints'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_precision(facebook_datum.total_prints_per_anno, separator: decimal_separator, delimiter: units_delimiter, precision: decimal_precision)
             tr
               td
-                | # clics Anuncios
+                = t 'facebook.ads_clics'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.total_clicks_anno, delimiter: units_delimiter)
             tr
               td
-                | # fans a traves de anuncios
+                = t 'facebook.fans_through_ads'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.fans_through_anno, delimiter: units_delimiter)
             tr
               td
-                | Interacciones totales de la marca en plataforma
+                = t 'facebook.total_interactions'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.brand_total_interactions, delimiter: units_delimiter)
             tr
               td
-                | % cambio en interacciones
+                = t 'facebook.change_interactions_percentage'
               - @facebook_data.each do | datum |
-
                 - valueChangeInteractions = number_with_precision(datum.get_percentage_difference_from_previous_total_interactions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if valueChangeInteractions.to_f >= 0.0
                   td.positiveValue
@@ -234,13 +236,13 @@ section.sectionInformation
                     = %{#{valueChangeInteractions}%}
             tr
               td
-                | Impresiones totales de la marca en plataforma
+                = t 'facebook.total_prints'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_delimiter(facebook_datum.total_prints, delimiter: units_delimiter)
             tr
               td
-                | % cambio en impresiones
+                = t 'facebook.change_prints_percentage'
               - @facebook_data.each do | datum |
                 - valChangePrints = number_with_precision(datum.get_percentage_difference_from_previous_total_prints, delimiter: units_delimiter,  separator: decimal_separator, precision: decimal_precision)
                 - if valChangePrints.to_f >= 0.0
@@ -251,73 +253,73 @@ section.sectionInformation
                     = %{#{valChangePrints}%}
             tr.titlesRows
               td colspan=100
-                |Inversion
+                = t 'global.investment_title'
             tr
               td
-                | Inversion agencia
+                = t 'global.agency_investment'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_precision(facebook_datum.agency_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion nuevas acciones
+                = t 'global.new_actions_investment'
               - @facebook_data.each do |facebook_datum|
                 td
                   =  number_with_precision(facebook_datum.new_stock_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion anuncios
+                = t 'global.ads_investment'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_precision(facebook_datum.anno_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion total
+                = t 'global.total_investment'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_precision(facebook_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
-                |Costes
+                = t 'global.costs_title'
             tr
               td
-                | CTR Anuncios
+                = t 'facebook.ctr_ads'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_precision(facebook_datum.ctr_anno, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | CPM Anuncios
+                = t 'facebook.cpm_ads'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_precision(facebook_datum.cpm_anno, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | CPC Anuncios
+                = t 'facebook.cpc_ads'
               - @facebook_data.each do |facebook_datum|
                 td
                   = number_with_precision(facebook_datum.cpc_anno, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | CPM General
+                = t 'facebook.cpm_general'
               - @facebook_data.each do | datum |
                 td
                   = number_with_precision(datum.cpm_general, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Coste por Interaccion
+                = t 'facebook.cost_per_interaction'
               - @facebook_data.each do | datum |
                 td
                   = number_with_precision(datum.coste_interactions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Coste por Fan
+                = t 'facebook.cost_per_fan'
               - @facebook_data.each do | datum |
                 td
-                  = number_with_precision(datum.fan_cost, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(datum.fan_cost, delimiter: units_delimiter, separator: decimal_separator, precision: 3)
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               -@facebook_data.each do |facebook_datum|
                 td.celdaOpciones
                   a.btn.btn-info href=facebook_edit_path(facebook_datum.id,params[:idc]) id=%{edit_#{facebook_datum.id}}
@@ -335,7 +337,7 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
 
     .tab-pane.fade id="tabcharts"  

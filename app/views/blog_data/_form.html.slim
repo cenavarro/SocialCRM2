@@ -8,12 +8,13 @@
 
   .form-horizontal.sectionInformation style="height: 650px;"
     .box.informationBlog
-      | Informacion
+      = t 'global.information'
+      br
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
       - !@blog_datum.start_date.nil? ? start_date = @blog_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date 
-      = f.label "Fecha Inicio"
+      = f.label t 'global.start_date' 
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
@@ -21,39 +22,39 @@
       br
       br
       - !@blog_datum.end_date.nil? ? end_date = @blog_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date 
-      = f.label "Fecha Final"
+      = f.label t 'global.end_date' 
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
 
     .box.visitsBlog
-      | Visitas
+      = t 'blog.title_visits'
       br
       br
-      = f.label "# visitas unicas"
+      = f.label t 'blog.unique_visits'
       = f.text_field :unique_visits, {:class => "number validate[required]"}
       br
       br
-      = f.label "# paginas vistas"
+      = f.label t 'blog.view_pages'
       = f.text_field :view_pages, {:class => "number validate[required]"}
 
     .box.percentageBlog
-      | Porcentajes
+      = t 'blog.title_percentage'
       br
       br
-      = f.label "Porcentaje de Rebote"
+      = f.label t 'blog.rebound_percentage'
       = f.text_field :rebound_percent, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Porcentaje visitas nuevas"
+      = f.label t 'blog.new_visits_percentage'
       = f.text_field :new_visits_percent, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "# de posts"
+      = f.label t 'blog.num_posts'
       = f.text_field :total_posts, {:class => "number validate[required]"}
     br
     br
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveBlog"}
+    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveBlog"}
     |     
-    = link_to 'Regresar', blog_index_path(params[:idc],1), :class => "btn btn-inverse backBlog"
+    = link_to (t 'buttons.back'), blog_index_path(params[:idc],1), :class => "btn btn-inverse backBlog"

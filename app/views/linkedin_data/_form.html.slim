@@ -8,13 +8,13 @@
 
   .form-horizontal.sectionInformation style="height: 1000px;"
     .box.informationLinkedin
-      | Informacion
+      = t 'global.information'
       br
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
       - !@linkedin_data.start_date.nil? ? start_date = @linkedin_data.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
-      = f.label "Fecha Inicio"
+      = f.label t 'global.start_date'
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
@@ -22,71 +22,70 @@
       br
       br
       - !@linkedin_data.end_date.nil? ? end_date = @linkedin_data.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
-      = f.label "Fecha Final"
+      = f.label t 'global.end_date'
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
 
     .box.comunityLinkedin
-      | Comunidad
+      = t 'linkedin.community_title'
       br
       br
-      = f.label "Acciones durante periodo"
+      = f.label t 'linkedin.actions_title'
       = f.text_field :actions, {:class => "validate[required]"}
       br
       br
-      = f.label "Seguidores"
+      = f.label t 'linkedin.total_followers'
       = f.text_field :total_followers, {:class => "number validate[required]"}
 
     .box.interactionLinkedin
-      | Interactividad
+      = t 'global.interactivity_title'
       br
       br
-      = f.label "Resumen"
+      = f.label t 'linkedin.summary'
       = f.text_field :summary, {:class => "number validate[required]"}
       br
       br
-      = f.label "Empleo"
+      = f.label  t 'linkedin.employ'
       = f.text_field :employment, {:class => "number validate[required]"}
       br
       br
-      = f.label "Productos y Servicios"
+      = f.label t 'linkedin.products_services'
       = f.text_field :products_services, {:class => "number validate[required]"}
       br
       br
-      = f.label "Impresiones"
+      = f.label t 'linkedin.prints'
       = f.text_field :prints, {:class => "number validate[required]"}
       br
       br
-      = f.label "Clicks"
+      = f.label t 'linkedin.clics'
       = f.text_field :clics, {:class => "number validate[required]"}
       br
       br
-      = f.label "% de interes"
+      = f.label t 'linkedin.interest_percentage'
       = f.text_field :interest, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Recomendacion"
+      = f.label t 'linkedin.recommendations'
       = f.text_field :recommendation, {:class => "number validate[required]"}
-
     .box.investmentLinkedin
-      |Inversion
+      = t 'global.investment_title'
       br
       br
-      = f.label "Inversion Agencia"
+      = f.label t 'global.agency_investment'
       = f.text_field :investment_agency, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion Nuevas Acciones "
+      = f.label t 'global.new_actions_investment'
       = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion anuncios twitter ads"
+      = f.label t 'global.ads_investment'
       = f.text_field :investment_anno, { :class => "decimal validate[required]"}
 
     br
     br
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveLinkedin"}
+    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveLinkedin"}
     |     
-    = link_to 'Regresar', linkedin_index_path(params[:idc],1), :class => "btn btn-inverse backLinkedin"
+    = link_to (t 'buttons.back'), linkedin_index_path(params[:idc],1), :class => "btn btn-inverse backLinkedin"

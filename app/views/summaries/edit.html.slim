@@ -21,11 +21,10 @@ javascript:
   = hidden_field_tag :id, params[:id]
   .form-horizontal.sectionInformation style="height: 600px;"
     .box.informationSummary
-      = f.label :title, "Titulo"
+      = f.label :title, (t 'summary.title') 
       = f.text_field :title, {:class => "validate[required]"}
       br
       br
-      =f.label :content, "Contenido"
+      = f.label :content, (t 'summary.content') 
       = f.text_area :content, {:class => "validate[required]", :wrap => "off", :style => "overflow: hidden; width: 800px; height: 360px;"} 
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveSummary"}
-
+    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveSummary"}

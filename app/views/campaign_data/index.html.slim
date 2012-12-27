@@ -23,18 +23,19 @@ script
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
+      |    
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=campaign_new_path(params[:idc],params[:id_social]) style="width: 168px" id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -43,21 +44,20 @@ script
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
+    = t 'global.end_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
       input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 
 section.sectionInformation
@@ -95,7 +95,7 @@ section.sectionInformation
                     = number_with_delimiter(value, delimiter: units_delimiter)
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               - @campaign_data['ids'].each do |id|
                 td.celdaOpciones
                   a.btn.btn-info href=campaign_edit_path(id, params[:idc],params[:id_social]) id=%{edit_#{id}}
@@ -113,7 +113,7 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
 
     .tab-pane.fade id="tabcharts"
@@ -132,7 +132,7 @@ section.sectionInformation
             br
             .counter
             button.btn.btn-success
-              | Guardar
+              = t 'buttons.save'
             .result
     .tab-pane.fade id="tabothers"
       == render 'layouts/uploadImage'

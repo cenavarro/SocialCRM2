@@ -7,13 +7,13 @@
           li = message
   .form-horizontal.sectionInformation style="height: 850px;"
     .box.informationTwitter
-      | Informacion
+      = t 'global.information'
       br
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
       - !@twitter_datum.start_date.nil? ? start_date = @twitter_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
-      = f.label "Fecha Inicio"
+      = f.label t 'global.start_date' 
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
@@ -21,71 +21,71 @@
       br
       br
       - !@twitter_datum.end_date.nil? ? end_date = @twitter_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
-      = f.label "Fecha Final"
+      = f.label t 'global.end_date' 
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
     .box.comunityTwitter
-      | Comunidad
+      = t 'twitter.community_title'
       br
       br
-      = f.label "# Followers"
+      = f.label t 'twitter.followers'
       = f.text_field :total_followers, {:class => "number validate[required]"}
       br
       br
-      = f.label "Objetivo Followers"
+      = f.label t 'twitter.goal_followers'
       = f.text_field :goal_followers, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Tweets en total"
+      = f.label t 'twitter.total_tweets'
       = f.text_field :total_tweets, {:class => "number validate[required]"}
     .box.interactionTwitter
-      | Interactividad
+      = t 'global.interactivity_title' 
       br
       br
-      = f.label "# Menciones"
+      = f.label t 'twitter.mentions'
       = f.text_field :total_mentions, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Retweets"
+      = f.label t 'twitter.retweets'
       = f.text_field :ret_tweets, {:class => "number validate[required]"}
       br
       br
-      = f.label "Clicks enlaces"
+      = f.label t 'twitter.link_clics'
       = f.text_field :total_clicks, {:class => "number validate[required]"}
       br
       br
-      = f.label "Interacciones en twitter ads"
+      = f.label t 'twitter.interactions_twitter_ads'
       = f.text_field :interactions_ads, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Impresiones (tweetreach)"
+      = f.label t 'twitter.prints_tweetreach'
       = f.text_field :prints, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Impresiones en twitter ads"
+      = f.label t 'twitter.prints_twitter_ads'
       = f.text_field :prints_ads, {:class => "number validate[required]"}
     .box.investmentTwitter
-      |Inversiones
+      = t 'global.investment_title' 
       br
       br
-      = f.label "Inversion Agencia"
+      = f.label t 'global.agency_investment'
       = f.text_field :agency_investment, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion Nuevas Acciones "
+      = f.label t 'global.new_actions_investment'
       = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion anuncios twitter ads"
+      = f.label t 'twitter.twitter_ads_investment'
       = f.text_field :investment_ads, { :class => "decimal validate[required]"}
       br
       br
-      = f.label "Cost per engagement twitter ads"
+      = f.label t 'twitter.cost_per_engagement'
       = f.text_field :cost_twitter_ads, {:class => "decimal validate[required]"}
     br
     br
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveTwitter" }
+    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveTwitter" }
     |     
-    = link_to 'Regresar', twitter_index_path(params[:idc], 1, params[:id_social]), :class => "btn btn-inverse backTwitter"
+    = link_to (t 'buttons.back'), twitter_index_path(params[:idc], 1, params[:id_social]), :class => "btn btn-inverse backTwitter"

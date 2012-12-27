@@ -13,110 +13,108 @@ br
           li= msg
   .form-horizontal.sectionInformation style="height:1150px;"
     .box.informacion
-      - start_date = @facebook_datum.start_date.strftime("%d-%m-%Y") if !@facebook_datum.nil?
-      - start_date = params[:start_date] if params.has_key?(:start_date)
-      = f.label "Fecha Inicio"
+      = f.hidden_field :client_id, :value => params[:idc]
+      - start_date = !@facebook_datum.nil? ? @facebook_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date 
+      = f.label t 'global.start_date'
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
           i.icon-th
       br
       br
-      - end_date = @facebook_datum.end_date.strftime("%d-%m-%Y") if !@facebook_datum.nil?
-      - end_date = params[:end_date] if params.has_key?(:end_date)
-      = f.label "Fecha Final"
+      - end_date = !@facebook_datum.nil? ? @facebook_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
+      = f.label t 'global.end_date'
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
       br
       br
-      = f.label "Acciones durante el periodo"
+      = f.label t 'facebook.actions_title'
       = f.text_field :actions
-      = f.hidden_field :client_id, :value => params[:idc]
       br
       br
       | Extraer datos desde Facebook
       br
       br
       button.btn.btn-primary type="button" onclick="javascript:connectFacebook(#{params[:idc]},#{SOCIAL_NETWORKS_CONFIG['facebook']['client_id']},#{params[:locale]});"
-        |Conectar
+        = t 'buttons.connect'
     .box.fans
-      | Fans
+      = t 'global.fans_title'
       br
       br
-      = f.label "# total fans"
+      = f.label t 'facebook.total_fans'
       = f.text_field :total_fans, :class => "number validate[required]"
       br
       br
-      = f.label "Objetivo fans"
+      = f.label t 'facebook.goal_fans'
       = f.text_field :goal_fans, :class => "number validate[required]"
       br
       br
-      = f.label "Ranking Espana"
+      = f.label t 'facebook.spain_ranking'
       = f.text_field :ranking_espana, :class => "number validate[required]"
       br
       br
-      = f.label "Ranking Mundo"
+      = f.label t 'facebook.world_ranking'
       = f.text_field :ranking_world, :class => "number validate[required]"
     .box.interaction
-      |Interactividad
+      = t 'facebook.interactions'
       br
       br
-      = f.label "# impresiones"
+      = f.label t 'facebook.prints'
       = f.text_field :prints, :class => "number validate[required]"
       br
       br
-      = f.label "# interacciones"
+      = f.label t 'facebook.interactions'
       = f.text_field :total_interactions, :class => "number validate[required]"
       br
       br
-      = f.label "Alcance total"
+      = f.label t 'facebook.total_reach'
       = f.text_field :total_reach, :class => "number validate[required]"
       br
       br
-      = f.label "Alcance potencial"
+      = f.label t 'facebook.potential_reach'
       = f.text_field :potential_reach, :class => "number validate[required]"
       br
       br
-      = f.label "# impresiones anuncios"
+      = f.label t 'facebook.ads_prints'
       = f.text_field :total_prints_per_anno, :class => "number validate[required]"
       br
       br
-      = f.label "# clicks anuncios"
+      = f.label t 'facebook.ads_clics'
       = f.text_field :total_clicks_anno, :class => "number validate[required]"
       br
       br
-      = f.label "# fans a traves de anuncios"
+      = f.label t 'facebook.fans_through_ads'
       = f.text_field :fans_through_anno, :class => "number validate[required]"
     .box.inversion
-      | Inversion
+      = t 'global.investment_title'
       br
       br
-      = f.label "Inversion agencia"
+      = f.label t 'global.agency_investment'
       = f.text_field :agency_investment, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion nuevas Acciones"
+      = f.label t 'global.new_actions_investment'
       = f.text_field :new_stock_investment, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion anuncios"
+      = f.label t 'global.ads_investment'
       = f.text_field :anno_investment, {:class => "decimal validate[required]"}
     .box.costes
-      | Costes
+      = t 'global.costs_title'
       br
       br
-      = f.label "CTR anuncios"
+      = f.label t 'facebook.ctr_ads'
       = f.text_field :ctr_anno, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "CPM anuncios"
+      = f.label t 'facebook.cpm_ads'
       = f.text_field :cpm_anno, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "CPC anuncios"
+      = f.label t 'facebook.cpc_ads'
       = f.text_field :cpc_anno, {:class => "decimal validate[required]"}
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveFacebook"}
+    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveFacebook"}
     |     
-    = link_to 'Regresar', facebook_index_path(params[:idc],1), :class => "btn btn-inverse backFacebook"
+    = link_to (t 'buttons.back'), facebook_index_path(params[:idc],1), :class => "btn btn-inverse backFacebook"

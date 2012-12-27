@@ -18,18 +18,19 @@ br
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
+      |    
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=flickr_new_path(params[:idc],2) id="btnNewData" style="width: 168px"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -38,21 +39,20 @@ br
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
+    = t 'global.end_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
       input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 
 
@@ -98,70 +98,70 @@ section.sectionInformation
           tbody
             tr.titlesRows
               td colspan=100
-                | Comunidad 
+                = t 'flickr.community_title'
             tr
               td.estiloCelda
-                |# nuevos contactos
+                = t 'flickr.new_contacts'
               - @flickr_datum.each do |flickr_datum|
                 td
                   = number_with_delimiter(flickr_datum.new_contacts, delimiter: units_delimiter)
             tr
               td
-                |# contactos
+                = t 'flickr.total_contacts'
               - @flickr_datum.each do |flickr_datum|
                 td
                   = number_with_delimiter(flickr_datum.total_contacts, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
-                |Interactividad
+                = t 'global.interactivity_title'
             tr
               td
-                |# Visitas
+                = t 'flickr.visits'
               - @flickr_datum.each do | flickr_datum |
                 td
                   = number_with_delimiter(flickr_datum.visits, delimiter: units_delimiter)
             tr
               td
-                |# Comentarios
+                = t 'flickr.comments'
               - @flickr_datum.each do |flickr_datum|
                 td
                   = number_with_delimiter(flickr_datum.comments, delimiter: units_delimiter)
             tr
               td
-                |# Favoritos
+                = t 'flickr.favorites'
               - @flickr_datum.each do |flickr_datum|
                 td
                   = number_with_delimiter(flickr_datum.favorites, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
-                | Inversion
+                = t 'global.investment_title'
             tr
               td
-                | Inversion Agencia
+                = t 'global.agency_investment.'
               - @flickr_datum.each do |flickr_datum|
                 td
                   = number_with_precision(flickr_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion nuevas acciones
+                = t 'global.new_actions_investment'
               - @flickr_datum.each do |flickr_datum|
                 td
                   = number_with_precision(flickr_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion anuncios
+                = t 'global.ads_investment'
               - @flickr_datum.each do |flickr_datum|
                 td
                   = number_with_precision(flickr_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion Total
+                = t 'global.total_investment'
               - @flickr_datum.each do |flickr_datum|
                 td
                   = number_with_precision(flickr_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               -@flickr_datum.each do |flickr_datum|
                 td.celdaOpciones
                   a.btn.btn-info href=flickr_edit_path(flickr_datum.id,params[:idc]) id=%{edit_#{flickr_datum.id}}
@@ -179,10 +179,8 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
-
-
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center

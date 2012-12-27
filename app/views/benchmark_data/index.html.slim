@@ -17,7 +17,8 @@
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
+      |    
       i.icon-circle-arrow-down.icon-white
     br
     br
@@ -25,11 +26,11 @@
 
 .margin
   a.btn.btn-primary href=benchmark_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -38,21 +39,20 @@
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
+    = t 'global.end_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
       input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 
 
@@ -89,19 +89,19 @@ section.sectionInformation
               td
               - @benchmark['dates'].each do
                 td.columnsTableBenchmark
-                  |Blogs
+                  = t 'benchmark.blogs'
                 td.columnsTableBenchmark
-                  |Foros
+                  = t 'benchmark.forums'
                 td.columnsTableBenchmark
-                  |Videos
+                  = t 'benchmark.videos'
                 td.columnsTableBenchmark
-                  |Twitter
+                  = t 'benchmark.twitter'
                 td.columnsTableBenchmark
-                  |Facebook
+                  = t 'benchmark.facebook'
                 td.columnsTableBenchmark
-                  |Otros
+                  = t 'benchmark.others'
                 td.columnsTableBenchmark
-                  |Totales
+                  = t 'benchmark.totals'
           tbody
             - totals = {}
             - @benchmark['competitors'].each do |competitor|
@@ -122,7 +122,7 @@ section.sectionInformation
                   - totals[competitor] = total 
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
                 - @benchmark['ids'].each do |id|
                   td colspan="7" style="text-align: center;"
                     a.btn.btn-info href=benchmark_edit_path(id)
@@ -140,7 +140,7 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
 
       script

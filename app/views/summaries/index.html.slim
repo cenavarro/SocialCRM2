@@ -19,18 +19,18 @@
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=summary_new_path
-    |Nueva Entrada
+    = t 'buttons.new_entry'
 section.sectionInformation
   .estilo_tabs
     ul.nav.nav-tabs id="myTab"
       li.active
         a href="#tabInfo" data-toggle="tab"
-          | Informacion
+          = t 'global.information'
   .tab-content
     .tab-pane.fade.in.active id="tabInfo"
       center
         h2
-          | Resumen del Reporte
+          = t 'summary.main_title'
       .margin
         - @summary_comments.each do |comment|
           h3

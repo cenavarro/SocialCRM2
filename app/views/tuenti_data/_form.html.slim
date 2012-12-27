@@ -8,13 +8,13 @@
 
   .form-horizontal.sectionInformation style="height: 1080px;"
     .box.informationTuenti
-      | Informacion
+      = t 'global.information'
       br
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
       - !@tuenti_datum.start_date.nil? ? start_date = @tuenti_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
-      = f.label "Fecha Inicio"
+      = f.label t 'global.start_date'
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
@@ -22,76 +22,75 @@
       br
       br
       - !@tuenti_datum.end_date.nil? ? end_date = @tuenti_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
-      = f.label "Fecha Final"
+      = f.label t 'global.end_date'
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
       br
       br
-      = f.label "Acciones durante el periodo"
+      = f.label t 'tuenti.actions_title' 
       = f.text_field :actions
 
     .box.comunityTuenti
-      | Fans 
+      = t 'tuenti.fans'
       br
       br
-      = f.label "# Fans Reales"
+      = f.label t 'tuenti.real_fans' 
       = f.text_field :real_fans, {:class => "number validate[required]"}
       br
       br
-      = f.label "Objetivo Fans"
+      = f.label t 'tuenti.goal_fans'
       = f.text_field :goal_fans, {:class => "number validate[required]"}
 
     .box.pageTuenti
-      | Pagina de la empresa
+      = t 'tuenti.page_company'
       br
       br
-      = f.label "Impresiones de la pagina"
+      = f.label t 'tuenti.page_prints'
       = f.text_field :page_prints, {:class => "number validate[required]"}
       br
       br
-      = f.label "Total de usuario unicos"
+      = f.label t 'tuenti.total_unique_users'
       = f.text_field :unique_total_users, {:class => "number validate[required]"}
       br
       br
-      = f.label "Clics externos"
+      = f.label t 'tuenti.external_clics'
       = f.text_field :external_clics, {:class => "number validate[required]"}
       br
       br
-      = f.label "Clics"
+      = f.label t 'tuenti.clics'
       = f.text_field :clics, {:class => "number validate[required]"}
       br
       br
-      = f.label "Descargas"
+      = f.label t 'tuenti.downloads'
       = f.text_field :downloads, {:class => "number validate[required]"}
       br
       br
-      = f.label "Numero de comentarios"
+      = f.label t 'tuenti.num_comments'
       = f.text_field :comments, {:class => "number validate[required]"}
       br
       br
-      = f.label "CRT % clic externo"
+      = f.label t 'tuenti.ctr_external_clics_percentage'
       = f.text_field :ctr_external_clics, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Fotos subidas"
+      = f.label t 'tuenti.upload_photos'
       = f.text_field :upload_photos, {:class => "number validate[required]"}
     .box.investmentTuenti
-      |Inversion
+      =  t 'global.investment_title' 
       br
       br
-      = f.label "Inversion Agencia"
+      = f.label t 'global.agency_investment'
       = f.text_field :investment_agency, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion Nuevas Acciones "
+      = f.label t 'global.new_actions_investment'
       = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion anuncios"
+      = f.label t 'global.ads_investment'
       = f.text_field :investment_ads, {:class => "decimal validate[required]"}
-
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveTuenti"}
+    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveTuenti"}
     |     
-    = link_to 'Regresar', tuenti_index_path(params[:idc],1), :class => "btn btn-inverse backTuenti"
+    = link_to (t 'buttons.back'), tuenti_index_path(params[:idc],1), :class => "btn btn-inverse backTuenti"

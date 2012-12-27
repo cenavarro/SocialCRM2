@@ -21,18 +21,19 @@ center
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
+      |    
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=pinterest_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -41,21 +42,20 @@ center
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
+    = t 'global.end_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
       input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
 
 script
   | createChart('container_community', 'Comunidad', #{raw @pinterest['dates']});
@@ -100,118 +100,118 @@ section.sectionInformation
           tbody
             tr.titlesRows
               td colspan=100
-                | Comunidad 
+                = t 'pinterest.community_title'
             tr
               td.estiloCelda
-                |#followers
+                = t 'pinterest.followers'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_delimiter(pinterest_datum.total_followers, delimiter: units_delimiter)
             tr
               td
-                | % de crecimiento 
+                = t 'global.percentage_growth'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_total_followers, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | # boards
+                = t 'pinterest.boards'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_delimiter(pinterest_datum.boards, delimiter: units_delimiter)
             tr
               td
-                | # pins
+                = t 'pinterest.pins'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_delimiter(pinterest_datum.pins, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
-                |Interactividad
+                = t 'global.interactivity_title'
             tr
               td
-                | # liked
+                = t 'pinterest.liked'
               - @pinterest_datum.each do | pinterest_datum |
                 td
                   = number_with_delimiter(pinterest_datum.liked, delimiter: units_delimiter)
             tr
               td
-                | % de cambio
+                = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_liked, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | # repin
+                = t 'pinterest.repin'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_delimiter(pinterest_datum.repin, delimiter: units_delimiter)
             tr
               td
-                | % de cambio
+                = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_repin, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | # comments
+                = t 'pinterest.comments'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_delimiter(pinterest_datum.comments, delimiter: units_delimiter)
             tr
               td
-                | % de cambio
+                = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_comments, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | # community boards
+                = t 'pinterest.community_boards'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_delimiter(pinterest_datum.community_boards, delimiter: units_delimiter)
             tr
               td
-                | % de cambio
+                = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_community_boards, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
-                | Inversion
+                = t 'global.investment_title'
             tr
               td
-                | Inversion Agencia
+                = t 'global.agency_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion nuevas acciones
+                = t 'global.new_actions_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion anuncios ads
+                = t 'global.ads_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion Total
+                = t 'global.total_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Coste Fan
+                = t 'global.fan_cost'
               - @pinterest_datum.each do |pinterest_datum|
                 td
                   = number_with_precision(pinterest_datum.coste_fan, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               -@pinterest_datum.each do |pinterest_datum|
                 td.celdaOpciones
                   a.btn.btn-info href=pinterest_edit_path(pinterest_datum.id,params[:idc]) id=%{edit_#{pinterest_datum.id}}
@@ -229,9 +229,8 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
-
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"

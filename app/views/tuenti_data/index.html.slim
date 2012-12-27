@@ -16,18 +16,18 @@
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=tuenti_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -36,21 +36,20 @@
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
+    = t 'global.end_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
       input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 script
   | createChart('container_fans', 'Fans', #{raw @tuenti['dates']});
@@ -107,127 +106,127 @@ section.sectionInformation
           tbody
             tr.titlesRows
               td
-                |Acciones Durante el periodo
+                = t 'tuenti.actions_title'
               - @tuenti_datum.each do | tuenti_datum |
                 td
                   = tuenti_datum.actions
             tr.titlesRows
               td colspan=100
-                |Fans 
+                = t 'tuenti.fans'
             tr
               td.estiloCelda
-                |# nuevos fans
+                = t 'tuenti.new_fans'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_delimiter(tuenti_datum.new_fans, delimiter: units_delimiter)
             tr
               td
-                |# fans reales
+                = t 'tuenti.real_fans'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_delimiter(tuenti_datum.real_fans, delimiter: units_delimiter)
             tr
               td
-                |# Objetivo fans
+                = t 'tuenti.goal_fans'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_delimiter(tuenti_datum.goal_fans, delimiter: units_delimiter)
             tr
               td
-                | Porcentaje crecimiento fans 
+                = t 'global.percentage_growth'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_precision(tuenti_datum.get_percentage_difference_from_previous_real_fans, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
-                |Pagina de empresa
+                = t 'tuenti.page_company'
             tr
               td
-                |Impresiones de la pagina
+                = t 'tuenti.page_prints'
               - @tuenti_datum.each do | tuenti_datum |
                 td
                   = number_with_delimiter(tuenti_datum.page_prints, delimiter: units_delimiter)
             tr
               td
-                |Total de usuario unicos
+                = t 'tuenti.total_unique_users'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_delimiter(tuenti_datum.unique_total_users, delimiter: units_delimiter)
             tr
               td
-                |Clics externos
+                = t 'tuenti.external_clics'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_delimiter(tuenti_datum.external_clics, delimiter: units_delimiter)
             tr
               td
-                |Clicks
+                = t 'tuenti.clics'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_delimiter(tuenti_datum.clics, delimiter: units_delimiter)
             tr
               td
-                |Descargas
+                = t 'tuenti.downloads'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_delimiter(tuenti_datum.downloads, delimiter: units_delimiter)
             tr
               td
-                |Numero de comentarios
+                = t 'tuenti.num_comments'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_delimiter(tuenti_datum.comments, delimiter: units_delimiter)
             tr
               td
-                |CTR % clic externos
+                = t 'tuenti.ctr_external_clics_percentage'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_precision(tuenti_datum.ctr_external_clics, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                |Fotos subidas
+                = t 'tuenti.upload_photos'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_delimiter(tuenti_datum.upload_photos, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
-                | Inversion
+                = t 'global.investment_title'
             tr
               td
-                | Inversion Agencia
+                = t 'global.agency_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_precision(tuenti_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion nuevas acciones
+                = t 'global.new_actions_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_precision(tuenti_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion anuncios
+                = t 'global.ads_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_precision(tuenti_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion Total
+                = t 'global.total_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
                   = number_with_precision(tuenti_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
-                |Costes
+                = t 'global.costs_title'
             tr
               td
-                |Coste Fan
+                = t 'global.fan_cost'
               - @tuenti_datum.each do | tuenti_datum |
                 td
                   = number_with_precision(tuenti_datum.cost_fan, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               -@tuenti_datum.each do |tuenti_datum|
                 td.celdaOpciones
                   a.btn.btn-info href=tuenti_edit_path(tuenti_datum.id,params[:idc]) id=%{edit_#{tuenti_datum.id}}
@@ -245,7 +244,7 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
 
     .tab-pane.fade id="tabcharts"

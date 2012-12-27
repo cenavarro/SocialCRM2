@@ -7,13 +7,13 @@
           li = message
   .form-horizontal.sectionInformation style="height: 600px;"
     .box.informationTumblr
-      | Informacion
+      = t 'global.information'
       br
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
       - !@tumblr_datum.start_date.nil? ? start_date = @tumblr_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
-      = f.label "Fecha Inicio"
+      = f.label t 'global.start_date'
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
@@ -21,47 +21,47 @@
       br
       br
       - !@tumblr_datum.end_date.nil? ? end_date = @tumblr_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
-      = f.label "Fecha Final"
+      = f.label t 'global.end_date'
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
     .box.comunityTumblr
-      | Comunidad
+      = t 'tumblr.community_title'
       br
       br
-      = f.label "# Followers"
+      = f.label t 'tumblr.total_followers'
       = f.text_field :total_followers, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Post"
+      = f.label t 'tumblr.posts'
       = f.text_field :posts, {:class => "number validate[required]"}
     .box.interactionTumblr
-      | Interactividad
+      = t 'global.interactivity_title'
       br
       br
-      = f.label "# like"
+      = f.label t 'tumblr.like'
       = f.text_field :likes, {:class => "number validate[required]"}
       br
       br
-      = f.label "# reblogged"
+      = f.label t 'tumblr.reblogged'
       = f.text_field :reblogged, {:class => "number validate[required]"}
     .box.investmentTumblr
       |Inversiones
       br
       br
-      = f.label "Inversion Agencia"
+      = f.label t 'global.agency_investment'
       = f.text_field :investment_agency, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion Nuevas Acciones "
+      = f.label t 'global.new_actions_investment'
       = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion anuncios tumblr ads"
+      = f.label t 'global.ads_investment'
       = f.text_field :investment_ads, { :class => "decimal validate[required]"}
     br
     br
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveTumblr" }
+    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveTumblr" }
     |     
-    = link_to 'Regresar', tumblr_index_path(params[:idc], 1, params[:id_social]), :class => "btn btn-inverse backTumblr"
+    = link_to (t 'buttons.back'), tumblr_index_path(params[:idc], 1, params[:id_social]), :class => "btn btn-inverse backTumblr"

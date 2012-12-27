@@ -1,12 +1,12 @@
 .form-horizontal.sectionInformation
   .box.informationBenchmark
-    | Informacion
+    = t 'global.information'
     br
     br
     = hidden_field_tag :client_id, params[:idc]
     = hidden_field_tag :social_network_id, params[:id_social]
     - @start_date.nil? ? (start_date = get_start_date) : (start_date = @start_date)
-    = label_tag "Fecha Inicio"
+    = label_tag t 'global.start_date'
     .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
       = text_field_tag :start_date, start_date, { :class => "span2",  :readonly => true } 
       span.add-on
@@ -14,14 +14,14 @@
     br
     br
     - @end_date.nil? ? (end_date = get_end_date) : (end_date = @end_date)
-    = label_tag "Fecha Final"
+    = label_tag t 'global.end_date'
     .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
       = text_field_tag :end_date, end_date,  { :class => "span2", :readonly => true }
       span.add-on
         i.icon-th
   .box.competitorsBenchmark
     h4
-      | Tabla de Informacion
+      = t 'benchmark.title_table'
     br
     table.table.table-bordered
       thead
@@ -29,17 +29,17 @@
           td
             |
           td
-            | Blogs
+            = t 'benchmark.blogs'
           td
-            | Foros
+            = t 'benchmark.forums'
           td
-            | Videos
+            = t 'benchmark.videos'
           td
-            | Twitter
+            = t 'benchmark.twitter'
           td
-            | Facebook
+            = t 'benchmark.facebook'
           td
-            | Otros
+            = t 'benchmark.others'
       tbody
         - @benchmark_competitors.each do |competitor|
           - benchmark_data = BenchmarkDatum.where('benchmark_competitor_id = ? and start_date = ? and end_date = ?', competitor.id, start_date.to_date, end_date.to_date)
@@ -60,5 +60,5 @@
             td
               = text_field_tag "#{competitor.id}[others]", benchmark_data.others, {:style => "width:60px;", :class => "number validate[required]"}
   .buttonsBenchmark
-    = submit_tag 'Guardar Datos', {:class => "btn btn-success saveBenchmark"}
-    = link_to 'Regresar', benchmark_index_path(params[:idc],1), :class => "btn btn-inverse backBenchmark"
+    = submit_tag (t 'buttons.save_data'), {:class => "btn btn-success saveBenchmark"}
+    = link_to (t 'buttons.back'), benchmark_index_path(params[:idc],1), :class => "btn btn-inverse backBenchmark"

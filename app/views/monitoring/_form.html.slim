@@ -1,13 +1,13 @@
 = form_tag monitoring_path, :class => "newMonitoring", :id => "formEntradaDatos" do
   .form-horizontal.sectionInformation
     .box.informationMonitoring
-      | Informacion
+      = t 'global.information'
       br
       br
       = hidden_field_tag :client_id, params[:idc]
       = hidden_field_tag :social_network_id, params[:id_social]
       - start_date = get_start_date
-      = label_tag "Fecha Inicio"
+      = label_tag t 'global.start_date' 
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = text_field_tag :start_date, nil, :class => "span2", :value => start_date, :readonly => true
         span.add-on
@@ -15,14 +15,14 @@
       br
       br
       - end_date = get_end_date
-      = label_tag "Fecha Final"
+      = label_tag t 'global.end_date' 
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = text_field_tag :end_date, nil, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
     .sectionDataMonitoring
       .box.themesMonitoring
-        | Temas
+        = t 'monitoring.themes'
         br
         br
         - @themes.each do |theme|
@@ -32,7 +32,7 @@
           br
           br
       .box.distributionMonitoring
-        | Distribucion de canales
+        = t 'monitoring.channels_distribution'
         br
         br
         - @channels.each do |channel|
@@ -42,6 +42,6 @@
           br
           br
     .buttonsMonitoring
-      = submit_tag 'Guardar Datos', {:class => "btn btn-success saveMonitoring"}
+      = submit_tag (t 'buttons.save_data'), {:class => "btn btn-success saveMonitoring"}
       |     
-      = link_to 'Regresar', monitoring_index_path(params[:idc], params[:id_social]), :class => "btn btn-inverse backMonitoring"
+      = link_to (t 'buttons.back'), monitoring_index_path(params[:idc], params[:id_social]), :class => "btn btn-inverse backMonitoring"

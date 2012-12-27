@@ -8,13 +8,13 @@
 
   .form-horizontal.sectionInformation style="height: 650px;"
     .box.informationFlickr
-      | Informacion
+      = t 'global.information'
       br
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
       - !@flickr_datum.start_date.nil? ? start_date = @flickr_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
-      = f.label "Fecha Inicio"
+      = f.label t 'global.start_date'
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
@@ -22,49 +22,49 @@
       br
       br
       - !@flickr_datum.end_date.nil? ? end_date = @flickr_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
-      = f.label "Fecha Final"
+      = f.label t 'global.end_date'
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
 
     .box.comunityFlickr
-      | Comunidad
+      = t 'flickr.community_title'
       br
       br
-      = f.label "# Contactos"
+      = f.label t 'flickr.total_contacts'
       = f.text_field :total_contacts, {:class => "number validate[required]"}
 
     .box.interactionFlickr
-      | Interactividad
+      = t 'global.interactivity_title'
       br
       br
-      = f.label "# Visitas"
+      = f.label t 'flickr.visits'
       = f.text_field :visits, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Comentarios"
+      = f.label t 'flickr.comments'
       = f.text_field :comments, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Favoritos"
+      = f.label t 'flickr.favorites'
       = f.text_field :favorites, {:class => "number validate[required]"}
     .box.investmentFlickr
-      |Inversion
+      = t 'global.investment_title'
       br
       br
-      = f.label "Inversion Agencia"
+      = f.label t 'global.agency_investment.'
       = f.text_field :investment_agency, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion Nuevas Acciones "
+      = f.label t 'global.new_actions_investment'
       = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion anuncios"
+      = f.label t 'global.ads_investment'
       = f.text_field :investment_ads, { :class => "decimal validate[required]"}
     br
     br
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveFlickr"}
+    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveFlickr"}
     |     
-    = link_to 'Regresar', flickr_index_path(params[:idc],1), :class => "btn btn-inverse backFlickr"
+    = link_to (t 'buttons.back'), flickr_index_path(params[:idc],1), :class => "btn btn-inverse backFlickr"

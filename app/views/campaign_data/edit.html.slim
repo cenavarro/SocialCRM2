@@ -6,36 +6,33 @@ br
 
 = form_tag campaign_update_path, :class => "formNuevosDatosCampaign", :id => "formEntradaDatos" do
   .box.informationCampaign
-    | Informacion
+    = t 'global.information'
+    br
     br
     = hidden_field_tag :idc, params[:idc]
     = hidden_field_tag :id_social, params[:id_social]
     - start_date = @row.start_date.strftime("%d-%m-%Y") 
-    = label_tag "Fecha Inicio"
+    = label_tag t 'global.start_date'
     .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
       = text_field_tag :start_date, start_date, {:class => "span2", :readonly => true}
       span.add-on
         i.icon-th
     br
-    br
     - end_date = @row.end_date.strftime("%d-%m-%Y")
-    = label_tag "Fecha Final"
+    = label_tag t 'global.end_date'
     .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
       = text_field_tag :end_date, end_date, { :class => "span2", :readonly => true}
       span.add-on
         i.icon-th
     br
-    br
     - @rows_campaign.each do | datum |
       = datum.name
       br
-      - p @row
-      - p datum.id
       - @row_data = RowDatum.where('start_date = ? and end_date = ? and rows_campaign_id = ?', @row.start_date, @row.end_date, datum.id).first
       input type="text" id="criteria_#{@row_data.id}" name="criteria_#{@row_data.id}" class="number validate[required]" value="#{@row_data.value}"
       br
     br
   .buttons
     center
-      = submit_tag 'Guardar Datos', {:class => "btn btn-success saveCampaign"}
-      = link_to 'Regresar', campaign_index_path(params[:idc],1,params[:id_social]), :class => "btn btn-inverse backCampaign"
+      = submit_tag (t 'buttons.save_data'), {:class => "btn btn-success saveCampaign"}
+      = link_to (t 'buttons.back'), campaign_index_path(params[:idc],1,params[:id_social]), :class => "btn btn-inverse backCampaign"

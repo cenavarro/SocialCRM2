@@ -8,13 +8,13 @@
 
   .form-horizontal.sectionInformation style="height: 1150px;"
     .box.informationYoutube
-      | Informacion
+      = t 'global.information'
       br
       br
       = f.hidden_field :client_id, :value => params[:idc]
       = f.hidden_field :social_network_id, :value => params[:id_social]
       - !@youtube_datum.start_date.nil? ? start_date = @youtube_datum.start_date.strftime("%d-%m-%Y") : start_date = get_start_date
-      = f.label "Fecha Inicio"
+      = f.label t 'global.start_date' 
       .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
         = f.text_field :start_date, :class => "span2", :value => start_date, :readonly => true
         span.add-on
@@ -22,106 +22,106 @@
       br
       br
       - !@youtube_datum.end_date.nil? ? end_date = @youtube_datum.end_date.strftime("%d-%m-%Y") : end_date = get_end_date
-      = f.label "Fecha Final"
+      = f.label t 'global.end_date' 
       .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
         = f.text_field :end_date, :class => "span2", :value => end_date, :readonly => true
         span.add-on
           i.icon-th
 
     .box.comunityYoutube
-      | Comunidad
+      = t 'youtube.community_title'
       br
       br
-      = f.label "Subscriptores totales"
+      = f.label t 'youtube.total_subscribers'
       = f.text_field :total_subscriber, {:class => "number validate[required]"}
 
     .box.interactionYoutube
-      | Interactividad
+      = t 'global.interactivity_title'
       br
       br
-      = f.label "Reproducciones videos durante el periodo"
+      = f.label t 'youtube.total_video_views'
       = f.text_field :total_video_views, {:class => "number validate[required]"}
       br
       br
-      = f.label "Reproductor insertado"
+      = f.label t 'youtube.inserted_player'
       = f.text_field :inserted_player, {:class => "number validate[required]"}
       br
       br
-      = f.label "Dispositivos mobiles"
+      = f.label t 'youtube.mobile_device'
       = f.text_field :mobile_devise, {:class => "number validate[required]"}
       br
       br
-      = f.label "Busqueda en Youtube"
+      = f.label t 'youtube.youtube_search'
       = f.text_field :youtube_search, {:class => "number validate[required]"}
       br
       br
-      = f.label "Sugerencia de Youtube"
+      = f.label t 'youtube.youtube_suggestion'
       = f.text_field :youtube_suggestion, {:class => "number validate[required]"}
       br
       br
-      = f.label "Pagina de canal de Youtube"
+      = f.label t 'youtube.youtube_page'
       = f.text_field :youtube_page, {:class => "number validate[required]"}
       br
       br
-      = f.label "Sitio web externo"
+      = f.label t 'youtube.external_web_site'
       = f.text_field :external_web_site, {:class => "number validate[required]"}
       br
       br
-      = f.label "Busqueda en Google"
+      = f.label t 'youtube.google_search'
       = f.text_field :google_search, {:class => "number validate[required]"}
       br
       br
-      = f.label "Otras paginas de Youtube"
+      = f.label t 'youtube.youtube_others'
       = f.text_field :youtube_others, {:class => "number validate[required]"}
       br
       br
-      = f.label "Suscripciones de Youtube"
+      = f.label t 'youtube.youtube_subscriptions'
       = f.text_field :youtube_subscriptions, {:class => "number validate[required]"}
       br
       br
-      = f.label "Publicidad de Youtube"
+      = f.label t 'youtube.youtube_ads'
       = f.text_field :youtube_ads, {:class => "number validate[required]"}
 
     .box.interaction_2_youtube
-      | Interactividad
+      = t 'global.interactivity_title'
       br
       br
-      = f.label "# Me Gusta"
+      = f.label t 'youtube.like'
       = f.text_field :likes, {:class => "number validate[required]"}
       br
       br
-      = f.label "#No Me Gusta"
+      = f.label t 'youtube.no_like'
       = f.text_field :no_likes, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Favoritos"
+      = f.label t 'youtube.favorites'
       = f.text_field :favorite, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Comentarios"
+      = f.label t 'youtube.comments'
       = f.text_field :comments, {:class => "number validate[required]"}
       br
       br
-      = f.label "# Compartidos"
+      = f.label t 'youtube.shared'
       = f.text_field :shared, {:class => "number validate[required]"}
 
     .box.investmentYoutube
-      |Inversion
+      = t 'global.investment_title'
       br
       br
-      = f.label "Inversion Agencia"
+      = f.label t 'global.agency_investment'
       = f.text_field :investment_agency, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion Nuevas Acciones "
+      = f.label t 'global.new_actions_investment'
       = f.text_field :investment_actions, {:class => "decimal validate[required]"}
       br
       br
-      = f.label "Inversion anuncios ads"
+      = f.label t 'global.ads_investment'
       = f.text_field :investment_anno, { :class => "decimal validate[required]"}
 
     br
     br
-    = f.submit 'Guardar Datos', {:class => "btn btn-success saveYoutube"}
+    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveYoutube"}
     |     
-    = link_to 'Regresar', youtube_index_path(params[:idc],1), :class => "btn btn-inverse backYoutube"
+    = link_to (t 'buttons.back'), youtube_index_path(params[:idc],1), :class => "btn btn-inverse backYoutube"

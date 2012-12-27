@@ -16,18 +16,19 @@
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
+      |    
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=twitter_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -36,21 +37,20 @@
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
+    = t 'global.start_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
       input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
+    = t 'global.end_date'
     .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
       input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 script
   | createChart('container_comunidad', 'Comunidad', #{raw @twitter['dates']});
@@ -103,22 +103,22 @@ section.sectionInformation
           tbody
             tr.titlesRows
               td colspan=100
-                | Comunidad 
+                = t 'twitter.community_title'
             tr
               td.estiloCelda
-                |# Nuevos Followers
+                = t 'twitter.new_followers'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.new_followers, delimiter: units_delimiter)
             tr
               td
-                |# Followers
+                = t 'twitter.followers'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.total_followers, delimiter: units_delimiter)
             tr
               td
-                | % Crecimiento
+                = t 'global.percentage_growth'
               - @twitter_data.each do |twitter_datum|
                 - percentage_followers = number_with_precision(twitter_datum.get_percentage_difference_from_previous_total_followers, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if percentage_followers.to_f >= 0.0 
@@ -129,34 +129,34 @@ section.sectionInformation
                     = %{#{percentage_followers}%}
             tr
               td
-                | Objetivo Followers
+                = t 'twitter.goal_followers'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.goal_followers, delimiter: units_delimiter)
             tr
               td
-                | # numero tweets en total
+                = t 'twitter.total_tweets'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.total_tweets, delimiter: units_delimiter)
             tr
               td
-                | # tweets periodo
+                = t 'twitter.tweets_in_period'
               - @twitter_data.each do | datum |
                 td
                   = number_with_delimiter(datum.period_tweets, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
-                |Interactividad
+                = t 'global.interactivity_title'
             tr
               td
-                | # Menciones
+                = t 'twitter.mentions'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.total_mentions, delimiter: units_delimiter)
             tr
               td
-                | % cambio en mensiones
+                = t 'twitter.change_mentions_percentage'
               - @twitter_data.each do |twitter_datum|
                 - percentage_mentions= number_with_precision(twitter_datum.get_percentage_difference_from_previous_total_mentions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if percentage_mentions.to_f >= 0.0 
@@ -167,13 +167,13 @@ section.sectionInformation
                     = %{#{percentage_mentions}%}
             tr
               td
-                | # Retweets
+                = t 'twitter.retweets'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.ret_tweets, delimiter: units_delimiter)
             tr
               td
-                | % cambio en retweets
+                = t 'twitter.change_retweets_percentage'
               - @twitter_data.each do |twitter_datum|
                 - percentage_retweets= number_with_precision(twitter_datum.get_percentage_difference_from_previous_ret_tweets, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if percentage_retweets.to_f >= 0.0 
@@ -184,13 +184,13 @@ section.sectionInformation
                     = %{#{percentage_retweets}%}
             tr
               td
-                | Clicks enlaces
+                = t 'twitter.link_clics'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.total_clicks, delimiter: units_delimiter)
             tr
               td
-                | % cambio en clics
+                = t 'twitter.change_clics_percentage'
               - @twitter_data.each do |twitter_datum|
                 - percentage_clicks = number_with_precision(twitter_datum.get_percentage_difference_from_previous_total_clicks, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if percentage_clicks.to_f >= 0.0 
@@ -201,13 +201,13 @@ section.sectionInformation
                     = %{#{percentage_clicks}%}
             tr
               td
-                | Interacciones en twitter ads
+                = t 'twitter.interactions_twitter_ads'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.interactions_ads, delimiter: units_delimiter)
             tr
               td
-                | % cambio interacciones en twitter ads
+                = t 'twitter.change_twitter_ads_percentage'
               - @twitter_data.each do |twitter_datum|
                 - percentage_interactions_ads = number_with_precision(twitter_datum.get_percentage_difference_from_previous_interactions_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if percentage_interactions_ads.to_f >= 0.0 
@@ -218,13 +218,13 @@ section.sectionInformation
                     = %{#{percentage_interactions_ads}%}
             tr
               td
-                | Interacciones en Total
+                = t 'twitter.total_interactions'
               - @twitter_data.each do | datum |
                 td
                   = number_with_delimiter(datum.total_interactions, delimiter: units_delimiter)
             tr
               td
-                | % cambio en interacciones
+                = t 'twitter.change_interactions_percentage'
               - @twitter_data.each do |twitter_datum|
                 - percentage_interactions = number_with_precision(twitter_datum.get_percentage_difference_from_previous_total_interactions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if percentage_interactions.to_f >= 0.0 
@@ -235,25 +235,25 @@ section.sectionInformation
                     = %{#{percentage_interactions}%}
             tr
               td
-                | # impresiones (tweetreach)
+                = t 'twitter.prints_tweetreach'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.prints, delimiter: units_delimiter)
             tr
               td
-                | # impresiones en twitter ads
+                = t 'twitter.prints_twitter_ads'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.prints_ads, delimiter: units_delimiter)
             tr
               td 
-                | impresiones en total
+                = t 'twitter.total_prints'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_delimiter(twitter_datum.total_prints, delimiter: units_delimiter)
             tr
               td
-                | % cambio en impresiones
+                = t 'twitter.change_prints_percentage'
               - @twitter_data.each do | datum |
                 - percentage_prints= number_with_precision(datum.get_percentage_difference_from_previous_total_prints, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
                 - if percentage_prints.to_f >= 0.0 
@@ -264,61 +264,61 @@ section.sectionInformation
                     = %{#{percentage_prints}%}
             tr.titlesRows
               td colspan=100
-                | Inversion
+                = t 'global.investment_title'
             tr
               td
-                | Inversion Agencia
+                = t 'global.agency_investment'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_precision(twitter_datum.agency_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion nuevas acciones
+                = t 'global.new_actions_investment'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_precision(twitter_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion anuncios twitter ads
+                = t 'twitter.twitter_ads_investment'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_precision(twitter_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion Total
+                = t 'global.total_investment'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_precision(twitter_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr.titlesRows
               td colspan=100
-                | Costes
+                = t 'global.costs_title'
             tr
               td
-                | Cost per engagement twitter ads
+                = t 'twitter.cost_per_engagement'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_precision(twitter_datum.cost_twitter_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Coste por mil impresiones
+                = t 'twitter.cost_per_prints'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_precision(twitter_datum.cost_per_prints, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Coste por interaccion
+                = t 'twitter.cost_per_interaction'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_precision(twitter_datum.cost_per_interaction, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Costes por follower
+                = t 'twitter.cost_per_followers'
               - @twitter_data.each do |twitter_datum|
                 td
                   = number_with_precision(twitter_datum.cost_follower, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               -@twitter_data.each do |twitter_datum|
                 td.celdaOpciones
                   a.btn.btn-info href=twitter_edit_path(twitter_datum.id,params[:idc]) id=%{edit_#{twitter_datum.id}}
@@ -336,7 +336,7 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"

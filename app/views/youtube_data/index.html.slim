@@ -17,18 +17,19 @@
       |    
       = t 'buttons.back_social_network'
     a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      |Reporte  
+      = t 'buttons.report'
+      |    
       i.icon-circle-arrow-down.icon-white
     br
     br
     img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=youtube_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
-    |Nueva Entrada de Datos
+    = t 'buttons.new_data'
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"
-    | Seleccionar Rango de Fecha
+    = t 'buttons.range_date'
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
@@ -37,21 +38,20 @@
       | Seleccione el rango de fechas
     br
     br
-    |Fecha Inicio
-    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
-      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+    = t 'global.start_date'
+    .input-append.date data-date=get_start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value=get_start_date readonly="readonly" id="start_date"
       span.add-on
         i.icon-th
     br
-    br
-    |Fecha Final
-    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
-      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+    = t 'global.end_date'
+    .input-append.date data-date=get_end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value=get_end_date readonly="readonly" id="end_date"
       span.add-on
         i.icon-th
     br
     center
-      input.btn.btn-primary type="submit" value="Obtener Datos"
+      input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 script
   | createChart('container_community', 'Comunidad', #{raw @youtube['dates']});
@@ -111,149 +111,149 @@ section.sectionInformation
           tbody
             tr.titlesRows
               td colspan=100
-                | Comunidad 
+                = t 'youtube.community_title'
             tr
               td.estiloCelda
-                |Suscriptores nuevos
+                = t 'youtube.new_subscribers'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.new_subscribers, delimiter: units_delimiter)
             tr
               td
-                |Suscriptores totales
+                = t 'youtube.total_subscribers'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.total_subscriber, delimiter: units_delimiter)
             tr.titlesRows
               td colspan=100
-                |Interactividad
+                = t 'global.interactivity_title'
             tr
               td
-                |Reproducciones videos durante un periodo
+                = t 'youtube.total_video_views'
               - @youtube_datum.each do | youtube_datum |
                 td
                   = number_with_delimiter(youtube_datum.total_video_views, delimiter: units_delimiter)
             tr
               td
-                |Reproductor insertado
+                = t 'youtube.inserted_player'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.inserted_player, delimiter: units_delimiter)
             tr
               td
-                |Dispositivos moviles
+                = t 'youtube.mobile_device'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.mobile_devise, delimiter: units_delimiter)
             tr
               td
-                |Busqueda en Youtube
+                = t 'youtube.youtube_search'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_precision(youtube_datum.youtube_search, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                |Sugerencia de Youtube
+                = t 'youtube.youtube_suggestion'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.youtube_suggestion, delimiter: units_delimiter)
             tr
               td
-                |Pagina de canal de Youtube
+                = t 'youtube.youtube_page'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_precision(youtube_datum.youtube_page, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                |Sitio web externo
+                = t 'youtube.external_web_site'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.external_web_site, delimiter: units_delimiter)
             tr
               td
-                |Busqueda en Google
+                = t 'youtube.google_search'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.google_search, delimiter: units_delimiter)
             tr
               td
-                |Otras paginas de Youtube
+                = t 'youtube.youtube_others'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.youtube_others, delimiter: units_delimiter)
             tr
               td
-                |Suscripciones de Youtube
+                = t 'youtube.youtube_subscriptions'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.youtube_subscriptions, delimiter: units_delimiter)
             tr
               td
-                |Publicidad de Youtube
+                = t 'youtube.youtube_ads'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.youtube_ads, delimiter: units_delimiter)
             tr
               td
-                |# Me Gusta
+                = t 'youtube.like'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.likes, delimiter: units_delimiter)
             tr
               td
-                |# No Me Gusta
+                = t 'youtube.no_like'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.no_likes, delimiter: units_delimiter)
             tr
               td
-                |# Favoritos
+                = t 'youtube.favorites'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.favorite, delimiter: units_delimiter)
             tr
               td
-                |# Comentarios
+                = t 'youtube.comments'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.comments, delimiter: units_delimiter)
             tr
               td
-                |# Compartidos
+                = t 'youtube.shared'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_delimiter(youtube_datum.shared, delimiter: units_delimiter)
 
             tr.titlesRows
               td colspan=100
-                | Inversion
+                = t 'global.investment_title'
             tr
               td
-                | Inversion Agencia
+                = t 'global.agency_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_precision(youtube_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion nuevas acciones
+                = t 'global.new_actions_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_precision(youtube_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion anuncios
+                = t 'global.ads_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_precision(youtube_datum.investment_anno, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr
               td
-                | Inversion Total
+                = t 'global.total_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
                   = number_with_precision(youtube_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
             tr id="buttons"
               td.nilValue
-                |Opciones
+                = t 'global.options'
               -@youtube_datum.each do |youtube_datum|
                 td.celdaOpciones
                   a.btn.btn-info href=youtube_edit_path(youtube_datum.id,params[:idc]) id=%{edit_#{youtube_datum.id}}
@@ -271,7 +271,7 @@ section.sectionInformation
           br
           .counter
           button.btn.btn-success
-            | Guardar
+            = t 'buttons.save'
           .result
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
