@@ -66,7 +66,7 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
 
   def sets_workbook_and_worksheet(document)
     @workbook = document.workbook
-    @workbook.sheet_by_name(social_network.name).nil? ? name = social_network.name : name = "#{social_network.name}-#{Random.rand(1000)}"
+    @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
     @worksheet = @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => { :orientation => :landscape, :paper_size => 9, :fit_to_width => 1, :fit_to_height => 10})
   end
 
