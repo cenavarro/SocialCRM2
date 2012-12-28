@@ -102,19 +102,19 @@ section.sectionInformation
                 = t 'google_plus.new_followers'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_delimiter(google_plus_datum.new_followers, delimiter: units_delimiter)
+                  = number_with_delimiter(google_plus_datum.new_followers, integer_format)
             tr
               td
                 = t 'google_plus.total_followers'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_delimiter(google_plus_datum.total_followers, delimiter: units_delimiter)
+                  = number_with_delimiter(google_plus_datum.total_followers, integer_format)
             tr
               td
                 = t 'global.percentage_growth'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_followers, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_followers, decimal_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.interactivity_title'
@@ -123,25 +123,25 @@ section.sectionInformation
                 = t 'google_plus.plus'
               - @google_plus_datum.each do | google_plus_datum |
                 td
-                  = number_with_delimiter(google_plus_datum.plus, delimiter: units_delimiter)
+                  = number_with_delimiter(google_plus_datum.plus, integer_format)
             tr
               td
                 = t 'google_plus.content_shared'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_delimiter(google_plus_datum.content_shared, delimiter: units_delimiter)
+                  = number_with_delimiter(google_plus_datum.content_shared, integer_format)
             tr
               td
                 = t 'google_plus.total_interactions'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_delimiter(google_plus_datum.total_interactions, delimiter: units_delimiter)
+                  = number_with_delimiter(google_plus_datum.total_interactions, integer_format)
             tr
               td
                 = t 'google_plus.change_interactions'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_interactions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_interactions, decimal_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.investment_title'
@@ -150,25 +150,25 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(google_plus_datum.investment_agency, decimal_format)
             tr
               td
                 = t 'global.new_actions_investment'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(google_plus_datum.investment_actions, decimal_format)
             tr
               td
                 = t 'global.ads_investment'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(google_plus_datum.investment_ads, decimal_format)
             tr
               td
                 = t 'global.total_investment'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(google_plus_datum.total_investment, decimal_format)
             tr id="buttons"
               td.nilValue
                 = t 'global.options'

@@ -109,10 +109,11 @@ $(document).ready(function(){
     $("#end_date_picker").datepicker('hide');
   });
   $("#formEntradaDatos").validationEngine();
-  $('input.number').autoNumeric({aSep:',', aPad: false, wEmpty: 'zero' });
-  $('input.decimal').autoNumeric({aSep:',', mDec: '2', wEmpty: 'zero' });
+  $('input.number').autoNumeric({aSep:'.', aDec: ',', aPad: false, wEmpty: 'zero' });
+  $('input.decimal').autoNumeric({aSep:'.', aDec: ',', mDec: '2', wEmpty: 'zero' });
   $('#formEntradaDatos').submit(function(){
     $('input.[number, decimal]:input').each(function(){
+      $(this).val($(this).val().replace(/\./g, ''));
       $(this).val($(this).val().replace(/,/g, '.'));
     });
   });

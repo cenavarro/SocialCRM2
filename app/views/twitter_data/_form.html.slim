@@ -31,59 +31,59 @@
       br
       br
       = f.label t 'twitter.followers'
-      = f.text_field :total_followers, {:class => "number validate[required]"}
+      = f.text_field :total_followers, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_followers, integer_format)}
       br
       br
       = f.label t 'twitter.goal_followers'
-      = f.text_field :goal_followers, {:class => "number validate[required]"}
+      = f.text_field :goal_followers, {:class => "number validate[required]", :value => number_with_delimiter(f.object.goal_followers, integer_format)}
       br
       br
       = f.label t 'twitter.total_tweets'
-      = f.text_field :total_tweets, {:class => "number validate[required]"}
+      = f.text_field :total_tweets, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_tweets, integer_format)}
     .box.interactionTwitter
       = t 'global.interactivity_title' 
       br
       br
       = f.label t 'twitter.mentions'
-      = f.text_field :total_mentions, {:class => "number validate[required]"}
+      = f.text_field :total_mentions, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_mentions, integer_format)}
       br
       br
       = f.label t 'twitter.retweets'
-      = f.text_field :ret_tweets, {:class => "number validate[required]"}
+      = f.text_field :ret_tweets, {:class => "number validate[required]", :value => number_with_delimiter(f.object.ret_tweets, integer_format)}
       br
       br
       = f.label t 'twitter.link_clics'
-      = f.text_field :total_clicks, {:class => "number validate[required]"}
+      = f.text_field :total_clicks, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_clicks, integer_format)}
       br
       br
       = f.label t 'twitter.interactions_twitter_ads'
-      = f.text_field :interactions_ads, {:class => "number validate[required]"}
+      = f.text_field :interactions_ads, {:class => "number validate[required]", :value => number_with_delimiter(f.object.interactions_ads, integer_format)}
       br
       br
       = f.label t 'twitter.prints_tweetreach'
-      = f.text_field :prints, {:class => "number validate[required]"}
+      = f.text_field :prints, {:class => "number validate[required]", :value => number_with_delimiter(f.object.prints, integer_format)}
       br
       br
       = f.label t 'twitter.prints_twitter_ads'
-      = f.text_field :prints_ads, {:class => "number validate[required]"}
+      = f.text_field :prints_ads, {:class => "number validate[required]", :value => number_with_delimiter(f.object.prints_ads, integer_format)}
     .box.investmentTwitter
       = t 'global.investment_title' 
       br
       br
       = f.label t 'global.agency_investment'
-      = f.text_field :agency_investment, {:class => "decimal validate[required]"}
+      = f.text_field :agency_investment, {:class => "decimal validate[required]", :value => number_with_precision(f.object.agency_investment, decimal_format)}
       br
       br
       = f.label t 'global.new_actions_investment'
-      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]", :value =>  number_with_precision(f.object.investment_actions, decimal_format)}
       br
       br
       = f.label t 'twitter.twitter_ads_investment'
-      = f.text_field :investment_ads, { :class => "decimal validate[required]"}
+      = f.text_field :investment_ads, { :class => "decimal validate[required]", :value =>  number_with_precision(f.object.investment_ads, decimal_format)}
       br
       br
       = f.label t 'twitter.cost_per_engagement'
-      = f.text_field :cost_twitter_ads, {:class => "decimal validate[required]"}
+      = f.text_field :cost_twitter_ads, {:class => "decimal validate[required]", :value =>  number_with_precision(f.object.cost_twitter_ads, decimal_format)}
     br
     br
     = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveTwitter" }

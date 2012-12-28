@@ -39,7 +39,7 @@
       br
       br
       = f.label t 'facebook.total_fans'
-      = f.text_field :total_fans, :value => @facebook['page_fan_adds_unique']-@facebook['page_fan_removes_unique'], :class => "number validate[required]"
+      = f.text_field :total_fans, :value => number_with_delimiter(@facebook['page_fan_adds_unique']-@facebook['page_fan_removes_unique'], integer_format), :class => "number validate[required]"
       br
       br
       = f.label t 'facebook.goal_fans'
@@ -57,19 +57,19 @@
       br
       br
       = f.label t 'facebook.prints'
-      = f.text_field :prints, :value => @facebook['page_impressions_organic'], :class => "number validate[required]"
+      = f.text_field :prints, :value => number_with_delimiter(@facebook['page_impressions_organic'], integer_format), :class => "number validate[required]"
       br
       br
       = f.label t 'facebook.interactions'
-      = f.text_field :total_interactions, :value => @facebook['page_storytellers'] + @facebook['page_impressions_organic_unique'] + @facebook['page_consumptions_unique'], :class => "number validate[required]"
+      = f.text_field :total_interactions, :value => number_with_delimiter(@facebook['page_storytellers'] + @facebook['page_impressions_organic_unique'] + @facebook['page_consumptions_unique'], integer_format), :class => "number validate[required]"
       br
       br
       = f.label t 'facebook.total_reach'
-      = f.text_field :total_reach, :value => @facebook['page_impressions_unique'], :class => "number validate[required]"
+      = f.text_field :total_reach, :value => number_with_delimiter(@facebook['page_impressions_unique'], integer_format), :class => "number validate[required]"
       br
       br
       = f.label t 'facebook.potential_reach'
-      = f.text_field :potential_reach, :value => @facebook['page_friends_of_fans'], :class => "number validate[required]"
+      = f.text_field :potential_reach, :value => number_with_delimiter(@facebook['page_friends_of_fans'], integer_format), :class => "number validate[required]"
       br
       br
       = f.label t 'facebook.ads_prints'

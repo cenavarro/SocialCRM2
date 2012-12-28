@@ -117,13 +117,13 @@ section.sectionInformation
                 = t 'youtube.new_subscribers'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.new_subscribers, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.new_subscribers, integer_format)
             tr
               td
                 = t 'youtube.total_subscribers'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.total_subscriber, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.total_subscriber, integer_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.interactivity_title'
@@ -132,97 +132,97 @@ section.sectionInformation
                 = t 'youtube.total_video_views'
               - @youtube_datum.each do | youtube_datum |
                 td
-                  = number_with_delimiter(youtube_datum.total_video_views, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.total_video_views, integer_format)
             tr
               td
                 = t 'youtube.inserted_player'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.inserted_player, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.inserted_player, integer_format)
             tr
               td
                 = t 'youtube.mobile_device'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.mobile_devise, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.mobile_devise, integer_format)
             tr
               td
                 = t 'youtube.youtube_search'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.youtube_search, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(youtube_datum.youtube_search, decimal_format)
             tr
               td
                 = t 'youtube.youtube_suggestion'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.youtube_suggestion, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.youtube_suggestion, integer_format)
             tr
               td
                 = t 'youtube.youtube_page'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.youtube_page, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(youtube_datum.youtube_page, decimal_format)
             tr
               td
                 = t 'youtube.external_web_site'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.external_web_site, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.external_web_site, integer_format)
             tr
               td
                 = t 'youtube.google_search'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.google_search, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.google_search, integer_format)
             tr
               td
                 = t 'youtube.youtube_others'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.youtube_others, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.youtube_others, integer_format)
             tr
               td
                 = t 'youtube.youtube_subscriptions'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.youtube_subscriptions, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.youtube_subscriptions, integer_format)
             tr
               td
                 = t 'youtube.youtube_ads'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.youtube_ads, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.youtube_ads, integer_format)
             tr
               td
                 = t 'youtube.like'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.likes, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.likes, integer_format)
             tr
               td
                 = t 'youtube.no_like'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.no_likes, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.no_likes, integer_format)
             tr
               td
                 = t 'youtube.favorites'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.favorite, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.favorite, integer_format)
             tr
               td
                 = t 'youtube.comments'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.comments, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.comments, integer_format)
             tr
               td
                 = t 'youtube.shared'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.shared, delimiter: units_delimiter)
+                  = number_with_delimiter(youtube_datum.shared, integer_format)
 
             tr.titlesRows
               td colspan=100
@@ -232,25 +232,25 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(youtube_datum.investment_agency, decimal_format)
             tr
               td
                 = t 'global.new_actions_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(youtube_datum.investment_actions, decimal_format)
             tr
               td
                 = t 'global.ads_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.investment_anno, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(youtube_datum.investment_anno, decimal_format)
             tr
               td
                 = t 'global.total_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(youtube_datum.total_investment, decimal_format)
             tr id="buttons"
               td.nilValue
                 = t 'global.options'

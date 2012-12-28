@@ -106,25 +106,25 @@ section.sectionInformation
                 = t 'pinterest.followers'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_delimiter(pinterest_datum.total_followers, delimiter: units_delimiter)
+                  = number_with_delimiter(pinterest_datum.total_followers, integer_format)
             tr
               td
                 = t 'global.percentage_growth'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_total_followers, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_total_followers, decimal_format)
             tr
               td
                 = t 'pinterest.boards'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_delimiter(pinterest_datum.boards, delimiter: units_delimiter)
+                  = number_with_delimiter(pinterest_datum.boards, integer_format)
             tr
               td
                 = t 'pinterest.pins'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_delimiter(pinterest_datum.pins, delimiter: units_delimiter)
+                  = number_with_delimiter(pinterest_datum.pins, integer_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.interactivity_title'
@@ -133,49 +133,49 @@ section.sectionInformation
                 = t 'pinterest.liked'
               - @pinterest_datum.each do | pinterest_datum |
                 td
-                  = number_with_delimiter(pinterest_datum.liked, delimiter: units_delimiter)
+                  = number_with_delimiter(pinterest_datum.liked, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_liked, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_liked, decimal_format)
             tr
               td
                 = t 'pinterest.repin'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_delimiter(pinterest_datum.repin, delimiter: units_delimiter)
+                  = number_with_delimiter(pinterest_datum.repin, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_repin, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_repin, decimal_format)
             tr
               td
                 = t 'pinterest.comments'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_delimiter(pinterest_datum.comments, delimiter: units_delimiter)
+                  = number_with_delimiter(pinterest_datum.comments, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_comments, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_comments, decimal_format)
             tr
               td
                 = t 'pinterest.community_boards'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_delimiter(pinterest_datum.community_boards, delimiter: units_delimiter)
+                  = number_with_delimiter(pinterest_datum.community_boards, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_community_boards, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_community_boards, decimal_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.investment_title'
@@ -184,31 +184,31 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.investment_agency, decimal_format)
             tr
               td
                 = t 'global.new_actions_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.investment_actions, decimal_format)
             tr
               td
                 = t 'global.ads_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.investment_ads, decimal_format)
             tr
               td
                 = t 'global.total_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.total_investment, decimal_format)
             tr
               td
                 = t 'global.fan_cost'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.coste_fan, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(pinterest_datum.coste_fan, decimal_format)
             tr id="buttons"
               td.nilValue
                 = t 'global.options'

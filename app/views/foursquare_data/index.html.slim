@@ -104,13 +104,13 @@ section.sectionInformation
                 = t 'foursquare.new_followers'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_delimiter(foursquare_datum.new_followers, delimiter: units_delimiter)
+                  = number_with_delimiter(foursquare_datum.new_followers, integer_format)
             tr
               td
                 = t 'foursquare.total_followers'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_delimiter(foursquare_datum.total_followers, delimiter: units_delimiter)
+                  = number_with_delimiter(foursquare_datum.total_followers, integer_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.interactivity_title'
@@ -119,37 +119,37 @@ section.sectionInformation
                 = t 'foursquare.clients'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_delimiter(foursquare_datum.clients, delimiter: units_delimiter)
+                  = number_with_delimiter(foursquare_datum.clients, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_clients, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_clients, decimal_format)
             tr
               td
                 = t 'foursquare.likes'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_delimiter(foursquare_datum.likes, delimiter: units_delimiter)
+                  = number_with_delimiter(foursquare_datum.likes, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_likes, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_likes, decimal_format)
             tr
               td
                 = t 'foursquare.checkins'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_delimiter(foursquare_datum.checkins, delimiter: units_delimiter)
+                  = number_with_delimiter(foursquare_datum.checkins, integer_format)
             tr
               td
                 = t 'global.difference_subtitile'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_checkins, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_checkins, decimal_format)
             tr.titlesRows
               td colspan=100
                 = t 'foursquare.campaign_title'
@@ -158,25 +158,25 @@ section.sectionInformation
                 = t 'foursquare.total_unlocks'
               - @foursquare_datum.each do | foursquare_datum |
                 td
-                  = number_with_delimiter(foursquare_datum.total_unlocks, delimiter: units_delimiter)
+                  = number_with_delimiter(foursquare_datum.total_unlocks, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_unlocks, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_unlocks, decimal_format)
             tr
               td
                 = t 'foursquare.total_visits'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_delimiter(foursquare_datum.total_visits, delimiter: units_delimiter)
+                  = number_with_delimiter(foursquare_datum.total_visits, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @foursquare_datum.each do |foursquare_datum|
                 td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_visits, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_visits, decimal_format)
             tr id="buttons"
               td.nilValue
                 = t 'global.options'

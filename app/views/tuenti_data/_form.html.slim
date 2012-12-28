@@ -37,60 +37,61 @@
       br
       br
       = f.label t 'tuenti.real_fans' 
-      = f.text_field :real_fans, {:class => "number validate[required]"}
+      = f.text_field :real_fans, {:class => "number validate[required]", :value => number_with_delimiter(f.object.real_fans, integer_format)}
       br
       br
       = f.label t 'tuenti.goal_fans'
-      = f.text_field :goal_fans, {:class => "number validate[required]"}
+      = f.text_field :goal_fans, {:class => "number validate[required]", :value => number_with_delimiter(f.object.goal_fans, integer_format)}
 
     .box.pageTuenti
       = t 'tuenti.page_company'
       br
       br
       = f.label t 'tuenti.page_prints'
-      = f.text_field :page_prints, {:class => "number validate[required]"}
+      = f.text_field :page_prints, {:class => "number validate[required]", :value => number_with_delimiter(f.object.page_prints, integer_format)}
       br
       br
       = f.label t 'tuenti.total_unique_users'
-      = f.text_field :unique_total_users, {:class => "number validate[required]"}
+      = f.text_field :unique_total_users, {:class => "number validate[required]", :value => number_with_delimiter(f.object.unique_total_users, integer_format)}
       br
       br
       = f.label t 'tuenti.external_clics'
-      = f.text_field :external_clics, {:class => "number validate[required]"}
+      = f.text_field :external_clics, {:class => "number validate[required]", :value => number_with_delimiter(f.object.external_clics, integer_format)}
       br
       br
       = f.label t 'tuenti.clics'
-      = f.text_field :clics, {:class => "number validate[required]"}
+      = f.text_field :clics, {:class => "number validate[required]", :value => number_with_delimiter(f.object.clics, integer_format)}
       br
       br
       = f.label t 'tuenti.downloads'
-      = f.text_field :downloads, {:class => "number validate[required]"}
+      = f.text_field :downloads, {:class => "number validate[required]", :value => number_with_delimiter(f.object.downloads, integer_format)}
       br
       br
       = f.label t 'tuenti.num_comments'
-      = f.text_field :comments, {:class => "number validate[required]"}
+      = f.text_field :comments, {:class => "number validate[required]", :value => number_with_delimiter(f.object.comments, integer_format)}
       br
       br
       = f.label t 'tuenti.ctr_external_clics_percentage'
-      = f.text_field :ctr_external_clics, {:class => "decimal validate[required]"}
+      = f.text_field :ctr_external_clics, {:class => "decimal validate[required]", :value => number_with_precision(f.object.ctr_external_clics, decimal_format)}
       br
       br
       = f.label t 'tuenti.upload_photos'
-      = f.text_field :upload_photos, {:class => "number validate[required]"}
+      = f.text_field :upload_photos, {:class => "number validate[required]", :value => number_with_delimiter(f.object.upload_photos, integer_format)}
     .box.investmentTuenti
       =  t 'global.investment_title' 
       br
       br
       = f.label t 'global.agency_investment'
-      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_agency, decimal_format)}
       br
       br
       = f.label t 'global.new_actions_investment'
-      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_actions, decimal_format)}
       br
       br
       = f.label t 'global.ads_investment'
-      = f.text_field :investment_ads, {:class => "decimal validate[required]"}
+      = f.text_field :investment_ads, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_ads, decimal_format)}
+
     = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveTuenti"}
     |     
     = link_to (t 'buttons.back'), tuenti_index_path(params[:idc],1), :class => "btn btn-inverse backTuenti"

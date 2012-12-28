@@ -114,9 +114,9 @@ section.sectionInformation
                     - data = @benchmark[competitor]
                     - for i in (0..5) do
                       td.columnsTableBenchmark
-                        = number_with_delimiter(data[index + i], delimiter: ',')
+                        = number_with_delimiter(data[index + i], integer_format)
                     td.columnsTableBenchmark
-                      = number_with_delimiter(data[index..index+5].inject(:+), delimiter: ',') 
+                      = number_with_delimiter(data[index..index+5].inject(:+), integer_format)
                       - total << data[index..index+5].inject(:+) 
                     - index = index + 6
                   - totals[competitor] = total 

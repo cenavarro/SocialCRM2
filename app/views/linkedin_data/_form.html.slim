@@ -37,52 +37,52 @@
       br
       br
       = f.label t 'linkedin.total_followers'
-      = f.text_field :total_followers, {:class => "number validate[required]"}
+      = f.text_field :total_followers, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_followers, integer_format)}
 
     .box.interactionLinkedin
       = t 'global.interactivity_title'
       br
       br
       = f.label t 'linkedin.summary'
-      = f.text_field :summary, {:class => "number validate[required]"}
+      = f.text_field :summary, {:class => "number validate[required]", :value => number_with_delimiter(f.object.summary, integer_format)}
       br
       br
       = f.label  t 'linkedin.employ'
-      = f.text_field :employment, {:class => "number validate[required]"}
+      = f.text_field :employment, {:class => "number validate[required]", :value => number_with_delimiter(f.object.employment, integer_format)}
       br
       br
       = f.label t 'linkedin.products_services'
-      = f.text_field :products_services, {:class => "number validate[required]"}
+      = f.text_field :products_services, {:class => "number validate[required]", :value => number_with_delimiter(f.object.products_services, integer_format)}
       br
       br
       = f.label t 'linkedin.prints'
-      = f.text_field :prints, {:class => "number validate[required]"}
+      = f.text_field :prints, {:class => "number validate[required]", :value => number_with_delimiter(f.object.prints, integer_format)}
       br
       br
       = f.label t 'linkedin.clics'
-      = f.text_field :clics, {:class => "number validate[required]"}
+      = f.text_field :clics, {:class => "number validate[required]", :value => number_with_delimiter(f.object.clics, integer_format)}
       br
       br
       = f.label t 'linkedin.interest_percentage'
-      = f.text_field :interest, {:class => "decimal validate[required]"}
+      = f.text_field :interest, {:class => "decimal validate[required]", :value => number_with_precision(f.object.interest, decimal_format)}
       br
       br
       = f.label t 'linkedin.recommendations'
-      = f.text_field :recommendation, {:class => "number validate[required]"}
+      = f.text_field :recommendation, {:class => "number validate[required]", :value => number_with_delimiter(f.object.recommendation, integer_format)}
     .box.investmentLinkedin
       = t 'global.investment_title'
       br
       br
       = f.label t 'global.agency_investment'
-      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_agency, decimal_format)}
       br
       br
       = f.label t 'global.new_actions_investment'
-      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_actions, decimal_format)}
       br
       br
       = f.label t 'global.ads_investment'
-      = f.text_field :investment_anno, { :class => "decimal validate[required]"}
+      = f.text_field :investment_anno, { :class => "decimal validate[required]", :value => number_with_precision(f.object.investment_anno, decimal_format)}
 
     br
     br

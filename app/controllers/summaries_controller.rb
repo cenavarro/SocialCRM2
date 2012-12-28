@@ -7,7 +7,7 @@ class SummariesController < ApplicationController
       Summary.create!(social_network_id: params[:id_social], client_id: params[:idc])
     end
     summary = Summary.find_by_social_network_id(params[:id_social])
-    @summary_comments = summary.summary_comments
+    @summary_comments = summary.summary_comments.order("start_date ASC")
   end
 
   def new

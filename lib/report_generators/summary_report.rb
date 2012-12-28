@@ -14,7 +14,7 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
 
   def add_to(document)
     if summary_has_data?
-      @summary_comments = summary.summary_comments
+      @summary_comments = summary.summary_comments.where("start_date >= ? and end_date <= ?", start_date, end_date).order("start_date ASC")
       sets_workbook_and_worksheet(document)
       create_report
       append_header(0)

@@ -48,17 +48,17 @@
             td
               = competitor.name
             td
-              = text_field_tag "#{competitor.id}[blogs]", benchmark_data.blogs, {:style => "width:60px;", :class => "number validate[required]"}
+              = text_field_tag "#{competitor.id}[blogs]", number_with_delimiter(benchmark_data.blogs, integer_format), {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[forums]", benchmark_data.forums, {:style => "width:60px;", :class => "number validate[required]"}
+              = text_field_tag "#{competitor.id}[forums]", number_with_delimiter(benchmark_data.forums, integer_format), {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[videos]", benchmark_data.videos, {:style => "width:60px;", :class => "number validate[required]"}
+              = text_field_tag "#{competitor.id}[videos]", number_with_delimiter(benchmark_data.videos, integer_format), {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[twitter]", benchmark_data.twitter, {:style => "width:60px;", :class => "number validate[required]"}
+              = text_field_tag "#{competitor.id}[twitter]", number_with_delimiter(benchmark_data.twitter, integer_format), {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[facebook]", benchmark_data.facebook, {:style => "width:60px;", :class => "number validate[required]"}
+              = text_field_tag "#{competitor.id}[facebook]", number_with_delimiter(benchmark_data.facebook, integer_format), {:style => "width:60px;", :class => "number validate[required]"}
             td
-              = text_field_tag "#{competitor.id}[others]", benchmark_data.others, {:style => "width:60px;", :class => "number validate[required]"}
+              = text_field_tag "#{competitor.id}[others]", number_with_delimiter(benchmark_data.others, integer_format), {:style => "width:60px;", :class => "number validate[required]"}
   .buttonsBenchmark
     = submit_tag (t 'buttons.save_data'), {:class => "btn btn-success saveBenchmark"}
     = link_to (t 'buttons.back'), benchmark_index_path(params[:idc],1), :class => "btn btn-inverse backBenchmark"

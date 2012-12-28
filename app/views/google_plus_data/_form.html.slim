@@ -33,32 +33,32 @@
       br
       br
       = f.label  t 'google_plus.total_followers'
-      = f.text_field :total_followers, {:class => "number validate[required]"}
+      = f.text_field :total_followers, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_followers, integer_format)}
 
     .box.interactionGooglePlus
       = t 'global.interactivity_title'
       br
       br
       = f.label t 'google_plus.plus'
-      = f.text_field :plus, {:class => "number validate[required]"}
+      = f.text_field :plus, {:class => "number validate[required]", :value => number_with_delimiter(f.object.plus, integer_format)}
       br
       br
       = f.label t 'google_plus.content_shared' 
-      = f.text_field :content_shared, {:class => "number validate[required]"}
+      = f.text_field :content_shared, {:class => "number validate[required]", :value => number_with_delimiter(f.object.content_shared, integer_format)}
     .box.investmentGooglePlus
       = t 'global.investment_title'
       br
       br
       = f.label t 'global.agency_investment' 
-      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_agency, decimal_format)}
       br
       br
       = f.label t 'global.new_actions_investment' 
-      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_actions, decimal_format)}
       br
       br
       = f.label t 'global.ads_investment'
-      = f.text_field :investment_ads, { :class => "decimal validate[required]"}
+      = f.text_field :investment_ads, { :class => "decimal validate[required]", :value => number_with_precision(f.object.investment_ads, decimal_format)}
     br
     br
     = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveGooglePlus"}

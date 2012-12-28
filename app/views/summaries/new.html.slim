@@ -3,4 +3,6 @@ center
   h1 Nueva Entrada Resumen
 br
 br
-== render 'form'
+= form_for @summary_comment, :url => summaries_path, :method => :post, :html => {:id => "formEntradaDatos"} do |f|
+  - @f = f
+  == render 'form'

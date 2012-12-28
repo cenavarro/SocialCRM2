@@ -44,77 +44,77 @@ br
       br
       br
       = f.label t 'facebook.total_fans'
-      = f.text_field :total_fans, :class => "number validate[required]"
+      = f.text_field :total_fans, :class => "number validate[required]", :value => number_with_delimiter(f.object.total_fans, integer_format)
       br
       br
       = f.label t 'facebook.goal_fans'
-      = f.text_field :goal_fans, :class => "number validate[required]"
+      = f.text_field :goal_fans, :class => "number validate[required]", :value => number_with_delimiter(f.object.goal_fans, integer_format)
       br
       br
       = f.label t 'facebook.spain_ranking'
-      = f.text_field :ranking_espana, :class => "number validate[required]"
+      = f.text_field :ranking_espana, :class => "number validate[required]", :value => number_with_delimiter(f.object.ranking_espana, integer_format)
       br
       br
       = f.label t 'facebook.world_ranking'
-      = f.text_field :ranking_world, :class => "number validate[required]"
+      = f.text_field :ranking_world, :class => "number validate[required]", :value => number_with_delimiter(f.object.ranking_world, integer_format)
     .box.interaction
       = t 'facebook.interactions'
       br
       br
       = f.label t 'facebook.prints'
-      = f.text_field :prints, :class => "number validate[required]"
+      = f.text_field :prints, :class => "number validate[required]", :value => number_with_delimiter(f.object.prints, integer_format)
       br
       br
       = f.label t 'facebook.interactions'
-      = f.text_field :total_interactions, :class => "number validate[required]"
+      = f.text_field :total_interactions, :class => "number validate[required]", :value => number_with_delimiter(f.object.total_interactions, integer_format)
       br
       br
       = f.label t 'facebook.total_reach'
-      = f.text_field :total_reach, :class => "number validate[required]"
+      = f.text_field :total_reach, :class => "number validate[required]", :value => number_with_delimiter(f.object.total_reach, integer_format)
       br
       br
       = f.label t 'facebook.potential_reach'
-      = f.text_field :potential_reach, :class => "number validate[required]"
+      = f.text_field :potential_reach, :class => "number validate[required]", :value => number_with_delimiter(f.object.potential_reach, integer_format)
       br
       br
       = f.label t 'facebook.ads_prints'
-      = f.text_field :total_prints_per_anno, :class => "number validate[required]"
+      = f.text_field :total_prints_per_anno, :class => "number validate[required]", :value => number_with_delimiter(f.object.total_prints_per_anno, integer_format)
       br
       br
       = f.label t 'facebook.ads_clics'
-      = f.text_field :total_clicks_anno, :class => "number validate[required]"
+      = f.text_field :total_clicks_anno, :class => "number validate[required]", :value => number_with_delimiter(f.object.total_clicks_anno, integer_format)
       br
       br
       = f.label t 'facebook.fans_through_ads'
-      = f.text_field :fans_through_anno, :class => "number validate[required]"
+      = f.text_field :fans_through_anno, :class => "number validate[required]", :value => number_with_delimiter(f.object.fans_through_anno, integer_format)
     .box.inversion
       = t 'global.investment_title'
       br
       br
       = f.label t 'global.agency_investment'
-      = f.text_field :agency_investment, {:class => "decimal validate[required]"}
+      = f.text_field :agency_investment, :class => "decimal validate[required]", :value => number_with_precision(f.object.agency_investment, decimal_format)
       br
       br
       = f.label t 'global.new_actions_investment'
-      = f.text_field :new_stock_investment, {:class => "decimal validate[required]"}
+      = f.text_field :new_stock_investment, {:class => "decimal validate[required]", :value => number_with_precision(f.object.new_stock_investment, decimal_format)}
       br
       br
       = f.label t 'global.ads_investment'
-      = f.text_field :anno_investment, {:class => "decimal validate[required]"}
+      = f.text_field :anno_investment, {:class => "decimal validate[required]", :value => number_with_precision(f.object.anno_investment, decimal_format)}
     .box.costes
       = t 'global.costs_title'
       br
       br
       = f.label t 'facebook.ctr_ads'
-      = f.text_field :ctr_anno, {:class => "decimal validate[required]"}
+      = f.text_field :ctr_anno, {:class => "decimal validate[required]", :value => number_with_precision(f.object.ctr_anno, decimal_format)}
       br
       br
       = f.label t 'facebook.cpm_ads'
-      = f.text_field :cpm_anno, {:class => "decimal validate[required]"}
+      = f.text_field :cpm_anno, {:class => "decimal validate[required]", :value => number_with_precision(f.object.cpm_anno, decimal_format)}
       br
       br
       = f.label t 'facebook.cpc_ads'
-      = f.text_field :cpc_anno, {:class => "decimal validate[required]"}
+      = f.text_field :cpc_anno, {:class => "decimal validate[required]", :value => number_with_precision(f.object.cpc_anno, decimal_format)}
     = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveFacebook"}
     |     
     = link_to (t 'buttons.back'), facebook_index_path(params[:idc],1), :class => "btn btn-inverse backFacebook"

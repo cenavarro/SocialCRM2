@@ -30,21 +30,21 @@
       br
       br
       = f.label t 'foursquare.total_followers'
-      = f.text_field :total_followers, {:class => "number validate[required]"}
+      = f.text_field :total_followers, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_followers, integer_format)}
     .box.interactivity-foursquare
       = t 'global.interactivity_title'
       br
       br
       = f.label t 'foursquare.clients'
-      = f.text_field :clients, {:class => "number validate[required]"}
+      = f.text_field :clients, {:class => "number validate[required]", :value => number_with_delimiter(f.object.clients, integer_format)}
       br
       br
       = f.label t 'foursquare.likes'
-      = f.text_field :likes, {:class => "number validate[required]"}
+      = f.text_field :likes, {:class => "number validate[required]", :value => number_with_delimiter(f.object.likes, integer_format)}
       br
       br
       = f.label t 'foursquare.checkins'
-      = f.text_field :checkins, {:class => "number validate[required]"}
+      = f.text_field :checkins, {:class => "number validate[required]", :value => number_with_delimiter(f.object.checkins, integer_format)}
       br
       br
     .box.campaign-foursquare
@@ -52,11 +52,11 @@
       br
       br
       = f.label t 'foursquare.total_unlocks'
-      = f.text_field :total_unlocks, {:class => "number validate[required]"}
+      = f.text_field :total_unlocks, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_unlocks, integer_format)}
       br
       br
       = f.label t 'foursquare.total_visits'
-      = f.text_field :total_visits, {:class => "number validate[required]"}
+      = f.text_field :total_visits, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_visits, integer_format)}
     br
     br
     = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveFoursquare"}

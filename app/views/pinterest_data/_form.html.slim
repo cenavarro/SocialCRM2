@@ -32,49 +32,49 @@
       br
       br
       = f.label t 'pinterest.followers'
-      = f.text_field :total_followers, {:class => "number validate[required]"}
+      = f.text_field :total_followers, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_followers, integer_format)}
       br
       br
       = f.label t 'pinterest.boards' 
-      = f.text_field :boards, {:class => "number validate[required]"}
+      = f.text_field :boards, {:class => "number validate[required]", :value => number_with_delimiter(f.object.boards, integer_format)}
       br
       br
       = f.label t 'pinterest.pins'
-      = f.text_field :pins, {:class => "number validate[required]"}
+      = f.text_field :pins, {:class => "number validate[required]", :value => number_with_delimiter(f.object.pins, integer_format)}
 
     .box.interactionPinterest
       = t 'global.interactivity_title'
       br
       br
       = f.label t 'pinterest.liked'
-      = f.text_field :liked, {:class => "number validate[required]"}
+      = f.text_field :liked, {:class => "number validate[required]", :value => number_with_delimiter(f.object.liked, integer_format)}
       br
       br
       = f.label t 'pinterest.repin'
-      = f.text_field :repin, {:class => "number validate[required]"}
+      = f.text_field :repin, {:class => "number validate[required]", :value => number_with_delimiter(f.object.repin, integer_format)}
       br
       br
       = f.label t 'pinterest.comments'
-      = f.text_field :comments, {:class => "number validate[required]"}
+      = f.text_field :comments, {:class => "number validate[required]", :value => number_with_delimiter(f.object.comments, integer_format)}
       br
       br
       = f.label t 'pinterest.community_boards'
-      = f.text_field :community_boards, {:class => "number validate[required]"}
+      = f.text_field :community_boards, {:class => "number validate[required]", :value => number_with_delimiter(f.object.community_boards, integer_format)}
 
     .box.investmentPinterest
       = t 'global.investment_title'
       br
       br
       = f.label t 'global.agency_investment'
-      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_agency, decimal_format)}
       br
       br
       = f.label t 'global.new_actions_investment'
-      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_actions, decimal_format)}
       br
       br
       = f.label t 'global.ads_investment'
-      = f.text_field :investment_ads, { :class => "decimal validate[required]"}
+      = f.text_field :investment_ads, { :class => "decimal validate[required]", :value => number_with_precision(f.object.investment_ads, decimal_format)}
 
     br
     br

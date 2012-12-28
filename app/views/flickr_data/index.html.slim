@@ -104,13 +104,13 @@ section.sectionInformation
                 = t 'flickr.new_contacts'
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = number_with_delimiter(flickr_datum.new_contacts, delimiter: units_delimiter)
+                  = number_with_delimiter(flickr_datum.new_contacts, integer_format)
             tr
               td
                 = t 'flickr.total_contacts'
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = number_with_delimiter(flickr_datum.total_contacts, delimiter: units_delimiter)
+                  = number_with_delimiter(flickr_datum.total_contacts, integer_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.interactivity_title'
@@ -119,19 +119,19 @@ section.sectionInformation
                 = t 'flickr.visits'
               - @flickr_datum.each do | flickr_datum |
                 td
-                  = number_with_delimiter(flickr_datum.visits, delimiter: units_delimiter)
+                  = number_with_delimiter(flickr_datum.visits, integer_format)
             tr
               td
                 = t 'flickr.comments'
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = number_with_delimiter(flickr_datum.comments, delimiter: units_delimiter)
+                  = number_with_delimiter(flickr_datum.comments, integer_format)
             tr
               td
                 = t 'flickr.favorites'
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = number_with_delimiter(flickr_datum.favorites, delimiter: units_delimiter)
+                  = number_with_delimiter(flickr_datum.favorites, integer_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.investment_title'
@@ -140,25 +140,25 @@ section.sectionInformation
                 = t 'global.agency_investment.'
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = number_with_precision(flickr_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(flickr_datum.investment_agency, decimal_format)
             tr
               td
                 = t 'global.new_actions_investment'
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = number_with_precision(flickr_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(flickr_datum.investment_actions, decimal_format)
             tr
               td
                 = t 'global.ads_investment'
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = number_with_precision(flickr_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(flickr_datum.investment_ads, decimal_format)
             tr
               td
                 = t 'global.total_investment'
               - @flickr_datum.each do |flickr_datum|
                 td
-                  = number_with_precision(flickr_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(flickr_datum.total_investment, decimal_format)
             tr id="buttons"
               td.nilValue
                 = t 'global.options'

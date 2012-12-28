@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121224171259) do
+ActiveRecord::Schema.define(:version => 20121228210457) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -403,6 +403,8 @@ ActiveRecord::Schema.define(:version => 20121224171259) do
     t.integer  "summary_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "start_date"
+    t.date     "end_date"
   end
 
   create_table "tuenti_comments", :force => true do |t|

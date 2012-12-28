@@ -96,12 +96,12 @@ section.sectionInformation
                 = t 'blog.unique_visits'
               - @blog_datum.each do |blog_datum|
                 td
-                  = number_with_delimiter(blog_datum.unique_visits, delimiter: units_delimiter)
+                  = number_with_delimiter(blog_datum.unique_visits, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @blog_datum.each do |blog_datum|
-                - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_unique_visits, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
+                - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_unique_visits, decimal_format)
                 - if value.to_f >= 0.0
                   td.positiveValue
                     = %{#{value}%}
@@ -113,12 +113,12 @@ section.sectionInformation
                 = t 'blog.view_pages'
               - @blog_datum.each do |blog_datum|
                 td
-                  = number_with_delimiter(blog_datum.view_pages, delimiter: units_delimiter)
+                  = number_with_delimiter(blog_datum.view_pages, integer_format)
             tr
               td
                 = t 'global.percentage_change'
               - @blog_datum.each do |blog_datum|
-                - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_view_pages, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
+                - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_view_pages, decimal_format)
                 - if value.to_f >= 0.0
                   td.positiveValue
                     = %{#{value}%}
@@ -133,19 +133,19 @@ section.sectionInformation
                 = t 'blog.rebound_percentage'
               - @blog_datum.each do | blog_datum |
                 td
-                  = number_with_precision(blog_datum.rebound_percent, delimiter: units_delimiter, separator: decimal_separator, :precision => 2)
+                  = number_with_precision(blog_datum.rebound_percent, decimal_format)
             tr
               td
                 = t 'blog.new_visits_percentage'
               - @blog_datum.each do |blog_datum|
                 td
-                  = number_with_precision(blog_datum.new_visits_percent, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
+                  = number_with_precision(blog_datum.new_visits_percent, decimal_format)
             tr
               td
                 = t 'blog.num_posts'
               - @blog_datum.each do |blog_datum|
                 td
-                  = number_with_delimiter(blog_datum.total_posts, delimiter: units_delimiter)
+                  = number_with_delimiter(blog_datum.total_posts, integer_format)
             tr id="buttons"
               td.nilValue
                 = t 'global.options'

@@ -33,92 +33,92 @@
       br
       br
       = f.label t 'youtube.total_subscribers'
-      = f.text_field :total_subscriber, {:class => "number validate[required]"}
+      = f.text_field :total_subscriber, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_subscriber, integer_format)}
 
     .box.interactionYoutube
       = t 'global.interactivity_title'
       br
       br
       = f.label t 'youtube.total_video_views'
-      = f.text_field :total_video_views, {:class => "number validate[required]"}
+      = f.text_field :total_video_views, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_video_views, integer_format)}
       br
       br
       = f.label t 'youtube.inserted_player'
-      = f.text_field :inserted_player, {:class => "number validate[required]"}
+      = f.text_field :inserted_player, {:class => "number validate[required]", :value => number_with_delimiter(f.object.inserted_player, integer_format)}
       br
       br
       = f.label t 'youtube.mobile_device'
-      = f.text_field :mobile_devise, {:class => "number validate[required]"}
+      = f.text_field :mobile_devise, {:class => "number validate[required]", :value => number_with_delimiter(f.object.mobile_devise, integer_format)}
       br
       br
       = f.label t 'youtube.youtube_search'
-      = f.text_field :youtube_search, {:class => "number validate[required]"}
+      = f.text_field :youtube_search, {:class => "number validate[required]", :value => number_with_precision(f.object.youtube_search, decimal_format)}
       br
       br
       = f.label t 'youtube.youtube_suggestion'
-      = f.text_field :youtube_suggestion, {:class => "number validate[required]"}
+      = f.text_field :youtube_suggestion, {:class => "number validate[required]", :value => number_with_delimiter(f.object.youtube_suggestion, integer_format)}
       br
       br
       = f.label t 'youtube.youtube_page'
-      = f.text_field :youtube_page, {:class => "number validate[required]"}
+      = f.text_field :youtube_page, {:class => "number validate[required]", :value => number_with_precision(f.object.youtube_page, decimal_format)}
       br
       br
       = f.label t 'youtube.external_web_site'
-      = f.text_field :external_web_site, {:class => "number validate[required]"}
+      = f.text_field :external_web_site, {:class => "number validate[required]", :value => number_with_delimiter(f.object.external_web_site, integer_format)}
       br
       br
       = f.label t 'youtube.google_search'
-      = f.text_field :google_search, {:class => "number validate[required]"}
+      = f.text_field :google_search, {:class => "number validate[required]", :value => number_with_delimiter(f.object.google_search, integer_format)}
       br
       br
       = f.label t 'youtube.youtube_others'
-      = f.text_field :youtube_others, {:class => "number validate[required]"}
+      = f.text_field :youtube_others, {:class => "number validate[required]", :value => number_with_delimiter(f.object.youtube_others, integer_format)}
       br
       br
       = f.label t 'youtube.youtube_subscriptions'
-      = f.text_field :youtube_subscriptions, {:class => "number validate[required]"}
+      = f.text_field :youtube_subscriptions, {:class => "number validate[required]", :value => number_with_delimiter(f.object.youtube_subscriptions, integer_format)}
       br
       br
       = f.label t 'youtube.youtube_ads'
-      = f.text_field :youtube_ads, {:class => "number validate[required]"}
+      = f.text_field :youtube_ads, {:class => "number validate[required]", :value => number_with_delimiter(f.object.youtube_ads, integer_format)}
 
     .box.interaction_2_youtube
       = t 'global.interactivity_title'
       br
       br
       = f.label t 'youtube.like'
-      = f.text_field :likes, {:class => "number validate[required]"}
+      = f.text_field :likes, {:class => "number validate[required]", :value => number_with_delimiter(f.object.likes, integer_format)}
       br
       br
       = f.label t 'youtube.no_like'
-      = f.text_field :no_likes, {:class => "number validate[required]"}
+      = f.text_field :no_likes, {:class => "number validate[required]", :value => number_with_delimiter(f.object.no_likes, integer_format)}
       br
       br
       = f.label t 'youtube.favorites'
-      = f.text_field :favorite, {:class => "number validate[required]"}
+      = f.text_field :favorite, {:class => "number validate[required]", :value => number_with_delimiter(f.object.favorite, integer_format)}
       br
       br
       = f.label t 'youtube.comments'
-      = f.text_field :comments, {:class => "number validate[required]"}
+      = f.text_field :comments, {:class => "number validate[required]", :value => number_with_delimiter(f.object.comments, integer_format)}
       br
       br
       = f.label t 'youtube.shared'
-      = f.text_field :shared, {:class => "number validate[required]"}
+      = f.text_field :shared, {:class => "number validate[required]", :value => number_with_delimiter(f.object.shared, integer_format)}
 
     .box.investmentYoutube
       = t 'global.investment_title'
       br
       br
       = f.label t 'global.agency_investment'
-      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_agency, decimal_format)}
       br
       br
       = f.label t 'global.new_actions_investment'
-      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_actions, decimal_format)}
       br
       br
       = f.label t 'global.ads_investment'
-      = f.text_field :investment_anno, { :class => "decimal validate[required]"}
+      = f.text_field :investment_anno, { :class => "decimal validate[required]", :value => number_with_precision(f.object.investment_anno, decimal_format)}
 
     br
     br

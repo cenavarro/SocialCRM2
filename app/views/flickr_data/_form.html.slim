@@ -33,36 +33,36 @@
       br
       br
       = f.label t 'flickr.total_contacts'
-      = f.text_field :total_contacts, {:class => "number validate[required]"}
+      = f.text_field :total_contacts, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_contacts, integer_format)}
 
     .box.interactionFlickr
       = t 'global.interactivity_title'
       br
       br
       = f.label t 'flickr.visits'
-      = f.text_field :visits, {:class => "number validate[required]"}
+      = f.text_field :visits, {:class => "number validate[required]", :value => number_with_delimiter(f.object.visits, integer_format)}
       br
       br
       = f.label t 'flickr.comments'
-      = f.text_field :comments, {:class => "number validate[required]"}
+      = f.text_field :comments, {:class => "number validate[required]", :value => number_with_delimiter(f.object.comments, integer_format)}
       br
       br
       = f.label t 'flickr.favorites'
-      = f.text_field :favorites, {:class => "number validate[required]"}
+      = f.text_field :favorites, {:class => "number validate[required]", :value => number_with_delimiter(f.object.favorites, integer_format)}
     .box.investmentFlickr
       = t 'global.investment_title'
       br
       br
       = f.label t 'global.agency_investment.'
-      = f.text_field :investment_agency, {:class => "decimal validate[required]"}
+      = f.text_field :investment_agency, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_agency, decimal_format)}
       br
       br
       = f.label t 'global.new_actions_investment'
-      = f.text_field :investment_actions, {:class => "decimal validate[required]"}
+      = f.text_field :investment_actions, {:class => "decimal validate[required]", :value => number_with_precision(f.object.investment_actions, decimal_format)}
       br
       br
       = f.label t 'global.ads_investment'
-      = f.text_field :investment_ads, { :class => "decimal validate[required]"}
+      = f.text_field :investment_ads, { :class => "decimal validate[required]", :value => number_with_precision(f.object.investment_ads, decimal_format)}
     br
     br
     = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveFlickr"}

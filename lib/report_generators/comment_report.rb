@@ -5,7 +5,7 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
   end
 
   def comments
-    social_network.comments
+    social_network.comments.where('start_date >= ? and end_date <= ?', start_date, end_date).order("start_date ASC")
   end
 
   def add_to(document)

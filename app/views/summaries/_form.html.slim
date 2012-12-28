@@ -1,24 +1,33 @@
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });
+- if @summary_comment.errors.any?
+  #error_explanation
+    h2 = "#{pluralize(@summary_comment.errors.count, "error")} prohibited this summary from being saved:"
+    ul
+      - @summary_comment.errors.full_messages.each do |message|
+        li = message
 
-= form_for @summary_comment, :url => summaries_path, :method => :post, :html => {:id => "formEntradaDatos"} do |f|
-  - if @summary_comment.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@summary_comment.errors.count, "error")} prohibited this summary from being saved:"
-      ul
-        - @summary_comment.errors.full_messages.each do |message|
-          li = message
-
-  = hidden_field_tag :idc, params[:idc]
-  = hidden_field_tag :id_social, params[:id_social]
-  .form-horizontal.sectionInformation style="height: 600px;"
-    .box.informationSummary
-      = f.label :title, (t 'summary.title') 
-      = f.text_field :title, {:class => "validate[required]"}
-      br
-      br
-      = f.label :content, (t 'summary.content') 
-      = f.text_area :content, {:class => "validate[required]", :style => "width: 800px; height: 360px;"} 
-    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveSummary"}
+= hidden_field_tag :idc, params[:idc]
+= hidden_field_tag :id_social, params[:id_social]
+= hidden_field_tag :id, params[:id]
+.form-horizontal.sectionInformation style="height: 600px;"
+  .box.informationSummary
+    = @f.label :title, (t 'summary.title') , :style => "float: left;"
+    = @f.label :start_date, (t 'global.start_date') + " periodo", :style => "float: left; margin-left: 230px;"
+    = @f.label :end_date, (t 'global.end_date') + " periodo", :style => "float: left; margin-left: 90px;"
+    br
+    br
+    = @f.text_field :title, {:class => "validate[required]"}
+    - @summary_comment.start_date.nil? ? start_date = get_start_date : start_date = @summary_comment.start_date.strftime("%d-%m-%Y")
+    .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
+      =@f.text_field :start_date, :style => "margin-left: 40px;", :class => "span2", :value => start_date, :readonly => true
+      span.add-on
+        i.icon-th
+    - @summary_comment.end_date.nil? ? end_date = get_end_date : end_date = @summary_comment.end_date.strftime("%d-%m-%Y")
+    .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
+      =@f.text_field :end_date, :style => "margin-left: 40px;", :class => "span2", :value => end_date, :readonly => true
+      span.add-on
+        i.icon-th
+    br
+    br
+    = @f.label :content, (t 'summary.content')
+    = @f.text_area :content, {:class => "validate[required]", :wrap => "off", :style => "overflow: hidden; width: 800px; height: 360px;"} 
+  = @f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveSummary"}

@@ -35,7 +35,7 @@ br
           = theme.name
           br
           - data = MonitoringData.find_by_monitoring_id_and_start_date_and_end_date(theme.id, start_date.to_date, end_date.to_date)
-          = text_field_tag "monitoring[#{data.id}]", data.value, :class => "number validate[required]"
+          = text_field_tag "monitoring[#{data.id}]", number_with_delimiter(data.value, integer_format), :class => "number validate[required]"
           br
           br
       .box.distributionMonitoring
@@ -46,7 +46,7 @@ br
           = channel.name
           br
           - data = MonitoringData.find_by_monitoring_id_and_start_date_and_end_date(channel.id, start_date.to_date, end_date.to_date)
-          = text_field_tag "monitoring[#{data.id}]", data.value, :class => "number validate[required]"
+          = text_field_tag "monitoring[#{data.id}]", number_with_delimiter(data.value, integer_format), :class => "number validate[required]"
           br
           br
     .buttonsMonitoring

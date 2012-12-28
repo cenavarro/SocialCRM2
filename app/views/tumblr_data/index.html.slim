@@ -99,19 +99,19 @@ section.sectionInformation
                 = t 'tumblr.new_followers'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  =number_with_delimiter(tumblr_datum.new_followers, delimiter: units_delimiter)
+                  =number_with_delimiter(tumblr_datum.new_followers, integer_format)
             tr
               td
                 = t 'tumblr.total_followers'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_delimiter(tumblr_datum.total_followers, delimiter: units_delimiter)
+                  = number_with_delimiter(tumblr_datum.total_followers, integer_format)
             tr
               td
                 = t 'tumblr.posts'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_delimiter(tumblr_datum.posts, delimiter: units_delimiter)
+                  = number_with_delimiter(tumblr_datum.posts, integer_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.interactivity_title'
@@ -120,13 +120,13 @@ section.sectionInformation
                 = t 'tumblr.like'
               - @tumblr_datum.each do | tumblr_datum |
                 td
-                  = number_with_delimiter(tumblr_datum.likes, delimiter: units_delimiter)
+                  = number_with_delimiter(tumblr_datum.likes, integer_format)
             tr
               td
                 = t 'tumblr.reblogged'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_delimiter(tumblr_datum.reblogged, delimiter: units_delimiter)
+                  = number_with_delimiter(tumblr_datum.reblogged, integer_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.investment_title'
@@ -135,25 +135,25 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_precision(tumblr_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tumblr_datum.investment_agency, decimal_format)
             tr
               td
                 = t 'global.new_actions_investment'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_precision(tumblr_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tumblr_datum.investment_actions, decimal_format)
             tr
               td
                 = t 'global.ads_investment'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_precision(tumblr_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tumblr_datum.investment_ads, decimal_format)
             tr
               td
                 = t 'global.total_investment'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_precision(tumblr_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tumblr_datum.total_investment, decimal_format)
             tr id="buttons"
               td.nilValue
                 = t 'global.options'

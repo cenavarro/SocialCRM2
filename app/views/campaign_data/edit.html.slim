@@ -29,7 +29,7 @@ br
       = datum.name
       br
       - @row_data = RowDatum.where('start_date = ? and end_date = ? and rows_campaign_id = ?', @row.start_date, @row.end_date, datum.id).first
-      input type="text" id="criteria_#{@row_data.id}" name="criteria_#{@row_data.id}" class="number validate[required]" value="#{@row_data.value}"
+      input type="text" id="criteria_#{@row_data.id}" name="criteria_#{@row_data.id}" class="number validate[required]" value="#{number_with_delimiter(@row_data.value, integer_format)}"
       br
     br
   .buttons

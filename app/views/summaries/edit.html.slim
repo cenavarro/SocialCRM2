@@ -3,28 +3,6 @@ center
   h1 Editando Entrada Resumen
 br
 br
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#formEntradaDatos").validationEngine();
-    });
-
 = form_for @summary_comment, :url => summary_path, :method => :put, :html => {:id => "formEntradaDatos"} do |f|
-  - if @summary_comment.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@summary_comment.errors.count, "error")} prohibited this summary from being saved:"
-      ul
-        - @summary_comment.errors.full_messages.each do |message|
-          li = message
-
-  = hidden_field_tag :idc, params[:idc]
-  = hidden_field_tag :id_social, params[:id_social]
-  = hidden_field_tag :id, params[:id]
-  .form-horizontal.sectionInformation style="height: 600px;"
-    .box.informationSummary
-      = f.label :title, (t 'summary.title') 
-      = f.text_field :title, {:class => "validate[required]"}
-      br
-      br
-      = f.label :content, (t 'summary.content') 
-      = f.text_area :content, {:class => "validate[required]", :wrap => "off", :style => "overflow: hidden; width: 800px; height: 360px;"} 
-    = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveSummary"}
+  - @f = f
+  == render 'form'

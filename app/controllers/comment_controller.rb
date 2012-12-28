@@ -1,7 +1,7 @@
 class CommentController < ApplicationController
 
   def index
-    @comments = Comment.where("social_network_id = ?", params[:id_social])
+    @comments = Comment.where("social_network_id = ?", params[:id_social]).order("start_date ASC")
     @positive_comments = @comments.where("comment_type = ?", 1)
     @negative_comments = @comments.where("comment_type = ?", 2)
   end

@@ -26,4 +26,13 @@ module ApplicationHelper
   def decimal_precision
     2
   end
+
+  def integer_format
+    {delimiter: units_delimiter}
+  end
+
+  def decimal_format
+    {delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision}
+  end
+
 end

@@ -118,25 +118,25 @@ section.sectionInformation
                 = t 'tuenti.new_fans'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.new_fans, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.new_fans, integer_format)
             tr
               td
                 = t 'tuenti.real_fans'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.real_fans, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.real_fans, integer_format)
             tr
               td
                 = t 'tuenti.goal_fans'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.goal_fans, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.goal_fans, integer_format)
             tr
               td
                 = t 'global.percentage_growth'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.get_percentage_difference_from_previous_real_fans, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tuenti_datum.get_percentage_difference_from_previous_real_fans, decimal_format)
             tr.titlesRows
               td colspan=100
                 = t 'tuenti.page_company'
@@ -145,49 +145,49 @@ section.sectionInformation
                 = t 'tuenti.page_prints'
               - @tuenti_datum.each do | tuenti_datum |
                 td
-                  = number_with_delimiter(tuenti_datum.page_prints, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.page_prints, integer_format)
             tr
               td
                 = t 'tuenti.total_unique_users'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.unique_total_users, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.unique_total_users, integer_format)
             tr
               td
                 = t 'tuenti.external_clics'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.external_clics, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.external_clics, integer_format)
             tr
               td
                 = t 'tuenti.clics'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.clics, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.clics, integer_format)
             tr
               td
                 = t 'tuenti.downloads'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.downloads, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.downloads, integer_format)
             tr
               td
                 = t 'tuenti.num_comments'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.comments, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.comments, integer_format)
             tr
               td
                 = t 'tuenti.ctr_external_clics_percentage'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.ctr_external_clics, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tuenti_datum.ctr_external_clics, decimal_format)
             tr
               td
                 = t 'tuenti.upload_photos'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.upload_photos, delimiter: units_delimiter)
+                  = number_with_delimiter(tuenti_datum.upload_photos, integer_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.investment_title'
@@ -196,25 +196,25 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.investment_agency, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tuenti_datum.investment_agency, decimal_format)
             tr
               td
                 = t 'global.new_actions_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.investment_actions, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tuenti_datum.investment_actions, decimal_format)
             tr
               td
                 = t 'global.ads_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.investment_ads, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tuenti_datum.investment_ads, decimal_format)
             tr
               td
                 = t 'global.total_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.total_investment, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tuenti_datum.total_investment, decimal_format)
             tr.titlesRows
               td colspan=100
                 = t 'global.costs_title'
@@ -223,7 +223,7 @@ section.sectionInformation
                 = t 'global.fan_cost'
               - @tuenti_datum.each do | tuenti_datum |
                 td
-                  = number_with_precision(tuenti_datum.cost_fan, delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision)
+                  = number_with_precision(tuenti_datum.cost_fan, decimal_format)
             tr id="buttons"
               td.nilValue
                 = t 'global.options'

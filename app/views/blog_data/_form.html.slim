@@ -33,26 +33,25 @@
       br
       br
       = f.label t 'blog.unique_visits'
-      = f.text_field :unique_visits, {:class => "number validate[required]"}
+      = f.text_field :unique_visits, {:class => "number validate[required]", :value => number_with_delimiter(f.object.unique_visits, integer_format)}
       br
       br
       = f.label t 'blog.view_pages'
-      = f.text_field :view_pages, {:class => "number validate[required]"}
-
+      = f.text_field :view_pages, {:class => "number validate[required]", :value => number_with_delimiter(f.object.view_pages, integer_format)}
     .box.percentageBlog
       = t 'blog.title_percentage'
       br
       br
       = f.label t 'blog.rebound_percentage'
-      = f.text_field :rebound_percent, {:class => "decimal validate[required]"}
+      = f.text_field :rebound_percent, {:class => "decimal validate[required]", :value => number_with_precision(f.object.rebound_percent, decimal_format)}
       br
       br
       = f.label t 'blog.new_visits_percentage'
-      = f.text_field :new_visits_percent, {:class => "decimal validate[required]"}
+      = f.text_field :new_visits_percent, {:class => "decimal validate[required]", :value => number_with_precision(f.object.new_visits_percent, decimal_format)}
       br
       br
       = f.label t 'blog.num_posts'
-      = f.text_field :total_posts, {:class => "number validate[required]"}
+      = f.text_field :total_posts, {:class => "number validate[required]", :value => number_with_delimiter(f.object.total_posts, integer_format)}
     br
     br
     = f.submit (t 'buttons.save_data'), {:class => "btn btn-success saveBlog"}
