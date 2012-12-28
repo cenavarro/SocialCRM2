@@ -4,10 +4,6 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
     type == Comment
   end
 
-  def comments
-    social_network.comments.where('start_date >= ? and end_date <= ?', start_date, end_date).order("start_date ASC")
-  end
-
   def add_to(document)
     if !comments.empty?
       sets_workbook_and_worksheet(document)
@@ -15,6 +11,13 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
       append_header(0)
     end
   end
+
+  private
+
+  def comments
+    social_network.comments.where('start_date >= ? and end_date <= ?', start_date, end_date).order("start_date ASC")
+  end
+
 
   def create_report
     create_report_styles_for_comment
@@ -63,7 +66,8 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
 
   def sets_workbook_and_worksheet(document)
     @workbook = document.workbook
-    @worksheet = @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => { :orientation => :landscape, :paper_size => 9, :fit_to_width => 1, :fit_to_height => 10})
+    @workbook.sheet_by_name(social_network.name).nil? ? name = social_network.name : name = "#{social_network.name}-#{Random.rand(1000)}"
+    @worksheet = @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => { :orientation => :landscape, :paper_size => 9, :fit_to_width => 1, :fit_to_height => 10})
   end
 
   def append_header(y_axis, width = 1100)

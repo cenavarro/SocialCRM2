@@ -4,14 +4,6 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
     type == Summary
   end
 
-  def summary
-    social_network.summaries.where("social_network_id = ?", social_network.id).first
-  end
-
-  def summary_has_data?
-    !summary.nil? && !summary.summary_comments.empty?
-  end
-
   def add_to(document)
     if summary_has_data?
       @summary_comments = summary.summary_comments.where("start_date >= ? and end_date <= ?", start_date, end_date).order("start_date ASC")
@@ -21,8 +13,19 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
     end
   end
 
+  private
+
+  def summary
+    social_network.summaries.where("social_network_id = ?", social_network.id).first
+  end
+
+  def summary_has_data?
+    !summary.nil? && !summary.summary_comments.empty?
+  end
+
   def sets_workbook_and_worksheet(document)
     @workbook = document.workbook
+    @workbook.sheet_by_name(social_network.name).nil? ? name = social_network.name : name = "#{social_network.name}-#{Random.rand(1000)}"
     @worksheet = @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => { :orientation => :landscape, :paper_size => 9, :fit_to_width => 1, :fit_to_height => 10})
   end
 

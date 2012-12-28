@@ -14,9 +14,13 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     end
   end
 
+
+  private
+
   def create_report(document)
       @workbook = document.workbook
-      @worksheet =  @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => {:orientation => :landscape, :paper_size => 9,  :fit_to_width => 1, 
+      @workbook.sheet_by_name(social_network.name).nil? ? name = social_network.name : name = "#{social_network.name}-#{Random.rand(1000)}"
+      @worksheet =  @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => {:orientation => :landscape, :paper_size => 9,  :fit_to_width => 1, 
                                             :fit_to_height => 10})
       size = (@report_data['size'] - 1) * 7
       create_report_styles(@report_data['size'])
@@ -30,8 +34,6 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       append_images_benchmark_to_report(207)
       @worksheet.column_widths *columns_sizes
   end
-
-  private
 
   def append_benchmark_table
     append_rows_to_report(2)

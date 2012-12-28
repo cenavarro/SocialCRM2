@@ -122,7 +122,8 @@ module ReportGenerators
 
     def set_workbook_and_worksheet(document)
       @workbook = document.workbook
-      @worksheet = @workbook.add_worksheet(:name => social_network.name, :page_margins => margins, :page_setup => page_setup)
+      @workbook.sheet_by_name(social_network.name).nil? ? name = social_network.name : name = "#{social_network.name}-#{Random.rand(1000)}"
+      @worksheet = @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => page_setup)
     end
 
     def append_headers_and_footers width=934
