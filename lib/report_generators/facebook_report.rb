@@ -49,11 +49,11 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     {
       'dates'=> ['', ''], 'actions'=> ['', 'Acciones durantes el periodo'], 'new_fans' => ['', 'Nuevos fans'], 
       'total_fans' =>['', 'Fans totales'], 'growth_fans' => ['', '% Crecimiento'], 'goal_fans' => ['', 'Objetivo fans'], 
-      'ranking_espana' => ['', 'Ranking en Espana'], 'ranking_world' => ['', 'Ranking mundial'], 
+      'ranking_espana' => ['', 'Ranking en España'], 'ranking_world' => ['', 'Ranking mundial'], 
       'interactivity_header' => ['', 'Interactividad y Alcance'],'prints' => ['', 'Impresiones'], 
       'total_interactions' => ['', 'Interacciones'], 'total_reach' => ['', 'Alcance total'], 
       'change_total_reach' => ['', '% cambio en Alcance Total'], 'potential_reach' => ['', 'Alcance potencial'],
-      'total_prints_per_anno' => ['', 'Impresiones anuncios'], 'total_clicks_anno' => ['', 'Clics anuncios'],
+      'total_prints_per_anno' => ['', 'Impresiones anuncios'], 'total_clicks_anno' => ['', 'Clics en anuncios'],
       'fans_through_anno' => ['', '# Fans a través de anuncios'], 'total_interactions_platform' => ['', 'Interacciones totales de la marca en plataforma'], 
       'change_interactions' => ['', '% cambio en interacciones'],'total_prints' => ['', 'Impresiones totales de la marca en plataforma'], 
       'change_prints' => ['', '% cambio en impresiones'],'investment_header' => ['', 'Inversión'], 

@@ -1,12 +1,12 @@
 es:
   blog:
     title_visits: "Visitas"
-    unique_visits: "Visitas únicas"
+    unique_visits: "Número de visitas únicas"
     view_pages: "Páginas vistas"
     title_percentage: "Porcentajes"
-    rebound_percentage: "Porcentaje de rebote"
-    new_visits_percentage: "Porcentaje de visitas nuevas"
-    num_posts: "# de posts"
+    rebound_percentage: "Porcentaje rebote"
+    new_visits_percentage: "Porcentaje visitas nuevas"
+    num_posts: "Número de posts"
   comment:
     title_positive: "Comentarios positivos"
     title_negative: "Comentarios negativos"
@@ -48,12 +48,12 @@ es:
   foursquare:
     community_title: "Comunidad"
     new_followers: "Nuevos followers"
-    total_followers: "Total followers"
+    total_followers: "Followers"
     clients: "Clientes"
     likes: "Me Gusta"
     checkins: "Check-ins"
     campaign_title: "Campaña"
-    total_unlocks: "Unlocks totales de las ofertas"
+    total_unlocks: "Unlocks total de las ofertas"
     total_visits: "Visitas totales de las ofertas"
   google_plus:
     community_title: "Comunidad"

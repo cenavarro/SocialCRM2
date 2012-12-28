@@ -99,7 +99,7 @@ section.sectionInformation
                   = number_with_delimiter(blog_datum.unique_visits, delimiter: units_delimiter)
             tr
               td
-                = t 'global.difference'
+                = t 'global.percentage_change'
               - @blog_datum.each do |blog_datum|
                 - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_unique_visits, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
                 - if value.to_f >= 0.0
@@ -116,7 +116,7 @@ section.sectionInformation
                   = number_with_delimiter(blog_datum.view_pages, delimiter: units_delimiter)
             tr
               td
-                = t 'global.difference'
+                = t 'global.percentage_change'
               - @blog_datum.each do |blog_datum|
                 - value = number_with_precision(blog_datum.get_percentage_difference_from_previous_view_pages, delimiter: units_delimiter, separator: decimal_separator, precision: 2)
                 - if value.to_f >= 0.0

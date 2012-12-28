@@ -44,10 +44,10 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
 
   def table_rows
     {
-      'dates' => ['',''], 'visits_header' => ['','Visitas'], 'unique_visits' => ['','Visitas únicas'],
-      'diff_visits' => ['','% Crecimiento'], 'view_pages' => ['','Páginas vistas'], 'diff_view' => ['','% Crecimiento'],
-      'percentage_header' => ['','Porcentajes'], 'rebound_percent' => ['','Porcentaje de Rebote'],
-      'new_visits_percent' => ['','Porcentaje de visitas nuevas'], 'total_posts' => ['','# de posts']
+      'dates' => ['',''], 'visits_header' => ['','Visitas'], 'unique_visits' => ['','Número de visitas únicas'],
+      'diff_visits' => ['','% Cambio'], 'view_pages' => ['','Páginas vistas'], 'diff_view' => ['','% Cambio'],
+      'percentage_header' => ['','Porcentajes'], 'rebound_percent' => ['','Porcentaje rebote'],
+      'new_visits_percent' => ['','Porcentaje de visitas nuevas'], 'total_posts' => ['','Número de posts']
     }
   end
 
@@ -71,8 +71,8 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
 
   def append_visits_chart
     chart = create_chart(46, "Visitas")
-    add_serie(chart, @report_data['unique_visits'], @report_data['dates'], 'visitas unicas')
-    add_serie(chart, @report_data['view_pages'], @report_data['dates'], '#paginas vistas')
+    add_serie(chart, @report_data['unique_visits'], @report_data['dates'], 'Número de visitas únicas')
+    add_serie(chart, @report_data['view_pages'], @report_data['dates'], 'Páginas vistas')
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -81,8 +81,8 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
 
   def append_percentage_chart
     chart = create_chart(86, "Porcentajes")
-    add_serie(chart, @report_data['rebound_percent'], @report_data['dates'], 'Porcentaje de Rebote')
-    add_serie(chart, @report_data['new_visits_percent'], @report_data['dates'], 'Porcentaje de Visitas')
+    add_serie(chart, @report_data['rebound_percent'], @report_data['dates'], 'Porcentaje rebote')
+    add_serie(chart, @report_data['new_visits_percent'], @report_data['dates'], 'Porcentaje visitas nuevas')
     append_rows_to_report 37
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1

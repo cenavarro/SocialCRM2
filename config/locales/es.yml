@@ -60,6 +60,7 @@ es:
     logged_in: "Conectado como"
   global:
     difference: "% diferencia"
+    difference_subtitile: "Diferencia"
     options: "Opciones"
     information: "Información"
     start_date: "Fecha inicio"
