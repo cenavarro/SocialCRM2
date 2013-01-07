@@ -1,7 +1,7 @@
-facebook_hydra:
+facebook:
   client_id: 167476766731637
   client_secret: 62cc1f787f7d81bed12d7cd94ef4f67c
 
-facebook:
+facebook_local:
   client_id: 441436639234798
   client_secret: 26df47c99d81ecb606fe2eb59669476d
