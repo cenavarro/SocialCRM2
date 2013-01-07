@@ -117,6 +117,10 @@ $(document).ready(function(){
       $(this).val($(this).val().replace(/\./g, ''));
       $(this).val($(this).val().replace(/,/g, '.'));
     });
+    $('input.decimal:input').each(function(){
+      $(this).val($(this).val().replace(/\./g, ''));
+      $(this).val($(this).val().replace(/,/g, '.'));
+    });
   });
 });
 
