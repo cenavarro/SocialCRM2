@@ -51,7 +51,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
   def create_report_data(params ={})
     datum = monitoring_datum
     monitoring_data = monitoring_hash
-    monitoring_data['dates'] = datum.collect{|data| "'#{data.start_date.strftime('%d %b')}-#{data.end_date.strftime('%d %b')}'"}
+    monitoring_data['dates'] = datum.collect{|data| "#{data.start_date.strftime('%d %b')}-#{data.end_date.strftime('%d %b')}"}
     datum.each do |data|
       monitoring_data['total_days'] << ((data.end_date - data.start_date).to_i + 1)
     end

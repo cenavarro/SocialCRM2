@@ -79,7 +79,7 @@ class MonitoringController < ApplicationController
       "theme_total_comment" => [],
       "channel_total_comment" => []
     }
-    @monitoring_data['dates'] = @datum.collect{|data| "'#{data.start_date.strftime('%d %b')}-#{data.end_date.strftime('%d %b')}'"}
+    @monitoring_data['dates'] = @datum.collect{|data| "#{data.start_date.strftime('%d %b')}-#{data.end_date.strftime('%d %b')}"}
     @datum.each do |data|
       @monitoring_data['total_days'] << ((data.end_date - data.start_date).to_i + 1)
     end
