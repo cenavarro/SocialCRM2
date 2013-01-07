@@ -1,9 +1,14 @@
 class CommentController < ApplicationController
 
   def index
-    @comments = Comment.where("social_network_id = ?", params[:id_social]).order("start_date ASC")
-    @positive_comments = @comments.where("comment_type = ?", 1)
-    @negative_comments = @comments.where("comment_type = ?", 2)
+    first_comment = Comment.where("social_network_id = ?", params[:id_social]).order("start_date DESC").order("end_date DESC").first
+    start_date = end_date = nil
+    if !first_comment.nil?
+      start_date = first_comment.start_date
+      end_date = first_comment.end_date
+    end
+    @comments = Comment.where("social_network_id = ? and start_date = ? and end_date = ?", params[:id_social], start_date, end_date).order("start_date DESC").order("end_date DESC")
+    @old_comments = Comment.where("social_network_id = ? and start_date < ?", params[:id_social], start_date).order("start_date DESC").order("end_date DESC")
   end
 
   def edit

@@ -24,6 +24,10 @@ h1
     | Nuevo Comentario
 
 .margin
+  h2
+    = "Periodo del #{@comments.first.start_date.strftime("%d-%m-%Y")} al #{@comments.first.end_date.strftime('%d-%m-%Y')}" if !@comments.nil?
+  br
+  br
   table.table.table-bordered
     tbody
       tr
@@ -32,6 +36,7 @@ h1
           = t 'comment.title_positive'
         td.positive_title
           = t 'comment.link_to_comment'
+      - @positive_comments = @comments.where("comment_type = ?", 1)
       - @positive_comments.each do |comment|
         tr
           td.positive_secondary_title
@@ -57,6 +62,7 @@ h1
           = t 'comment.title_negative'
         td.negative_title
           = t 'comment.link_to_comment'
+      - @negative_comments = @comments.where("comment_type = ?", 2)
       - @negative_comments.each do |comment|
         tr
           td.negative_secondary_title.buttons
@@ -76,3 +82,73 @@ h1
             td
               a.btn-link href=list_comment.link
                 = list_comment.link
+.margin
+  .accordion id="accordion_old_summary"
+    a.accordion-toggle data-toggle="collapse" data-parent="#accordion_old_summary" href="#collapseOne"
+      | Entradas Anteriores
+    .accordion-body.collapse id="collapseOne"
+      .accordion-inner
+        - dates_of_old_comments = @old_comments.count(:all, :group => [:start_date, :end_date])
+        - dates_of_old_comments.each do |dates, count|
+          .accordion-group
+            .accordion-heading
+              - start_date_header = dates[0].strftime("%d-%m-%Y")
+              - end_date_header = dates[1].strftime("%d-%m-%Y")
+              a.accordion-toggle data-toggle="collapse" data-parent="#accordion_old_summary" href="#collapse#{start_date_header}-#{end_date_header}"
+                = "Periodo del #{start_date_header} al #{end_date_header}"
+            .accordion-body.collapse id="collapse#{start_date_header}-#{end_date_header}"
+              .accordion-inner
+                table.table.table-bordered
+                  tbody
+                    tr
+                      td.positive_title
+                      td.positive_title.main
+                        = t 'comment.title_positive'
+                      td.positive_title
+                        = t 'comment.link_to_comment'
+                    - @positive_comments = @old_comments.where("comment_type = ?", 1)
+                    - @positive_comments.each do |comment|
+                      tr
+                        td.positive_secondary_title
+                          a.btn.btn-mini.btn-info href=comment_edit_path(comment.id)
+                            i.icon-pencil.icon-white
+                          |    
+                          a.btn.btn-mini.btn-danger data-method='delete' rel='nofollow' href=comment_destroy_path(comment.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                            i.icon-trash.icon-white
+                        td.positive_secondary_title colspan="2"
+                          = comment.social_network_name
+                      - comment.list_comments.each do |list_comment|
+                        tr
+                          td
+                            |
+                          td
+                            = list_comment.content
+                          td
+                            a.btn-link href=list_comment.link
+                              = list_comment.link
+                    tr
+                      td.negative_title
+                      td.negative_title
+                        = t 'comment.title_negative'
+                      td.negative_title
+                        = t 'comment.link_to_comment'
+                    - @negative_comments = @old_comments.where("comment_type = ?", 2)
+                    - @negative_comments.each do |comment|
+                      tr
+                        td.negative_secondary_title.buttons
+                          a.btn.btn-mini.btn-info href=comment_edit_path(comment.id)
+                            i.icon-pencil.icon-white
+                          |    
+                          a.btn.btn-mini.btn-danger data-method='delete' rel='nofollow' href=comment_destroy_path(comment.id) data-confirm="Esta seguro que desea eliminar estos datos?"
+                            i.icon-trash.icon-white
+                        td.negative_secondary_title colspan="2"
+                          = comment.social_network_name
+                      - comment.list_comments.each do |list_comment|
+                        tr style="border: 1px solid;"
+                          td
+                            |
+                          td
+                            = list_comment.content
+                          td
+                            a.btn-link href=list_comment.link
+                              = list_comment.link

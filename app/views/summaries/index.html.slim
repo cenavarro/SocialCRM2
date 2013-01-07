@@ -32,6 +32,10 @@ section.sectionInformation
         h2
           = t 'summary.main_title'
       .margin
+        h2
+          = "Periodo del #{@summary_comments.first.start_date.strftime("%d-%m-%Y")} al #{@summary_comments.first.end_date.strftime('%d-%m-%Y')}" if !@summary_comments.nil?
+        br
+        br
         - @summary_comments.each do |comment|
           h3
             = raw comment.title
@@ -40,7 +44,6 @@ section.sectionInformation
               = substring[0..130]
               br
             br
-            br
             .actions-buttons style="float: right;"
               a.btn.btn-info href=summary_edit_path(comment.id, params[:idc], params[:id_social])
                 i.icon-pencil.icon-white
@@ -48,3 +51,35 @@ section.sectionInformation
               a.btn.btn-danger data-method='delete' rel='nofollow' href=summary_delete_path(comment.id) data-confirm="Esta seguro que desea eliminar este entrada?"
                 i.icon-trash.icon-white
             br
+      .margin
+        .accordion id="accordion_old_summary"
+          a.accordion-toggle data-toggle="collapse" data-parent="#accordion_old_summary" href="#collapseOne"
+            | Entradas Anteriores
+          .accordion-body.collapse id="collapseOne"
+            .accordion-inner
+              - dates_of_old_summaries = @old_summary_comments.count(:all, :group => [:start_date, :end_date])
+              - dates_of_old_summaries.each do |date, count|
+                .accordion-group
+                  .accordion-heading
+                    - start_date_header = date[0].strftime("%d-%m-%Y")
+                    - end_date_header = date[1].strftime("%d-%m-%Y")
+                    a.accordion-toggle data-toggle="collapse" data-parent="#accordion_old_summary" href="#collapse#{start_date_header}-#{end_date_header}"
+                      = "Periodo del #{start_date_header} al #{end_date_header}"
+                  .accordion-body.collapse id="collapse#{start_date_header}-#{end_date_header}"
+                    .accordion-inner
+                    - @old_summary_comments.where('start_date = ? and end_date = ?', date[0], date[1]).each do |comment|
+                      .comment-style style="margin: 0px 10px 0px 10px"
+                        h3
+                          = raw comment.title
+                        .well
+                          - comment.content.split(/\n/).each do |substring|
+                            = substring[0..130]
+                            br
+                          br
+                          .actions-buttons style="float: right;"
+                            a.btn.btn-info href=summary_edit_path(comment.id, params[:idc], params[:id_social])
+                              i.icon-pencil.icon-white
+                            |  
+                            a.btn.btn-danger data-method='delete' rel='nofollow' href=summary_delete_path(comment.id) data-confirm="Esta seguro que desea eliminar este entrada?"
+                              i.icon-trash.icon-white
+                          br

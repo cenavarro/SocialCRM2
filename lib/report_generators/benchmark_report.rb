@@ -39,10 +39,10 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     append_rows_to_report(2)
     unshift_array(@report_data['x_axis'], ' ', 2)
     dates = dates_array(@report_data['dates'])
-    @worksheet.add_row dates, :style => 8, :height => height_cell
-    @worksheet.add_row @report_data['x_axis'], :style => 6, :height => height_cell
+    @worksheet.add_row dates.take(dates.size - 1), :style => 5, :height => height_cell
+    @worksheet.add_row @report_data['x_axis'], :style => 4, :height => height_cell
     @report_data['competitors'].each do |competitor|
-      @worksheet.add_row @report_data[competitor]['data'].unshift(competitor).unshift(''), :style => 8, :height => 13 
+      @worksheet.add_row @report_data[competitor]['data'].unshift(competitor).unshift(''), :style => 6, :height => 13 
       @row = @row + 1
     end
     append_rows_to_report
@@ -53,7 +53,10 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
   end
 
   def append_images_benchmark_to_report position
-    images = ImagesSocialNetwork.where(:social_network_id => social_network.id)
+    last_period_image = ImagesSocialNetwork.where(:social_network_id => social_network.id).order('start_date DESC').order('end_date DESC').first
+    start_date_last_period = last_period_image.start_date if !last_period_image.nil?
+    end_date_last_period = last_period_image.end_date if !last_period_image.nil?
+    images = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network.id, start_date_last_period, end_date_last_period)
     images.each do |image|
       @headers << position
       append_rows_to_report(7)

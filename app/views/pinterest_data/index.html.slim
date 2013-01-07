@@ -43,14 +43,14 @@ center
     br
     br
     = t 'global.start_date'
-    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
-      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+    .input-append.date data-date=get_start_date data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value=get_start_date readonly="readonly" id="start_date"
       span.add-on
         i.icon-th
     br
     = t 'global.end_date'
-    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
-      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+    .input-append.date data-date=get_end_date data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value=get_end_date readonly="readonly" id="end_date"
       span.add-on
         i.icon-th
     br

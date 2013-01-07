@@ -7,7 +7,7 @@ class Client < ActiveRecord::Base
 
   def build_reports(date_range, social_network_id=nil)
     report = ::Axlsx::Package.new
-    social_network_id ? (client_social_networks = social_networks.where("id = ?", social_network_id)) : client_social_networks = social_networks
+    social_network_id ? (client_social_networks = social_networks.where("id = ?", social_network_id)) : client_social_networks = sorter_social_networks
     client_social_networks.map do |social_network|
       build_reporters_for(social_network, date_range)
     end.flatten.each do |reporter|
@@ -24,6 +24,18 @@ class Client < ActiveRecord::Base
         generator.new(social_network, date_range)
       end
     end.flatten
+  end
+
+  def sorter_social_networks
+    sorter_social_networks = []
+    social_networks_sequence.each do |id|
+      sorter_social_networks.concat(social_networks.where('info_social_network_id = ?', id))
+    end
+    sorter_social_networks
+  end
+
+  def social_networks_sequence
+    [1, 2, 3, 9, 6, 5, 12, 4, 8, 7, 10, 13, 14, 11, 16, 15]
   end
 
   def add_front_page(report, date_range)

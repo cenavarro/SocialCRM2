@@ -7,7 +7,14 @@ class SummariesController < ApplicationController
       Summary.create!(social_network_id: params[:id_social], client_id: params[:idc])
     end
     summary = Summary.find_by_social_network_id(params[:id_social])
-    @summary_comments = summary.summary_comments.order("start_date ASC")
+    first_summary = summary.summary_comments.order("start_date DESC").order("end_date DESC").first
+    start_date = end_date = nil
+    if !first_summary.nil?
+      start_date = first_summary.start_date
+      end_date = first_summary.end_date
+    end
+    @summary_comments = summary.summary_comments.where("start_date = ? and end_date = ?", start_date, end_date).order("start_date DESC").order("end_date DESC")
+    @old_summary_comments = summary.summary_comments.where("start_date < ?", start_date).order("start_date DESC").order("end_date DESC")
   end
 
   def new

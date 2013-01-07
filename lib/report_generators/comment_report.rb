@@ -15,7 +15,9 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
   private
 
   def comments
-    social_network.comments.where('start_date >= ? and end_date <= ?', start_date, end_date).order("start_date ASC")
+    start_date_comments = social_network.comments.order("start_date DESC").order("end_date DESC").first.start_date if !social_network.comments.empty?
+    end_date_comments = social_network.comments.order("start_date DESC").order("end_date DESC").first.end_date if !social_network.comments.empty?
+    social_network.comments.where('start_date = ? and end_date = ?', start_date_comments, end_date_comments)
   end
 
 

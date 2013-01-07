@@ -125,6 +125,8 @@ class SocialNetworksController < ApplicationController
 
   def add_image
     image = ImagesSocialNetwork.new(params[:images])
+    image.start_date = params[:images][:start_date]
+    image.end_date = params[:images][:end_date]
     if image.save
       mensaje = "La imagen se guardo satisfactoriamente!"
     else

@@ -8,8 +8,8 @@ center
   h1 Redes Sociales
 br
 br
-.section-table 
-  table.table.table-bordered id="table_social_network"
+.section-table
+  table.table id="table_social_network"
     thead
       tr
         th
@@ -52,8 +52,8 @@ javascript:
   $(document).ready(function(){
     $('#table_social_network').dataTable({
       "sPaginationType" : "full_numbers",
-      "iDisplayLength" : 5,
-      "aLengthMenu" : [[5, 10, 15, -1], [5, 10, 15, "All"]],
+      "iDisplayLength" : 15,
+      "aLengthMenu" : [[15, 30, 45, -1], [15, 30, 45, "All"]],
       "asStripeClasses" : ['']
     });
   });

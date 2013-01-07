@@ -6,7 +6,9 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
 
   def add_to(document)
     if summary_has_data?
-      @summary_comments = summary.summary_comments.where("start_date >= ? and end_date <= ?", start_date, end_date).order("start_date ASC")
+      start_date_comments = summary.summary_comments.order("start_date DESC").order('end_date DESC').first.start_date
+      end_date_comments = summary.summary_comments.order("start_date DESC").order('end_date DESC').first.end_date
+      @summary_comments = summary.summary_comments.where("start_date = ? and end_date = ?", start_date_comments, end_date_comments)
       sets_workbook_and_worksheet(document)
       create_report
       append_header(0)
@@ -16,7 +18,7 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
   private
 
   def summary
-    social_network.summaries.where("social_network_id = ?", social_network.id).first
+    social_network.summaries.first
   end
 
   def summary_has_data?
@@ -25,7 +27,7 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
 
   def sets_workbook_and_worksheet(document)
     @workbook = document.workbook
-    @workbook.sheet_by_name(social_network.name[0.30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0.25]}-#{Random.rand(1000)}"
+    @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
     @worksheet = @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => { :orientation => :landscape, :paper_size => 9, :fit_to_width => 1, :fit_to_height => 10})
   end
 
@@ -43,7 +45,7 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
       @worksheet. add_row ["", comment.title], :style => 3
       append_rows_to_report 1
       comment.content.split(/\n/).each do |substring|
-        @worksheet. add_row ["", substring[0..130]], :style => 4
+        @worksheet. add_row ["", substring[0..130]]
       end
       append_rows_to_report 2
     end

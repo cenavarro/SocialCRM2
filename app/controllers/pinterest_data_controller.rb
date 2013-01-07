@@ -9,9 +9,8 @@ class PinterestDataController < ApplicationController
     if !getDataDateRange?(params)
       @pinterest_datum = PinterestDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
-      fechaInicio = params[:start_date].to_date
-      fechaFinal = params[:end_date].to_date
-      @pinterest_datum = PinterestDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
+      @pinterest_datum = PinterestDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], 
+                                              params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
     @pinterest = select_chart_data
   end

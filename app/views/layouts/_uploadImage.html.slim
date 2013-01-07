@@ -1,7 +1,6 @@
 .margin
   button.btn.btn-primary onclick="show('addNewImage','btnAddImages')" id="btnAddImages"
     | Agregar Imagenes
-
 .form_nueva_imagen id="addNewImage"
   button.close onclick="hide('addNewImage', 'btnAddImages')"
     |x
@@ -18,27 +17,44 @@
     = f.file_field :attachment, :required => "required", :accept => "image/*"
     br
     br
-    = f.label "Comentario Imagen"
-    = f.text_area :comment 
+    .input-append.date data-date=get_start_date data-date-format="dd-mm-yyyy" id="start_date_image" style="float: left;"
+      = f.label t 'global.start_date'
+      = f.text_field :start_date, :class => "span2", :value => get_start_date, :readonly => true
+      span.add-on
+        i.icon-th
+    .input-append.date data-date=get_end_date data-date-format="dd-mm-yyyy" id="end_date_image" style="float: left; margin-left: 20px;"
+      = f.label t 'global.end_date'
+      = f.text_field :end_date, :class => "span2", :value => get_end_date, :readonly => true
+      span.add-on
+        i.icon-th
+    br
+    br
+    .comment_style style="clear: both;"
+      = f.label "Comentario Imagen"
+      = f.text_area :comment 
     br
     br
     = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
     center
       = f.submit "Guardar", :class => "btn btn-success" 
 .margin
-  - @images = ImagesSocialNetwork.where(:social_network_id => @socialNetwork.id).all
-  - @images.each do | imagen |
-    br
-    br
+  - @images = ImagesSocialNetwork.where("social_network_id = ?", @socialNetwork.id).order("start_date DESC").order("end_date DESC")
+  - if !@images.empty?
+    - start_date_last_period = @images.first.start_date
+    - end_date_last_period = @images.first.end_date
+    h2
+      = "Periodo del #{start_date_last_period.strftime("%d-%m-%Y")} al #{end_date_last_period.strftime("%d-%m-%Y")}"
+  br
+  - @images_current_period = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', @socialNetwork.id, start_date_last_period, end_date_last_period).order("start_date DESC").order("end_date DESC")
+  - @images_current_period.each do |image|
     h3
-      = imagen.title
+      = image.title
+    br
+    img src="#{image.attachment.url}" style="width:800px; height:auto;"
     br
     br
-    img src="#{imagen.attachment.url}" style="width:800px; height:auto;"
-    br
-    br
-    = form_tag({:controller => "social_networks", :action => "change_image", :id => imagen.id}, :multipart => true, :method => "post") do
-      .change_image style="position:absolute;right:0px;"
+    = form_tag({:controller => "social_networks", :action => "change_image", :id => image.id}, :multipart => true, :method => "post") do
+      .change_image style="float: right;"
         br
         = file_field_tag :attachment, {:accept => "image/*", :required => "required"}
         br
@@ -48,16 +64,65 @@
     br
     h4 Comentario
     br
-    form id="updateComment#{imagen.id}" onsubmit="return updateImageComment('#updateComment#{imagen.id}',#{imagen.id}, '#{params[:locale]}');"
-      textarea id="comment" style="max-width:790px; width: 100%;" rows="10"
-        = imagen.comment
+    form id="updateComment#{image.id}" onsubmit="return updateImageComment('#updateComment#{image.id}',#{image.id}, '#{params[:locale]}');"
+      textarea id="comment" style="max-width:790px; width: 100%;" rows="5"
+        = image.comment
       button.btn.btn-success style="float:left;"
-        |Actualizar
+        |Actualizar Comentario
       |      
-      a.btn.btn-danger href=social_networks_destroy_image_path(imagen.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
-        |Eliminar
+      a.btn.btn-danger href=social_networks_destroy_image_path(image.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+        |Eliminar Imagen
       |      
       .result
+    br
+    br
+  - @old_images = ImagesSocialNetwork.where('social_network_id = ? and ((start_date != ? and end_date != ?) or start_date IS ?)', @socialNetwork.id, start_date_last_period, end_date_last_period, nil).order("start_date DESC").order("end_date DESC")
+  .accordion id="accordion_old_images"
+    a.accordion-toggle data-toggle="collapse" data-parent="#accordion_old_summary" href="#collapseOne"
+      | Entradas Anteriores
+    .accordion-body.collapse id="collapseOne"
+      .accordion-inner
+        - dates_of_old_images = @old_images.count(:all, :group => [:start_date, :end_date])
+        - dates_of_old_images.each do |date, count|
+          .accordion-group
+            .accordion-heading
+              - date[0].nil? ? start_date_header = 'sin-fecha' : start_date_header = date[0].strftime("%d-%m-%Y")
+              - date[1].nil? ? end_date_header = 'sin-fecha' : end_date_header = date[1].strftime("%d-%m-%Y")
+              a.accordion-toggle data-toggle="collapse" data-parent="#accordion_old_summary" href="#collapse#{start_date_header}-#{end_date_header}"
+                = "Periodo del #{start_date_header} al #{end_date_header}"
+            .accordion-body.collapse id="collapse#{start_date_header}-#{end_date_header}"
+              .accordion-inner
+                - date[0].nil? ? @list_old_images = @old_images.where('start_date is ?', nil) : @list_old_images = @old_images.where('start_date = ? and end_date = ?', date[0], date[1])
+                - @list_old_images.each do |image|
+                  h3
+                    = image.title
+                  br
+                  img src="#{image.attachment.url}" style="width:800px; height:auto;"
+                  br
+                  br
+                  = form_tag({:controller => "social_networks", :action => "change_image", :id => image.id}, :multipart => true, :method => "post") do
+                    .change_image style="float: right;"
+                      br
+                      = file_field_tag :attachment, {:accept => "image/*", :required => "required"}
+                      br
+                      button.btn.btn-primary type="submit" name="commit" style="height:25px;"
+                        | Cambiar Imagen
+                  br
+                  br
+                  h4 Comentario
+                  br
+                  form id="updateComment#{image.id}" onsubmit="return updateImageComment('#updateComment#{image.id}',#{image.id}, '#{params[:locale]}');"
+                    textarea id="comment" style="max-width:790px; width: 100%;" rows="5"
+                      = image.comment
+                    button.btn.btn-success style="float:left;"
+                      |Actualizar Comentario
+                    |      
+                    a.btn.btn-danger href=social_networks_destroy_image_path(image.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+                      |Eliminar Imagen
+                    |      
+                    .result
+                  br
+                  br
 
 - if !admin_user?
   javascript:
@@ -70,5 +135,13 @@
         });
       $("#btnMostrarRangos").css("display","block");
       $("#btnCloseRange").css("display","block");
-
     });
+javascript:
+  $("#start_date_image").datepicker({ format: 'dd-mm-yyyy' })
+  .on('changeDate', function(ev){
+    $("#start_date_image").datepicker('hide');
+  });
+  $("#end_date_image").datepicker({ format: 'dd-mm-yyyy' })
+  .on('changeDate', function(ev){
+    $("#end_date_image").datepicker('hide');
+  });
