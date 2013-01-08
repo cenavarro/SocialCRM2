@@ -15,7 +15,7 @@ function hide(id,button){
 function updateImageComment(form, id_image,locale){
   jQuery.ajax({
     type: 'POST',
-    url: '/'+locale+'/social_networks/update_comment',
+    url: '/'+locale+'/images_social_network/update_comment',
     data: { comment: $(form).find("#comment").val(), id_image: id_image },
     dataType: 'json',
     success: function(data){
@@ -28,7 +28,23 @@ function updateImageComment(form, id_image,locale){
   return false;
 }
 
-function saveChartComment(form,social_network,id_comment,locale, id_name){
+function save_comment(form, social_network_id, id_comment, locale){
+  jQuery.ajax( {
+    type: 'POST',
+    url: '/'+locale+'/social_network/save_comment',
+    data: { content: $(form).find("#comment").val(), social_network_id: social_network_id, id_comment: id_comment },
+    dataType: 'json',
+    success: function(data){
+      $(form).find('.result').html(data);
+    },
+    error: function(data){
+      $(form).find('.result').html(data);
+    }
+  });
+  return false;
+}
+
+function saveChartComment(form, social_network, id_comment, locale, id_name){
   jQuery.ajax( {
     type: 'POST',
     url: '/'+locale+'/'+id_name+'_data/save_comment',
@@ -43,6 +59,12 @@ function saveChartComment(form,social_network,id_comment,locale, id_name){
   });
   return false;
 }
+
+$(document).on("click", "#new_comment_link", function(){
+  var comment_id = $(this).data('id');
+  $(".modal-body #history_comment_comment_id").val(comment_id);
+  $(".modal-body #history_comment_content").val('');
+});
 
 $(document).ready(function(){
   var chart = null;

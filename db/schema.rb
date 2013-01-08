@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130103153724) do
+ActiveRecord::Schema.define(:version => 20130107214157) do
 
   create_table "benchmark_comments", :force => true do |t|
     t.integer  "social_network_id"
@@ -218,6 +218,18 @@ ActiveRecord::Schema.define(:version => 20130103153724) do
     t.datetime "updated_at"
   end
 
+  create_table "history_comments", :force => true do |t|
+    t.integer  "social_network_id"
+    t.integer  "comment_id"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.text     "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "history_comments", ["social_network_id"], :name => "index_history_comments_on_social_network_id"
+
   create_table "images_social_networks", :force => true do |t|
     t.integer  "social_network_id"
     t.string   "attachment_file_name"
@@ -292,14 +304,6 @@ ActiveRecord::Schema.define(:version => 20130103153724) do
   end
 
   add_index "list_comments", ["comment_id"], :name => "index_list_comments_on_comment_id"
-
-  create_table "list_of_comment", :force => true do |t|
-    t.integer  "comment_id"
-    t.text     "content"
-    t.text     "link"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "monitoring_comments", :force => true do |t|
     t.integer  "social_network_id"

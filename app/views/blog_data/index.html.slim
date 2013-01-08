@@ -1,17 +1,14 @@
+- @social_network = SocialNetwork.find(params[:id_social])
+- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
         h4
           = notice
-
-- @blog_info = InfoSocialNetwork.find_by_id_name('blog')
-- @socialNetwork = SocialNetwork.find(params[:id_social])
-- @comments = BlogComment.find_by_social_network_id(@socialNetwork.id)
-
 .margin
   center
     h1
-      = @socialNetwork.name
+      = @social_network.name
     a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
       i.icon-circle-arrow-left.icon-white
       |    
@@ -22,7 +19,7 @@
       i.icon-circle-arrow-down.icon-white
     br
     br
-    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=blog_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     = t 'buttons.new_data'
@@ -159,16 +156,9 @@ section.sectionInformation
       .comment
         .title
           h4
-            = (t 'global.title_table_comment') + ":"
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@blog_info.id_name}');"
-          textarea id="comment"
-            = @comments.table
-          br
-          .counter
-          button.btn.btn-success
-            = t 'buttons.save'
-          .result
-
+            = (t 'global.title_table_comment')
+        - @comment = history_comment_for(1)
+        == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
@@ -180,31 +170,16 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Visitas
-          form  id="visits" onsubmit="return saveChartComment('#visits',#{@socialNetwork.id},'visits' ,'#{params[:locale]}','#{@blog_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.visits
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+          - @comment = history_comment_for(2)
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
         .estilo_graficos
           #container_percentage
         .comment
           .title
             h4
               | Comentario Grafico Porcentajes
-          form  id="percentage" onsubmit="return saveChartComment('#percentage',#{@socialNetwork.id},'percentages','#{params[:locale]}','#{@blog_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.percentages
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+          - @comment = history_comment_for(3)
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
     .tab-pane.fade id="tabothers"
-      == render 'layouts/uploadImage'
-script
-  | limit_characters_textarea_for_form('#table');
-  | limit_characters_textarea_for_form('#visits');
-  | limit_characters_textarea_for_form('#percentage');
+      == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
+== render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}

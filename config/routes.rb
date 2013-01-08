@@ -134,13 +134,17 @@ DemoComentarios::Application.routes.draw do
     get "social_networks/new_campaign" => "social_networks#new_campaign", :as => "social_networks_new_campaign"
     get "social_networks/new_monitoring" => "social_networks#new_monitoring", :as => "social_networks_new_monitoring"
     get "social_networks/new_benchmark" => "social_networks#new_benchmark", :as => "social_networks_new_benchmark"
-    post "social_networks/add_image" => "social_networks#add_image", :as => "social_networks_add_image"
-    post "social_networks/update_comment" => "social_networks#update_comment_image", :as => "social_networks_update_comment"
     post "social_networks/create_campaign" => "social_networks#create_campaign", :as => "social_networks_create_campaing"
     post "social_networks/create_monitoring" => "social_networks#create_monitoring", :as => "social_networks_create_monitoring"
     post "social_networks/create_benchmark" => "social_networks#create_benchmark", :as => "social_networks_create_benchmark"
-    delete "social_networks/destroy_image/:id" => "social_networks#destroy_image", :as => "social_networks_destroy_image"
-    post "social_networks/change_image/:id" => "social_networks#change_image", :as => "social_networks_change_image"
+
+    post "images_social_network/update_comment" => "images_social_network#update_comment", :as => "images_social_network_update_comment"
+    post "images_social_network/new" => "images_social_network#new", :as => "images_social_network_new"
+    delete "images_social_network/destroy/:id" => "images_social_network#destroy", :as => "images_social_network_destroy"
+    post "images_social_network/update/:id" => "images_social_network#update", :as => "images_social_network_update"
+
+    post "history_comments/new" => "history_comment#new", :as => "history_comment_new"
+    delete "history_comments/destroy/:id" => "history_comment#destroy", :as => "history_comment_destroy"
 
   end
 

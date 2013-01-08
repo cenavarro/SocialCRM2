@@ -1,13 +1,10 @@
+- @social_network = SocialNetwork.find(params[:id_social])
+- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
         h4
           = notice
-
-- @campaign_info = InfoSocialNetwork.find_by_id_name('campaign')
-- @socialNetwork = SocialNetwork.find(params[:id_social])
-- @comment = CampaignComment.find_by_social_network_id(params[:id_social])
-
 script
   | createChart('container_chart', 'Grafico Campañas', #{ raw @campaign_data['dates']});
   - @campaign_data['data'].each do |data|
@@ -17,7 +14,7 @@ script
 .margin
   center
     h2
-      = @socialNetwork.name
+      = @social_network.name
     a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
       i.icon-circle-arrow-left.icon-white
       |    
@@ -28,7 +25,7 @@ script
       i.icon-circle-arrow-down.icon-white
     br
     br
-    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=campaign_new_path(params[:idc],params[:id_social]) style="width: 168px" id="btnNewData"
     = t 'buttons.new_data'
@@ -79,7 +76,7 @@ section.sectionInformation
           thead
             tr.headerTable
               td.hideCell
-                = @socialNetwork.name
+                = @social_network.name
                 - @campaign_data['dates'].each do |date|
                   td
                     = date
@@ -106,15 +103,9 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@campaign_info.id_name}');"
-          textarea id="comment"
-            = @comment.table
-          br
-          .counter
-          button.btn.btn-success
-            = t 'buttons.save'
-          .result
+            | Comentario para la tabla:
+        - @comment = history_comment_for(1)
+        == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
@@ -126,16 +117,8 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico
-          form  id="chart" onsubmit="return saveChartComment('#chart',#{@socialNetwork.id},'chart' ,'#{params[:locale]}','#{@campaign_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comment.chart
-            br
-            .counter
-            button.btn.btn-success
-              = t 'buttons.save'
-            .result
+          - @comment = history_comment_for(2)
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
     .tab-pane.fade id="tabothers"
-      == render 'layouts/uploadImage'
-script
-  | limit_characters_textarea_for_form('#table');
-  | limit_characters_textarea_for_form('#chart');
+      == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
+== render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}

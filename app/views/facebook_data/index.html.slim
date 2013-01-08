@@ -1,17 +1,14 @@
+- @social_network = SocialNetwork.find(params[:id_social])
+- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
         h4
           = notice
-
-- @facebook_info = InfoSocialNetwork.find(1)
-- @socialNetwork = SocialNetwork.find(params[:id_social])
-- @comments = FacebookComment.where(:social_network_id => @socialNetwork.id)[0]
-
 .margin
   center
     h1
-      = @socialNetwork.name
+      = @social_network.name
     a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
       i.icon-circle-arrow-left.icon-white
       |    
@@ -22,7 +19,7 @@
       i.icon-circle-arrow-down.icon-white
     br
     br
-    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=facebook_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     = t 'buttons.new_data'
@@ -55,7 +52,7 @@
       input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 
-script 
+script
   | createChart('container_fans', 'Comunidad', [#{@chart['dates']}]);
   | addSerie('Nuevos Fans', [#{@chart['new_fans']}]);
   | addSerie('Fans Totales', [#{@chart['total_fans']}]);
@@ -329,97 +326,49 @@ section.sectionInformation
                     i.icon-trash.icon-white
       .comment
         .title
-          h4
-            | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table', '#{params[:locale]}', '#{@facebook_info.id_name}');"
-          textarea id="comment"
-            = @comments.table
-          br
-          .counter
-          button.btn.btn-success
-            = t 'buttons.save'
-          .result
+          h4 Comentario para la Tabla:
+        - @comment = history_comment_for(1) 
+        == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
 
-    .tab-pane.fade id="tabcharts"  
-      section.sectionGraphics id="seccionGraficos"
+    .tab-pane.fade id="tabcharts" style="min-height: auto;"
+      section id="seccionGraficos"
         center
-          h2 Graficos de la Tabla
+          h2 Graficos Facebook
         .estilo_graficos
           #container_fans
         .comment
           .title
-            h4
-              | Comentario Grafico Fans
-          form  id="fans" onsubmit="return saveChartComment('#fans',#{@socialNetwork.id},'fans', '#{params[:locale]}', '#{@facebook_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.fans
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+            h4 Comentario Gráfico Fans
+          - @comment = history_comment_for(2) 
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
         .estilo_graficos
           #container_interactivity
         .comment
           .title
-            h4
-              | Comentario Grafico Interactividad
-          form id="interaction" onsubmit="return saveChartComment('#interaction',#{@socialNetwork.id},'interaction', '#{params[:locale]}', '#{@facebook_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.interaction
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+            h4 Comentario Gráfico Interactividad
+          - @comment = history_comment_for(3) 
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
         .estilo_graficos
           #container_reach
         .comment
           .title
-            h4
-              | Comentario Grafico Alcance
-          form  id="reach" onsubmit="return saveChartComment('#reach',#{@socialNetwork.id},'reach', '#{params[:locale]}', '#{@facebook_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.reach
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+            h4 Comentario Gráfico Alcance
+          - @comment = history_comment_for(4) 
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 4}
         .estilo_graficos
           #container_investment_growth
         .comment
           .title
-            h4
-              | Comentario Grafico Crecimiento Inversion
-          form id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},'investment', '#{params[:locale]}', '#{@facebook_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.investment
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+            h4 Comentario Gráfico Inversiones
+          - @comment = history_comment_for(5) 
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 5}
         .estilo_graficos
           #container_costs
         .comment
           .title
-            h4
-              | Comentario Grafico Costes
-          form id="costs" onsubmit="return saveChartComment('#costs',#{@socialNetwork.id},'cost', '#{params[:locale]}', '#{@facebook_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.cost
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+            h4 Comentario Gráfico Costes
+          - @comment = history_comment_for(6) 
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 6}
     .tab-pane.fade id="tabimagenes"
-      == render 'layouts/uploadImage'
-script
-  | limit_characters_textarea_for_form('#table');
-  | limit_characters_textarea_for_form('#fans');
-  | limit_characters_textarea_for_form('#interaction');
-  | limit_characters_textarea_for_form('#reach');
-  | limit_characters_textarea_for_form('#investment');
-  | limit_characters_textarea_for_form('#costs');
+      == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
+== render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}

@@ -1,17 +1,14 @@
+- @social_network = SocialNetwork.find(params[:id_social])
+- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
         h4
           = notice
-
-- @google_plus_info = InfoSocialNetwork.find_by_id_name('google_plus')
-- @socialNetwork = SocialNetwork.find(params[:id_social])
-- @comments = GooglePlusComment.find_by_social_network_id(@socialNetwork.id)
-
 .margin
   center
     h1
-      = @socialNetwork.name
+      = @social_network.name
     a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
       i.icon-circle-arrow-left.icon-white
       |    
@@ -22,7 +19,7 @@
       i.icon-circle-arrow-down.icon-white
     br
     br
-    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=google_plus_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     = t 'buttons.new_data'
@@ -183,66 +180,37 @@ section.sectionInformation
         .title
           h4
             | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@google_plus_info.id_name}');"
-          textarea id="comment"
-            = @comments.table
-          br
-          .counter
-          button.btn.btn-success
-            = t 'buttons.save'
-          .result
+        - @comment = history_comment_for(1)
+        == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Graficos de la Tabla
+          h2 Gráficos de la Tabla
         .estilo_graficos
           #container_community
         .comment
           .title
             h4
-              | Comentario Grafico Comunidad
-          form  id="community" onsubmit="return saveChartComment('#community',#{@socialNetwork.id},'community' ,'#{params[:locale]}','#{@google_plus_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.community
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+              | Comentario gráfico comunidad
+          - @comment = history_comment_for(2)
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
         .estilo_graficos
           #container_interactions
         .comment
           .title
             h4
-              | Comentario Grafico Interacciones
-          form  id="interactions" onsubmit="return saveChartComment('#interactions',#{@socialNetwork.id},'interaction','#{params[:locale]}','#{@google_plus_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.interaction
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+              | Comentario gráfico interacciones
+          - @comment = history_comment_for(3)
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
         .estilo_graficos
           #container_investment
         .comment
           .title
             h4
-              | Comentario Grafico Inversion
-          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id},'investment','#{params[:locale]}','#{@google_plus_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.investment
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
-
+              | Comentario gráfico inversion
+          - @comment = history_comment_for(4)
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 4}
     .tab-pane.fade id="tabothers"
-      == render 'layouts/uploadImage'
-script
-  | limit_characters_textarea_for_form('#table');
-  | limit_characters_textarea_for_form('#community');
-  | limit_characters_textarea_for_form('#interactions');
-  | limit_characters_textarea_for_form('#investment');
+      == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
+== render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}

@@ -3,9 +3,10 @@ class SocialNetwork < ActiveRecord::Base
   has_attached_file :image, :default_url => "/assets/images/missing.png"
   validate :image, :attachment_presence => true
 
+  has_many :history_comment, :dependent => :destroy
+
   has_many :blog_comment, :dependent => :destroy
   has_many :benchmark_comment, :dependent => :destroy
-  has_many :facebook_comment, :dependent => :destroy
   has_many :flickr_comment, :dependent => :destroy
   has_many :google_plus_comment, :dependent => :destroy
   has_many :linkedin_comment, :dependent => :destroy

@@ -4,7 +4,7 @@
 .form_nueva_imagen id="addNewImage"
   button.close onclick="hide('addNewImage', 'btnAddImages')"
     |x
-  = form_for ImagesSocialNetwork.new, :as => :images, :url => social_networks_add_image_path, :html => { :multipart => true} do | f |
+  = form_for ImagesSocialNetwork.new, :as => :images, :url => images_social_network_new_path, :html => { :multipart => true} do | f |
     center
       h3 Agregar Imagen
     br
@@ -34,18 +34,18 @@
       = f.text_area :comment 
     br
     br
-    = f.hidden_field :social_network_id, :value =>  @socialNetwork.id.to_s
+    = f.hidden_field :social_network_id, :value =>  social_network_id.to_s
     center
       = f.submit "Guardar", :class => "btn btn-success" 
 .margin
-  - @images = ImagesSocialNetwork.where("social_network_id = ?", @socialNetwork.id).order("start_date DESC").order("end_date DESC")
+  - @images = ImagesSocialNetwork.where("social_network_id = ?", social_network_id).order("start_date DESC").order("end_date DESC")
   - if !@images.empty?
     - start_date_last_period = @images.first.start_date
     - end_date_last_period = @images.first.end_date
     h2
       = "Periodo del #{start_date_last_period.strftime("%d-%m-%Y")} al #{end_date_last_period.strftime("%d-%m-%Y")}"
   br
-  - @images_current_period = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', @socialNetwork.id, start_date_last_period, end_date_last_period).order("start_date DESC").order("end_date DESC")
+  - @images_current_period = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network_id, start_date_last_period, end_date_last_period).order("start_date DESC").order("end_date DESC")
   - @images_current_period.each do |image|
     h3
       = image.title
@@ -53,7 +53,7 @@
     img src="#{image.attachment.url}" style="width:800px; height:auto;"
     br
     br
-    = form_tag({:controller => "social_networks", :action => "change_image", :id => image.id}, :multipart => true, :method => "post") do
+    = form_tag({:controller => "images_social_network", :action => "update", :id => image.id}, :multipart => true, :method => "post") do
       .change_image style="float: right;"
         br
         = file_field_tag :attachment, {:accept => "image/*", :required => "required"}
@@ -70,13 +70,13 @@
       button.btn.btn-success style="float:left;"
         |Actualizar Comentario
       |      
-      a.btn.btn-danger href=social_networks_destroy_image_path(image.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+      a.btn.btn-danger href=images_social_network_destroy_path(image.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
         |Eliminar Imagen
       |      
       .result
     br
     br
-  - @old_images = ImagesSocialNetwork.where('social_network_id = ? and ((start_date != ? and end_date != ?) or start_date IS ?)', @socialNetwork.id, start_date_last_period, end_date_last_period, nil).order("start_date DESC").order("end_date DESC")
+  - @old_images = ImagesSocialNetwork.where('social_network_id = ? and ((start_date != ? and end_date != ?) or start_date IS ?)', social_network_id, start_date_last_period, end_date_last_period, nil).order("start_date DESC").order("end_date DESC")
   .accordion id="accordion_old_images"
     a.accordion-toggle data-toggle="collapse" data-parent="#accordion_old_summary" href="#collapseOne"
       | Entradas Anteriores
@@ -100,7 +100,7 @@
                   img src="#{image.attachment.url}" style="width:800px; height:auto;"
                   br
                   br
-                  = form_tag({:controller => "social_networks", :action => "change_image", :id => image.id}, :multipart => true, :method => "post") do
+                  = form_tag({:controller => "images_social_network", :action => "update", :id => image.id}, :multipart => true, :method => "post") do
                     .change_image style="float: right;"
                       br
                       = file_field_tag :attachment, {:accept => "image/*", :required => "required"}
@@ -117,7 +117,7 @@
                     button.btn.btn-success style="float:left;"
                       |Actualizar Comentario
                     |      
-                    a.btn.btn-danger href=social_networks_destroy_image_path(image.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
+                    a.btn.btn-danger href=images_social_network_destroy_path(image.id) style="float:left; margin-left:10px;" data-confirm="Esta seguro?" data-method="delete" rel="nofollow"
                       |Eliminar Imagen
                     |      
                     .result

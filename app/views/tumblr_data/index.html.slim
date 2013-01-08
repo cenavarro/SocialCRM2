@@ -1,17 +1,14 @@
+- @social_network = SocialNetwork.find(params[:id_social])
+- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
         h4
           = notice
-
-- @tumblr_info = InfoSocialNetwork.find_by_id_name('tumblr')
-- @socialNetwork = SocialNetwork.find(params[:id_social])
-- @comments = TumblrComment.find_by_social_network_id(@socialNetwork.id)
-
 .margin
   center
     h1
-      = @socialNetwork.name
+      = @social_network.name
     a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
       i.icon-circle-arrow-left.icon-white
       |    
@@ -21,7 +18,7 @@
       i.icon-circle-arrow-down.icon-white
     br
     br
-    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=tumblr_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     = t 'buttons.new_data'
@@ -167,65 +164,37 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la Tabla:
-        form id="table" onsubmit="return saveChartComment('#table',#{@socialNetwork.id},'table' ,'#{params[:locale]}','#{@tumblr_info.id_name}');"
-          textarea id="comment"
-            = @comments.table
-          br
-          .counter
-          button.btn.btn-success
-            = t 'buttons.save'
-          .result
+            | Comentario para la tabla
+        - @comment = history_comment_for(1)
+        == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Graficos de la Tabla
+          h2 Gráficos de la tabla
         .estilo_graficos
           #container_followers
         .comment
           .title
             h4
-              | Comentario Grafico Followers
-          form  id="followers" onsubmit="return saveChartComment('#followers',#{@socialNetwork.id},'followers' ,'#{params[:locale]}','#{@tumblr_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.followers
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+              | Comentario gráfico followers
+          - @comment = history_comment_for(2)
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
         .estilo_graficos
           #container_interactivity
         .comment
           .title
             h4
-              | Comentario Grafico Interactividad
-          form  id="interactivity" onsubmit="return saveChartComment('#interactivity',#{@socialNetwork.id}, 'interactivity','#{params[:locale]}','#{@tumblr_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.interactivity
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+              | Comentario gráfico interactividad
+          - @comment = history_comment_for(3)
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
         .estilo_graficos
           #container_investment
         .comment
           .title
             h4
-              | Comentario Grafico Inversion
-          form  id="investment" onsubmit="return saveChartComment('#investment',#{@socialNetwork.id}, 'investment','#{params[:locale]}','#{@tumblr_info.id_name}');"
-            textarea rows=10 id="comment"
-              = @comments.investment
-            br
-            .counter
-            button.btn.btn-success
-              | Guardar
-            .result
+              | Comentario gráfico inversión
+          - @comment = history_comment_for(4)
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 4}
     .tab-pane.fade id="tabothers"
-      == render 'layouts/uploadImage'
-script
-  | limit_characters_textarea_for_form('#table');
-  | limit_characters_textarea_for_form('#followers');
-  | limit_characters_textarea_for_form('#interactivity');
-  | limit_characters_textarea_for_form('#investment');
+      == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
+== render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}

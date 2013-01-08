@@ -35,4 +35,12 @@ module ApplicationHelper
     {delimiter: units_delimiter, separator: decimal_separator, precision: decimal_precision}
   end
 
+  def date_with_format(date)
+    date.strftime("%d-%m-%Y")
+  end
+
+  def history_comment_for type
+    @comments_history.where(comment_id: type).order("start_date DESC").order("end_date DESC").first
+  end
+
 end
