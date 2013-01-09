@@ -3,9 +3,6 @@ class TumblrDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(TumblrComment, params[:id_social])
-      TumblrComment.create!(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @tumblr_datum = TumblrDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else

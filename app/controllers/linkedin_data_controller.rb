@@ -3,9 +3,6 @@ class LinkedinDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(LinkedinComment, params[:id_social])
-      LinkedinComment.create!(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @linkedin_data = LinkedinDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else

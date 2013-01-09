@@ -3,9 +3,6 @@ class TwitterDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(TwitterComment, params[:id_social])
-      TwitterComment.create(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @twitter_data = TwitterDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else 

@@ -3,9 +3,6 @@ class FoursquareDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(FoursquareComment, params[:id_social])
-      FoursquareComment.new(:social_network_id => params[:id_social].to_i).save! 
-    end
     if !getDataDateRange?(params)
       @foursquare_datum = FoursquareDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else

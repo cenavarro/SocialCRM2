@@ -5,9 +5,6 @@ class FacebookDataController < ApplicationController
   require 'open-uri'
 
   def index
-    if !has_comments_table?(FacebookComment, params[:id_social])
-      FacebookComment.create!(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @facebook_data = FacebookDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else

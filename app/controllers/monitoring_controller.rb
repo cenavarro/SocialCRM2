@@ -4,9 +4,6 @@ class MonitoringController < ApplicationController
 
 
   def index
-    if !has_comments_table?(MonitoringComment, params[:id_social])
-      MonitoringComment.create!(:social_network_id => params[:id_social])
-    end
     themes = Monitoring.where('social_network_id = ? and isTheme = ?', params[:id_social], true).order("name ASC")
     channels = Monitoring.where('social_network_id = ? and isTheme = ?', params[:id_social], false).order("name ASC")
     if getDataDateRange?(params)

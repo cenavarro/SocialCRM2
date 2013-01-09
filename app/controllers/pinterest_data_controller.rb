@@ -3,9 +3,6 @@ class PinterestDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(PinterestComment, params[:id_social])
-      PinterestComment.create(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @pinterest_datum = PinterestDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else

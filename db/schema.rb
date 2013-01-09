@@ -11,16 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130107214157) do
-
-  create_table "benchmark_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "distribution"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "totals"
-  end
+ActiveRecord::Schema.define(:version => 20130109143432) do
 
   create_table "benchmark_competitors", :force => true do |t|
     t.integer  "social_network_id"
@@ -43,15 +34,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.datetime "updated_at"
   end
 
-  create_table "blog_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "visits"
-    t.text     "percentages"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "blog_data", :force => true do |t|
     t.integer  "client_id"
     t.integer  "social_network_id"
@@ -64,14 +46,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.integer  "total_posts"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "campaign_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "chart"
   end
 
   create_table "clients", :force => true do |t|
@@ -95,20 +69,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "facebook_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.string   "table"
-    t.string   "fans"
-    t.string   "interaction"
-    t.string   "investment"
-    t.string   "cost"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "reach"
-  end
-
-  add_index "facebook_comments", ["social_network_id"], :name => "index_facebook_comments_on_social_network", :unique => true
 
   create_table "facebook_data", :force => true do |t|
     t.integer  "client_id"
@@ -139,16 +99,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.integer  "social_network_id"
   end
 
-  create_table "flickr_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "community"
-    t.text     "interaction"
-    t.text     "investment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "flickr_data", :force => true do |t|
     t.integer  "client_id"
     t.integer  "social_network_id"
@@ -166,16 +116,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.datetime "updated_at"
   end
 
-  create_table "foursquare_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "followers"
-    t.text     "deals"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "interactivity"
-  end
-
   create_table "foursquare_data", :force => true do |t|
     t.integer  "client_id"
     t.integer  "social_network_id"
@@ -190,16 +130,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.integer  "clients"
     t.integer  "likes"
     t.integer  "checkins"
-  end
-
-  create_table "google_plus_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "community"
-    t.text     "interaction"
-    t.text     "investment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "google_plus_data", :force => true do |t|
@@ -264,16 +194,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.datetime "updated_at"
   end
 
-  create_table "linkedin_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "comunity"
-    t.text     "interaction"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "pages_views"
-  end
-
   create_table "linkedin_data", :force => true do |t|
     t.integer  "total_followers"
     t.integer  "summary"
@@ -305,15 +225,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
 
   add_index "list_comments", ["comment_id"], :name => "index_list_comments_on_comment_id"
 
-  create_table "monitoring_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "distributions"
-    t.text     "typology"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "monitoring_data", :force => true do |t|
     t.integer  "monitoring_id"
     t.integer  "value"
@@ -327,16 +238,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.string   "name"
     t.integer  "social_network_id"
     t.boolean  "isTheme"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "pinterest_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "comunity"
-    t.text     "interaction"
-    t.text     "investment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -357,12 +258,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.date     "start_date"
     t.date     "end_date"
     t.integer  "social_network_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "rols", :force => true do |t|
-    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -413,18 +308,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.date     "end_date"
   end
 
-  create_table "tuenti_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "fans"
-    t.text     "interaction"
-    t.text     "reach"
-    t.text     "investment"
-    t.text     "cost"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "tuenti_data", :force => true do |t|
     t.integer  "client_id"
     t.integer  "social_network_id"
@@ -450,16 +333,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.string   "actions"
   end
 
-  create_table "tumblr_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "followers"
-    t.text     "interactivity"
-    t.text     "investment"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "tumblr_data", :force => true do |t|
     t.integer  "client_id"
     t.integer  "social_network_id"
@@ -474,17 +347,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "posts"
-  end
-
-  create_table "twitter_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "comunity"
-    t.text     "interaction"
-    t.text     "investment"
-    t.text     "cost"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "twitter_data", :force => true do |t|
@@ -532,17 +394,6 @@ ActiveRecord::Schema.define(:version => 20130107214157) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
-  create_table "youtube_comments", :force => true do |t|
-    t.integer  "social_network_id"
-    t.text     "table"
-    t.text     "community"
-    t.text     "interaction"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "interaction_2"
-    t.text     "investment"
-  end
 
   create_table "youtube_data", :force => true do |t|
     t.integer  "client_id"

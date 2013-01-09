@@ -3,15 +3,10 @@ class GooglePlusDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(GooglePlusComment, params[:id_social])
-      GooglePlusComment.create!(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @google_plus_datum = GooglePlusDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
-      fechaInicio = params[:start_date].to_date
-      fechaFinal = params[:end_date].to_date
-      @google_plus_datum = GooglePlusDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], fechaInicio, fechaFinal).order("start_date ASC")
+      @google_plus_datum = GooglePlusDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end
     @google = select_chart_data
   end

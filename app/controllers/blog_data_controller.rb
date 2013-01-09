@@ -3,9 +3,6 @@ class BlogDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(BlogComment, params[:id_social])
-      BlogComment.create!(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @blog_datum = BlogDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else

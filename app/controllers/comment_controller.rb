@@ -1,4 +1,6 @@
 class CommentController < ApplicationController
+  before_filter :authenticate_user!
+  before_filter :has_admin_credentials?, :except => [:index]
 
   def index
     first_comment = Comment.where("social_network_id = ?", params[:id_social]).order("start_date DESC").order("end_date DESC").first

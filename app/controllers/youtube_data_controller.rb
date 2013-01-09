@@ -3,12 +3,9 @@ class YoutubeDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(YoutubeComment, params[:id_social])
-      YoutubeComment.create!(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @youtube_datum = YoutubeDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
-    else 
+    else
       @youtube_datum = YoutubeDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',
         params[:id_social], params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
     end

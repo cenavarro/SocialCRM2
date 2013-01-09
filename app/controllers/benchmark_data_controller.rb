@@ -3,9 +3,6 @@ class BenchmarkDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(BenchmarkComment, params[:id_social])
-      BenchmarkComment.new(:social_network_id => params[:id_social].to_i).save! 
-    end
     @benchmark = select_benchmark_data
   end
 

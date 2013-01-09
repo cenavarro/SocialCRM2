@@ -3,9 +3,6 @@ class FlickrDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(FlickrComment, params[:id_social])
-      FlickrComment.create!(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @flickr_datum = FlickrDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else

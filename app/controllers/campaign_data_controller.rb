@@ -4,9 +4,6 @@ class CampaignDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(CampaignComment, params[:id_social])
-      CampaignComment.create!(:social_network_id => params[:id_social])
-    end
     create_campaign_data
   end
 

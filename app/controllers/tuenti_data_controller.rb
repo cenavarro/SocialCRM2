@@ -3,9 +3,6 @@ class TuentiDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !has_comments_table?(TuentiComment, params[:id_social])
-      TuentiComment.create!(:social_network_id => params[:id_social])
-    end
     if !getDataDateRange?(params)
       @tuenti_datum = TuentiDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
