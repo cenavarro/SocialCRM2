@@ -6,7 +6,6 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
 
   def add_to(document)
     if !competitors.empty?
-      @comments = social_network.benchmark_comment.where("social_network_id = ?", social_network.id).first
       @report_data = select_report_data
       set_headers_and_footers
       create_report(document)
@@ -22,7 +21,6 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
       @worksheet =  @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => {:orientation => :landscape, :paper_size => 9,  :fit_to_width => 1, 
                                             :fit_to_height => 10})
-      size = (@report_data['size'] - 1) * 7
       create_report_styles(@report_data['size'])
       append_rows_to_report(7)
       @worksheet.add_row ['', "PAGINA DE BENCHMARK"], :style => 3
@@ -48,7 +46,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     append_rows_to_report
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
-    @worksheet.add_row ["", @comments.table]
+    @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
     @row = @row + 8
   end
 
@@ -126,7 +124,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
-    @worksheet.add_row ["", @comments.distribution]
+    @worksheet.add_row ["", history_comment_for(2).content] if !history_comment_for(2).nil?
   end
 
   def insert_totals_chart size
@@ -138,7 +136,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     append_rows_to_report 37
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
-    @worksheet.add_row ["", @comments.totals]
+    @worksheet.add_row ["", history_comment_for(3).content] if !history_comment_for(3).nil?
   end
 
   def data_of_competitor id

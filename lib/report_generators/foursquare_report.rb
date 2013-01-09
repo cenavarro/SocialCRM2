@@ -6,7 +6,6 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
 
   def add_to(document)
     if !foursquare_datum.empty?
-      @comments = social_network.foursquare_comment.where("social_network_id = ?", social_network.id).first
       @report_data = select_report_data
       set_headers_and_footers
       create_report(document)
@@ -84,7 +83,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
-    @worksheet.add_row ["", @comments.followers]
+    @worksheet.add_row ["", history_comment_for(2).content] if !history_comment_for(2).nil?
   end
 
   def append_interactivity_chart
@@ -95,7 +94,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     append_rows_to_report 36
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
-    @worksheet.add_row ["", @comments.interactivity]
+    @worksheet.add_row ["", history_comment_for(3).content] if !history_comment_for(3).nil?
   end
 
   def append_offers_chart
@@ -105,7 +104,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     append_rows_to_report 39
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
-    @worksheet.add_row ["", @comments.deals]
+    @worksheet.add_row ["", history_comment_for(4).content] if !history_comment_for(4).nil?
   end
 
 

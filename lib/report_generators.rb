@@ -6,6 +6,7 @@ module ReportGenerators
     def initialize(social_network, date_range)
       @social_network = social_network
       @date_range = date_range
+      @comments_history = HistoryComment.where(social_network_id: social_network.id)
     end
 
     def create_chart(position, title, chart_width = 9, height_chart = 23)
@@ -88,7 +89,7 @@ module ReportGenerators
       append_rows_to_report 1
       @worksheet.add_row ["", "Comentario"], :style => 3
       append_rows_to_report 1
-      @worksheet.add_row ["", @comments.table]
+      @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
     end
 
     def header(y_axis, width = 934)
@@ -133,8 +134,11 @@ module ReportGenerators
       for i in (0..@headers.size-1)
         header(@headers[i], width)
         footer(@footers[i], width)
-
       end
+    end
+
+    def history_comment_for type
+      @comments_history.where(comment_id: type).order("start_date DESC").order("end_date DESC").first
     end
 
   end

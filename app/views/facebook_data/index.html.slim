@@ -326,47 +326,47 @@ section.sectionInformation
                     i.icon-trash.icon-white
       .comment
         .title
-          h4 Comentario para la Tabla:
+          h4 Comentario para la tabla
         - @comment = history_comment_for(1) 
         == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
 
     .tab-pane.fade id="tabcharts" style="min-height: auto;"
       section id="seccionGraficos"
         center
-          h2 Graficos Facebook
+          h2 Gráficos Facebook
         .estilo_graficos
           #container_fans
         .comment
           .title
-            h4 Comentario Gráfico Fans
+            h4 Comentario gráfico fans
           - @comment = history_comment_for(2) 
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
         .estilo_graficos
           #container_interactivity
         .comment
           .title
-            h4 Comentario Gráfico Interactividad
+            h4 Comentario gráfico interactividad
           - @comment = history_comment_for(3) 
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
         .estilo_graficos
           #container_reach
         .comment
           .title
-            h4 Comentario Gráfico Alcance
+            h4 Comentario gráfico alcance
           - @comment = history_comment_for(4) 
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 4}
         .estilo_graficos
           #container_investment_growth
         .comment
           .title
-            h4 Comentario Gráfico Inversiones
+            h4 Comentario gráfico inversiones
           - @comment = history_comment_for(5) 
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 5}
         .estilo_graficos
           #container_costs
         .comment
           .title
-            h4 Comentario Gráfico Costes
+            h4 Comentario gráfico costes
           - @comment = history_comment_for(6) 
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 6}
     .tab-pane.fade id="tabimagenes"

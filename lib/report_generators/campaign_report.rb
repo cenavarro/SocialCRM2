@@ -5,7 +5,6 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
 
   def add_to(document)
     if has_data_for_the_report? 
-      @comments = social_network.campaign_comment.where("social_network_id = ?", social_network.id).first
       @report_data = select_report_data(rows_campaign)
       set_headers_and_footers
       create_report(document)
@@ -53,7 +52,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
     append_rows_to_report 1
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
-    @worksheet.add_row ["", @comments.table]
+    @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
     @row = @row + 8
   end
 
@@ -116,7 +115,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
-    @worksheet.add_row ["", @comments.chart]
+    @worksheet.add_row ["", history_comment_for(2).content] if !history_comment_for(2).nil?
   end
 
   def remove_cells_report_table_for_campaign

@@ -6,7 +6,6 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
 
   def add_to(document)
     if !is_empty? && !themes.first.monitoring_data.empty? 
-      @comments = social_network.monitoring_comment.first
       params = {themes: themes, channels: channels, start_date: start_date, end_date: end_date, datum: monitoring_datum}
       @report_data = create_report_data(params)
       set_headers_and_footers
@@ -132,7 +131,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     append_rows_to_report 1
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
-    @worksheet.add_row ["", @comments.table]
+    @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
     @row = @row + 14 
   end
 
@@ -183,7 +182,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
-    @worksheet.add_row ["", @comments.distributions]
+    @worksheet.add_row ["", history_comment_for(2).content] if !history_comment_for(2).nil?
   end
 
   def append_channels_chart
@@ -197,7 +196,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
-    @worksheet.add_row ["", @comments.typology]
+    @worksheet.add_row ["", history_comment_for(3).content] if !history_comment_for(3).nil?
   end
 
   def monitoring_hash

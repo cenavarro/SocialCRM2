@@ -7,7 +7,6 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
 
   def add_to(document)
     if !linkedin_datum.empty?
-      @comments = social_network.linkedin_comment.where("social_network_id = ?", social_network.id).first
       @report_data = select_report_data
       set_headers_and_footers
       create_report(document)
@@ -88,7 +87,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     append_rows_to_report(24)
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report(1)
-    @worksheet.add_row ["", @comments.comunity]
+    @worksheet.add_row ["", history_comment_for(2).content] if !history_comment_for(2).nil?
   end
 
   def append_interactivity_chart position
@@ -100,7 +99,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     append_rows_to_report(36)
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
-    @worksheet.add_row ["", @comments.interaction]
+    @worksheet.add_row ["", history_comment_for(3).content] if !history_comment_for(3).nil?
   end
 
   def append_views_pages_chart position
@@ -110,7 +109,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     append_rows_to_report(39)
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report
-    @worksheet.add_row ["", @comments.pages_views]
+    @worksheet.add_row ["", history_comment_for(4).content] if !history_comment_for(4).nil?
   end
 
   def set_headers_and_footers

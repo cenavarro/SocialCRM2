@@ -7,7 +7,6 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
 
   def add_to(document)
     if !blog_datum.empty?
-      @comments = social_network.blog_comment.where("social_network_id = ?", social_network.id).first
       @report_data = select_report_data
       set_headers_and_footers
       create_report(document)
@@ -76,7 +75,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
     append_rows_to_report 24
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
-    @worksheet.add_row ["", @comments.visits]
+    @worksheet.add_row ["", history_comment_for(2).content] if !history_comment_for(2).nil?
   end
 
   def append_percentage_chart
@@ -86,7 +85,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
     append_rows_to_report 37
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
-    @worksheet.add_row ["", @comments.percentages]
+    @worksheet.add_row ["", history_comment_for(3).content] if !history_comment_for(3).nil?
   end
 
   def set_headers_and_footers
