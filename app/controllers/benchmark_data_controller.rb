@@ -55,17 +55,6 @@ class BenchmarkDataController < ApplicationController
     end
   end
 
-  def save_comment
-    comment = BenchmarkComment.find_by_social_network_id(params[:social_network].to_i)
-    message = (t 'comments.fail')
-    if comment.update_attributes({params[:id_comment] => params[:comment]})
-      message = (t 'comments.success')
-    end
-    respond_to do | format |
-      format.json { render json: message.to_json }
-    end
-  end
-
   private
 
   def select_benchmark_data

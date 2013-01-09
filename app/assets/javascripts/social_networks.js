@@ -44,22 +44,6 @@ function save_comment(form, social_network_id, id_comment, locale){
   return false;
 }
 
-function saveChartComment(form, social_network, id_comment, locale, id_name){
-  jQuery.ajax( {
-    type: 'POST',
-    url: '/'+locale+'/'+id_name+'_data/save_comment',
-    data: { comment: $(form).find("#comment").val(), social_network: social_network, id_comment: id_comment },
-    dataType: 'json',
-    success: function(data){
-      $(form).find('.result').html(data);
-    },
-    error: function(data){
-      $(form).find('.result').html(data);
-    }
-  });
-  return false;
-}
-
 $(document).on("click", "#new_comment_link", function(){
   var comment_id = $(this).data('id');
   $(".modal-body #history_comment_comment_id").val(comment_id);

@@ -59,15 +59,7 @@ class TuentiDataController < ApplicationController
     end
   end
 
-
-  def save_comment
-    comment = TuentiComment.where(:social_network_id => params[:social_network].to_i)[0]
-    message = (t 'comments.fail')
-    if comment.update_attributes({params[:id_comment] => params[:comment]})
-      message = (t 'comments.success')
-    end
-    render :json => message.to_json
-  end
+  private
 
   def select_chart_data
     chart_data = {}
