@@ -26,7 +26,7 @@ class FacebookDatum < ActiveRecord::Base
   end
 
   def cpm_general
-    (agency_investment + (new_stock_investment/prints) + total_interactions)*1000.0
+    (total_investment/total_prints) * 1000.0
   end
 
   def coste_interactions

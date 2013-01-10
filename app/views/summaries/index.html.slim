@@ -33,7 +33,7 @@ section.sectionInformation
           = t 'summary.main_title'
       .margin
         h2
-          = "Periodo del #{@summary_comments.first.start_date.strftime("%d-%m-%Y")} al #{@summary_comments.first.end_date.strftime('%d-%m-%Y')}" if !@summary_comments.nil?
+          = "Periodo del #{@summary_comments.first.start_date.strftime("%d-%m-%Y")} al #{@summary_comments.first.end_date.strftime('%d-%m-%Y')}" if !@summary_comments.nil? and !@summary_comments.empty?
         br
         br
         - @summary_comments.each do |comment|

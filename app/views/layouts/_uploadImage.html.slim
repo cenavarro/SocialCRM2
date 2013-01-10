@@ -40,10 +40,12 @@
 .margin
   - @images = ImagesSocialNetwork.where("social_network_id = ?", social_network_id).order("start_date DESC").order("end_date DESC")
   - if !@images.empty?
-    - start_date_last_period = @images.first.start_date
-    - end_date_last_period = @images.first.end_date
+    - !@images.first.start_date.nil? ? start_date_last_period = @images.first.start_date.strftime("%d-%m-%Y") : start_date_last_period = nil
+    - !@images.first.end_date.nil? ? end_date_last_period = @images.first.end_date.strftime("%d-%m-%Y") : end_date_last_period = nil
+    - end_date_last_period = @images.first.end_date if !@images.first.end_date.nil?
     h2
-      = "Periodo del #{start_date_last_period.strftime("%d-%m-%Y")} al #{end_date_last_period.strftime("%d-%m-%Y")}"
+      - if !start_date_last_period.nil? and !end_date_last_period.nil?
+        = "Periodo del #{start_date_last_period} al #{end_date_last_period}"
   br
   - @images_current_period = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network_id, start_date_last_period, end_date_last_period).order("start_date DESC").order("end_date DESC")
   - @images_current_period.each do |image|
