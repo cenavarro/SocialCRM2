@@ -44,9 +44,9 @@
     - !@images.first.end_date.nil? ? end_date_last_period = @images.first.end_date : end_date_last_period = nil
     h2
       - if !start_date_last_period.nil? and !end_date_last_period.nil?
-        = "Periodo del #{start_date_last_period} al #{end_date_last_period}"
+        = "Periodo del #{date_with_format(start_date_last_period)} al #{date_with_format(end_date_last_period)}"
       - else
-        = "Periodo del #{dates_with_format(tstart_date_last_period)} al #{dates_with_format(end_date_last_period)}"
+        = "Periodo del sin fecha al fin fecha"
   br
   - @images_current_period = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network_id, start_date_last_period, end_date_last_period).order("start_date DESC").order("end_date DESC")
   - @images_current_period.each do |image|
