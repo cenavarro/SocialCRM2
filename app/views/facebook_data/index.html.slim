@@ -1,5 +1,4 @@
 - @social_network = SocialNetwork.find(params[:id_social])
-- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
@@ -327,8 +326,8 @@ section.sectionInformation
       .comment
         .title
           h4 Comentario para la tabla
-        - @comment = history_comment_for(1) 
-        == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
+        .content_comment id="table_comment"
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts" style="min-height: auto;"
       section id="seccionGraficos"
@@ -339,36 +338,36 @@ section.sectionInformation
         .comment
           .title
             h4 Comentario gráfico fans
-          - @comment = history_comment_for(2) 
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
+          .content_comment id="fans_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2, :id_div => "#fans_chart"}
         .estilo_graficos
           #container_interactivity
         .comment
           .title
             h4 Comentario gráfico interactividad
-          - @comment = history_comment_for(3) 
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
+          .content_comment id="interactivity_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3, :id_div => "#interactivity_chart"}
         .estilo_graficos
           #container_reach
         .comment
           .title
             h4 Comentario gráfico alcance
-          - @comment = history_comment_for(4) 
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 4}
+          .content_comment id="reach_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 4, :id_div => "#reach_chart"}
         .estilo_graficos
           #container_investment_growth
         .comment
           .title
             h4 Comentario gráfico inversiones
-          - @comment = history_comment_for(5) 
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 5}
+          .content_comment id="investment_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 5, :id_div => "#investment_chart"}
         .estilo_graficos
           #container_costs
         .comment
           .title
             h4 Comentario gráfico costes
-          - @comment = history_comment_for(6) 
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 6}
+          .content_comment id="costs_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 6, :id_div => "#costs_chart"}
     .tab-pane.fade id="tabimagenes"
       == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
 == render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}

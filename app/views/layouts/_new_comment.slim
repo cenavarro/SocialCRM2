@@ -1,4 +1,4 @@
-= form_for HistoryComment.new, :url => history_comment_new_path, :html => {:class => "form_new_comment_modal", :id => "formEntradaDatosTexto"} do |f|
+= form_for HistoryComment.new, :url => history_comment_new_path, :remote => true, :html => {:class => "form_new_comment_modal", :id => "form_new_comment"} do |f|
   .modal.hide.fade id="new_comment_modal" tabindex="-1" role="dialog" aria-hidden="true"
     .modal-header
       button.close type="button" data-dismiss="modal" aria-hidden="true"
@@ -8,6 +8,7 @@
     .modal-body
       = f.hidden_field :comment_id
       = f.hidden_field :social_network_id, :value => social_network_id
+      = hidden_field_tag :id_div
       h3
         | Periodo del Comentario
       br

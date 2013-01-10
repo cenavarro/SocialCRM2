@@ -1,5 +1,4 @@
 - @social_network = SocialNetwork.find(params[:id_social])
-- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
@@ -129,11 +128,10 @@ section.sectionInformation
                       i.icon-trash.icon-white
       .comment
         .title
-          h4
-            | Comentario para la tabla:
-          - @comment = history_comment_for(1) 
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
-
+          h4 Comentario para la tabla
+        br
+        .content_comment id="table_comment" 
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
       script
         | createChart('container_totals', 'Totales', #{raw @benchmark['dates']});
         - @benchmark['competitors'].each do |competitor|
@@ -148,18 +146,16 @@ section.sectionInformation
           #container_distribution
         .comment
           .title
-            h4
-              | Comentario Grafico Distribucion de los comentarios en canales
-          - @comment = history_comment_for(2)
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
+            h4 Comentario gráfico distribucion de los comentarios en canales
+          .content_comment id="distribution_chart" 
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2, :id_div => "#distribution_chart"}
         .estilo_graficos
           #container_totals
         .comment
           .title
-            h4
-              | Comentario Grafico Totales
-          - @comment = history_comment_for(3)
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
+            h4 Comentario gráfico totales
+          .content_comment id="totals_chart" 
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3, :id_div => "#totals_chart"}
     .tab-pane.fade id="tabothers"
       == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
 == render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}

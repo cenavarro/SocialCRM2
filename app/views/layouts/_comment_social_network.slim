@@ -1,3 +1,4 @@
+- @comment = history_comment_for(comment_id)
 .well
   p
   - if !@comment.nil?
@@ -6,9 +7,9 @@
       span style="font-size: 8pt;"
         = "Comentario del periodo #{date_with_format(@comment.start_date)} al #{date_with_format(@comment.end_date)}"
       .delete_comment_button style="float: right;"
-        a.btn.btn-mini.btn-danger href=history_comment_destroy_path(@comment.id) data-method='delete' rel='nofollow' data-confirm="Esta seguro que desea eliminar este comentario"
+        a.btn.btn-mini.btn-danger id="delete_comment" href=history_comment_destroy_path(@comment.id, @social_network.id, comment_id) data-method='delete' rel='nofollow' data-confirm="Esta seguro que desea eliminar este comentario"
           i.icon-trash.icon-white
   - else
     = "No se ha ingresado ningun comentario!"
-a.btn.btn-small.btn-primary href="#new_comment_modal" data-toggle="modal" data-id="#{comment_id}" id="new_comment_link"
+a.btn.btn-small.btn-primary href="#new_comment_modal" data-toggle="modal" data-id="#{comment_id}" id="new_comment_link" data-div="#{id_div}"
   | Nuevo Comentario

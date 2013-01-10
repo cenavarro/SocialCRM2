@@ -1,5 +1,4 @@
 - @social_network = SocialNetwork.find(params[:id_social])
-- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
@@ -213,9 +212,9 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla:
-        - @comment = history_comment_for(1)
-        == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
+            | Comentario para la tabla
+        .content_comment id="table_comment"
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
@@ -227,24 +226,24 @@ section.sectionInformation
           .title
             h4
               | Comentario gráfico seguidores
-          - @comment = history_comment_for(2)
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
+          .content_comment id="follower_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2, :id_div => "#follower_chart"}
         .estilo_graficos
           #container_interactions
         .comment
           .title
             h4
               | Comentario gráfico interacciones
-          - @comment = history_comment_for(3)
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
+          .content_comment id="interactions_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3, :id_div => "#interactions_chart"}
         .estilo_graficos
           #container_views_page
         .comment
           .title
             h4
               | Comentario gráfico visualizaciones de páginas 
-          - @comment = history_comment_for(4)
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 4}
+          .content_comment id="views_pages_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 4, :id_div => "#views_pages_chart"}
     .tab-pane.fade id="tabothers"
       == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
 == render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}

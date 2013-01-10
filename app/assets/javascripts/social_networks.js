@@ -46,8 +46,10 @@ function save_comment(form, social_network_id, id_comment, locale){
 
 $(document).on("click", "#new_comment_link", function(){
   var comment_id = $(this).data('id');
+  var id_div = $(this).data('div');
   $(".modal-body #history_comment_comment_id").val(comment_id);
   $(".modal-body #history_comment_content").val('');
+  $(".modal-body #id_div").val(id_div);
 });
 
 $(document).ready(function(){
@@ -105,6 +107,24 @@ $(document).ready(function(){
     }
     chart.xAxis[0].setExtremes(0, (maxSeries - 1), true, false);
   }
+  $("#form_new_comment").submit(function(event){
+    var values = $(this).serialize();
+    event.preventDefault();
+    $.ajax({
+      url: $(this).attr('action'),
+      type: "post",
+      data: values,
+      success: function(response){
+        $(response['id_div']).html(response['html']);
+        $("#new_comment_modal").modal('hide');
+      },
+      error: function(){
+        alert('failure');
+      },
+      async: false
+    });
+    return false;
+  });
 
   $("#start_date_picker").datepicker({ format: 'dd-mm-yyyy' })
   .on('changeDate', function(ev){

@@ -130,7 +130,7 @@ DemoComentarios::Application.routes.draw do
     post "images_social_network/update/:id" => "images_social_network#update", :as => "images_social_network_update"
 
     post "history_comments/new" => "history_comment#new", :as => "history_comment_new"
-    delete "history_comments/destroy/:id" => "history_comment#destroy", :as => "history_comment_destroy"
+    delete "history_comments/destroy/:id/:social_network_id/:comment_id" => "history_comment#destroy", :as => "history_comment_destroy"
 
   end
 

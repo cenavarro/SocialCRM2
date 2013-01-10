@@ -6,19 +6,19 @@ h1
           = notice
 
 - @comment_info = InfoSocialNetwork.find_by_id_name('comment')
-- @socialNetwork = SocialNetwork.find(params[:id_social])
+- @social_network = SocialNetwork.find(params[:id_social])
 
 .margin
   center
     h1
-      = @socialNetwork.name
+      = @social_network.name
     a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
       i.icon-circle-arrow-left.icon-white
       |    
       = t 'buttons.back_social_network'
     br
     br
-    img.content src="#{@socialNetwork.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=comment_new_path
     | Nuevo Comentario

@@ -1,5 +1,4 @@
 - @social_network = SocialNetwork.find(params[:id_social])
-- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
@@ -157,8 +156,8 @@ section.sectionInformation
         .title
           h4
             = (t 'global.title_table_comment')
-        - @comment = history_comment_for(1)
-        == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
+        .content_comment id="table_comment" 
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
@@ -170,16 +169,16 @@ section.sectionInformation
           .title
             h4
               | Comentario Grafico Visitas
-          - @comment = history_comment_for(2)
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
+          .content_comment id="visits_chart" 
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2, :id_div => "#visits_chart"}
         .estilo_graficos
           #container_percentage
         .comment
           .title
             h4
               | Comentario Grafico Porcentajes
-          - @comment = history_comment_for(3)
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
+          .content_comment id="percentages_chart" 
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3, :id_div => "#percentages_chart"}
     .tab-pane.fade id="tabothers"
       == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
 == render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}

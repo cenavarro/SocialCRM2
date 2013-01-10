@@ -1,5 +1,4 @@
 - @social_network = SocialNetwork.find(params[:id_social])
-- @comments_history = HistoryComment.where(social_network_id: @social_network.id)
 - if !notice.nil?
     .alert.alert-success
       center
@@ -164,9 +163,9 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla:
-        - @comment = history_comment_for(1)
-        == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1}
+            | Comentario para la tabla
+        .content_comment id="table_comment"
+          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
@@ -178,16 +177,16 @@ section.sectionInformation
           .title
             h4
               | Comentario gráfico distribución de los comentarios en canales
-          - @comment = history_comment_for(2)
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2}
+          .content_comment id="distribution_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2, :id_div => "#distribution_chart"}
         .estilo_graficos
           #container_typology
         .comment
           .title
             h4
               | Comentario gráfico tipología de los comentarios
-          - @comment = history_comment_for(3)
-          == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3}
+          .content_comment id="typology_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3, :id_div => "#typology_chart"}
     .tab-pane.fade id="tabothers"
       == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
 == render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}
