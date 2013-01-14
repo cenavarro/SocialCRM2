@@ -140,7 +140,7 @@ section.sectionInformation
                 = t 'youtube.mobile_device'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.mobile_devise, integer_format)
+                  = number_with_precision(youtube_datum.mobile_devise, decimal_format)
             tr
               td
                 = t 'youtube.youtube_search'
@@ -152,7 +152,7 @@ section.sectionInformation
                 = t 'youtube.youtube_suggestion'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.youtube_suggestion, integer_format)
+                  = number_with_precision(youtube_datum.youtube_suggestion, decimal_format)
             tr
               td
                 = t 'youtube.youtube_page'
@@ -164,31 +164,31 @@ section.sectionInformation
                 = t 'youtube.external_web_site'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.external_web_site, integer_format)
+                  = number_with_precision(youtube_datum.external_web_site, decimal_format)
             tr
               td
                 = t 'youtube.google_search'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.google_search, integer_format)
+                  = number_with_precision(youtube_datum.google_search, decimal_format)
             tr
               td
                 = t 'youtube.youtube_others'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.youtube_others, integer_format)
+                  = number_with_precision(youtube_datum.youtube_others, decimal_format)
             tr
               td
                 = t 'youtube.youtube_subscriptions'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.youtube_subscriptions, integer_format)
+                  = number_with_precision(youtube_datum.youtube_subscriptions, decimal_format)
             tr
               td
                 = t 'youtube.youtube_ads'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.youtube_ads, integer_format)
+                  = number_with_precision(youtube_datum.youtube_ads, decimal_format)
             tr
               td
                 = t 'youtube.like'
@@ -228,25 +228,25 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.investment_agency, decimal_format)
+                  = "#{number_with_precision(youtube_datum.investment_agency, decimal_format)} €"
             tr
               td
                 = t 'global.new_actions_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.investment_actions, decimal_format)
+                  = "#{number_with_precision(youtube_datum.investment_actions, decimal_format)} €"
             tr
               td
                 = t 'global.ads_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.investment_anno, decimal_format)
+                  = "#{number_with_precision(youtube_datum.investment_anno, decimal_format)} €"
             tr
               td
                 = t 'global.total_investment'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.total_investment, decimal_format)
+                  = "#{number_with_precision(youtube_datum.total_investment, decimal_format)} €"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -260,13 +260,13 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Youtube
         .estilo_graficos
           #container_community
         .comment

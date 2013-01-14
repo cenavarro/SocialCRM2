@@ -129,13 +129,13 @@ section.sectionInformation
                 = t 'blog.rebound_percentage'
               - @blog_datum.each do | blog_datum |
                 td
-                  = number_with_precision(blog_datum.rebound_percent, decimal_format)
+                  = "#{number_with_precision(blog_datum.rebound_percent, decimal_format)}%"
             tr
               td
                 = t 'blog.new_visits_percentage'
               - @blog_datum.each do |blog_datum|
                 td
-                  = number_with_precision(blog_datum.new_visits_percent, decimal_format)
+                  = "#{number_with_precision(blog_datum.new_visits_percent, decimal_format)}%"
             tr
               td
                 = t 'blog.num_posts'
@@ -162,7 +162,7 @@ section.sectionInformation
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Graficos de la Tabla
+          h2 Gráficos Blog
         .estilo_graficos
           #container_visits
         .comment

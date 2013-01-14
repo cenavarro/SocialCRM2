@@ -28,7 +28,7 @@ module ApplicationHelper
   end
 
   def integer_format
-    {delimiter: units_delimiter}
+    {delimiter: units_delimiter, separator: decimal_separator, precision: 0}
   end
 
   def decimal_format
@@ -42,6 +42,11 @@ module ApplicationHelper
   def history_comment_for type
     comments_history = HistoryComment.where(social_network_id: @social_network.id)
     comments_history.where(comment_id: type).order("start_date DESC").order("end_date DESC").first
+  end
+
+  def number_with_precision number, options
+    (!number.nil? and ((number % 1) == 0.0)) ? (options = {delimiter: units_delimiter, separator: decimal_separator, precision: 0}) : nil
+    super
   end
 
 end

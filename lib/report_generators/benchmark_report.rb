@@ -44,7 +44,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       @row = @row + 1
     end
     append_rows_to_report
-    @worksheet.add_row ["", "Comentario"], :style => 3
+    @worksheet.add_row ["", "Comentario del consultor"], :style => 3
     append_rows_to_report
     @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
     @row = @row + 8

@@ -235,7 +235,7 @@ section.sectionInformation
                 = t 'facebook.total_prints'
               - @facebook_data.each do |facebook_datum|
                 td
-                  = number_with_delimiter(facebook_datum.total_prints, integer_format)
+                  = number_with_precision(facebook_datum.total_prints, decimal_format)
             tr
               td
                 = t 'facebook.change_prints_percentage'
@@ -255,25 +255,25 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @facebook_data.each do |facebook_datum|
                 td
-                  = number_with_precision(facebook_datum.agency_investment, decimal_format)
+                  = "#{number_with_precision(facebook_datum.agency_investment, decimal_format)} €"
             tr
               td
                 = t 'global.new_actions_investment'
               - @facebook_data.each do |facebook_datum|
                 td
-                  =  number_with_precision(facebook_datum.new_stock_investment, decimal_format)
+                  =  "#{number_with_precision(facebook_datum.new_stock_investment, decimal_format)} €"
             tr
               td
                 = t 'global.ads_investment'
               - @facebook_data.each do |facebook_datum|
                 td
-                  = number_with_precision(facebook_datum.anno_investment, decimal_format)
+                  = "#{number_with_precision(facebook_datum.anno_investment, decimal_format)} €"
             tr
               td
                 = t 'global.total_investment'
               - @facebook_data.each do |facebook_datum|
                 td
-                  = number_with_precision(facebook_datum.total_investment, decimal_format)
+                  = "#{number_with_precision(facebook_datum.total_investment, decimal_format)} €"
             tr.titlesRows
               td colspan=100
                 = t 'global.costs_title'
@@ -282,37 +282,37 @@ section.sectionInformation
                 = t 'facebook.ctr_ads'
               - @facebook_data.each do |facebook_datum|
                 td
-                  = number_with_precision(facebook_datum.ctr_anno, decimal_format)
+                  = "#{number_with_precision(facebook_datum.ctr_anno, decimal_format)}%"
             tr
               td
                 = t 'facebook.cpm_ads'
               - @facebook_data.each do |facebook_datum|
                 td
-                  = number_with_precision(facebook_datum.cpm_anno, decimal_format)
+                  = "#{number_with_precision(facebook_datum.cpm_anno, decimal_format)} €"
             tr
               td
                 = t 'facebook.cpc_ads'
               - @facebook_data.each do |facebook_datum|
                 td
-                  = number_with_precision(facebook_datum.cpc_anno, decimal_format)
+                  = "#{number_with_precision(facebook_datum.cpc_anno, decimal_format)} €"
             tr
               td
                 = t 'facebook.cpm_general'
               - @facebook_data.each do | datum |
                 td
-                  = number_with_precision(datum.cpm_general, decimal_format)
+                  = "#{number_with_precision(datum.cpm_general, decimal_format)} €"
             tr
               td
                 = t 'facebook.cost_per_interaction'
               - @facebook_data.each do | datum |
                 td
-                  = number_with_precision(datum.coste_interactions, decimal_format)
+                  = "#{number_with_precision(datum.coste_interactions, decimal_format)} €"
             tr
               td
                 = t 'facebook.cost_per_fan'
               - @facebook_data.each do | datum |
                 td
-                  = number_with_precision(datum.fan_cost, decimal_format)
+                  = "#{number_with_precision(datum.fan_cost, decimal_format)} €"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -325,7 +325,8 @@ section.sectionInformation
                     i.icon-trash.icon-white
       .comment
         .title
-          h4 Comentario para la tabla
+          h4
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 

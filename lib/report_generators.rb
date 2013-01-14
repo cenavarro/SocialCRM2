@@ -28,7 +28,7 @@ module ReportGenerators
       images = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network.id, start_date_last_period, end_date_last_period)
       images.each do |image|
         header position
-        position = position + 10
+        position = position + 9
         @worksheet.add_row ["",image.title], :style => @styles['title'][1]
         img = File.expand_path(image.attachment.path, __FILE__)
         @worksheet.add_image(:image_src => img) do |sheet_image|
@@ -40,8 +40,8 @@ module ReportGenerators
         @worksheet.add_row ["", "Comentario"], :style => 3
         append_rows_to_report 1
         @worksheet.add_row ["", image.comment]
-        append_rows_to_report 12
-        position = position + 32
+        append_rows_to_report 13
+        position = position + 33
         footer position-1
       end
     end
@@ -87,7 +87,7 @@ module ReportGenerators
         end
       end
       append_rows_to_report 1
-      @worksheet.add_row ["", "Comentario"], :style => 3
+      @worksheet.add_row ["", "Comentario del consultor"], :style => 3
       append_rows_to_report 1
       @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
     end

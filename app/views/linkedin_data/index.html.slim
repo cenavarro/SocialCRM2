@@ -165,7 +165,7 @@ section.sectionInformation
                 = t 'linkedin.interest_percentage'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.interest, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.interest, decimal_format)}%"
             tr
               td
                 = t 'linkedin.recommendations'
@@ -180,25 +180,25 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.investment_agency, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.investment_agency, decimal_format)} €"
             tr
               td
                 = t 'global.new_actions_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.investment_actions, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.investment_actions, decimal_format)} €"
             tr
               td
                 = t 'global.ads_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.investment_anno, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.investment_anno, decimal_format)} €"
             tr
               td
                 = t 'global.total_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.total_investment, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.total_investment, decimal_format)} €"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -212,14 +212,14 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Linkedin
         .estilo_graficos
           #container_followers
         .comment

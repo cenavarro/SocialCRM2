@@ -67,7 +67,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
 
   def create_theme_datum(params, monitoring_data)
     themes.each do |theme|
-      themes_datum = social_network.monitoring.where("isTheme = ? and id = ?", true, theme.id).first.monitoring_data
+      themes_datum = social_network.monitoring.where("isTheme = ? and id = ?", true, theme.id).first.monitoring_data.where("start_date >= ? and end_date <= ?", start_date.to_date, end_date.to_date)
       data = []
       index = 2
       themes_datum.each do |datum|
@@ -84,7 +84,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
 
   def create_channel_datum(params, monitoring_data)
     channels.each do |channel|
-      channels_datum = social_network.monitoring.where("isTheme = ? and id = ?", false,channel.id).first.monitoring_data
+      channels_datum = social_network.monitoring.where("isTheme = ? and id = ?", false,channel.id).first.monitoring_data.where("start_date >= ? and end_date <= ?", start_date.to_date, end_date.to_date)
       data = []
       index = 2
       channels_datum.each do |datum|
@@ -124,12 +124,12 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       @report_data['change_volume_comments'][i] = result.round(2)
     end
     for i in (2..@report_data['channel_total_comment'].size-1)
-      @report_data['daily_average'][i] = (@report_data['channel_total_comment'][i] / @report_data['total_days'][i]).round(2)
+      @report_data['daily_average'][i] = (@report_data['channel_total_comment'][i] / @report_data['total_days'][2]).round(2)
     end
     @worksheet.add_row @report_data['change_volume_comments'], :style => @styles['basic'], :height => 13 
     @worksheet.add_row @report_data['daily_average'], :style => @styles['basic'], :height => 13
     append_rows_to_report 1
-    @worksheet.add_row ["", "Comentario"], :style => 3
+    @worksheet.add_row ["", "Comentario del consultor"], :style => 3
     append_rows_to_report 1
     @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
     @row = @row + 14 

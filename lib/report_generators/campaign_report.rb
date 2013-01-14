@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::CampaignReport < ReportGenerators::Base
 	def self.can_process? type
 		type == RowsCampaign
@@ -50,7 +51,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
       @row = @row + 1
     end
     append_rows_to_report 1
-    @worksheet.add_row ["", "Comentario"], :style => 3
+    @worksheet.add_row ["", "Comentario del consultor"], :style => 3
     append_rows_to_report 1
     @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
     @row = @row + 8
@@ -100,13 +101,13 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
   def append_charts_to_report
     remove_cells_report_table_for_campaign
     append_rows_to_report 7
-    @worksheet.add_row ["","GRAFICOS CAMPANA"], :style => 3
+    @worksheet.add_row ["","GRAFICOS CAMPAÑA"], :style => 3
     append_rows_to_report 2
     append_campaign_chart
   end
 
   def append_campaign_chart
-    chart = create_chart(51, "Grafico Campana")
+    chart = create_chart(51, "Grafico Campaña")
     @report_data['data'].each do |data|
       data.values.first
       add_serie(chart, data.values.first, @report_data['dates'], data.keys.first)

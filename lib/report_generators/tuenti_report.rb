@@ -26,10 +26,10 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
     append_rows_to_report 7
     @worksheet.add_row ["","PAGINA DE TUENTI"], :style => 3
     add_table_to_report
-    append_rows_to_report 41
+    append_rows_to_report 44
     append_charts_to_report
     append_rows_to_report 15
-    add_images_report 282
+    add_images_report 283
     @worksheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
   end
 
@@ -50,8 +50,8 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
       'real_fans' => ['','Fans totales'], 'goal_fans' => ['', 'Objetivo fans'], 'growth_fans' => ['', '% crecimiento fans'],
       'page_header' => ['','Página de la empresa'], 'page_prints' => ['', 'Impresiones de la página'],
       'unique_total_users' => ['', 'Total de usuario únicos'], 'external_clics' => ['','Clics externos'],
-      'clics' => ['','Clicks'], 'downloads' => ['','Descargars'], 'comments' => ['','Número de comentarios'],
-      'ctr_external_clics' => ['','CTR % clic externos'], 'upload_photos' => ['','Fotos subidas'],
+      'downloads' => ['','Descargars'], 'comments' => ['','Número de comentarios'],
+      'ctr_external_clics' => ['','CTR % clic externos'],
       'investment_header' => ['','Inversión'], 'investment_agency' => ['', 'Inversión agencia'], 'investment_actions' => ['','Inversión nuevas acciones'],
       'investment_ads' => ['','Inversión anuncios'], 'total_investment' => ['','Inversión total'],
       'costs_header' => ['', 'Coste fan'], 'cost_fan' => ['','Coste fan']
@@ -76,7 +76,7 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
 
   def tuenti_keys
     ['actions', 'fans_header', 'real_fans', 'goal_fans', 'page_header', 'page_prints', 'unique_total_users', 
-      'external_clics', 'clics', 'downloads', 'comments', 'ctr_external_clics', 'upload_photos', 'investment_header', 
+      'external_clics', 'downloads', 'comments', 'ctr_external_clics', 'investment_header', 
       'investment_agency', 'investment_actions', 'investment_ads','costs_header']
   end
 
@@ -85,7 +85,7 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
     add_serie(chart, @report_data['new_fans'], @report_data['dates'], 'Nuevos fans')
     add_serie(chart, @report_data['total_fans'], @report_data['dates'], 'Fans totales')
     add_serie(chart, @report_data['goal_fans'], @report_data['dates'], 'Objetivos fans')
-    append_rows_to_report 24
+    append_rows_to_report 23
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
     @worksheet.add_row ["", history_comment_for(2).content] if !history_comment_for(2).nil?
@@ -94,10 +94,8 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
   def append_interactivity_chart
     chart = create_chart(121, "Interacciones")
     add_serie(chart, @report_data['unique_total_users'], @report_data['dates'], 'Total usuarios únicos')
-    add_serie(chart, @report_data['clics'], @report_data['dates'], 'Clicks')
     add_serie(chart, @report_data['downloads'], @report_data['dates'], 'Descargas')
     add_serie(chart, @report_data['comments'], @report_data['dates'], 'Numero comentarios')
-    add_serie(chart, @report_data['upload_photos'], @report_data['dates'], 'Fotos subidas')
     append_rows_to_report 37
     @worksheet.add_row ["", "Comentario"], :style => 3
     append_rows_to_report 1
@@ -137,8 +135,8 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
   end
 
   def set_headers_and_footers
-    @headers ||= [0, 72, 114, 156, 198, 240]
-    @footers ||= [71, 113, 155, 197, 239, 281]
+    @headers ||= [0, 73, 115, 157, 199, 241]
+    @footers ||= [72, 114, 156, 198, 240, 282]
   end
 
 end

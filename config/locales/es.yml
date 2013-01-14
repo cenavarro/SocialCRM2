@@ -65,7 +65,7 @@ es:
     information: "Información"
     start_date: "Fecha inicio periodo"
     end_date: "Fecha final periodo"
-    title_table_comment: "Comentario para la tabla"
+    title_table_comment: "Comentarios del consultor"
     percentage_growth: "% Crecimiento"
     investment_title: "Inversión"
     agency_investment: "Inversión agencia"

@@ -267,25 +267,25 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @twitter_data.each do |twitter_datum|
                 td
-                  = number_with_precision(twitter_datum.agency_investment, decimal_format)
+                  = "#{number_with_precision(twitter_datum.agency_investment, decimal_format)} €"
             tr
               td
                 = t 'global.new_actions_investment'
               - @twitter_data.each do |twitter_datum|
                 td
-                  = number_with_precision(twitter_datum.investment_actions, decimal_format)
+                  = "#{number_with_precision(twitter_datum.investment_actions, decimal_format)} €"
             tr
               td
                 = t 'twitter.twitter_ads_investment'
               - @twitter_data.each do |twitter_datum|
                 td
-                  = number_with_precision(twitter_datum.investment_ads, decimal_format)
+                  = "#{number_with_precision(twitter_datum.investment_ads, decimal_format)} €"
             tr
               td
                 = t 'global.total_investment'
               - @twitter_data.each do |twitter_datum|
                 td
-                  = number_with_precision(twitter_datum.total_investment, decimal_format)
+                  = "#{number_with_precision(twitter_datum.total_investment, decimal_format)} €"
             tr.titlesRows
               td colspan=100
                 = t 'global.costs_title'
@@ -294,25 +294,25 @@ section.sectionInformation
                 = t 'twitter.cost_per_engagement'
               - @twitter_data.each do |twitter_datum|
                 td
-                  = number_with_precision(twitter_datum.cost_twitter_ads, decimal_format)
+                  = "#{number_with_precision(twitter_datum.cost_twitter_ads, decimal_format)} €"
             tr
               td
                 = t 'twitter.cost_per_prints'
               - @twitter_data.each do |twitter_datum|
                 td
-                  = number_with_precision(twitter_datum.cost_per_prints, decimal_format)
+                  = "#{number_with_precision(twitter_datum.cost_per_prints, decimal_format)} €"
             tr
               td
                 = t 'twitter.cost_per_interaction'
               - @twitter_data.each do |twitter_datum|
                 td
-                  = number_with_precision(twitter_datum.cost_per_interaction, decimal_format)
+                  = "#{number_with_precision(twitter_datum.cost_per_interaction, decimal_format)} €"
             tr
               td
                 = t 'twitter.cost_per_followers'
               - @twitter_data.each do |twitter_datum|
                 td
-                  = number_with_precision(twitter_datum.cost_follower, decimal_format)
+                  = "#{number_with_precision(twitter_datum.cost_follower, decimal_format)} €"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -326,13 +326,13 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Twitter
         .estilo_graficos
           #container_comunidad
         .comment

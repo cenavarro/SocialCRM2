@@ -59,10 +59,6 @@
       = f.text_field :external_clics, {:class => "number validate[required]", :value => number_with_delimiter(f.object.external_clics, integer_format)}
       br
       br
-      = f.label t 'tuenti.clics'
-      = f.text_field :clics, {:class => "number validate[required]", :value => number_with_delimiter(f.object.clics, integer_format)}
-      br
-      br
       = f.label t 'tuenti.downloads'
       = f.text_field :downloads, {:class => "number validate[required]", :value => number_with_delimiter(f.object.downloads, integer_format)}
       br
@@ -72,11 +68,9 @@
       br
       br
       = f.label t 'tuenti.ctr_external_clics_percentage'
+      - p f.object
+      - p f.object.ctr_external_clics
       = f.text_field :ctr_external_clics, {:class => "decimal validate[required]", :value => number_with_precision(f.object.ctr_external_clics, decimal_format)}
-      br
-      br
-      = f.label t 'tuenti.upload_photos'
-      = f.text_field :upload_photos, {:class => "number validate[required]", :value => number_with_delimiter(f.object.upload_photos, integer_format)}
     .box.investmentTuenti
       =  t 'global.investment_title' 
       br

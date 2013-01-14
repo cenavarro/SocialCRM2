@@ -109,8 +109,13 @@ section.sectionInformation
               td
                 = t 'global.percentage_growth'
               - @google_plus_datum.each do |google_plus_datum|
-                td
-                  = number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_followers, decimal_format)
+                - diff_total_followers = google_plus_datum.get_percentage_difference_from_previous_total_followers
+                - if diff_total_followers.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_followers, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_followers, decimal_format)}%"
             tr.titlesRows
               td colspan=100
                 = t 'global.interactivity_title'
@@ -136,8 +141,13 @@ section.sectionInformation
               td
                 = t 'google_plus.change_interactions'
               - @google_plus_datum.each do |google_plus_datum|
-                td
-                  = number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_interactions, decimal_format)
+                - diff_total_interactions = google_plus_datum.get_percentage_difference_from_previous_total_interactions
+                - if diff_total_interactions.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_interactions, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_interactions, decimal_format)}%"
             tr.titlesRows
               td colspan=100
                 = t 'global.investment_title'
@@ -146,25 +156,25 @@ section.sectionInformation
                 = t 'global.agency_investment'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.investment_agency, decimal_format)
+                  = "#{number_with_precision(google_plus_datum.investment_agency, decimal_format)} €"
             tr
               td
                 = t 'global.new_actions_investment'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.investment_actions, decimal_format)
+                  = "#{number_with_precision(google_plus_datum.investment_actions, decimal_format)} €"
             tr
               td
                 = t 'global.ads_investment'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.investment_ads, decimal_format)
+                  = "#{number_with_precision(google_plus_datum.investment_ads, decimal_format)} €"
             tr
               td
                 = t 'global.total_investment'
               - @google_plus_datum.each do |google_plus_datum|
                 td
-                  = number_with_precision(google_plus_datum.total_investment, decimal_format)
+                  = "#{number_with_precision(google_plus_datum.total_investment, decimal_format)} €"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -178,14 +188,14 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Google+
         .estilo_graficos
           #container_community
         .comment
