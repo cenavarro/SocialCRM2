@@ -11,18 +11,18 @@ br
 br
 = form_tag(client_generate_report_path, :method => "get", :class => "well form-inline form_reports", :id => "form_reports") do
 
-  = label_tag :id_label, "Seleccione el Cliente:"
-  br
-  = select_tag :client_id, options_from_collection_for_select(@clients, :id, :name)
+  = label_tag :id_label, "Seleccione un cliente", :style => "font-weight: bold;"
   br
   br
+  center
+    = select_tag :client_id, options_from_collection_for_select(@clients, :id, :name, params[:id]), :prompt => "Seleccione un cliente"
   br
-  = label_tag :dates, "Seleccione el rango de fechas para generar el reporte:"
+  = label_tag :dates, "Seleccione el rango de fechas para generar el reporte", :style => "font-weight: bold;"
   br
   br
   - start_date = get_start_date
   - end_date = get_end_date
-  table
+  table style="margin-left: 40px;"
     tr
       td
         = label_tag "Fecha Inicio"
@@ -39,13 +39,39 @@ br
           span.add-on
             i.icon-th
   br
-  br
   span style="font-size: 8pt;"
     |Nota: Para el reporte se descargara un maximo de 6 periodos, ya sean por quincena o mensuales.
   br
   br
+  = label_tag :social_networks, "Seleccione las redes sociales que desea que aparezcan en el reporte", :style => "font-weight: bold;"
+  br
+  br
+  .well style="max-height: 400px; overflow: scroll;"
+    .content_social_networks style="margin-left: 150px;"
+      - if !params[:id].nil?
+        - @social_networks_available.each do |social_network|
+          .check_box_social_network
+            = check_box_tag 'social_networks[]', social_network.id, true
+            = "       #{social_network.name}"
+          br
+      - else
+        h3
+          | Sin redes disponibles
+  br
+  br
   center
-    button.btn.btn-success type="submit" name="commit"
+    button.btn.btn-success type="submit" name="commit" id="generate_report"
       i.icon-check.icon-white
       | Generar Reporte 
-
+javascript:
+  jQuery(document).ready(function(){
+    $('#client_id').change(function(){
+      var selected_value = $(this).val();
+      if(selected_value != '' ){
+        var url = window.location.href;
+        url = url.substring(0, url.indexOf('&'));
+        url += '?id=' + selected_value;
+        window.location.href = url;
+      }
+    });
+  });

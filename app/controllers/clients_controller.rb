@@ -137,6 +137,9 @@ class ClientsController < ApplicationController
 
   def reports
     current_user.rol_id == 1 ? @clients = Client.all : @clients = [Client.find(current_user.client_id)]
+    if !params[:id].nil?
+      @social_networks_available = Client.find(params[:id]).social_networks.order("name ASC")
+    end
   end
 
   def report_full_path_with_name
@@ -146,13 +149,21 @@ class ClientsController < ApplicationController
   end
 
   def generate_report
-    client = Client.find(params[:client_id])
-    date_range = OpenStruct.new(start_date: params[:start_date], end_date: params[:end_date])
-    file_report = report_full_path_with_name
-    reports = client.build_reports(date_range, params[:social_network_id])
-    reports.serialize(file_report)
-    send_file file_report, :type => "application/vnd.ms-excel"
-    File.delete(file_report) if File.exist? file_report
+    if can_generate_report?
+      client = Client.find(params[:client_id])
+      date_range = OpenStruct.new(start_date: params[:start_date], end_date: params[:end_date])
+      file_report = report_full_path_with_name
+      reports = client.build_reports(date_range, params[:social_networks])
+      reports.serialize(file_report)
+      send_file file_report, :type => "application/vnd.ms-excel"
+      File.delete(file_report) if File.exist? file_report
+    else
+      redirect_to request.referer
+    end
+  end
+
+  def can_generate_report?
+    !params[:client_id].nil? and params[:client_id] != ""
   end
 
 end
