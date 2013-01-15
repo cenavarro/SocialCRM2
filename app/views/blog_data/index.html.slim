@@ -79,14 +79,16 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @blog_datum.each do |blog_datum|
-                td
+                th
                   = blog_datum.start_date.strftime('%d %b') + "-" + blog_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'blog.title_visits'
+              - @blog_datum.each do | blog_datum |
+                td
             tr
               td.estiloCelda
                 = t 'blog.unique_visits'
@@ -122,8 +124,10 @@ section.sectionInformation
                   td.negativeValue
                     = %{#{value}%}
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'blog.title_percentage'
+              - @blog_datum.each do | blog_datum |
+                td
             tr
               td
                 = t 'blog.rebound_percentage'
