@@ -1,30 +1,11 @@
-- @social_network = SocialNetwork.find(params[:id_social])
-- if !notice.nil?
-    .alert.alert-success
-      center
-        h4
-          = notice
+== render 'layouts/description_social_network'
+
 script
   | createChart('container_chart', 'Grafico Campañas', #{ raw @campaign_data['dates']});
   - @campaign_data['data'].each do |data|
     | addSerie('#{data.keys.first}', #{data.values.first});
   | refreshChart();
 
-.margin
-  center
-    h2
-      = @social_network.name
-    a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
-      i.icon-circle-arrow-left.icon-white
-      |    
-      = t 'buttons.back_social_network'
-    a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      = t 'buttons.report'
-      |    
-      i.icon-circle-arrow-down.icon-white
-    br
-    br
-    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=campaign_new_path(params[:idc],params[:id_social]) style="width: 168px" id="btnNewData"
     = t 'buttons.new_data'

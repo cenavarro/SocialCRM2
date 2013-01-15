@@ -3,7 +3,7 @@ class TumblrDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !getDataDateRange?(params)
+    if !get_data_from_range_date?
       @tumblr_datum = TumblrDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
       @tumblr_datum = TumblrDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',
@@ -59,7 +59,7 @@ class TumblrDataController < ApplicationController
   private
 
   def select_chart_data
-    chart_data = {
+    {
       "dates" => @tumblr_datum.collect {|td| "#{td.start_date.strftime('%d %b')} - #{td.end_date.strftime('%d %b')}"},
       "new_followers" => @tumblr_datum.collect{ |td| td.new_followers },
       "total_followers" => @tumblr_datum.map(&:total_followers),

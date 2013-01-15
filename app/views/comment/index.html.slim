@@ -1,24 +1,5 @@
-h1
-- if !notice.nil?
-    .alert.alert-success
-      center
-        h4
-          = notice
+== render 'layouts/description_social_network'
 
-- @comment_info = InfoSocialNetwork.find_by_id_name('comment')
-- @social_network = SocialNetwork.find(params[:id_social])
-
-.margin
-  center
-    h1
-      = @social_network.name
-    a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
-      i.icon-circle-arrow-left.icon-white
-      |    
-      = t 'buttons.back_social_network'
-    br
-    br
-    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 .margin
   a.btn.btn-primary href=comment_new_path
     | Nuevo Comentario

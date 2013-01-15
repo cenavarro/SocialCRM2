@@ -1,9 +1,9 @@
 module Datum
+
   def compare_metric metric, other_datum
     return 0 if other_datum.nil? || other_datum.send(metric) == 0
     ((send(metric)-other_datum.send(metric)).to_f/other_datum.send(metric).to_f)*100
   end
-
 
   def previous_datum
     social_network.send(type).where("end_date <= ? and id != ?", end_date.to_date, id).last
@@ -18,6 +18,7 @@ module Datum
   end
 
   module ClassMethods
+
     def set_type (type)
       @type = type
     end

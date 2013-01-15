@@ -1,24 +1,4 @@
-- @social_network = SocialNetwork.find(params[:id_social])
-- if !notice.nil?
-    .alert.alert-success
-      center
-        h4
-          = notice
-.margin
-  center
-    h1
-      = @social_network.name
-    a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
-      i.icon-circle-arrow-left.icon-white
-      |    
-      = t 'buttons.back_social_network'
-    a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      = t 'buttons.report'
-      |    
-      i.icon-circle-arrow-down.icon-white
-    br
-    br
-    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+== render 'layouts/description_social_network'
 
 .margin
   a.btn.btn-primary href=benchmark_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
@@ -30,20 +10,20 @@
 .estiloRangoFechas id="formSelectRangeDate"
   button.close onclick="hide('formSelectRangeDate', 'btnMostrarRangos')" id="btnCloseRange"
     |x
-  form action=benchmark_index_path(params[:idc],2) method="get"
+  form action=benchmark_index_path(params[:idc], 2) method="get"
     center
       | Seleccione el rango de fechas
     br
     br
     = t 'global.start_date'
-    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
-      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly"
+    .input-append.date data-date=current_date data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value=current_date readonly="readonly"
       span.add-on
         i.icon-th
     br
     = t 'global.end_date'
-    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
-      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly"
+    .input-append.date data-date=current_date data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value=current_date readonly="readonly"
       span.add-on
         i.icon-th
     br
@@ -99,7 +79,7 @@ section.sectionInformation
                 td.columnsTableBenchmark
                   = t 'benchmark.totals'
           tbody
-            - totals = {}
+            - totals_for_chart = {}
             - @benchmark['competitors'].each do |competitor|
               tr
                 td
@@ -115,7 +95,7 @@ section.sectionInformation
                       = number_with_delimiter(data[index..index+5].inject(:+), integer_format)
                       - total << data[index..index+5].inject(:+) 
                     - index = index + 6
-                  - totals[competitor] = total 
+                  - totals_for_chart[competitor] = total 
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -135,7 +115,7 @@ section.sectionInformation
       script
         | createChart('container_totals', 'Totales', #{raw @benchmark['dates']});
         - @benchmark['competitors'].each do |competitor|
-          | addSerie('#{competitor}', #{totals[competitor]});
+          | addSerie('#{competitor}', #{totals_for_chart[competitor]});
         | refreshChart();
 
     .tab-pane.fade id="tabcharts"

@@ -108,7 +108,6 @@ class SocialNetworksController < ApplicationController
     benchmark = SocialNetwork.new(params)
     benchmark.info_social_network_id = InfoSocialNetwork.find_by_id_name('benchmark').id
     if benchmark.save!
-      BenchmarkComment.new(:social_network_id => benchmark.id).save!
       competitors_list = params[:competitors]
       competitors_list.each do |competitor|
         BenchmarkCompetitor.new(:social_network_id => benchmark.id, :name => competitor).save!
