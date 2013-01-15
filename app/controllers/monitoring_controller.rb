@@ -6,7 +6,7 @@ class MonitoringController < ApplicationController
   def index
     themes = Monitoring.where('social_network_id = ? and isTheme = ?', params[:id_social], true).order("name ASC")
     channels = Monitoring.where('social_network_id = ? and isTheme = ?', params[:id_social], false).order("name ASC")
-    if getDataDateRange?(params)
+    if get_data_from_range_date?
       @datum = MonitoringData.where('start_date = ? and end_date = ? and monitoring_id = ?', 
                                     params[:start_date].to_date, params[:end_date].to_date, themes.first.id).order('start_date ASC')
     else
@@ -109,7 +109,7 @@ class MonitoringController < ApplicationController
   end
 
   def get_monitoring_data(id)
-      if getDataDateRange?(params)
+      if get_data_from_range_date?
         MonitoringData.where('start_date >= ? and end_date <= ? and monitoring_id = ?', 
                                                params[:start_date].to_date, params[:end_date].to_date, id).order('start_date ASC')
       else

@@ -3,7 +3,7 @@ class TwitterDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !getDataDateRange?(params)
+    if !get_data_from_range_date?
       @twitter_data = TwitterDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else 
       @twitter_data = TwitterDatum.where(['start_date >= ? and end_date <= ? and social_network_id = ?', 

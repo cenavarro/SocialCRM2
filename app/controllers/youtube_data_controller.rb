@@ -3,7 +3,7 @@ class YoutubeDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !getDataDateRange?(params)
+    if !get_data_from_range_date?
       @youtube_datum = YoutubeDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
       @youtube_datum = YoutubeDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',

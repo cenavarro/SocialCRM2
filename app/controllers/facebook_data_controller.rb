@@ -5,12 +5,11 @@ class FacebookDataController < ApplicationController
   require 'open-uri'
 
   def index
-    if !getDataDateRange?(params)
+    if !get_data_from_range_date?
       @facebook_data = FacebookDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
       @facebook_data = FacebookDatum.where(['start_date >= ? and end_date <= ? and social_network_id = ?', params[:start_date].to_date, params[:end_date].to_date, params[:id_social]]).order("start_date ASC")
     end
-
     @chart = create_chart_data(@facebook_data)
   end
 

@@ -1,24 +1,5 @@
-- @social_network = SocialNetwork.find(params[:id_social])
-- if !notice.nil?
-    .alert.alert-success
-      center
-        h4
-          = notice
-.margin
-  center
-    h1
-      = @social_network.name
-    a.btn.btn-primary.btn-small href=clients_social_networks_path(params[:idc]) data-toggle="modal" style="float:left;"
-      i.icon-circle-arrow-left.icon-white
-      |    
-      = t 'buttons.back_social_network'
-    a.btn.btn-primary.btn-small href="#report_social_network_modal" data-toggle="modal" style="float:right;margin-right: 30px;"
-      = t 'buttons.report'
-      |    
-      i.icon-circle-arrow-down.icon-white
-    br
-    br
-    img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
+== render 'layouts/description_social_network'
+
 .margin
   a.btn.btn-primary href=blog_new_path(params[:idc],2) style="width: 168px" id="btnNewData"
     = t 'buttons.new_data'
@@ -35,14 +16,14 @@
     br
     br
     |Fecha Inicio
-    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="start_date_picker"
-      input.span2 type="text" name="start_date" value="01-01-2012" readonly="readonly" id="start_date"
+    .input-append.date data-date=current_date data-date-format="dd-mm-yyyy" id="start_date_picker"
+      input.span2 type="text" name="start_date" value=current_date readonly="readonly" id="start_date"
       span.add-on
         i.icon-th
     br
     |Fecha Final
-    .input-append.date data-date="01-01-2012" data-date-format="dd-mm-yyyy" id="end_date_picker"
-      input.span2 type="text" name="end_date" value="01-01-2012" readonly="readonly" id="end_date"
+    .input-append.date data-date=current_date data-date-format="dd-mm-yyyy" id="end_date_picker"
+      input.span2 type="text" name="end_date" value=current_date readonly="readonly" id="end_date"
       span.add-on
         i.icon-th
     br

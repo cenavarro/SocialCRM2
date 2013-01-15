@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   def get_start_date
     Time.now.strftime('%d-%m-%Y')
   end
@@ -7,12 +8,16 @@ module ApplicationHelper
     Time.now.strftime('%d-%m-%Y')
   end
 
+  def current_date
+    Time.now.strftime('%d-%m-%Y')
+  end
+
   def admin_user?
-    (current_user.rol_id == 1) ? (return true) : (return false)
+    (current_user.rol_id == 1)
   end
 
   def has_admin_credentials?
-    admin_user? ? (return true) : (redirect_to root_path, notice: "No tiene los permisos necesarios para realizar esta accion!")
+    admin_user? ? true : (redirect_to root_path, notice: "No tiene los permisos necesarios para realizar esta accion!")
   end
 
   def units_delimiter

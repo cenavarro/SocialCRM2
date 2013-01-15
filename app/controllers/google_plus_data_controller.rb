@@ -3,7 +3,7 @@ class GooglePlusDataController < ApplicationController
   before_filter :has_admin_credentials?, :except => [:index]
 
   def index
-    if !getDataDateRange?(params)
+    if !get_data_from_range_date?
       @google_plus_datum = GooglePlusDatum.where('social_network_id = ?', params[:id_social]).order("start_date ASC")
     else
       @google_plus_datum = GooglePlusDatum.where('social_network_id = ? and start_date >= ? and end_date <= ?',params[:id_social], params[:start_date].to_date, params[:end_date].to_date).order("start_date ASC")
