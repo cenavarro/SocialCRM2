@@ -58,8 +58,8 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
         table[key] << value
       end
       table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
-      table['diff_visits'] << datum.get_percentage_difference_from_previous_unique_visits.round(2)
-      table['diff_view'] << datum.get_percentage_difference_from_previous_view_pages.round(2)
+      table['diff_visits'] << "#{datum.get_percentage_difference_from_previous_unique_visits.round(2)}%"
+      table['diff_view'] << "#{datum.get_percentage_difference_from_previous_view_pages.round(2)}%"
     end
     table
   end

@@ -1,5 +1,9 @@
+#encoding: utf-8
 module ReportGenerators
   class Base
+    include ActionView::Helpers::NumberHelper
+    include ApplicationHelper
+
     attr :social_network, :date_range, :comments, :worksheet, :workbook, :styles, :headers, :footers
     delegate :start_date, :end_date, :to => :date_range
 
@@ -51,7 +55,7 @@ module ReportGenerators
       cell_header = @workbook.styles.add_style(:bg_color => "FF0000", :border => {:style => :thin, :color => "FFFF0000"}, :font_name => "Calibri")
       dates_style = @workbook.styles.add_style(:b => true, :bg_color => "000000", :fg_color => "FFFFFF", 
                                      :border => {:style => :thin, :color => "#FF000000"}, :sz => 9, :font_name => "Calibri")
-      basic_style = @workbook.styles.add_style(:border => {:style => :thin, :color => "#00000000"}, :sz => 11, :font_name => "Calibri")
+      basic_style = @workbook.styles.add_style(:border => {:style => :thin, :color => "#00000000"}, :sz => 11, :font_name => "Calibri", :alignment => {:horizontal => :right, :vertical => :center})
       none_style = @workbook.styles.add_style()
       date_benchmark_style = @workbook.styles.add_style(:size => 5, :font_name => "Calibri")
       @styles = {"title"=> [none_style], "header"=> [none_style], "dates"=> [none_style], "basic"=> [none_style]}
@@ -141,6 +145,24 @@ module ReportGenerators
       @comments_history.where(comment_id: type).order("start_date DESC").order("end_date DESC").first
     end
 
+    def euro_currency_keys
+      ['agency_investment', 'new_stock_investment', 'anno_investment', 'cpm_anno', 'cpc_anno']
+    end
+
+    def put_euro_currency_to table
+      table.each do |key, values|
+        table[key] = append_euro_currency_to_array(values) if euro_currency_keys.include?(key)
+      end
+    end
+
+    def append_euro_currency_to_array values
+      new_values = values[0..1]
+      values[2..values.size].each do |value|
+        new_values << "#{number_with_precision(value, decimal_format)} €"
+      end
+      new_values
+    end
+
   end
 
   def self.all
@@ -168,6 +190,7 @@ module ReportGenerators
       report_generator.can_process? data_type
     end
   end
+
 end
 
 require 'report_generators/facebook_report'

@@ -150,6 +150,7 @@ class ClientsController < ApplicationController
 
   def generate_report
     if can_generate_report?
+      params[:social_networks] = [params[:social_network_id]] if !params[:social_network_id].nil?
       client = Client.find(params[:client_id])
       date_range = OpenStruct.new(start_date: params[:start_date], end_date: params[:end_date])
       file_report = report_full_path_with_name
