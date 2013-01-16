@@ -76,9 +76,9 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @tuenti_datum.each do |tuenti_datum|
-                td
+                th
                   = tuenti_datum.start_date.strftime('%d %b') + "-" + tuenti_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
@@ -88,8 +88,10 @@ section.sectionInformation
                 td
                   = tuenti_datum.actions
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'tuenti.fans'
+              - @tuenti_datum.each do |tuenti_datum|
+                td
             tr
               td.estiloCelda
                 = t 'tuenti.new_fans'
@@ -120,8 +122,10 @@ section.sectionInformation
                   td.negativeValue
                     = "#{number_with_precision(tuenti_datum.get_percentage_difference_from_previous_real_fans, decimal_format)}%"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'tuenti.page_company'
+              - @tuenti_datum.each do |tuenti_datum|
+                td
             tr
               td
                 = t 'tuenti.page_prints'
@@ -159,8 +163,10 @@ section.sectionInformation
                 td
                   = "#{number_with_precision(tuenti_datum.ctr_external_clics, decimal_format)}%"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @tuenti_datum.each do |tuenti_datum|
+                td
             tr
               td
                 = t 'global.agency_investment'
@@ -186,8 +192,10 @@ section.sectionInformation
                 td
                   = "#{number_with_precision(tuenti_datum.total_investment, decimal_format)} €"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.costs_title'
+              - @tuenti_datum.each do |tuenti_datum|
+                td
             tr
               td
                 = t 'global.fan_cost'

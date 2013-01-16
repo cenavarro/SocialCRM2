@@ -81,14 +81,16 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @youtube_datum.each do |youtube_datum|
-                td
+                th
                   = youtube_datum.start_date.strftime('%d %b') + "-" + youtube_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'youtube.community_title'
+              - @youtube_datum.each do |youtube_datum|
+                td
             tr
               td.estiloCelda
                 = t 'youtube.new_subscribers'
@@ -102,8 +104,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(youtube_datum.total_subscriber, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @youtube_datum.each do |youtube_datum|
+                td
             tr
               td
                 = t 'youtube.total_video_views'
@@ -202,8 +206,10 @@ section.sectionInformation
                   = number_with_delimiter(youtube_datum.shared, integer_format)
 
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @youtube_datum.each do |youtube_datum|
+                td
             tr
               td
                 = t 'global.agency_investment'

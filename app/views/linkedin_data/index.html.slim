@@ -65,9 +65,9 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @linkedin_data.each do |linkedin_datum|
-                td
+                th
                   = linkedin_datum.start_date.strftime('%d %b') + "-" + linkedin_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
@@ -77,8 +77,10 @@ section.sectionInformation
                 td
                   = linkedin_datum.actions
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'linkedin.community_title'
+              - @linkedin_data.each do |linkedin_datum|
+                td
             tr
               td.estiloCelda
                 = t 'linkedin.new_followers'
@@ -103,8 +105,10 @@ section.sectionInformation
                   td.negativeValue
                     = %{#{percentFollowers}%}
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @linkedin_data.each do |linkedin_datum|
+                td
             tr
               td
                 = t 'linkedin.summary'
@@ -154,8 +158,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(linkedin_datum.recommendation, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @linkedin_data.each do |linkedin_datum|
+                td
             tr
               td
                 = t 'global.agency_investment'

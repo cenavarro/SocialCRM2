@@ -83,9 +83,9 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @facebook_data.each do |facebook_datum|
-                td
+                th
                   = facebook_datum.start_date.strftime('%d %b') + "-" + facebook_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
@@ -136,8 +136,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(facebook_datum.ranking_world, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'facebook.interactivity_title'
+              - @facebook_data.each do |facebook_datum|
+                td
             tr
               td
                 = t 'facebook.prints'
@@ -174,8 +176,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(facebook_datum.potential_reach, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'facebook.interactivity_title'
+              - @facebook_data.each do |facebook_datum|
+                td
             tr
               td
                 = t 'facebook.ads_prints'
@@ -229,8 +233,10 @@ section.sectionInformation
                   td.negativeValue
                     = %{#{valChangePrints}%}
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @facebook_data.each do |facebook_datum|
+                td
             tr
               td
                 = t 'global.agency_investment'
@@ -256,8 +262,10 @@ section.sectionInformation
                 td
                   = "#{number_with_precision(facebook_datum.total_investment, decimal_format)} €"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.costs_title'
+              - @facebook_data.each do |facebook_datum|
+                td
             tr
               td
                 = t 'facebook.ctr_ads'

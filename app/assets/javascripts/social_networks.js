@@ -148,17 +148,6 @@ $(document).ready(function(){
       $(this).val($(this).val().replace(/,/g, '.'));
     });
   });
-  var oTable = $('#tablaInformacion').dataTable({
-      "asStripeClasses": [''],
-      "bSort" : false,
-      "bPaginate": false,
-      "bFilter": false,
-      "bInfo": false,
-      "sScrollX": "100%",
-      "sScrollXInner": "150%",
-      "bScrollCollapse": true,
-  });
-  new FixedColumns(oTable);
 });
 
 function createChart(container, title, categories){

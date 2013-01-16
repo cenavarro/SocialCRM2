@@ -66,14 +66,16 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @google_plus_datum.each do |google_plus_datum|
-                td
+                th
                   = google_plus_datum.start_date.strftime('%d %b') + "-" + google_plus_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'google_plus.community_title'
+              - @google_plus_datum.each do |google_plus_datum|
+                td
             tr
               td.estiloCelda
                 = t 'google_plus.new_followers'
@@ -98,8 +100,10 @@ section.sectionInformation
                   td.negativeValue
                     = "#{number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_followers, decimal_format)}%"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @google_plus_datum.each do |google_plus_datum|
+                td
             tr
               td
                 = t 'google_plus.plus'
@@ -130,8 +134,10 @@ section.sectionInformation
                   td.negativeValue
                     = "#{number_with_precision(google_plus_datum.get_percentage_difference_from_previous_total_interactions, decimal_format)}%"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @google_plus_datum.each do |google_plus_datum|
+                td
             tr
               td
                 = t 'global.agency_investment'

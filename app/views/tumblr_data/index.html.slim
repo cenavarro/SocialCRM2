@@ -70,8 +70,10 @@ section.sectionInformation
                   = tumblr_datum.start_date.strftime('%d %b') + "-" + tumblr_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'tumblr.community_title'
+              - @tumblr_datum.each do |tumblr_datum|
+                td
             tr
               td.estiloCelda
                 = t 'tumblr.new_followers'
@@ -91,8 +93,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(tumblr_datum.posts, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @tumblr_datum.each do |tumblr_datum|
+                td
             tr
               td
                 = t 'tumblr.like'
@@ -106,8 +110,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(tumblr_datum.reblogged, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @tumblr_datum.each do |tumblr_datum|
+                td
             tr
               td
                 = t 'global.agency_investment'

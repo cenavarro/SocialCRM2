@@ -67,14 +67,16 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @flickr_datum.each do |flickr_datum|
-                td
+                th
                   = flickr_datum.start_date.strftime('%d %b') + "-" + flickr_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'flickr.community_title'
+              - @flickr_datum.each do |flickr_datum|
+                td
             tr
               td.estiloCelda
                 = t 'flickr.new_contacts'
@@ -88,8 +90,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(flickr_datum.total_contacts, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @flickr_datum.each do |flickr_datum|
+                td
             tr
               td
                 = t 'flickr.visits'
@@ -109,8 +113,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(flickr_datum.favorites, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @flickr_datum.each do |flickr_datum|
+                td
             tr
               td
                 = t 'global.agency_investment.'

@@ -60,14 +60,16 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @monitoring_data['dates'].each do |date|
-                td
+                th
                   = date
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'monitoring.themes'
+              - @monitoring_data['dates'].each do |date|
+                td
             - @monitoring_data['theme_datum'].each do |datum|
               tr
                 td
@@ -88,8 +90,10 @@ section.sectionInformation
                     = number_with_delimiter(value, integer_format)
                 - index = index + 1
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'monitoring.channels_distribution'
+              - @monitoring_data['dates'].each do |date|
+                td
             - @monitoring_data['channel_datum'].each do |datum|
               tr
                 td

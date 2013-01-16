@@ -73,8 +73,10 @@ section.sectionInformation
                   = foursquare_datum.start_date.strftime('%d %b') + "-" + foursquare_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'foursquare.community_title'
+              - @foursquare_datum.each do |foursquare_datum|
+                td
             tr
               td.estiloCelda
                 = t 'foursquare.new_followers'
@@ -88,8 +90,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(foursquare_datum.total_followers, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @foursquare_datum.each do |foursquare_datum|
+                td
             tr
               td
                 = t 'foursquare.clients'
@@ -142,8 +146,10 @@ section.sectionInformation
                   td.negativeValue
                     = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_checkins, decimal_format)}%"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'foursquare.campaign_title'
+              - @foursquare_datum.each do |foursquare_datum|
+                td
             tr
               td
                 = t 'foursquare.total_unlocks'

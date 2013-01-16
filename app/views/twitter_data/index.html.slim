@@ -80,8 +80,10 @@ section.sectionInformation
                   = twitter_datum.start_date.strftime('%d %b') + "-" + twitter_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'twitter.community_title'
+              - @twitter_data.each do |twitter_datum|
+                td
             tr
               td.estiloCelda
                 = t 'twitter.new_followers'
@@ -124,8 +126,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(datum.period_tweets, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @twitter_data.each do | datum |
+                td
             tr
               td
                 = t 'twitter.mentions'
@@ -241,8 +245,10 @@ section.sectionInformation
                   td.negativeValue
                     = %{#{percentage_prints}%}
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @twitter_data.each do | datum |
+                td
             tr
               td
                 = t 'global.agency_investment'
@@ -268,8 +274,10 @@ section.sectionInformation
                 td
                   = "#{number_with_precision(twitter_datum.total_investment, decimal_format)} €"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.costs_title'
+              - @twitter_data.each do |twitter_datum|
+                td
             tr
               td
                 = t 'twitter.cost_per_engagement'
