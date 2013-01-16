@@ -1526,7 +1526,7 @@ table {
 .table th,
 .table td {
   min-width: 97px;
-  padding: 8px;
+  padding: 8px !important;
   line-height: 18px;
   text-align: left;
   vertical-align: top;

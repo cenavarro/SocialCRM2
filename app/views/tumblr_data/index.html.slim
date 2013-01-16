@@ -70,8 +70,10 @@ section.sectionInformation
                   = tumblr_datum.start_date.strftime('%d %b') + "-" + tumblr_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'tumblr.community_title'
+              - @tumblr_datum.each do |tumblr_datum|
+                td
             tr
               td.estiloCelda
                 = t 'tumblr.new_followers'
@@ -91,8 +93,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(tumblr_datum.posts, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @tumblr_datum.each do |tumblr_datum|
+                td
             tr
               td
                 = t 'tumblr.like'
@@ -106,32 +110,34 @@ section.sectionInformation
                 td
                   = number_with_delimiter(tumblr_datum.reblogged, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @tumblr_datum.each do |tumblr_datum|
+                td
             tr
               td
                 = t 'global.agency_investment'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_precision(tumblr_datum.investment_agency, decimal_format)
+                  = "#{number_with_precision(tumblr_datum.investment_agency, decimal_format)} €"
             tr
               td
                 = t 'global.new_actions_investment'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_precision(tumblr_datum.investment_actions, decimal_format)
+                  = "#{number_with_precision(tumblr_datum.investment_actions, decimal_format)} €"
             tr
               td
                 = t 'global.ads_investment'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_precision(tumblr_datum.investment_ads, decimal_format)
+                  = "#{number_with_precision(tumblr_datum.investment_ads, decimal_format)} €"
             tr
               td
                 = t 'global.total_investment'
               - @tumblr_datum.each do |tumblr_datum|
                 td
-                  = number_with_precision(tumblr_datum.total_investment, decimal_format)
+                  = "#{number_with_precision(tumblr_datum.total_investment, decimal_format)} €"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -145,13 +151,13 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Tumblr
         .estilo_graficos
           #container_followers
         .comment

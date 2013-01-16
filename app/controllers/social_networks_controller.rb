@@ -67,7 +67,6 @@ class SocialNetworksController < ApplicationController
     campaign = SocialNetwork.new(:name => params[:name], :client_id => params[:id_client], :info_social_network_id => InfoSocialNetwork.find_by_id_name('campaign').id)
     campaign.image = params[:image] if !params[:image].nil?
     if campaign.save!
-      CampaignComment.new(:social_network_id => campaign.id).save!
       list = params[:criteria]
       list.each do |item|
         RowsCampaign.new(:name => item, :social_network_id => campaign.id).save!

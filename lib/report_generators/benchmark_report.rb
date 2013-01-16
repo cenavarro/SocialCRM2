@@ -1,3 +1,4 @@
+#encoding: utf-8
 class ReportGenerators::BenchmarkReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -23,7 +24,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
                                             :fit_to_height => 10})
       create_report_styles(@report_data['size'])
       append_rows_to_report(7)
-      @worksheet.add_row ['', "PAGINA DE BENCHMARK"], :style => 3
+      @worksheet.add_row ['', "PÁGINA DE BENCHMARK"], :style => 3
       @row = 8
       append_benchmark_table
       append_rows_to_report(68-@row)
@@ -44,7 +45,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       @row = @row + 1
     end
     append_rows_to_report
-    @worksheet.add_row ["", "Comentario"], :style => 3
+    @worksheet.add_row ["", "Comentario del consultor"], :style => 3
     append_rows_to_report
     @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
     @row = @row + 8
@@ -106,7 +107,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
   def append_charts_to_report
     size = (@report_data['size'] - 1) * 7
     append_rows_to_report 7
-    @worksheet.add_row ["","GRAFICOS BENCHMAR"], :style => 3
+    @worksheet.add_row ["","GRÁFICOS BENCHMAR"], :style => 3
     append_rows_to_report 2
     insert_distribution_chart size
     append_rows_to_report 26 
@@ -114,7 +115,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
   end
 
   def insert_distribution_chart size
-    chart = create_chart(78, "Distribucion", 18)
+    chart = create_chart(78, "Distribución", 18)
     shift_array(@report_data['x_axis'], 2)
     @report_data['competitors'].each do |competitor|
       shift_array(@report_data[competitor]['data'], 2)

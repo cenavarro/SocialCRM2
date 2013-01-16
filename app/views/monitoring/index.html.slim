@@ -60,14 +60,16 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @monitoring_data['dates'].each do |date|
-                td
+                th
                   = date
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'monitoring.themes'
+              - @monitoring_data['dates'].each do |date|
+                td
             - @monitoring_data['theme_datum'].each do |datum|
               tr
                 td
@@ -88,8 +90,10 @@ section.sectionInformation
                     = number_with_delimiter(value, integer_format)
                 - index = index + 1
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'monitoring.channels_distribution'
+              - @monitoring_data['dates'].each do |date|
+                td
             - @monitoring_data['channel_datum'].each do |datum|
               tr
                 td
@@ -113,12 +117,17 @@ section.sectionInformation
               td
                 b = t 'monitoring.change_volume_comments_percentage' 
                 - if !@monitoring_data['channel_total_comment'].empty?
-                  td
+                  td.positiveValue
                     | 0.00
               - for i in (1..@monitoring_data['channel_total_comment'].length-1)
                 td
                   - change_total_comments = (((@monitoring_data['channel_total_comment'][i]-@monitoring_data['channel_total_comment'][i-1]).to_f/@monitoring_data['channel_total_comment'][i-1])*100).round(2)
-                  = number_with_precision(change_total_comments, decimal_format)
+                  - if channel_total_comment.to_f >= 0.0
+                    td.positiveValue
+                      = "#{number_with_precision(change_total_comments, decimal_format)}%"
+                  - else
+                    td.negativeValue
+                      = "#{number_with_precision(change_total_comments, decimal_format)}%"
             tr
               td
                 b = t 'monitoring.daily_average' 
@@ -144,14 +153,14 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Monitoring
         .estilo_graficos
           #container_distribution
         .comment

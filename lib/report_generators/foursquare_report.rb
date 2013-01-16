@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ReportGenerators::FoursquareReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -23,7 +24,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(foursquare_datum.size + 1)
     append_rows_to_report 7
-    @worksheet.add_row ["","PAGINA DE FOURSQUARE"], :style => 3
+    @worksheet.add_row ["","PÁGINA DE FOURSQUARE"], :style => 3
     add_table_to_report
     append_charts_to_report
     append_rows_to_report 15
@@ -34,7 +35,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
   def append_charts_to_report
     remove_cells_report_table
     append_rows_to_report 10
-    @worksheet.add_row ["","GRAFICOS FOURSQUARE"], :style => 3
+    @worksheet.add_row ["","GRÁFICOS FOURSQUARE"], :style => 3
     append_rows_to_report 2
     append_followers_chart
     append_interactivity_chart
@@ -48,7 +49,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
       'interactivity_header' => ['', 'Interactividad'], 'clients' => ['','Clientes'], 
       'diff_clients' => ['', '% Cambio'], 'likes' => ['', 'Me gusta'], 'diff_likes' => ['', '% Cambio'], 
       'checkins' => ['', 'Check-ins'], 'diff_checkins' => ['', '% Cambio'],
-      'campaign_header' => ['','Campana'],
+      'campaign_header' => ['','Campaña'],
       'total_unlocks' => ['','Unlocks total de las ofertas'], 'diff_unlocks' => ['', '% Cambio'],
       'total_visits' => ['','Visitas totales de las ofertas'], 'diff_visits' => ['', '% Cambio']
     }

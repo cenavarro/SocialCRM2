@@ -54,7 +54,7 @@ section.sectionInformation
   .tab-content
     .tab-pane.fade.in.active id="tabtable"
       section.sectionTable
-        table.table.table-bordered id="tablaInformacion"
+        table.table.table-bordered
           thead
             tr
               td
@@ -107,9 +107,10 @@ section.sectionInformation
                     a.btn.btn-danger data-method='delete' rel='nofollow' href=benchmark_datum_path(id) data-confirm="Esta seguro?"
                       i.icon-trash.icon-white
       .comment
-        .title
-          h4 Comentario para la tabla
         br
+        .title
+          h4
+            = t 'global.title_table_comment'
         .content_comment id="table_comment" 
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
       script

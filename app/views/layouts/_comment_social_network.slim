@@ -1,4 +1,4 @@
-- @comment = history_comment_for(comment_id)
+- @comment = history_comment_for(comment_id).first
 .well
   p
   - if !@comment.nil?
@@ -13,3 +13,28 @@
     = "No se ha ingresado ningun comentario!"
 a.btn.btn-small.btn-primary href="#new_comment_modal" data-toggle="modal" data-id="#{comment_id}" id="new_comment_link" data-div="#{id_div}"
   | Nuevo Comentario
+br
+br
+- if !@comment.nil?
+  .accordion id="accordion_old_images_#{@comment.id}"
+    a.accordion-toggle data-toggle="collapse" data-parent="accordion_old_images_#{@comment.id}" href="#collapse_#{@comment.id}"
+      | Comentarios anteriores
+    .accordion-body.collapse id="collapse_#{@comment.id}"
+      .accordion-inner
+        - @old_comment = history_comment_for(comment_id) - [@comment]
+        - @old_comment.each do |comment|
+          .accordion-group
+            .accordion-heading
+              a.accordion-toggle data-toggle="collapse" data-parent="accordion_old_images_#{@comment_id}" href="#collapse_#{comment.id}"
+                = "Ver comentario del periodo #{date_with_format(comment.start_date)} al #{date_with_format(comment.end_date)}"
+            .accordion-body.collapse id="collapse_#{comment.id}"
+              .accordion-inner
+                .well
+                  p
+                    = (comment.content.gsub(/\n/,'<br/>')).html_safe
+                    p style="margin: 10px 0px 0px 0px;"
+                      span style="font-size: 8pt;"
+                        = "Comentario del periodo #{date_with_format(comment.start_date)} al #{date_with_format(comment.end_date)}"
+                      .delete_comment_button style="float: right;"
+                        a.btn.btn-mini.btn-danger id="delete_comment" href=history_comment_destroy_path(comment.id, @social_network.id, comment.comment_id) data-method='delete' rel='nofollow' data-confirm="Esta seguro que desea eliminar este comentario"
+                          i.icon-trash.icon-white

@@ -24,7 +24,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(linkedin_datum.size+1)
     append_rows_to_report(8)
-    @worksheet.add_row ["","PAGINA DE LINKEDIN"], :style => 3
+    @worksheet.add_row ["","PÁGINA DE LINKEDIN"], :style => 3
     append_rows_to_report
     add_table_to_report
     append_charts_to_report
@@ -36,7 +36,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
   def append_charts_to_report
     remove_cells_report_table
     append_rows_to_report(44)
-    @worksheet.add_row ["","GRAFICOS LINKEDIN"], :style => 3
+    @worksheet.add_row ["","GRÁFICOS LINKEDIN"], :style => 3
     append_rows_to_report(2)
     append_followers_chart(83)
     append_interactivity_chart(122)

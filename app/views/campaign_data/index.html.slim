@@ -55,14 +55,16 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
                 = @social_network.name
-                - @campaign_data['dates'].each do |date|
-                  td
-                    = date
+              - @campaign_data['dates'].each do |date|
+                th
+                  = date
           tbody
-            tr.titlesRows
-              td colspan=100
+            tr
+              td
+              - @campaign_data['dates'].each do |date|
+                td
             - @campaign_data['data'].each do |data|
               tr
                 td
@@ -83,7 +85,7 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment" 
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 

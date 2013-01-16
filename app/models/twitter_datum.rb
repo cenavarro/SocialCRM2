@@ -12,7 +12,7 @@ class TwitterDatum < ActiveRecord::Base
   end
 
   def period_tweets
-    previous_datum.present? ? total_tweets + total_tweets : total_tweets
+    previous_datum.present? ? total_tweets - previous_datum.total_tweets : total_tweets
   end
 
   def total_interactions

@@ -66,14 +66,16 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @pinterest_datum.each do |pinterest_datum|
-                td
+                th
                   = pinterest_datum.start_date.strftime('%d %b') + "-" + pinterest_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'pinterest.community_title'
+              - @pinterest_datum.each do |pinterest_datum|
+                td
             tr
               td.estiloCelda
                 = t 'pinterest.followers'
@@ -84,8 +86,13 @@ section.sectionInformation
               td
                 = t 'global.percentage_growth'
               - @pinterest_datum.each do |pinterest_datum|
-                td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_total_followers, decimal_format)
+                - diff_total_followers = pinterest_datum.get_percentage_difference_from_previous_total_followers
+                - if diff_total_followers.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_total_followers, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_total_followers, decimal_format)}%"
             tr
               td
                 = t 'pinterest.boards'
@@ -99,8 +106,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(pinterest_datum.pins, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @pinterest_datum.each do |pinterest_datum|
+                td
             tr
               td
                 = t 'pinterest.liked'
@@ -111,8 +120,13 @@ section.sectionInformation
               td
                 = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
-                td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_liked, decimal_format)
+                - diff_liked = pinterest_datum.get_percentage_difference_from_previous_liked
+                - if diff_liked.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_liked, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_liked, decimal_format)}%"
             tr
               td
                 = t 'pinterest.repin'
@@ -123,8 +137,13 @@ section.sectionInformation
               td
                 = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
-                td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_repin, decimal_format)
+                - diff_repin = pinterest_datum.get_percentage_difference_from_previous_repin
+                - if diff_repin.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_repin, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_repin, decimal_format)}%"
             tr
               td
                 = t 'pinterest.comments'
@@ -135,8 +154,13 @@ section.sectionInformation
               td
                 = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
-                td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_comments, decimal_format)
+                - diff_comments = pinterest_datum.get_percentage_difference_from_previous_comments
+                - if diff_comments.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_comments, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_comments, decimal_format)}%"
             tr
               td
                 = t 'pinterest.community_boards'
@@ -147,41 +171,48 @@ section.sectionInformation
               td
                 = t 'global.percentage_change'
               - @pinterest_datum.each do |pinterest_datum|
-                td
-                  = number_with_precision(pinterest_datum.get_percentage_difference_from_previous_community_boards, decimal_format)
+                - diff_boards = pinterest_datum.get_percentage_difference_from_previous_community_boards
+                - if diff_boards.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_community_boards, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(pinterest_datum.get_percentage_difference_from_previous_community_boards, decimal_format)}%"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @pinterest_datum.each do |pinterest_datum|
+                td
             tr
               td
                 = t 'global.agency_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.investment_agency, decimal_format)
+                  = "#{number_with_precision(pinterest_datum.investment_agency, decimal_format)} €"
             tr
               td
                 = t 'global.new_actions_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.investment_actions, decimal_format)
+                  = "#{number_with_precision(pinterest_datum.investment_actions, decimal_format)} €"
             tr
               td
                 = t 'global.ads_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.investment_ads, decimal_format)
+                  = "#{number_with_precision(pinterest_datum.investment_ads, decimal_format)} €"
             tr
               td
                 = t 'global.total_investment'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.total_investment, decimal_format)
+                  = "#{number_with_precision(pinterest_datum.total_investment, decimal_format)} €"
             tr
               td
                 = t 'global.fan_cost'
               - @pinterest_datum.each do |pinterest_datum|
                 td
-                  = number_with_precision(pinterest_datum.coste_fan, decimal_format)
+                  = "#{number_with_precision(pinterest_datum.coste_fan, decimal_format)} €"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -195,14 +226,14 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Pinterest
         .estilo_graficos
           #container_community
         .comment

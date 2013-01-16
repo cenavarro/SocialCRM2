@@ -1,3 +1,4 @@
+#encoding: utf-8
 class ReportGenerators::CommentReport < ReportGenerators::Base
 
   def self.can_process? type

@@ -32,28 +32,26 @@
     br
 script
   | createChart('container_fans', 'Fans', #{raw @tuenti['dates']});
-  | addSerie('# nuevos fans', #{@tuenti['new_fans']});
-  | addSerie('# Fans Reales', #{@tuenti['real_fans']});
-  | addSerie('Objetivo Fans', #{@tuenti['goal_fans']});
+  | addSerie('Nuevos fans', #{@tuenti['new_fans']});
+  | addSerie('# Fans reales', #{@tuenti['real_fans']});
+  | addSerie('Objetivo fans', #{@tuenti['goal_fans']});
   | refreshChart();
 
   | createChart('container_interactions', 'Interacciones', #{raw @tuenti['dates']});
-  | addSerie('Total de usuarios unicos', #{@tuenti['unique_total_users']});
-  | addSerie('Clicks', #{@tuenti['clics']});
+  | addSerie('Total de usuarios únicos', #{@tuenti['unique_total_users']});
   | addSerie('Descargas', #{@tuenti['downloads']});
-  | addSerie('Numero de comentarios', #{@tuenti['comments']});
-  | addSerie('Fotos subidas', #{@tuenti['upload_photos']});
+  | addSerie('Número de comentarios', #{@tuenti['comments']});
   | refreshChart();
 
   | createChart('container_reach', 'Alcance', #{raw @tuenti['dates']});
-  | addSerie('Impresiones de la pagina', #{@tuenti['page_prints']});
+  | addSerie('Impresiones de la página', #{@tuenti['page_prints']});
   | refreshChart();
 
   | createChart('container_investment', 'Inversiones', #{raw @tuenti['dates']});
   | addSerie('Inversion agencia', #{@tuenti['investment_agency']});
   | addSerie('Inversion nuevas acciones', #{@tuenti['investment_actions']});
   | addSerie('Inversion anuncios', #{@tuenti['investment_ads']});
-  | addSerie('Inversion Total', #{@tuenti['total_investment']});
+  | addSerie('Inversion total', #{@tuenti['total_investment']});
   | refreshChart();
 
   | createChart('container_costs', 'Costes', #{raw @tuenti['dates']});
@@ -78,9 +76,9 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @tuenti_datum.each do |tuenti_datum|
-                td
+                th
                   = tuenti_datum.start_date.strftime('%d %b') + "-" + tuenti_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
@@ -90,8 +88,10 @@ section.sectionInformation
                 td
                   = tuenti_datum.actions
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'tuenti.fans'
+              - @tuenti_datum.each do |tuenti_datum|
+                td
             tr
               td.estiloCelda
                 = t 'tuenti.new_fans'
@@ -114,11 +114,18 @@ section.sectionInformation
               td
                 = t 'global.percentage_growth'
               - @tuenti_datum.each do |tuenti_datum|
-                td
-                  = number_with_precision(tuenti_datum.get_percentage_difference_from_previous_real_fans, decimal_format)
+                - diff_real_fans = tuenti_datum.get_percentage_difference_from_previous_real_fans
+                - if diff_real_fans.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(tuenti_datum.get_percentage_difference_from_previous_real_fans, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(tuenti_datum.get_percentage_difference_from_previous_real_fans, decimal_format)}%"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'tuenti.page_company'
+              - @tuenti_datum.each do |tuenti_datum|
+                td
             tr
               td
                 = t 'tuenti.page_prints'
@@ -139,12 +146,6 @@ section.sectionInformation
                   = number_with_delimiter(tuenti_datum.external_clics, integer_format)
             tr
               td
-                = t 'tuenti.clics'
-              - @tuenti_datum.each do |tuenti_datum|
-                td
-                  = number_with_delimiter(tuenti_datum.clics, integer_format)
-            tr
-              td
                 = t 'tuenti.downloads'
               - @tuenti_datum.each do |tuenti_datum|
                 td
@@ -160,49 +161,47 @@ section.sectionInformation
                 = t 'tuenti.ctr_external_clics_percentage'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.ctr_external_clics, decimal_format)
-            tr
+                  = "#{number_with_precision(tuenti_datum.ctr_external_clics, decimal_format)}%"
+            tr.titlesRows
               td
-                = t 'tuenti.upload_photos'
+                = t 'global.investment_title'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_delimiter(tuenti_datum.upload_photos, integer_format)
-            tr.titlesRows
-              td colspan=100
-                = t 'global.investment_title'
             tr
               td
                 = t 'global.agency_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.investment_agency, decimal_format)
+                  = "#{number_with_precision(tuenti_datum.investment_agency, decimal_format)} €"
             tr
               td
                 = t 'global.new_actions_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.investment_actions, decimal_format)
+                  = "#{number_with_precision(tuenti_datum.investment_actions, decimal_format)} €"
             tr
               td
                 = t 'global.ads_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.investment_ads, decimal_format)
+                  = "#{number_with_precision(tuenti_datum.investment_ads, decimal_format)} €"
             tr
               td
                 = t 'global.total_investment'
               - @tuenti_datum.each do |tuenti_datum|
                 td
-                  = number_with_precision(tuenti_datum.total_investment, decimal_format)
+                  = "#{number_with_precision(tuenti_datum.total_investment, decimal_format)} €"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.costs_title'
+              - @tuenti_datum.each do |tuenti_datum|
+                td
             tr
               td
                 = t 'global.fan_cost'
               - @tuenti_datum.each do | tuenti_datum |
                 td
-                  = number_with_precision(tuenti_datum.cost_fan, decimal_format)
+                  = "#{number_with_precision(tuenti_datum.cost_fan, decimal_format)} €"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -216,14 +215,14 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Tuenti
         .estilo_graficos
           #container_fans
         .comment

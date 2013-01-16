@@ -73,8 +73,10 @@ section.sectionInformation
                   = foursquare_datum.start_date.strftime('%d %b') + "-" + foursquare_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'foursquare.community_title'
+              - @foursquare_datum.each do |foursquare_datum|
+                td
             tr
               td.estiloCelda
                 = t 'foursquare.new_followers'
@@ -88,8 +90,10 @@ section.sectionInformation
                 td
                   = number_with_delimiter(foursquare_datum.total_followers, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @foursquare_datum.each do |foursquare_datum|
+                td
             tr
               td
                 = t 'foursquare.clients'
@@ -100,8 +104,13 @@ section.sectionInformation
               td
                 = t 'global.percentage_change'
               - @foursquare_datum.each do |foursquare_datum|
-                td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_clients, decimal_format)
+                - diff_clients = foursquare_datum.get_percentage_difference_from_previous_clients
+                - if diff_clients.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_clients, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_clients, decimal_format)}%"
             tr
               td
                 = t 'foursquare.likes'
@@ -112,8 +121,13 @@ section.sectionInformation
               td
                 = t 'global.percentage_change'
               - @foursquare_datum.each do |foursquare_datum|
-                td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_likes, decimal_format)
+                - diff_likes = foursquare_datum.get_percentage_difference_from_previous_likes
+                - if diff_likes.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_likes, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_likes, decimal_format)}%"
             tr
               td
                 = t 'foursquare.checkins'
@@ -124,11 +138,18 @@ section.sectionInformation
               td
                 = t 'global.difference_subtitile'
               - @foursquare_datum.each do |foursquare_datum|
-                td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_checkins, decimal_format)
+                - diff_checkins = foursquare_datum.get_percentage_difference_from_previous_checkins
+                - if diff_checkins.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_checkins, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_checkins, decimal_format)}%"
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'foursquare.campaign_title'
+              - @foursquare_datum.each do |foursquare_datum|
+                td
             tr
               td
                 = t 'foursquare.total_unlocks'
@@ -139,8 +160,13 @@ section.sectionInformation
               td
                 = t 'global.percentage_change'
               - @foursquare_datum.each do |foursquare_datum|
-                td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_unlocks, decimal_format)
+                - diff_total_unlocks = foursquare_datum.get_percentage_difference_from_previous_total_unlocks
+                - if diff_total_unlocks.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_unlocks, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_unlocks, decimal_format)}%"
             tr
               td
                 = t 'foursquare.total_visits'
@@ -151,8 +177,13 @@ section.sectionInformation
               td
                 = t 'global.percentage_change'
               - @foursquare_datum.each do |foursquare_datum|
-                td
-                  = number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_visits, decimal_format)
+                - diff_total_visits = foursquare_datum.get_percentage_difference_from_previous_total_visits
+                - if diff_total_visits.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_visits, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(foursquare_datum.get_percentage_difference_from_previous_total_visits, decimal_format)}%"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -166,13 +197,13 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla:
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Foursquare
         .estilo_graficos
           #container_followers
         .comment

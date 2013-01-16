@@ -65,9 +65,9 @@ section.sectionInformation
         table.table.table-bordered id="tablaInformacion"
           thead
             tr.headerTable
-              td.hideCell
+              th.hideCell
               - @linkedin_data.each do |linkedin_datum|
-                td
+                th
                   = linkedin_datum.start_date.strftime('%d %b') + "-" + linkedin_datum.end_date.strftime("%d %b")
           tbody
             tr.titlesRows
@@ -77,8 +77,10 @@ section.sectionInformation
                 td
                   = linkedin_datum.actions
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'linkedin.community_title'
+              - @linkedin_data.each do |linkedin_datum|
+                td
             tr
               td.estiloCelda
                 = t 'linkedin.new_followers'
@@ -103,8 +105,10 @@ section.sectionInformation
                   td.negativeValue
                     = %{#{percentFollowers}%}
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.interactivity_title'
+              - @linkedin_data.each do |linkedin_datum|
+                td
             tr
               td
                 = t 'linkedin.summary'
@@ -146,7 +150,7 @@ section.sectionInformation
                 = t 'linkedin.interest_percentage'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.interest, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.interest, decimal_format)}%"
             tr
               td
                 = t 'linkedin.recommendations'
@@ -154,32 +158,34 @@ section.sectionInformation
                 td
                   = number_with_delimiter(linkedin_datum.recommendation, integer_format)
             tr.titlesRows
-              td colspan=100
+              td
                 = t 'global.investment_title'
+              - @linkedin_data.each do |linkedin_datum|
+                td
             tr
               td
                 = t 'global.agency_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.investment_agency, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.investment_agency, decimal_format)} €"
             tr
               td
                 = t 'global.new_actions_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.investment_actions, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.investment_actions, decimal_format)} €"
             tr
               td
                 = t 'global.ads_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.investment_anno, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.investment_anno, decimal_format)} €"
             tr
               td
                 = t 'global.total_investment'
               - @linkedin_data.each do |linkedin_datum|
                 td
-                  = number_with_precision(linkedin_datum.total_investment, decimal_format)
+                  = "#{number_with_precision(linkedin_datum.total_investment, decimal_format)} €"
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
@@ -193,14 +199,14 @@ section.sectionInformation
       .comment
         .title
           h4
-            | Comentario para la tabla
+            = (t 'global.title_table_comment')
         .content_comment id="table_comment"
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
 
     .tab-pane.fade id="tabcharts"
       section.sectionGraphics id="seccionGraficos"
         center
-          h2 Gráficos de la tabla
+          h2 Gráficos Linkedin
         .estilo_graficos
           #container_followers
         .comment

@@ -16,13 +16,13 @@
       - end_date = get_end_date
       .start-date style="float: left; margin-left: 70px;"
         = label_tag "Fecha Inicio"
-        .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker_report"
+        .input-append.date data-date=start_date data-date-format="dd-mm-yyyy" id="start_date_picker_new_comment"
           = f.text_field :start_date, { :value => start_date, :class => "span2",  :readonly => true } 
           span.add-on
             i.icon-th
       .end-date style="float: right; margin-right: 75px;"
         = label_tag "Fecha Final"
-        .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker_report"
+        .input-append.date data-date=end_date data-date-format="dd-mm-yyyy" id="end_date_picker_new_comment"
           = f.text_field :end_date, { :value => end_date, :class => "span2", :readonly => true }
           span.add-on
             i.icon-th

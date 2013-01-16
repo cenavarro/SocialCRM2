@@ -24,7 +24,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(blog_datum.size + 1)
     append_rows_to_report 7
-    @worksheet.add_row ["","PAGINA DE BLOG"], :style => 3
+    @worksheet.add_row ["","PÁGINA DE BLOG"], :style => 3
     add_table_to_report
     append_charts_to_report
     append_rows_to_report 14
@@ -35,7 +35,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
   def append_charts_to_report
     remove_cells_report_table
     append_rows_to_report 19
-    @worksheet.add_row ["","GRAFICOS BLOG"], :style => 3
+    @worksheet.add_row ["","GRÁFICOS BLOG"], :style => 3
     append_rows_to_report 2
     append_visits_chart
     append_percentage_chart
@@ -58,8 +58,8 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
         table[key] << value
       end
       table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
-      table['diff_visits'] << datum.get_percentage_difference_from_previous_unique_visits.round(2)
-      table['diff_view'] << datum.get_percentage_difference_from_previous_view_pages.round(2)
+      table['diff_visits'] << "#{datum.get_percentage_difference_from_previous_unique_visits.round(2)}%"
+      table['diff_view'] << "#{datum.get_percentage_difference_from_previous_view_pages.round(2)}%"
     end
     table
   end
