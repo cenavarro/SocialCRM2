@@ -27,7 +27,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(@report_data['dates'].size + 1)
     append_rows_to_report 7
-    @worksheet.add_row ['', "PAGINA DE CAMPANA"], :style => 3
+    @worksheet.add_row ['', "PÁGINA DE CAMPANA"], :style => 3
     @row = 8
     add_table_campaign
     append_rows_to_report(41 - @row)
@@ -101,13 +101,13 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
   def append_charts_to_report
     remove_cells_report_table_for_campaign
     append_rows_to_report 7
-    @worksheet.add_row ["","GRAFICOS CAMPAÑA"], :style => 3
+    @worksheet.add_row ["","GRÁFICOS CAMPAÑA"], :style => 3
     append_rows_to_report 2
     append_campaign_chart
   end
 
   def append_campaign_chart
-    chart = create_chart(51, "Grafico Campaña")
+    chart = create_chart(51, "Gráfico Campaña")
     @report_data['data'].each do |data|
       data.values.first
       add_serie(chart, data.values.first, @report_data['dates'], data.keys.first)

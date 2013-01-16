@@ -24,7 +24,7 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(twitter_datum.size + 1)
     append_rows_to_report 7
-    @worksheet.add_row ["","PAGINA DE TWITTER"], :style => 3
+    @worksheet.add_row ["","PÁGINA DE TWITTER"], :style => 3
     add_table_to_report
     append_charts_to_report
     append_rows_to_report 15
@@ -35,7 +35,7 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
   def append_charts_to_report
     remove_cells_report_table
     append_rows_to_report 26
-    @worksheet.add_row ["","GRAFICOS TWITTER"], :style => 3
+    @worksheet.add_row ["","GRÁFICOS TWITTER"], :style => 3
     append_rows_to_report 2
     append_followers_chart
     append_interactivity_chart

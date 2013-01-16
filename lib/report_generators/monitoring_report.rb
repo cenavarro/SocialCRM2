@@ -37,7 +37,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(@report_data['size'])
     append_rows_to_report 6
-    @worksheet.add_row ['', "PAGINA DE MONITORING"], :style => 3
+    @worksheet.add_row ['', "PÁGINA DE MONITORING"], :style => 3
     @row = 7
     add_table_monitoring
     append_rows_to_report(41 - @row)
@@ -162,7 +162,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
 
   def append_charts_to_report
     append_rows_to_report 9
-    @worksheet.add_row ["","GRAFICOS MONITORING"], :style => 3
+    @worksheet.add_row ["","GRÁFICOS MONITORING"], :style => 3
     append_rows_to_report 2
     append_themes_chart
     append_rows_to_report 13
@@ -170,7 +170,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
   end
 
   def append_themes_chart
-    chart = create_chart(51, "Distribucion de los comentarios en canales", 8)
+    chart = create_chart(51, "Distribución de los comentarios en canales", 8)
     @report_data['dates'].shift
     @report_data['dates'].shift
     @report_data['theme_datum'].each do |datum|
@@ -186,7 +186,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
   end
 
   def append_channels_chart
-    chart = create_chart(90, "Tipologia de comentarios", 8)
+    chart = create_chart(90, "Tipología de comentarios", 8)
     @report_data['channel_datum'].each do |datum|
       datum[:data].shift
       datum[:data].shift

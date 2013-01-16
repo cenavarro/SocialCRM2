@@ -24,7 +24,7 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(tuenti_datum.size + 1)
     append_rows_to_report 7
-    @worksheet.add_row ["","PAGINA DE TUENTI"], :style => 3
+    @worksheet.add_row ["","PÁGINA DE TUENTI"], :style => 3
     add_table_to_report
     append_rows_to_report 44
     append_charts_to_report
@@ -35,7 +35,7 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
 
   def append_charts_to_report
     remove_cells_report_table
-		@worksheet.add_row ["","GRAFICOS TUENTI"], :style => 3
+		@worksheet.add_row ["","GRÁFICOS TUENTI"], :style => 3
     append_rows_to_report 2
 		append_followers_chart
 		append_interactivity_chart
@@ -54,7 +54,7 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
       'ctr_external_clics' => ['','CTR % clic externos'],
       'investment_header' => ['','Inversión'], 'investment_agency' => ['', 'Inversión agencia'], 'investment_actions' => ['','Inversión nuevas acciones'],
       'investment_ads' => ['','Inversión anuncios'], 'total_investment' => ['','Inversión total'],
-      'costs_header' => ['', 'Coste fan'], 'cost_fan' => ['','Coste fan']
+      'costs_header' => ['', 'Coste'], 'cost_fan' => ['','Coste fan']
     }
   end
 

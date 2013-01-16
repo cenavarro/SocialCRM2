@@ -24,7 +24,7 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(google_datum.size + 1)
     append_rows_to_report 7
-    @worksheet.add_row ["","PAGINA DE GOOGLE+"], :style => 3
+    @worksheet.add_row ["","PÁGINA DE GOOGLE+"], :style => 3
     add_table_to_report
     append_charts_to_report 
     append_rows_to_report 15
@@ -35,7 +35,7 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
   def append_charts_to_report
     remove_cells_report_table
     append_rows_to_report 12
-    @worksheet.add_row ["","GRAFICOS GOOGLE+"], :style => 3
+    @worksheet.add_row ["","GRÁFICOS GOOGLE+"], :style => 3
     append_rows_to_report 2
     append_community_chart
     append_interactivity_chart

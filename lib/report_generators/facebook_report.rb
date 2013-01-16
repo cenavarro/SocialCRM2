@@ -24,7 +24,7 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(facebook_datum.size + 1)
     append_rows_to_report 7
-    @worksheet.add_row ["","PAGINA DE FACEBOOK"], :style => 3
+    @worksheet.add_row ["","PÁGINA DE FACEBOOK"], :style => 3
     add_table_to_report
     append_charts_to_report
     append_rows_to_report 15

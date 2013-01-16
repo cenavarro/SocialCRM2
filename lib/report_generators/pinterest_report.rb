@@ -24,7 +24,7 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
     set_workbook_and_worksheet(document)
     create_report_styles(pinterest_datum.size + 1)
     append_rows_to_report 8
-    @worksheet.add_row ["","PAGINA DE PINTEREST"], :style => 3
+    @worksheet.add_row ["","PÁGINA DE PINTEREST"], :style => 3
     add_table_to_report
     append_rows_to_report
     append_charts_to_report
@@ -36,7 +36,7 @@ class ReportGenerators::PinterestReport < ReportGenerators::Base
   def append_charts_to_report
     remove_cells_report_table
     append_rows_to_report 43
-    @worksheet.add_row ["","GRAFICOS PINTEREST"], :style => 3
+    @worksheet.add_row ["","GRÁFICOS PINTEREST"], :style => 3
     append_rows_to_report 2
     append_followers_chart
     append_interactivity_chart

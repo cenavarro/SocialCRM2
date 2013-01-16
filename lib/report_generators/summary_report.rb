@@ -1,3 +1,4 @@
+#encoding: utf-8
 class ReportGenerators::SummaryReport < ReportGenerators::Base
 
   def self.can_process? type
@@ -34,7 +35,7 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
   def create_report
     create_report_styles_for_summary
     append_rows_to_report 7
-    @worksheet.add_row ["", "PAGINA DE REPORTE"], :style => 3
+    @worksheet.add_row ["", "PÁGINA DE REPORTE"], :style => 3
     add_summary_comments_to_report
     @worksheet.column_widths 4, 10, 10, 10, 10, 10, 10, 10
   end
