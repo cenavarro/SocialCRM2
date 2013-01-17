@@ -7,92 +7,65 @@ describe ClientsController do
   end
 
   def valid_attributes
-    {:name => "Test", :description => "Test"}
+    {:name => "Test", :description => "Test", :user_attributes => {:email=> "test@test.com", :password => "password", :password_confirmation => "password", :rol_id => 2}}
   end
 
   def create_client_with_user
     client = Client.new(valid_attributes)
     client.attachment = File.new("spec/fixtures/client.png")
     client.save!
-    User.create!(:client_id => client.id,
-                 :email => 'fake@example.com',
-                 :password => 'password',
-		             :password_confirmation => 'password',
-		             :rol_id => 2)
-    return client
+    client
   end
 
   describe "#index" do
     it "verifies @clients has a the correct information" do
       client = create_client_with_user
-      get :index, :locale => :es
+      get :index, :locale => :en
       assigns(:clients).should eq([client])
     end
   end
 
   describe "#create" do
     context "with valid data" do
-      it "create a new client and the user for the new client" do
+      it "new client" do
         expect {
           @request.env["HTTP_REFERER"] = root_path
-          post :create, :locale => :es, :attachment => nil, :name => "Test", :description => "Description", :email => "fake@example.com", :password => "password_test", :password_confirmation => "password_test"
+          post :create, :locale => :es, :client => valid_attributes
         }.to change(Client, :count).by(1)
-        user = User.find_by_email("fake@example.com") 
-        user.should_not be_nil
       end
     end
 
     context "with invalid data" do
-      it "client has invalid data only for client info" do
+      it "customer doesnt save" do
         expect {
           @request.env["HTTP_REFERER"] = root_path
-          post :create, :locale => :es, :attachment => nil, :name => "Test", :description => nil, :email => "fake@example.com", :password => "password_test", :password_confirmation => "password_test"
+          Client.any_instance.stub(:save!).and_return("El Cliente NO se pudo ingresar correctamente.")
+          post :create, :locale => :es, :client => valid_attributes
         }.to change(Client, :count).by(0)
-      end
-
-      it "client has valid data but the user info is invalid" do
-        expect{
-          @request.env["HTTP_REFERER"] = root_path
-          post :create, :locale => :es, :attachment => nil, :name => "Test", :description => "Description", :email => "fake@example.com", :password => "password_test", :password_confirmation => "password_wrong"
-        }.to change(User, :count).by(0)
-        Client.all.should be_empty
       end
     end
   end
 
   describe "#edit" do
-    it "verifies @client has the information of a selected client" do
+    it "verifies @client has the information of a selected customer" do
       client = create_client_with_user
-      get :edit, :locale => :es, :id => client.id.to_s
+      get :edit, :locale => :en, :id => client.id.to_s
       assigns(:client).should eq(client)
     end
   end
 
   describe "#update" do
     context "with valid params" do
-      it "updates the requested client with password changed" do
+      it "the requested customer" do
         client = create_client_with_user
-        put :update, :locale => :es, :id => client.id, :description => client.description, :name => "Test Name", :password => "test_pass", :email => 'fake@example.com', :password_confirmation => 'test_pass'
+        put :update, :locale => :es, :id => client.id, :client => {:name => "Test Name", :description => "Test", :user_attributes => {:email=> "test@test.com", :password => "password", :password_confirmation => "password", :rol_id => 2}} 
         client = Client.find_by_name('Test Name')
         client.should_not be_nil
-      end
-
-      it "updates the requested client without password changed" do
-        client = create_client_with_user
-        put :update, :locale => :es, :id => client.id, :description => client.description, :name => "Test Name", :password => "", :email => 'fake@example.com', :password_confirmation => "" 
-        client = Client.find_by_name('Test Name')
-        client.should_not be_nil
-      end
-
-      it "assigns the requested client as @client" do
-        client = create_client_with_user
-        put :update, :locale => :es, :id => client.id, :description => client.description, :name => client.name, :password => "", :email => 'fake@example.com', :password_confirmation => ""
-        assigns(:client).should eq(client)
       end
 
       it "redirects to the index client page" do
         client = create_client_with_user
-        put :update, :locale => :es, :id => client.id, :description => client.description, :name => client.name, :password => "", :email => 'fake@example.com', :password_confirmation => ""
+        put :update, :locale => :es, :id => client.id, :client => valid_attributes
         response.should redirect_to(clients_path)
       end
     end
@@ -100,14 +73,14 @@ describe ClientsController do
     context "with invalid params" do
       it "assigns the client as @client" do
         client = create_client_with_user
-        Client.any_instance.stub(:save!).and_return(false)
+        Client.any_instance.stub(:update_attributes).and_return(false)
         put :update, :locale => :es, :id => client.id.to_s, :name => "Test Name", :password => "", :description => ""
         assigns(:client).should eq(client)
       end
 
       it "re-renders the 'edit' template" do
         client = create_client_with_user
-        Client.any_instance.stub(:save!).and_return(false)
+        Client.any_instance.stub(:update_attributes).and_return(false)
         put :update, :locale => :es, :id => client.id.to_s, :name => "Test Name", :password => "", :description => ""
         response.should render_template("edit")
       end

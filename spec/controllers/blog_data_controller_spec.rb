@@ -125,17 +125,4 @@ describe BlogDataController do
     end
   end
 
-  describe "#save_comment" do
-    it "update a comments of a BlogComment given a social network" do
-      BlogComment.create!({:social_network_id => 1})
-      post :save_comment, :locale => :es, :comment => "Comment Table Test", :id_comment => "table", :social_network => 1
-      post :save_comment, :locale => :es, :comment => "Comment Visits Test", :id_comment => "visits", :social_network => 1
-      post :save_comment, :locale => :es, :comment => "Comment Percentages Test", :id_comment => "percentages", :social_network => 1
-      datum_comments = BlogComment.find_by_social_network_id(1)
-      datum_comments.table.should eq("Comment Table Test")
-      datum_comments.visits.should eq("Comment Visits Test")
-      datum_comments.percentages.should eq("Comment Percentages Test")
-    end
-  end
-
 end

@@ -94,13 +94,4 @@ describe CampaignDataController do
     end
   end
 
-  describe "#save_comment" do
-    it "update a comments of a CampaignComments given a social network" do
-      CampaignComment.create!({:social_network_id => 1})
-      post :save_comment, :locale => :es, :comment => "Comment Table Test", :id_comment => "table", :social_network => 1
-      datum_comments = CampaignComment.find_by_social_network_id(1)
-      datum_comments.table.should eq("Comment Table Test")
-    end
-  end
-
 end

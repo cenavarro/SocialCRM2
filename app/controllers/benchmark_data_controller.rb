@@ -43,7 +43,7 @@ class BenchmarkDataController < ApplicationController
 
   def destroy
     data_to_delete = BenchmarkDatum.find(params[:id])
-    social_network_id = BenchmarkCompetitor.find(data.benchmark_competitor_id).social_network_id
+    social_network_id = BenchmarkCompetitor.find(data_to_delete.benchmark_competitor_id).social_network_id
     client_id = SocialNetwork.find(social_network_id).client_id
     benchmark_datum = BenchmarkDatum.where('start_date = ? and end_date = ?', data_to_delete.start_date, data_to_delete.end_date) 
     benchmark_datum.delete_all

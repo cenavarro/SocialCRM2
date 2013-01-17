@@ -1,7 +1,6 @@
 javascript:
 
     jQuery(document).ready(function(){
-      // binds form submission and fields to the validation engine
       jQuery("#user_edit").validationEngine();
     });
 
@@ -53,10 +52,9 @@ br
       |   (se necesita su contraseña actual para confirmar los cambios)
     br
     br
-    = f.label :tipo_usuario
-    - @rols = Rol.all
     - if current_user.rol_id == 1
-        = f.select :rol_id, options_for_select([["Administrador",1]])
+      = f.label :tipo_usuario
+      = f.select :rol_id, options_for_select([["Administrador",1]])
     br
     br
     center

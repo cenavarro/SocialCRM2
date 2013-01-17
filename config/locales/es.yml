@@ -78,3 +78,7 @@ es:
     note: "Nota"
     percentage_change: "% Cambio"
     fan_cost: "Coste fan"
+  activerecord:
+    errors:
+      messages:
+        record_invalid: "Record invalido"
