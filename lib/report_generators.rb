@@ -13,7 +13,7 @@ module ReportGenerators
       @comments_history = HistoryComment.where(social_network_id: social_network.id)
     end
 
-    def create_chart(position, title, chart_width = 9, height_chart = 23)
+    def create_chart(position, title, chart_width = 6, height_chart = 14)
       @chart = (@worksheet.add_chart(Axlsx::Line3DChart, :start_at => [0, position], :end_at => [chart_width, position+height_chart], :title => title, :rotX => 0, :rotY => 0))
       @chart.catAxis.gridlines = false
       @chart.serAxis.delete = true
@@ -86,13 +86,12 @@ module ReportGenerators
         image.width = width
         image.start_at 0, y_axis
       end
-      p width
     end
 
     def footer(y_axis, width = 820)
       image_header = File.expand_path(Rails.root.join("public/assets/images/footer.gif"), __FILE__)
       @worksheet.add_image(:image_src => image_header) do |image|
-        image.height = 16
+        image.height = 22
         image.width = width
         image.start_at 0, y_axis
       end
@@ -140,7 +139,7 @@ module ReportGenerators
     def append_comment_chart_for type
       append_row_with ["Comentario"]
       append_rows 1
-      append_row_with [history_comment_for(type).content] if !history_comment_for(type).nil?
+      append_row_with (!history_comment_for(type).nil? ? [history_comment_for(type).content] : ["Sin comentarios"])
     end
 
     def margins
