@@ -1,64 +1,11 @@
-javascript:
-    jQuery(document).ready(function(){
-      jQuery("#form_new").validationEngine();
-    });
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
 center
   h1
     = t 'customers.edit.title'
 br
-br
-br
-= form_tag({:controller => "clients", :action => "update"}, :multipart => true, :method => "put", :class => "well form-inline formNuevoCliente", :id =>"form_new") do
-
-  = label_tag :name, t('customers.name') 
-  br
-  = text_field_tag :name, @client.name ,{:class => "validate[required] text-input"}
-  p.simbolo
-    span style="font-size: 16pt" align=""
-      |*
-  br
-  br
-  = label_tag :email, t('customers.email') 
-  br
-  = text_field_tag :email, @user.email , :class => "validate[required, custom[email]]"
-  p.simbolo
-    span style="font-size: 16pt" align=""
-      |*
-  br
-  br
-  = label_tag :password, t('customers.password') 
-  br
-  = password_field_tag :password, nil
-  br
-  br
-  = label_tag :password_confirmation, t('customers.confirm_password') 
-  = password_field_tag :password_confirmation, nil
-  br
-  br
-  = label_tag :description, t('customers.description') 
-  = text_field_tag :description, @client.description
-
-  br
-  br
-  = label_tag :image, t('customers.image') 
-  br
-  = file_field_tag :attachment, {:accept => "image/*", :onchange => "previewImage(this);"}
-  br
-  br
-  img id="image_preview" alt="#{t('messages.alt_image')}" width="100px" height="100px" src="#" style="padding-left:80px;"
-  br
-  br
-  center
-    button.btn.btn-success type="submit" name="commit" data-confirm="#{t('messages.data_confirm')}"
-      i.icon-check.icon-white
-      = t 'buttons.update_customer'
-  br
-  br
-  p.leyenda
-    span style="font-size: 16pt"
-      |* 
-    = t 'messages.requireds'
-script
-  | $(document).ready(function() {
-  |   $('#image_preview').attr('src', '#{@client.attachment.url.html_safe}');
-  | });
+= render 'form'

@@ -3,7 +3,8 @@ class Client < ActiveRecord::Base
   validate :attachment, :attachment_presence => true
 
   has_many :social_networks, :dependent => :destroy
-  has_many :users, :dependent => :destroy
+  has_one :user, :dependent => :destroy
+  accepts_nested_attributes_for :user, :allow_destroy => true
 
   def build_reports(date_range, social_networks_ids=[])
     report = ::Axlsx::Package.new
@@ -17,6 +18,8 @@ class Client < ActiveRecord::Base
     add_cover_page(report)
     report
   end
+
+  private
 
   def build_reporters_for(social_network, date_range)
     social_network.data_types.map do |data_type|

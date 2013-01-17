@@ -1,51 +1,43 @@
-javascript:
-
-    jQuery(document).ready(function(){
-      jQuery("#form_new").validationEngine();
-    });
-
-br
-br
-= form_tag({:controller => "clients", :action => "create"}, :multipart => true, :method => "post", :class => "well form-inline formNuevoCliente", :id =>"form_new") do
-
-  = label_tag :name, t('customers.name')
+= form_for @client, :html => {:class => "well form-inline formNuevoCliente", :id => "form_new"} do |f|
+  = f.label :name, t('customers.name')
   br
-  = text_field_tag :name, nil, {:class => "validate[required] text-input"}
+  = f.text_field :name, {:class => "validate[required]"}
   p.simbolo
     span style="font-size: 16pt" align=""
       |*
   br
   br
-  = label_tag :email, t('customers.email')
-  br
-  = text_field_tag :email, nil, :class => "validate[required, custom[email]]"
-  p.simbolo
-    span style="font-size: 16pt" align=""
-      |*
-  br
-  br
-  = label_tag :password, t('customers.password')
-  br
-  = password_field_tag :password, nil, {:class => "validate[required]"}
-  p.simbolo
-    span style="font-size: 16pt" align=""
-      |*
-  br
-  br
-  = label_tag :password_confirmation, t('customers.confirm_password')
-  = password_field_tag :password_confirmation, nil, {:class => "validate[required,equals[password]]"}
-  p.simbolo
-    span style="font-size: 16pt" align=""
-      |*
-  br
-  br
-  = label_tag :description, t('customers.description')
-  = text_field_tag :description
+  = f.fields_for :user do |user|
+    = user.label :email, t('customers.email')
+    br
+    = user.text_field :email, {:class => "validate[required]"}
+    p.simbolo
+      span style="font-size: 16pt" align=""
+        |*
+    br
+    br
+    = user.label :password, t('customers.password') 
+    br
+    = user.password_field :password, {:class => "validate[required, minSize[6]]"}
+    p.simbolo
+      span style="font-size: 16pt" align=""
+        |*
+    br
+    br
+    = user.label :password_confirmation,  t('customers.confirm_password') 
+    = user.password_field :password_confirmation, {:class => "validate[required, equals[client_user_attributes_password]]"}
+    p.simbolo
+      span style="font-size: 16pt" align=""
+        |*
   br
   br
-  = label_tag :image, t('customers.image')
+  = f.label :description, t('customers.description') 
+  = f.text_field :description
   br
-  = file_field_tag :attachment, {:accept => "image/*", :onchange => "previewImage(this);"}
+  br
+  = f.label :image, t('customers.image') 
+  br
+  = f.file_field :attachment, :html => {:accept => "image/*", :onchange => "previewImage(this);"}
   br
   br
   img id="image_preview" alt="#{t('messages.alt_image')}" width="100px" height="100px" src="#" style="padding-left:80px;"
@@ -54,10 +46,18 @@ br
   center
     button.btn.btn-success type="submit" name="commit" data-confirm="#{t('messages.data_confirm')}"
       i.icon-check.icon-white
-      = t 'buttons.new_customer'
+      = t 'buttons.update_customer'
   br
   br
   p.leyenda
     span style="font-size: 16pt"
       |* 
     = t 'messages.requireds'
+script
+  | $(document).ready(function() {
+  |   $('#image_preview').attr('src', '#{@client.attachment.url.html_safe}');
+  | });
+javascript:
+    jQuery(document).ready(function(){
+      jQuery("#form_new").validationEngine();
+    });

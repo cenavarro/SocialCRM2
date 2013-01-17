@@ -6,65 +6,36 @@ class ClientsController < ApplicationController
 
   def index
     @clients = Client.all
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @clients }
-    end
   end
 
-  def create_user(client_id)
-		@user = User.new
-		@user.name = params[:name].to_s
-		@user.email = params[:email].to_s
-		@user.password = params[:password].to_s
-		@user.password_confirmation = params[:password_confirmation].to_s
-		@user.rol_id = 2
-		@user.client_id = client_id.to_i
-  	if @user.save 		
-  		mensaje = 'El Cliente se ha ingresado correctamente.'
-    else
-      Client.find(client_id).destroy 
-      mensaje = 'El Cliente NO se pudo ingresar correctamente.'
-  	end
-  	respond_to do |format|
-	  	format.html { redirect_to request.referer, notice: mensaje }
-  	  format.json { head :ok }
-	  end
+  def new
+    @client = Client.new
+    @client.user = User.new
   end
 
   def create
-    begin
-      @client = Client.new(:name => params[:name], :description => params[:description], :attachment => params[:attachment] ) 
-      create_user(@client.id) if @client.save!
-    rescue
-      respond_to do |format|
+    @client = Client.new(params[:client])
+    @client.user.rol_id = 2
+    respond_to do |format|
+      if @client.save!
+        format.html { redirect_to request.referer, notice: "El Cliente se ha ingresado correctamente." }
+      else
         format.html { redirect_to request.referer, notice: 'El Cliente NO se pudo ingresar correctamente.'}
-        format.json { head :ok }
       end
     end
   end
 
   def edit
     @client = Client.find(params[:id])
-    @user = User.find_by_client_id(@client.id)
   end
 
   def update
     @client = Client.find(params[:id])
-    @user = User.find_by_client_id(@client.id)
-    password_changed = !params[:password].empty?
-    password_changed ? (user_save = @user.update_attributes!(params)) : (user_save = @user.update_without_password(params))
-    @client.name = params[:name]
-    @client.description = params[:description]
-    @client.attachment = params[:attachment] if !params[:attachment].nil?
     respond_to do |format|
-      if @client.save! && user_save
+      if @client.update_attributes(params[:client])
         format.html { redirect_to clients_path, notice: 'El Cliente fue actualizado correctamente.' }
-        format.json { head :ok }
       else
         format.html { render action: "edit", notice: "No se pudo actualizar el cliente!" }
-        format.json { head :ok }
       end
     end
   end
@@ -131,7 +102,6 @@ class ClientsController < ApplicationController
     end
     respond_to do | format |
       format.html
-      format.json { head :ok }
     end
   end
 
