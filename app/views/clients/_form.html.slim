@@ -37,7 +37,7 @@
   br
   = f.label :image, t('customers.image') 
   br
-  = f.file_field :attachment, :html => {:accept => "image/*", :onchange => "previewImage(this);"}
+  = f.file_field :attachment, {:accept => "image/*", :onchange => "previewImage(this);"}
   br
   br
   img id="image_preview" alt="#{t('messages.alt_image')}" width="100px" height="100px" src="#" style="padding-left:80px;"
