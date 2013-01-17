@@ -4,7 +4,7 @@ module ReportGenerators
     include ActionView::Helpers::NumberHelper
     include ApplicationHelper
 
-    attr :social_network, :date_range, :comments, :worksheet, :workbook, :styles, :headers, :footers
+    attr :social_network, :date_range, :worksheet, :workbook, :styles, :headers, :footers, :current_row, :workbook, :chart
     delegate :start_date, :end_date, :to => :date_range
 
     def initialize(social_network, date_range)
@@ -14,18 +14,20 @@ module ReportGenerators
     end
 
     def create_chart(position, title, chart_width = 9, height_chart = 23)
-      new_chart = (@worksheet.add_chart(Axlsx::Line3DChart, :start_at => [1, position], :end_at => [chart_width, position+height_chart], 
-                                        :title => title, :rotX => 0, :rotY => 0))
-      new_chart.catAxis.gridlines = false
-      new_chart.serAxis.delete = true
-      new_chart
+      @chart = (@worksheet.add_chart(Axlsx::Line3DChart, :start_at => [0, position], :end_at => [chart_width, position+height_chart], :title => title, :rotX => 0, :rotY => 0))
+      @chart.catAxis.gridlines = false
+      @chart.serAxis.delete = true
     end
 
-    def add_serie(chart, data, labels, title, style = nil)
-      chart.add_series :data => data, :labels => labels, :title => title, :style => style
+    def add_serie(data, title, labels=default_labels, style = nil)
+      @chart.add_series :data => data, :labels => labels, :title => title, :style => style
     end
 
-    def add_images_report position
+    def default_labels
+      @report_data['dates']
+    end
+
+    def append_images position
       last_period_image = ImagesSocialNetwork.where(:social_network_id => social_network.id).order('start_date DESC').order('end_date DESC').first
       start_date_last_period = last_period_image.start_date if !last_period_image.nil?
       end_date_last_period = last_period_image.end_date if !last_period_image.nil?
@@ -33,105 +35,95 @@ module ReportGenerators
       images.each do |image|
         header position
         position = position + 9
-        @worksheet.add_row ["",image.title], :style => @styles['title'][1]
+        append_row_with [image.title]
         img = File.expand_path(image.attachment.path, __FILE__)
         @worksheet.add_image(:image_src => img) do |sheet_image|
           sheet_image.width = 755 
           sheet_image.height = 400
           sheet_image.start_at 1, position
         end
-        append_rows_to_report 26
-        @worksheet.add_row ["", "Comentario"], :style => 3
-        append_rows_to_report 1
-        @worksheet.add_row ["", image.comment]
-        append_rows_to_report 13
+        append_rows 26
+        append_row_with ["Comentario"]
+        append_rows 1
+        append_row_with [image.comment]
+        append_rows 13
         position = position + 33
         footer position-1
       end
     end
 
-    def create_report_styles size
+    def create_report_styles
+      no_style = @workbook.styles.add_style()
       title_style = @workbook.styles.add_style(:b => true, :sz => 14, :font_name => "Calibri")
-      cell_header = @workbook.styles.add_style(:bg_color => "FF0000", :border => {:style => :thin, :color => "FFFF0000"}, :font_name => "Calibri")
+      header_style = @workbook.styles.add_style(:bg_color => "FF0000", :border => {:style => :thin, :color => "FFFF0000"}, :font_name => "Calibri")
       dates_style = @workbook.styles.add_style(:b => true, :bg_color => "000000", :fg_color => "FFFFFF", 
                                      :border => {:style => :thin, :color => "#FF000000"}, :sz => 9, :font_name => "Calibri")
       basic_style = @workbook.styles.add_style(:border => {:style => :thin, :color => "#00000000"}, :sz => 11, :font_name => "Calibri", :alignment => {:horizontal => :right, :vertical => :center})
-      none_style = @workbook.styles.add_style()
-      date_benchmark_style = @workbook.styles.add_style(:size => 5, :font_name => "Calibri")
-      @styles = {"title"=> [none_style], "header"=> [none_style], "dates"=> [none_style], "basic"=> [none_style]}
-      for i in (1..size) do
-        @styles['title'] << title_style
-        @styles['header'] << cell_header
-        @styles['dates'] << dates_style
-        @styles['basic'] << basic_style
-      end
+      @styles = {"none" => no_style, "title"=> title_style, "header"=> header_style, "dates"=> dates_style, "basic"=> basic_style}
     end
 
-    def margins
-      {:left => 0, :top => 0, :right => 0, :bottom => 0}
-    end
-
-    def page_setup
-      {:orientation => :landscape, :paper_size => 9}
-    end
-
-    def height_cell
-      return 20
-    end
-
-    def add_table_to_report
-      append_rows_to_report 2
+    def append_table
+      append_rows 2
       @report_data.each do |key, data|
         if key.include?("header") || (key=="actions")
-          @worksheet.add_row data, :style => @styles['header'], :height => height_cell
+          append_row_with data, @styles['header']
         elsif key.include?("dates")
-          @worksheet.add_row data, :style => @styles['dates'], :height => height_cell
+          append_row_with data, @styles['dates']
         else
-          @worksheet.add_row data, :style => @styles['basic'], :height => height_cell
+          append_row_with data, @styles['basic']
         end
       end
-      append_rows_to_report 1
-      @worksheet.add_row ["", "Comentario del consultor"], :style => 3
-      append_rows_to_report 1
-      @worksheet.add_row ["", history_comment_for(1).content] if !history_comment_for(1).nil?
+      append_rows 1
+      append_row_with ["Comentario del consultor"]
+      append_rows 1
+      append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
     end
 
-    def header(y_axis, width = 934)
+    def header(y_axis, width = 820)
       image_header = File.expand_path(Rails.root.join("public/assets/images/header.jpg"), __FILE__)
       @worksheet.add_image(:image_src => image_header) do |image|
         image.height = 87
         image.width = width
-        image.start_at 1, y_axis
+        image.start_at 0, y_axis
       end
+      p width
     end
 
-    def footer(y_axis, width = 934)
+    def footer(y_axis, width = 820)
       image_header = File.expand_path(Rails.root.join("public/assets/images/footer.gif"), __FILE__)
       @worksheet.add_image(:image_src => image_header) do |image|
         image.height = 16
         image.width = width
-        image.start_at 1, y_axis
+        image.start_at 0, y_axis
       end
     end
 
-    def append_rows_to_report rows=1
-      for i in (1..rows)
-        @worksheet.add_row
-      end
+    def append_row_with data, style=nil, height=height_cell
+      @worksheet.add_row data, :style => style, :height => height
+      @current_row += 1
     end
 
-    def remove_cells_report_table
+    def append_rows rows
+      (1..rows).each do
+        append_row_with []
+      end
+      @current_row += rows
+    end
+
+    def remove_table_legends
       @report_data.each do |key, data|
-        2.times do
-          data.shift
-        end
+        data.shift
       end
     end
 
-    def set_workbook_and_worksheet(document)
+    def initialize_variables document
+      @current_row = 0
       @workbook = document.workbook
       @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
       @worksheet = @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => page_setup)
+      create_report_styles
+      set_headers_and_footers
+      @report_data = select_report_data
     end
 
     def append_headers_and_footers width=934
@@ -145,22 +137,26 @@ module ReportGenerators
       @comments_history.where(comment_id: type).order("start_date DESC").order("end_date DESC").first
     end
 
-    def euro_currency_keys
-      ['agency_investment', 'new_stock_investment', 'anno_investment', 'cpm_anno', 'cpc_anno']
+    def append_comment_chart_for type
+      append_row_with ["Comentario"]
+      append_rows 1
+      append_row_with [history_comment_for(type).content] if !history_comment_for(type).nil?
     end
 
-    def put_euro_currency_to table
-      table.each do |key, values|
-        table[key] = append_euro_currency_to_array(values) if euro_currency_keys.include?(key)
-      end
+    def margins
+      {:left => 0.3, :top => 0, :right => 0, :bottom => 0}
     end
 
-    def append_euro_currency_to_array values
-      new_values = values[0..1]
-      values[2..values.size].each do |value|
-        new_values << "#{number_with_precision(value, decimal_format)} €"
-      end
-      new_values
+    def page_setup
+      {:orientation => :landscape, :paper_size => 9}
+    end
+
+    def height_cell
+      return 19
+    end
+
+    def columns_widths
+      [31, 9, 9, 9, 9, 9, 9, 9]
     end
 
   end

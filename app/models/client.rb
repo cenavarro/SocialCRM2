@@ -19,8 +19,6 @@ class Client < ActiveRecord::Base
     report
   end
 
-  private
-
   def build_reporters_for(social_network, date_range)
     social_network.data_types.map do |data_type|
       ReportGenerators.for(data_type).map do |generator|
@@ -49,6 +47,7 @@ class Client < ActiveRecord::Base
     else
       logo_customer = File.expand_path(Rails.root.join("public/assets/images/missing.png"), __FILE__)
     end
+    p logo_customer
     logo_hydra_social = File.expand_path(Rails.root.join("public/assets/images/logoHydra.png"),__FILE__)
     @title_style = @workbook.styles.add_style(:b => true, :sz => 24, :font_name => "Calibri")
     @subtitle_style = @workbook.styles.add_style(:b => true, :sz => 16, :font_name => "Calibri")
