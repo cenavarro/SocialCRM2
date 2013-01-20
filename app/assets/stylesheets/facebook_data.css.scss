@@ -10,6 +10,18 @@ $space: 400px;
 	position: relative;
 }
 
+.DTFC_LeftBodyWrapper{
+  height: auto !important;
+}
+
+.dataTables_scrollBody{
+  height: auto !important;
+}
+
+#tablaInformacion{
+  height: auto;
+}
+
 .sectionTable{
 	overflow: auto;
 	margin: 0px 42px 0px 42px;

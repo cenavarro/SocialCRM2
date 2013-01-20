@@ -33,22 +33,22 @@ module ReportGenerators
       end_date_last_period = last_period_image.end_date if !last_period_image.nil?
       images = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network.id, start_date_last_period, end_date_last_period)
       images.each do |image|
-        header position
-        position = position + 9
-        append_row_with [image.title]
+        header position, 934
+        append_row_with [image.title], @styles['title']
+        position = position + 6
         img = File.expand_path(image.attachment.path, __FILE__)
         @worksheet.add_image(:image_src => img) do |sheet_image|
           sheet_image.width = 755 
-          sheet_image.height = 400
-          sheet_image.start_at 1, position
+          sheet_image.height = 333
+          sheet_image.start_at 0, position
         end
-        append_rows 26
-        append_row_with ["Comentario"]
+        append_rows 15
+        append_row_with ["Comentario"], @styles['title']
         append_rows 1
         append_row_with [image.comment]
-        append_rows 13
-        position = position + 33
-        footer position-1
+        append_rows 10
+        position = position + 23
+        footer position-1, 934
       end
     end
 
@@ -58,8 +58,13 @@ module ReportGenerators
       header_style = @workbook.styles.add_style(:bg_color => "FF0000", :border => {:style => :thin, :color => "FFFF0000"}, :font_name => "Calibri")
       dates_style = @workbook.styles.add_style(:b => true, :bg_color => "000000", :fg_color => "FFFFFF", 
                                      :border => {:style => :thin, :color => "#FF000000"}, :sz => 9, :font_name => "Calibri")
-      basic_style = @workbook.styles.add_style(:border => {:style => :thin, :color => "#00000000"}, :sz => 11, :font_name => "Calibri", :alignment => {:horizontal => :right, :vertical => :center})
-      @styles = {"none" => no_style, "title"=> title_style, "header"=> header_style, "dates"=> dates_style, "basic"=> basic_style}
+      basic = {:border => {:style => :thin, :color => "#00000000"}, :sz => 11, :font_name => "Calibri", 
+              :alignment => {:horizontal => :right, :vertical => :center}}
+      basic_style = @workbook.styles.add_style(basic.merge({:format_code => "###,###,##0.00;###,###,##0.00"}))
+      euro_style = @workbook.styles.add_style(basic.merge({:format_code => "###,###,##0.00 €;###,###,##0.00 €"}))
+      percentage_style = @workbook.styles.add_style(basic.merge({:format_code => "[GREEN]###,###,##0.00%;[RED]###,###,##0.00%"}))
+      @styles = {"none" => no_style, "title"=> title_style, "header"=> header_style, "dates"=> dates_style, 
+                 "basic"=> basic_style, "euro" => euro_style, "percent" => percentage_style}
     end
 
     def append_table
@@ -69,12 +74,16 @@ module ReportGenerators
           append_row_with data, @styles['header']
         elsif key.include?("dates")
           append_row_with data, @styles['dates']
+        elsif percentage_rows.include?(key)
+          append_row_with data, @styles['percent']
+        elsif euro_rows.include?(key)
+          append_row_with data, @styles['euro']
         else
           append_row_with data, @styles['basic']
         end
       end
       append_rows 1
-      append_row_with ["Comentario del consultor"]
+      append_row_with ["Comentario del consultor"], @styles['title']
       append_rows 1
       append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
     end
@@ -137,7 +146,7 @@ module ReportGenerators
     end
 
     def append_comment_chart_for type
-      append_row_with ["Comentario"]
+      append_row_with ["Comentario"], @styles['title']
       append_rows 1
       append_row_with (!history_comment_for(type).nil? ? [history_comment_for(type).content] : ["Sin comentarios"])
     end
@@ -155,7 +164,29 @@ module ReportGenerators
     end
 
     def columns_widths
-      [31, 9, 9, 9, 9, 9, 9, 9]
+      [31, 11, 11, 12, 11, 12, 11, 12]
+    end
+
+    def is_header_or_dates_row? key
+      ['costs_header', 'community_header', 'visits_header', 'percentage_header', 
+       'interactivity_header', 'investment_header', 'actions', 'dates', 'campaign_header'].include?(key)
+    end
+
+    def percentage_rows
+      ['get_percentage_difference_from_previous_view_pages', 'get_percentage_difference_from_previous_unique_visits',
+      'get_percentage_difference_from_previous_total_fans', 'get_percentage_difference_from_previous_total_reach', 
+       'get_percentage_difference_from_previous_total_prints', 'get_percentage_difference_from_previous_total_interactions',
+       'get_percentage_difference_from_previous_clients', 'get_percentage_difference_from_previous_likes',
+       'get_percentage_difference_from_previous_total_unlocks', 'get_percentage_difference_from_previous_total_visits',
+       'get_percentage_difference_from_previous_checkins',
+       'ctr_anno'
+      ]
+    end
+
+    def euro_rows
+      ['agency_investment', 'new_stock_investment', 'anno_investment', 'total_investment', 'cpm_anno',
+       'investment_agency', 'investment_actions', 'investment_ads',
+       'cpc_anno', 'cpm_general', 'coste_interactions', 'fan_cost']
     end
 
   end

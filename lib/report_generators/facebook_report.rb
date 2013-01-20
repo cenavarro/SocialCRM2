@@ -20,10 +20,11 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
   def add_information_to document
     initialize_variables document
     append_rows 5
-    append_row_with ["PÁGINA DE FACEBOOK"]
+    append_row_with ["PÁGINA DE FACEBOOK"], @styles['title']
     append_table
     append_charts
-    append_rows 15
+    append_rows 10
+    append_images 203
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
   end
@@ -39,16 +40,10 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     table
   end
 
-  def facebook_keys
-    keys = table_rows
-    keys.shift
-    keys.collect{ |key, value| key  }
-  end
-
   def append_charts
     remove_table_legends
     append_rows 18
-    append_row_with ["GRÁFICOS FACEBOOK"]
+    append_row_with ["GRÁFICOS FACEBOOK"], @styles['title']
     append_rows 2
     append_community_chart
     append_interactivity_chart
@@ -104,8 +99,10 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     append_comment_chart_for 6
   end
 
-  def is_header_or_dates_row? key
-    ['costs_header', 'interactivity_header', 'investment_header', 'actions', 'dates'].include?(key)
+  def facebook_keys
+    keys = table_rows
+    keys.shift
+    keys.collect{ |key, value| key  }
   end
 
   def set_headers_and_footers
