@@ -169,7 +169,8 @@ module ReportGenerators
 
     def is_header_or_dates_row? key
       ['costs_header', 'community_header', 'visits_header', 'percentage_header', 
-       'interactivity_header', 'investment_header', 'actions', 'dates', 'campaign_header'].include?(key)
+       'interactions_header', 'interactivity_header', 'investment_header', 'actions',
+       'dates', 'campaign_header', 'fans_header', 'page_header'].include?(key)
     end
 
     def percentage_rows
@@ -178,15 +179,18 @@ module ReportGenerators
        'get_percentage_difference_from_previous_total_prints', 'get_percentage_difference_from_previous_total_interactions',
        'get_percentage_difference_from_previous_clients', 'get_percentage_difference_from_previous_likes',
        'get_percentage_difference_from_previous_total_unlocks', 'get_percentage_difference_from_previous_total_visits',
-       'get_percentage_difference_from_previous_checkins',
-       'ctr_anno'
+       'get_percentage_difference_from_previous_checkins', 'get_percentage_difference_from_previous_total_followers',
+       'get_percentage_difference_from_previous_liked', 'get_percentage_difference_from_previous_repin',
+       'get_percentage_difference_from_previous_comments', 'get_percentage_difference_from_previous_community_boards',
+       'get_percentage_difference_from_previous_real_fans',
+       'ctr_anno', 'interest'
       ]
     end
 
     def euro_rows
       ['agency_investment', 'new_stock_investment', 'anno_investment', 'total_investment', 'cpm_anno',
-       'investment_agency', 'investment_actions', 'investment_ads',
-       'cpc_anno', 'cpm_general', 'coste_interactions', 'fan_cost']
+       'investment_agency', 'investment_actions', 'investment_ads', 'investment_anno',
+       'cpc_anno', 'cpm_general', 'coste_interactions', 'fan_cost', 'coste_fan', 'cost_fan']
     end
 
   end
