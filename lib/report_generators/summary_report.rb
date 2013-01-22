@@ -30,25 +30,27 @@ class ReportGenerators::SummaryReport < ReportGenerators::Base
     @workbook = document.workbook
     @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
     @worksheet = @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => { :orientation => :landscape, :paper_size => 9, :fit_to_width => 1, :fit_to_height => 10})
+    @current_row = 0
+    create_report_styles
   end
 
   def create_report
     create_report_styles_for_summary
-    append_rows_to_report 7
-    @worksheet.add_row ["", "PÁGINA DE REPORTE"], :style => 3
+    append_rows 5
+    @worksheet.add_row ["", "PÁGINA DE REPORTE"], :style => @styles['title']
     add_summary_comments_to_report
     @worksheet.column_widths 4, 10, 10, 10, 10, 10, 10, 10
   end
 
   def add_summary_comments_to_report
-    append_rows_to_report 2
+    append_rows 2
     @summary_comments.each do |comment|
-      @worksheet. add_row ["", comment.title], :style => 3
-      append_rows_to_report 1
+      @worksheet. add_row ["", comment.title], :style => @styles['title']
+      append_rows 1
       comment.content.split(/\n/).each do |substring|
-        @worksheet. add_row ["", substring[0..130]]
+        @worksheet. add_row ["", substring[0..130]], :height => height_cell
       end
-      append_rows_to_report 2
+      append_rows 2
     end
   end
 

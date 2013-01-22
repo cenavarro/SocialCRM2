@@ -23,16 +23,18 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
 
 
   def create_report
+    @current_row = 0
     create_report_styles_for_comment
-    append_rows_to_report 7
-    @worksheet.add_row ["", "COMENTARIOS"], :style => 3
+    create_report_styles
+    append_rows 5
+    append_row_with ["", "COMENTARIOS"], @styles['title']
     append_comments_to_report
     @worksheet.column_widths 4, 90, 30, 10, 10, 10, 10, 10
 
   end
 
   def append_comments_to_report
-    append_rows_to_report 2
+    append_rows 2
     append_positive_comments
     append_negative_comments
   end
