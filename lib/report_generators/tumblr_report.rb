@@ -7,10 +7,7 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
 
   def add_to(document)
     if !tumblr_datum.empty?
-      @report_data = select_report_data
-      set_headers_and_footers
-      create_report(document)
-      append_headers_and_footers 
+      add_information_to document
     end
   end
 
@@ -20,92 +17,90 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
     social_network.tumblr_data.where('start_date >= ? and end_date <= ?', start_date.to_date, end_date.to_date).order("start_date ASC").limit(6)
   end
 
-  def create_report(document)
-    set_workbook_and_worksheet(document)
-    create_report_styles(tumblr_datum.size + 1)
-    append_rows_to_report 7
-    @worksheet.add_row ["","PÁGINA DE TUMBLR"], :style => 3
-    add_table_to_report
-    append_charts_to_report
-    append_rows_to_report 15
-    add_images_report 161
-    @worksheet.column_widths 4, 31, 9, 9, 9, 9, 9, 9
+  def add_information_to document
+    initialize_variables document
+    append_rows 5
+    append_row_with ["PÁGINA DE TUMBLR"], @styles['title']
+    append_table
+    append_charts
+    append_rows 10
+    append_images 116
+    @worksheet.column_widths *columns_widths
+    append_headers_and_footers
   end
 
-  def append_charts_to_report
-    remove_cells_report_table
-    append_rows_to_report 15
-    @worksheet.add_row ["","GRÁFICOS TUMBLR"], :style => 3
-    append_rows_to_report 2
+  def append_charts
+    remove_table_legends
+    append_rows 8
+    append_row_with ["GRÁFICOS TUMBLR"], @styles['title']
+    append_rows 2
     append_followers_chart
     append_interactivity_chart
     append_investment_chart
-  end
-
-  def table_rows
-    {
-      'dates' => ['',''], 'community_header' => ['','Comunidad'], 
-      'new_followers' => ['','Nuevos followers'], 'total_followers' => ['','Followers'], 
-      'posts' => ['', 'Post'],
-      'interaction_header' => ['', 'Interactividad'], 'likes' => ['', 'Like'],
-      'reblogged' => ['','Reblogged'], 'investment_header' => ['','Inversión'], 'investment_agency' => ['', 'Inversión agencia'], 
-      'investment_actions' => ['','Inversión nuevas acciones'], 'investment_ads' => ['','Inversión anuncios'], 
-      'total_investment' => ['','Inversión total'],
-    }
   end
 
   def select_report_data
     table = table_rows
     tumblr_datum.each do |datum|
       tumblr_keys.each do |key|
-        key.include?("header") ? (value = nil) : (value = datum[key])
-        table[key] << value
+        is_header_or_dates_row?(key)  ? table[key] << nil : (table[key] << (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
       end
       table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
-      table['total_investment'] << datum.total_investment.round(2)
-      table['new_followers'] << datum.new_followers
     end
     table
   end
 
-  def tumblr_keys
-    ['community_header', 'total_followers', 'posts', 'interaction_header', 'likes', 'reblogged', 'investment_header', 
-      'investment_agency', 'investment_actions', 'investment_ads']
-  end
-
   def append_followers_chart
-    chart = create_chart(45, "Followers")
-    add_serie(chart, @report_data['new_followers'], @report_data['dates'], 'Nuevos followers')
-    add_serie(chart, @report_data['total_followers'], @report_data['dates'], 'Followers')
-    append_rows_to_report 24
-    @worksheet.add_row ["", "Comentario"], :style => 3
-    append_rows_to_report 1
-    @worksheet.add_row ["", history_comment_for(2).content] if !history_comment_for(2).nil?
+    create_chart(35, "Followers")
+    add_serie(@report_data['new_followers'], 'Nuevos followers')
+    add_serie(@report_data['total_followers'], 'Followers')
+    append_rows 14
+    append_comment_chart_for 2
   end
 
   def append_interactivity_chart
-    chart = create_chart(84, "Interactividad")
-    add_serie(chart, @report_data['likes'], @report_data['dates'], 'Like')
-    add_serie(chart, @report_data['reblogged'], @report_data['dates'], 'Reblogged')
-    append_rows_to_report 36
-    @worksheet.add_row ["", "Comentario"], :style => 3
-    append_rows_to_report 1
-    @worksheet.add_row ["", history_comment_for(3).content] if !history_comment_for(3).nil?
+    create_chart(63, "Interactividad")
+    add_serie(@report_data['likes'], 'Like')
+    add_serie(@report_data['reblogged'], 'Reblogged')
+    append_rows 25
+    append_comment_chart_for 3
   end
 
   def append_investment_chart
-    chart = create_chart(126, "Inversión")
-    add_serie(chart, @report_data['new_followers'], @report_data['dates'], 'Nuevos followers')
-    add_serie(chart, @report_data['total_investment'], @report_data['dates'], 'Inversión total')
-    append_rows_to_report 39
-    @worksheet.add_row ["", "Comentario"], :style => 3
-    append_rows_to_report 1
-    @worksheet.add_row ["", history_comment_for(4).content] if !history_comment_for(4).nil?
+    create_chart(92, "Inversión")
+    add_serie(@report_data['new_followers'], 'Nuevos followers')
+    add_serie(@report_data['total_investment'], 'Inversión total')
+    append_rows 26
+    append_comment_chart_for 4
+  end
+
+  def tumblr_keys
+    keys = table_rows
+    keys.shift
+    keys.collect { |key, vale| key  }
   end
 
   def set_headers_and_footers
-    @headers ||= [0, 35, 77, 119]
-    @footers ||= [34, 76, 118, 160]
+    @headers ||= [0, 29, 58, 87]
+    @footers ||= [28, 57, 86, 115]
+  end
+
+  def table_rows
+    {
+      'dates' => [''],
+      'community_header' => ['Comunidad'], 
+      'new_followers' => ['Nuevos followers'],
+      'total_followers' => ['Followers'], 
+      'posts' => ['Post'],
+      'interaction_header' => ['Interactividad'],
+      'likes' => ['Like'],
+      'reblogged' => ['Reblogged'],
+      'investment_header' => ['Inversión'],
+      'investment_agency' => ['Inversión agencia'], 
+      'investment_actions' => ['Inversión nuevas acciones'],
+      'investment_ads' => ['Inversión anuncios'], 
+      'total_investment' => ['Inversión total'],
+    }
   end
 
 

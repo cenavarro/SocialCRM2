@@ -67,8 +67,8 @@ module ReportGenerators
                  "basic"=> basic_style, "euro" => euro_style, "percent" => percentage_style}
     end
 
-    def append_table
-      append_rows 2
+    def append_table spaces=2
+      append_rows spaces
       @report_data.each do |key, data|
         if key.include?("header") || (key=="actions")
           append_row_with data, @styles['header']
@@ -170,7 +170,7 @@ module ReportGenerators
     def is_header_or_dates_row? key
       ['costs_header', 'community_header', 'visits_header', 'percentage_header', 
        'interactions_header', 'interactivity_header', 'investment_header', 'actions',
-       'dates', 'campaign_header', 'fans_header', 'page_header'].include?(key)
+       'dates', 'campaign_header', 'fans_header', 'page_header', 'interaction_header'].include?(key)
     end
 
     def percentage_rows
@@ -182,7 +182,9 @@ module ReportGenerators
        'get_percentage_difference_from_previous_checkins', 'get_percentage_difference_from_previous_total_followers',
        'get_percentage_difference_from_previous_liked', 'get_percentage_difference_from_previous_repin',
        'get_percentage_difference_from_previous_comments', 'get_percentage_difference_from_previous_community_boards',
-       'get_percentage_difference_from_previous_real_fans',
+       'get_percentage_difference_from_previous_real_fans', 'get_percentage_difference_from_previous_total_mentions',
+       'get_percentage_difference_from_previous_ret_tweets', 'get_percentage_difference_from_previous_total_clicks',
+       'get_percentage_difference_from_previous_interactions_ads', 
        'ctr_anno', 'interest'
       ]
     end
@@ -190,7 +192,8 @@ module ReportGenerators
     def euro_rows
       ['agency_investment', 'new_stock_investment', 'anno_investment', 'total_investment', 'cpm_anno',
        'investment_agency', 'investment_actions', 'investment_ads', 'investment_anno',
-       'cpc_anno', 'cpm_general', 'coste_interactions', 'fan_cost', 'coste_fan', 'cost_fan']
+       'cpc_anno', 'cpm_general', 'coste_interactions', 'fan_cost', 'coste_fan', 'cost_fan',
+       'cost_twitter_ads', 'cost_per_prints', 'cost_per_interaction', 'cost_follower']
     end
 
   end
