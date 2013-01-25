@@ -120,14 +120,13 @@ section.sectionInformation
                   td.positiveValue
                     | 0.00
               - for i in (1..@monitoring_data['channel_total_comment'].length-1)
-                td
-                  - change_total_comments = (((@monitoring_data['channel_total_comment'][i]-@monitoring_data['channel_total_comment'][i-1]).to_f/@monitoring_data['channel_total_comment'][i-1])*100).round(2)
-                  - if channel_total_comment.to_f >= 0.0
-                    td.positiveValue
-                      = "#{number_with_precision(change_total_comments, decimal_format)}%"
-                  - else
-                    td.negativeValue
-                      = "#{number_with_precision(change_total_comments, decimal_format)}%"
+                - change_total_comments = (((@monitoring_data['channel_total_comment'][i]-@monitoring_data['channel_total_comment'][i-1]).to_f/@monitoring_data['channel_total_comment'][i-1])*100).round(2)
+                - if change_total_comments.to_f >= 0.0
+                  td.positiveValue
+                    = "#{number_with_precision(change_total_comments, decimal_format)}%"
+                - else
+                  td.negativeValue
+                    = "#{number_with_precision(change_total_comments, decimal_format)}%"
             tr
               td
                 b = t 'monitoring.daily_average' 
