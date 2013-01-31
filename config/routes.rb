@@ -117,10 +117,14 @@ DemoComentarios::Application.routes.draw do
     resources :social_networks, :except => [:new, :show]
     get "social_networks/new/:isn" => "social_networks#new", :as => "social_networks_new"
     post "social_networks/new_redirect" => "social_networks#redirect", :as => "social_networks_redirect_new"
-    get "social_networks/new_campaign" => "social_networks#new_campaign", :as => "social_networks_new_campaign"
     get "social_networks/new_monitoring" => "social_networks#new_monitoring", :as => "social_networks_new_monitoring"
     get "social_networks/new_benchmark" => "social_networks#new_benchmark", :as => "social_networks_new_benchmark"
+
+    get "social_networks/new_campaign" => "social_networks#new_campaign", :as => "social_networks_new_campaign"
+    get "social_networks/edit_campaign/:id" => "social_networks#edit_campaign", :as => "social_networks_edit_campaign"
     post "social_networks/create_campaign" => "social_networks#create_campaign", :as => "social_networks_create_campaing"
+    post "social_networks/updatet_campaign" => "social_networks#update_campaign", :as => "social_networks_update_campaign"
+
     post "social_networks/create_monitoring" => "social_networks#create_monitoring", :as => "social_networks_create_monitoring"
     post "social_networks/create_benchmark" => "social_networks#create_benchmark", :as => "social_networks_create_benchmark"
 

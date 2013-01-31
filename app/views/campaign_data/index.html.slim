@@ -9,6 +9,8 @@ script
 .margin
   a.btn.btn-primary href=campaign_new_path(params[:idc],params[:id_social]) style="width: 168px" id="btnNewData"
     = t 'buttons.new_data'
+  a.btn.btn-primary href=social_networks_edit_campaign_path(params[:id_social]) style="float:right; margin-right: 30px;"
+    | Editar Campanña
   br
   br
   button.btn.btn-primary onclick="show('formSelectRangeDate','btnMostrarRangos')" id="btnMostrarRangos" style="width: 190px"

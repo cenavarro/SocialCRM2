@@ -31,13 +31,14 @@
       input.btn.btn-primary type="submit" value="#{t 'buttons.get_data'}"
     br
 
-
+- colspan = @benchmark['columns'].size + 1
 script
   | createChart('container_distribution', 'Distribucion de los comentarios en canales', #{raw @benchmark['x_axis']});
   - @benchmark['competitors'].each do |competitor|
-    | addSerie('#{competitor}', #{@benchmark[competitor]});
+    - values = @benchmark[competitor].inject([]){|result, value| result.concat(value[1..-2].split(",").collect{|v|  v.to_i})}
+    | addSerie('#{competitor}', #{values});
   | addPlotLines(#{@benchmark['dates'].size});
-  | refreshChart(12);
+  | refreshChart(#{colspan});
 
 section.sectionInformation
   .estilo_tabs
@@ -59,48 +60,35 @@ section.sectionInformation
             tr
               td
               -@benchmark['dates'].each do |date|
-                td colspan="7" style="text-align: center; font-weight: bold;"
+                td colspan="#{colspan}" style="text-align: center; font-weight: bold;"
                   = date 
             tr.titlesRows
               td
-              - @benchmark['dates'].each do
-                td.columnsTableBenchmark
-                  = t 'benchmark.blogs'
-                td.columnsTableBenchmark
-                  = t 'benchmark.forums'
-                td.columnsTableBenchmark
-                  = t 'benchmark.videos'
-                td.columnsTableBenchmark
-                  = t 'benchmark.twitter'
-                td.columnsTableBenchmark
-                  = t 'benchmark.facebook'
-                td.columnsTableBenchmark
-                  = t 'benchmark.others'
-                td.columnsTableBenchmark
-                  = t 'benchmark.totals'
-          tbody
-            - totals_for_chart = {}
+              -@benchmark['dates'].each do |date|
+                - @benchmark['columns'].each do |column|
+                  td
+                    = column
+                td
+                  | Totales
+            - totals = []
             - @benchmark['competitors'].each do |competitor|
               tr
                 td
                   = competitor
-                  - total = []
-                  - index = 0
-                  - @benchmark['dates'].each do
-                    - data = @benchmark[competitor]
-                    - for i in (0..5) do
-                      td.columnsTableBenchmark
-                        = number_with_delimiter(data[index + i], integer_format)
-                    td.columnsTableBenchmark
-                      = number_with_delimiter(data[index..index+5].inject(:+), integer_format)
-                      - total << data[index..index+5].inject(:+) 
-                    - index = index + 6
-                  - totals_for_chart[competitor] = total 
+                  - @benchmark[competitor].each do |competitor_data|
+                    - competitor_data[1..-2].split(",").each do |value| 
+                      td
+                        = number_with_delimiter(value.to_i, integer_format)
+                    td
+                      - total = competitor_data[1..-2].split(",").inject(0) {|result, value| result += value.to_i}
+                      - totals << total
+                      = total
+          tbody
             tr id="buttons"
               td.nilValue
                 = t 'global.options'
                 - @benchmark['ids'].each do |id|
-                  td colspan="7" style="text-align: center;"
+                  td colspan="#{colspan}" style="text-align: center;"
                     a.btn.btn-info href=benchmark_edit_path(id)
                       i.icon-pencil.icon-white
                     |  
@@ -114,9 +102,8 @@ section.sectionInformation
         .content_comment id="table_comment" 
           == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 1, :id_div => "#table_comment"}
       script
-        | createChart('container_totals', 'Totales', #{raw @benchmark['dates']});
-        - @benchmark['competitors'].each do |competitor|
-          | addSerie('#{competitor}', #{totals_for_chart[competitor]});
+        | createChart('container_totals', 'Totales', #{raw @benchmark['x_axis']});
+        | addSerie('Totales', #{totals});
         | refreshChart();
 
     .tab-pane.fade id="tabcharts"

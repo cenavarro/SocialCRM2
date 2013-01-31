@@ -119,55 +119,55 @@ section.sectionInformation
                 = t 'youtube.inserted_player'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_delimiter(youtube_datum.inserted_player, integer_format)
+                  = number_to_percentage(youtube_datum.inserted_player, decimal_format)
             tr
               td
                 = t 'youtube.mobile_device'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.mobile_devise, decimal_format)
+                  = number_to_percentage(youtube_datum.mobile_devise, decimal_format)
             tr
               td
                 = t 'youtube.youtube_search'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.youtube_search, decimal_format)
+                  = number_to_percentage(youtube_datum.youtube_search, decimal_format)
             tr
               td
                 = t 'youtube.youtube_suggestion'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.youtube_suggestion, decimal_format)
+                  = number_to_percentage(youtube_datum.youtube_suggestion, decimal_format)
             tr
               td
                 = t 'youtube.youtube_page'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.youtube_page, decimal_format)
+                  = number_to_percentage(youtube_datum.youtube_page, decimal_format)
             tr
               td
                 = t 'youtube.external_web_site'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.external_web_site, decimal_format)
+                  = number_to_percentage(youtube_datum.external_web_site, decimal_format)
             tr
               td
                 = t 'youtube.google_search'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.google_search, decimal_format)
+                  = number_to_percentage(youtube_datum.google_search, decimal_format)
             tr
               td
                 = t 'youtube.youtube_others'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.youtube_others, decimal_format)
+                  = number_to_percentage(youtube_datum.youtube_others, decimal_format)
             tr
               td
                 = t 'youtube.youtube_subscriptions'
               - @youtube_datum.each do |youtube_datum|
                 td
-                  = number_with_precision(youtube_datum.youtube_subscriptions, decimal_format)
+                  = number_to_percentage(youtube_datum.youtube_subscriptions, decimal_format)
             tr
               td
                 = t 'youtube.youtube_ads'

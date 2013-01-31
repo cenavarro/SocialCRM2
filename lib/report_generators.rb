@@ -115,7 +115,6 @@ module ReportGenerators
       (1..rows).each do
         append_row_with []
       end
-      @current_row += rows
     end
 
     def remove_table_legends
@@ -185,6 +184,8 @@ module ReportGenerators
        'get_percentage_difference_from_previous_real_fans', 'get_percentage_difference_from_previous_total_mentions',
        'get_percentage_difference_from_previous_ret_tweets', 'get_percentage_difference_from_previous_total_clicks',
        'get_percentage_difference_from_previous_interactions_ads', 
+       'inserted_player', 'mobile_devise', 'youtube_search', 'youtube_suggestion', 'youtube_page', 'external_web_site',
+       'google_search', 'youtube_others', 'youtube_subscriptions',
        'ctr_anno', 'interest'
       ]
     end

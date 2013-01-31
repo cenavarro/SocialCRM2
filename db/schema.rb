@@ -11,7 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109143432) do
+ActiveRecord::Schema.define(:version => 20130125161033) do
+
+  create_table "benchmark_columns", :force => true do |t|
+    t.string   "name"
+    t.integer  "social_network_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "benchmark_columns", ["social_network_id"], :name => "index_benchmark_columns_on_social_network_id"
 
   create_table "benchmark_competitors", :force => true do |t|
     t.integer  "social_network_id"
@@ -23,15 +32,10 @@ ActiveRecord::Schema.define(:version => 20130109143432) do
   create_table "benchmark_data", :force => true do |t|
     t.date     "start_date"
     t.date     "end_date"
-    t.integer  "blogs"
-    t.integer  "forums"
-    t.integer  "videos"
-    t.integer  "twitter"
-    t.integer  "facebook"
-    t.integer  "others"
     t.integer  "benchmark_competitor_id", :limit => 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "values"
   end
 
   create_table "blog_data", :force => true do |t|
@@ -402,7 +406,7 @@ ActiveRecord::Schema.define(:version => 20130109143432) do
     t.integer  "social_network_id"
     t.integer  "total_subscriber"
     t.integer  "total_video_views"
-    t.integer  "inserted_player"
+    t.float    "inserted_player"
     t.float    "mobile_devise"
     t.float    "youtube_search"
     t.float    "youtube_suggestion"

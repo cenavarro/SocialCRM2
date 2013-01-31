@@ -67,11 +67,13 @@ class CampaignDataController < ApplicationController
     rows_campaign = RowsCampaign.where('social_network_id = ?', params[:id_social].to_i)
     rows_campaign.each do |row|
       row_data = select_row_data(row.id, params[:start_date], params[:end_date])
+      @no_empty_row_data ||= row_data if !row_data.empty?
+      process_row_data(row.id) if row_data.empty?
       values = row_data.map(&:value)
       @campaign_data['data'] << {"#{row.name}" => values}
     end
-    @campaign_data['ids'] = row_data.map(&:id)
-    row_data.collect{ |datum| @campaign_data['dates'] << datum.start_date.strftime("%d %b ") + datum.end_date.strftime("- %d %b")}.join(', ')
+    @campaign_data['ids'] = rows_campaign.first.row_data.map(&:id)
+    rows_campaign.first.row_data.collect{ |datum| @campaign_data['dates'] << datum.start_date.strftime("%d %b ") + datum.end_date.strftime("- %d %b")}.join(', ')
   end
 
   def select_row_data(id, start_date, end_date)
@@ -80,6 +82,12 @@ class CampaignDataController < ApplicationController
     else
       row_data = RowDatum.where('rows_campaign_id = ?', id).order("start_date ASC")
     end
+  end
+
+  def process_row_data id
+    @no_empty_row_data.each do |row|
+      RowDatum.create(start_date: row.start_date, end_date: row.end_date, rows_campaign_id: id, value: 0)
+    end if !@no_empty_row_data.nil?
   end
 
   def data_in_range?(start_date, end_date)

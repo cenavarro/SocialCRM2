@@ -8,20 +8,22 @@ class BenchmarkDataController < ApplicationController
 
   def new
     @benchmark_competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:id_social]).order("name ASC")
+    @benchmark_columns = BenchmarkColumn.where('social_network_id = ?', params[:id_social]).order("id ASC")
   end
 
   def edit
     @benchmark_competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:id_social]).order("name ASC")
+    @benchmark_columns = BenchmarkColumn.where('social_network_id = ?', params[:id_social]).order("id ASC")
     selected_data = BenchmarkDatum.find(params[:id])
     @start_date = selected_data.start_date.strftime("%d-%m-%Y")
     @end_date = selected_data.end_date.strftime("%d-%m-%Y")
   end
 
   def create
-    benchmark_competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:social_network_id]).order("name ASC")
+    benchmark_competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:social_network_id]).order("id ASC")
     benchmark_competitors.each do |competitor|
-      data_of_competitor = params["#{competitor.id}"]
-      BenchmarkDatum.create!({benchmark_competitor_id: competitor.id, start_date: params[:start_date], end_date: params[:end_date]}.merge(data_of_competitor))
+      data_of_competitor = params["column_#{competitor.id}"].collect{|k,v| v.to_i}
+      BenchmarkDatum.create!({benchmark_competitor_id: competitor.id, start_date: params[:start_date], end_date: params[:end_date], values: data_of_competitor.to_s})
     end
     respond_to do |format|
       format.html { redirect_to benchmark_index_path(params[:client_id], 1, params[:social_network_id]), notice: 'La informacion se ha ingresado exitosamente.' }
@@ -30,9 +32,10 @@ class BenchmarkDataController < ApplicationController
 
   def update
     old_data = BenchmarkDatum.find(params[:id])
-    benchmark_competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:social_network_id]).order("name ASC")
+    benchmark_competitors = BenchmarkCompetitor.where('social_network_id = ?', params[:social_network_id]).order("id ASC")
     benchmark_competitors.each do |competitor|
-      new_data = {start_date: params[:start_date], end_date: params[:end_date]}.merge(params["#{competitor.id}"])
+      data_of_competitor = params["column_#{competitor.id}"].collect{|k,v| v.to_i}
+      new_data = {start_date: params[:start_date], end_date: params[:end_date], values: data_of_competitor.to_s}
       datum = BenchmarkDatum.find_by_benchmark_competitor_id_and_start_date_and_end_date(competitor.id, old_data.start_date, old_data.end_date)
       datum.update_attributes(new_data)
     end
@@ -58,21 +61,26 @@ class BenchmarkDataController < ApplicationController
     BenchmarkCompetitor.where('social_network_id = ?', params[:id_social]).order("name ASC")
   end
 
+  def columns
+    BenchmarkColumn.where('social_network_id = ?', params[:id_social]).order("id ASC")
+  end
+
   def benchmark_data
     @benchmark_data ||= {
       "x_axis" => [],
       "competitors" => competitors.map(&:name),
       "dates" => dates,
-      "ids" => ids
+      "ids" => ids, 
+      "columns" => columns.map(&:name)
     }
   end
 
   def dates
-    competitors.first.benchmark_data.where(@where_conditions).order("start_date ASC").collect{ |datum| "#{datum.start_date.strftime("%d %b")} - #{datum.end_date.strftime("%d %b")}"}
+    !competitors.empty? ? competitors.first.benchmark_data.where(@where_conditions).order("start_date ASC").collect{ |datum| "#{datum.start_date.strftime("%d %b")} - #{datum.end_date.strftime("%d %b")}"} : []
   end
 
   def ids
-    competitors.first.benchmark_data.where(@where_conditions).order("start_date ASC").map(&:id)
+    !competitors.empty? ? competitors.first.benchmark_data.where(@where_conditions).order("start_date ASC").map(&:id) : []
   end
 
   def x_axis_for_chart
@@ -85,9 +93,7 @@ class BenchmarkDataController < ApplicationController
     competitor_data = competitor.benchmark_data.where(@where_conditions).order("start_date ASC")
     benchmark_data[competitor.name] = []
     competitor_data.each do |datum|
-      benchmark_keys.each do |key|
-        benchmark_data[competitor.name].push(datum[key])
-      end
+      benchmark_data[competitor.name].push(datum.values)
     end
   end
 
@@ -101,23 +107,7 @@ class BenchmarkDataController < ApplicationController
   end
 
   def x_axis start_date, end_date
-    ['Blogs', 
-      "Foros <br><b>#{start_date}</b>",
-      "Videos<br><b>al</b>",
-      "Twitter<br><b>#{end_date}  </b>",
-      "Facebook",
-      "Otros"
-    ]
-  end
-
-  def benchmark_keys
-    ['blogs',
-      'forums',
-      'videos',
-      'twitter',
-      'facebook',
-      'others'
-    ]
+    columns.collect{|column| "#{column.name}<br><br>#{start_date} - #{end_date}"}
   end
 
   def where_conditions

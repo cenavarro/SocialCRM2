@@ -18,6 +18,7 @@ class SocialNetwork < ActiveRecord::Base
   has_many :youtube_data, :dependent => :destroy
   has_many :foursquare_data, :dependent => :destroy
   has_many :benchmark_competitor, :dependent => :destroy
+  has_many :benchmark_columns, :dependent => :destroy
   has_many :rows_campaign, :dependent => :destroy
   has_many :monitoring, :dependent => :destroy
   has_many :summaries, :dependent => :destroy

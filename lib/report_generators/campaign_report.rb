@@ -25,7 +25,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
     append_rows 5
     append_row_with ["PÁGINA DE CAMPANA"], @styles['title']
     append_table_campaign
-    append_rows (37-@current_row)
+    append_rows (28-@current_row)
     append_charts_campaign
     append_images_campaign_in_row 58
     @worksheet.column_widths *columns_widths

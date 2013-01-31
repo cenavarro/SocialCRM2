@@ -1,0 +1,59 @@
+javascript:
+  jQuery(document).ready(function(){
+    jQuery("#form_campaign").validationEngine();
+  });
+
+- if !notice.nil?
+    .alert.alert-success
+      center
+        h4
+          = notice
+br
+center
+  h1 Editar Campaña a Cliente
+br
+br
+= form_tag ({:controller => "social_networks", :action => "update_campaign"}), :multipart => true, :id => 'form_campaign', :onsubmit => "return selectAllListBoxItems()", :class => "well form-inline formNewCampaign" do
+  = hidden_field_tag :id, @campaign.id
+  | Informacion de la campaña
+  br
+  br
+  |Nombre de la campaña
+  br
+  = text_field_tag :name, @campaign.name, :class => "validate[required]"
+  br
+  br
+  |Cliente
+  br
+  = select_tag :id_client, options_for_select(Client.all.collect {|c| [c.name, c.id]}, @campaign.client_id), {:class => "validate[required]"}
+  br
+  br
+  |Criterios de la campaña
+  br
+  br
+  .criteria_list id="criteria_list"
+    -@campaign.rows_campaign.each do |criterio|
+      .criteria id="old_criteria_#{criterio.id}"
+        = text_field_tag "old[#{criterio.id}]", criterio.name
+        a.btn.btn-danger style="margin-left: 20px;" onclick="delete_criteria('old_criteria_#{criterio.id}');"
+          i.icon-trash.icon-white
+        br
+        br
+  a.btn.btn-primary onclick="add_new_criteria();"
+    |Agregar Nuevo Criterio
+  br
+  br
+  | Imagen:
+  br
+  br
+  = file_field_tag :image, {:accept => "image/*", :onchange => "previewImage(this);"}
+  br
+  br
+  center
+    img id="image_preview" alt="Preview Image" width="100px" height="100px" src="#{@campaign.image.url}"
+  br
+  br
+  center
+    button.btn.btn-success
+      | Actualizar Datos
+

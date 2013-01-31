@@ -5,20 +5,10 @@ class SocialNetworksController < ApplicationController
 
   def index
     @social_networks = SocialNetwork.all
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @social_networks }
-    end
   end
 
   def new
     @social_network = SocialNetwork.new
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @social_network }
-    end
   end
 
   def edit
@@ -81,6 +71,29 @@ class SocialNetworksController < ApplicationController
     end
   end
 
+  def edit_campaign
+    @campaign = SocialNetwork.find(params[:id])
+  end
+
+  def update_campaign
+    @campaign = SocialNetwork.find(params[:id])
+    @campaign.name = params[:name]
+    @campaign.client_id = params[:id_client]
+    rows_to_delete = RowsCampaign.where("id not in (?) and social_network_id = ?", params[:old].collect{|id,v| id}, @campaign.id)
+    rows_to_delete.delete_all
+    params[:old].each do |id, value|
+      row_campaign = RowsCampaign.find(id)
+      row_campaign.name = value
+      row_campaign.save!
+    end if !params[:old].nil?
+    params[:new].each do |id, value|
+      RowsCampaign.create(name: value, social_network_id: @campaign.id)
+    end if !params[:new].nil?
+    respond_to do |format|
+      format.html { redirect_to social_networks_path, notice: "La Campaña se ha actualizado exitosamente!"}
+    end
+  end
+
   def create_monitoring
     monitoring = SocialNetwork.new(:name => params[:name], :client_id => params[:id_client], :info_social_network_id => InfoSocialNetwork.find_by_id_name('monitoring').id)
     monitoring.image = params[:image] if !params[:image].nil?
@@ -106,16 +119,16 @@ class SocialNetworksController < ApplicationController
   def create_benchmark
     benchmark = SocialNetwork.new(params)
     benchmark.info_social_network_id = InfoSocialNetwork.find_by_id_name('benchmark').id
-    if benchmark.save!
-      competitors_list = params[:competitors]
-      competitors_list.each do |competitor|
-        BenchmarkCompetitor.new(:social_network_id => benchmark.id, :name => competitor).save!
-      end
-      respond_to do |format|
+    params[:columns].split(/\r\n/)[0..7].each do |column|
+      benchmark.benchmark_columns << BenchmarkColumn.new(name: column)
+    end
+    params[:rows].split(/\r\n/)[0..10].each do |row|
+      benchmark.benchmark_competitor << BenchmarkCompetitor.new(name: row)
+    end
+    respond_to do |format|
+      if benchmark.save!
         format.html { redirect_to social_networks_path, notice: "Benchmark se ha creado exitosamente!"}
-      end
-    else
-      respond_to do |format|
+      else
         format.html { redirect_to request.referer, notice: "Benchmark no se pudo crear!"}
       end
     end

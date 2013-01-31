@@ -21,15 +21,17 @@
     img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 javascript:
   jQuery(document).ready(function(){
-    var oTable = $('#tablaInformacion').dataTable({
-        "asStripeClasses": [''],
-        "bSort" : false,
-        "bSorteable": false,
-        "bPaginate": false,
-        "bFilter": false,
-        "bInfo": false,
-        "sScrollX": "101%",
-        "bScrollCollapse": true,
-    });
-    new FixedColumns(oTable);
+    if(document.getElementById('tablaInformacion') != undefined){
+      var oTable = $('#tablaInformacion').dataTable({
+          "asStripeClasses": [''],
+          "bSort" : false,
+          "bSorteable": false,
+          "bPaginate": false,
+          "bFilter": false,
+          "bInfo": false,
+          "sScrollX": "101%",
+          "bScrollCollapse": true,
+      });
+      new FixedColumns(oTable);
+    }
   });

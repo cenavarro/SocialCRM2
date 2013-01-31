@@ -36,3 +36,18 @@ function selectAllListBoxItems(){
   }
   return true;
 }
+
+var id_criteria = 1;
+
+function add_new_criteria(){
+  document.getElementById('criteria_list').innerHTML += 
+    '<div class="criteria" id="new_criteria_' + id_criteria + '">' +
+    '<input type="text" id="new_' + id_criteria + '" name="new[' + id_criteria + ']"/>' +
+    '<a onclick="delete_criteria(\'new_criteria_' + id_criteria + '\');" class="btn btn-danger" style="margin-left: 20px;"> <i class="icon-trash icon-white"></i></a><br/><br/></div>';
+  id_criteria += 1;
+}
+
+function delete_criteria(id){
+  var div = document.getElementById(id);
+  div.parentNode.removeChild(div);
+}
