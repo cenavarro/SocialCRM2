@@ -6,7 +6,7 @@
 
 .margin
   h2
-    = "Periodo del #{@comments.first.start_date.strftime("%d-%m-%Y")} al #{@comments.first.end_date.strftime('%d-%m-%Y')}" if !@comments.nil?
+    = "Periodo del #{@comments.first.start_date.strftime("%d-%m-%Y")} al #{@comments.first.end_date.strftime('%d-%m-%Y')}" if !@comments.nil? && !@comments.first.nil?
   br
   br
   table.table.table-bordered
