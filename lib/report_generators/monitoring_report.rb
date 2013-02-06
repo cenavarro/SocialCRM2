@@ -41,7 +41,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     append_rows 4
     append_row_with ["PÁGINA DE MONITORING"], @styles['title']
     add_table_monitoring
-    append_rows (31 - @current_row)
+    append_rows (29 - @current_row)
     append_charts
     append_rows 10
     add_images_monitoring_report 87
@@ -160,7 +160,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
   end
 
   def append_charts
-    append_rows 9
+    append_rows 4
     append_row_with ["GRÁFICOS MONITORING"], @styles['title']
     append_rows 2
     append_themes_chart

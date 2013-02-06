@@ -31,7 +31,7 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
 
   def append_charts
     remove_table_legends
-    append_rows 29
+    append_rows 30
 		append_row_with ["GRÁFICOS TUENTI"], @styles['title']
     append_rows 2
 		append_followers_chart

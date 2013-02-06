@@ -31,7 +31,7 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
 
   def append_charts
     remove_table_legends
-    append_rows 24
+    append_rows 25
     append_row_with ["GRÁFICOS YOUTUBE"], @styles['title']
     append_rows 2
     append_community_chart

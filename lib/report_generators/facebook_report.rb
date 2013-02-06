@@ -57,7 +57,7 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     add_serie(@report_data['new_fans'], 'Nuevos fans')
     add_serie(@report_data['total_fans'], 'Fans fotales')
     add_serie(@report_data['goal_fans'], 'Objetivo fans')
-    append_rows 14
+    append_rows 15
     append_comment_chart_for 2
   end
 

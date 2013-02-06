@@ -42,7 +42,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
 
   def append_charts
     remove_table_legends
-    append_rows 12
+    append_rows 13
     append_row_with ["GRÁFICOS BLOG"], @styles['title']
     append_rows 2
     append_visits_chart

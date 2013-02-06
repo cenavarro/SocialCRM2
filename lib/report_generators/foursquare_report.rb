@@ -42,7 +42,7 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
 
   def append_charts
     remove_table_legends
-    append_rows 6
+    append_rows 7
     append_row_with ["GRÁFICOS FOURSQUARE"], @styles['title']
     append_rows 2
     append_followers_chart

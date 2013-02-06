@@ -31,7 +31,7 @@ class ReportGenerators::FlickrReport < ReportGenerators::Base
 
   def append_charts
     remove_table_legends
-    append_rows 8
+    append_rows 9
     append_row_with ["GRÁFICOS FLICKR"], @styles['title']
     append_rows 2
     append_community_chart

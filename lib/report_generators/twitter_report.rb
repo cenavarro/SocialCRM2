@@ -31,7 +31,7 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
 
   def append_charts
     remove_table_legends
-    append_rows 19
+    append_rows 20
     append_row_with ["GRÁFICOS TWITTER"], @styles['title']
     append_rows 2
     append_followers_chart
