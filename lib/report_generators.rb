@@ -60,9 +60,9 @@ module ReportGenerators
                                      :border => {:style => :thin, :color => "#FF000000"}, :sz => 9, :font_name => "Calibri")
       basic = {:border => {:style => :thin, :color => "#00000000"}, :sz => 11, :font_name => "Calibri", 
               :alignment => {:horizontal => :right, :vertical => :center}}
-      basic_style = @workbook.styles.add_style(basic.merge({:format_code => "###,###,##0.00;###,###,##0.00"}))
-      euro_style = @workbook.styles.add_style(basic.merge({:format_code => "###,###,##0.00 €;###,###,##0.00 €"}))
-      percentage_style = @workbook.styles.add_style(basic.merge({:format_code => "[GREEN]###,###,##0.00%;[RED]###,###,##0.00%"}))
+      basic_style = @workbook.styles.add_style(basic)
+      euro_style = @workbook.styles.add_style(basic)
+      percentage_style = @workbook.styles.add_style(basic)
       @styles = {"none" => no_style, "title"=> title_style, "header"=> header_style, "dates"=> dates_style, 
                  "basic"=> basic_style, "euro" => euro_style, "percent" => percentage_style}
     end
@@ -75,8 +75,10 @@ module ReportGenerators
         elsif key.include?("dates")
           append_row_with data, @styles['dates']
         elsif percentage_rows.include?(key)
+          append_percetage_symbol(data)
           append_row_with data, @styles['percent']
         elsif euro_rows.include?(key)
+          append_euro_symbol(data)
           append_row_with data, @styles['euro']
         else
           append_row_with data, @styles['basic']
@@ -86,6 +88,18 @@ module ReportGenerators
       append_row_with ["Comentario del consultor"], @styles['title']
       append_rows 1
       append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
+    end
+
+    def append_percetage_symbol data
+      for i in (1..data.size-1) do
+        data[i] = "#{data[i]} %"
+      end
+    end
+
+    def append_euro_symbol data
+      for i in (1..data.size-1) do
+        data[i] = "#{data[i]} €%"
+      end
     end
 
     def header(y_axis, width = 820)

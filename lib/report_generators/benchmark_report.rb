@@ -50,8 +50,8 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
       @report_data['dates'] ||= competitor_data.collect { |datum| "#{datum.start_date.strftime("%d %b")} - #{datum.end_date.strftime("%d %b")}"}
       @report_data[competitor.name] = {"data" => [], "totals" => []}
       competitor_data.each do |datum|
-        @report_data[competitor.name]['data'] << (datum['values'][1..-2].split(",").collect{|v| v.to_i})
-        total = datum['values'][1..-2].split(",").inject(0){|result, value| result += value.to_i}
+        @report_data[competitor.name]['data'] << (datum['values'][1..-2].split(",").collect{|v| number_with_precision(v.to_i, decimal_format)})
+        total = number_with_precision(datum['values'][1..-2].split(",").inject(0){|result, value| result += value.to_i}, decimal_format)
         @report_data[competitor.name]['totals'].push(total)
       end
     end

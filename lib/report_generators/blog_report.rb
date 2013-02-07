@@ -33,7 +33,8 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
     table = table_rows
     blog_datum.each do |datum|
       blog_keys.each do |key|
-        is_header_or_dates_row?(key)  ? table[key] << nil : (table[key] << (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
+        is_header_or_dates_row?(key)  ? table[key] << nil : ( value = (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
+        table[key] << number_with_precision(value, decimal_format) if !is_header_or_dates_row?(key)
       end
       table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
     end

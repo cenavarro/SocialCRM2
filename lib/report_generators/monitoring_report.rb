@@ -75,8 +75,8 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       themes_datum.each do |datum|
         data << datum.value
         monitoring_data['theme_total_comment'][index].nil? ? 
-          (monitoring_data['theme_total_comment'][index] = datum.value) : 
-          (monitoring_data['theme_total_comment'][index] = monitoring_data['theme_total_comment'][index] + datum.value)  
+          (monitoring_data['theme_total_comment'][index] = datum.value) :
+          (monitoring_data['theme_total_comment'][index] = monitoring_data['theme_total_comment'][index] + datum.value)
         index  = index + 1
       end
       monitoring_data['theme_datum'] << {:name => theme.name, :data => data}
@@ -109,22 +109,27 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     append_row_with @report_data['dates'], @styles['dates']
     append_row_with @report_data['theme_header'], @styles['header']
     @report_data['theme_datum'].each do |datum|
-      append_row_with datum[:data].unshift(datum[:name]),  @styles['basic']
+      values = datum[:data].unshift(datum[:name])
+      format_number(values)
+      append_row_with values,  @styles['basic']
     end
     append_row_with @report_data['theme_total_comment'], @styles['basic']
     append_row_with @report_data['distribution_header'], @styles['header']
     @report_data['channel_datum'].each do |datum|
-      append_row_with datum[:data].unshift(datum[:name]), @styles['basic']
+      values = datum[:data].unshift(datum[:name])
+      format_number(values)
+      append_row_with values, @styles['basic']
     end
     append_row_with @report_data['channel_total_comment'], @styles['basic']
     for i in (2..@report_data['channel_total_comment'].size-1) do
-      previous_data = @report_data['channel_total_comment'][i-1]
-      actual_data = @report_data['channel_total_comment'][i]
+      previous_data = @report_data['channel_total_comment'][i-1].to_i
+      actual_data = @report_data['channel_total_comment'][i].to_i
       result = ((actual_data - previous_data).to_f/previous_data)*100
-      @report_data['change_volume_comments'][i] = result.round(2)
+      @report_data['change_volume_comments'][i] = number_with_precision(result, decimal_format)
     end
     for i in (1..@report_data['channel_total_comment'].size-1)
-      @report_data['daily_average'][i] = (@report_data['channel_total_comment'][i] / @report_data['total_days'][1]).round(2)
+      result = (@report_data['channel_total_comment'][i] / @report_data['total_days'][1]).round(2)
+      @report_data['daily_average'][i] = number_with_precision(result, decimal_format)
     end
     append_row_with @report_data['change_volume_comments'], @styles['basic']
     append_row_with @report_data['daily_average'], @styles['basic']
@@ -132,6 +137,12 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     append_row_with ["Comentario del consultor"], @styles['title']
     append_rows 1
     append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
+  end
+
+  def format_number numbers_array
+      for i in (1..numbers_array.size-1) do
+        numbers_array[i] = number_with_precision(numbers_array[i], decimal_format)
+      end
   end
 
   def add_images_monitoring_report(position)

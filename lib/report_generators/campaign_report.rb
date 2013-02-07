@@ -76,7 +76,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
     row_data = []
     rows_campaign.each do |row|
       row_data = select_row_data(row.id)
-      values = row_data.map(&:value)
+      values = row_data.collect{ |data| number_with_precision(data.value, decimal_format) }
       campaign_data['data'] << {"#{row.name}" => values}
     end
     row_data.collect{ |datum| campaign_data['dates'] << "#{datum.start_date.strftime("%d %b")}-#{datum.end_date.strftime("%d %b")}"; campaign_data['header'] << ''}.join(', ')
