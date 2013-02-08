@@ -98,7 +98,7 @@ module ReportGenerators
 
     def append_euro_symbol data
       for i in (1..data.size-1) do
-        data[i] = "#{data[i]} €%"
+        data[i] = "#{data[i]} €"
       end
     end
 
