@@ -96,7 +96,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
   end
 
   def append_campaign_chart
-    create_chart(36, social_network.name[0..20])
+    create_chart(36, social_network.name)
     @report_data['data'].each do |data|
       data.values.first
       add_serie(data.values.first, data.keys.first)
