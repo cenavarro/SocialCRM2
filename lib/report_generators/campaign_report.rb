@@ -23,7 +23,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
   def add_information_to document
     initialize_variables document
     append_rows 5
-    append_row_with ["PÁGINA DE CAMPANA"], @styles['title']
+    append_row_with [social_network.name], @styles['title']
     append_table_campaign
     append_rows (28-@current_row)
     append_charts_campaign
@@ -96,7 +96,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
   end
 
   def append_campaign_chart
-    create_chart(36, "Gráfico Campaña")
+    create_chart(36, social_network.name[0..20])
     @report_data['data'].each do |data|
       data.values.first
       add_serie(data.values.first, data.keys.first)
