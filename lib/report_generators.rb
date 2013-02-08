@@ -77,9 +77,11 @@ module ReportGenerators
         elsif percentage_rows.include?(key)
           append_percetage_symbol(data)
           append_row_with data, @styles['percent']
+          clear_symbols(data)
         elsif euro_rows.include?(key)
           append_euro_symbol(data)
           append_row_with data, @styles['euro']
+          clear_symbols(data)
         else
           append_row_with data, @styles['basic']
         end
@@ -99,6 +101,12 @@ module ReportGenerators
     def append_euro_symbol data
       for i in (1..data.size-1) do
         data[i] = "#{data[i]} €"
+      end
+    end
+
+    def clear_symbols data
+      for i in (1..data.size-1) do
+        data[i] = data[i].split(' ')[0]
       end
     end
 
