@@ -39,13 +39,13 @@ script
 
   | createChart('container_interactions', 'Interactividad', #{raw @pinterest['dates']});
   | addSerie('# liked',#{@pinterest['liked']});
-  | addSerie('#repin',#{@pinterest['repin']});
-  | addSerie('#comments',#{@pinterest['comments']});
+  | addSerie('# repin',#{@pinterest['repin']});
+  | addSerie('# comments',#{@pinterest['comments']});
   | addSerie('# community boards',#{@pinterest['community_boards']});
   | refreshChart();
 
-  | createChart('container_investment', 'Inversion', #{raw @pinterest['dates']});
-  | addSerie('Inversion Total',#{@pinterest['total_investment']});
+  | createChart('container_investment', 'Inversión', #{raw @pinterest['dates']});
+  | addSerie('Inversión total',#{@pinterest['total_investment']});
   | refreshChart();
 
 section.sectionInformation

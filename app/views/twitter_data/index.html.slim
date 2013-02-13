@@ -32,29 +32,29 @@
     br
 script
   | createChart('container_comunidad', 'Comunidad', #{raw @twitter['dates']});
-  | addSerie('# Nuevos Followers', #{@twitter['new_followers']});
-  | addSerie('# Followers', #{@twitter['total_followers']});
-  | addSerie('Objetivo Followers', #{@twitter['goal_followers']});
+  | addSerie('# nuevos followers', #{@twitter['new_followers']});
+  | addSerie('# followers', #{@twitter['total_followers']});
+  | addSerie('Objetivo followers', #{@twitter['goal_followers']});
   | refreshChart();
 
   | createChart('container_interacciones', 'Interactividad', #{raw @twitter['dates']});
-  | addSerie('# Menciones', #{@twitter['total_mentions']});
-  | addSerie('# Retweets', #{@twitter['ret_tweets']});
-  | addSerie('Clicks Enlaces', #{@twitter['total_clicks']});
+  | addSerie('# menciones', #{@twitter['total_mentions']});
+  | addSerie('# retweets', #{@twitter['ret_tweets']});
+  | addSerie('Clicks enlaces', #{@twitter['total_clicks']});
   | addSerie('# Interacciones en twitter ads', #{@twitter['interactions_ads']});
-  | addSerie('Interacciones Totales', #{@twitter['total_interactions']});
+  | addSerie('Interacciones totales', #{@twitter['total_interactions']});
   | refreshChart();
 
-  | createChart('container_inversion', 'Inversion', #{raw @twitter['dates']});
+  | createChart('container_inversion', 'Inversión', #{raw @twitter['dates']});
   | addSerie('# nuevos followers', #{@twitter['new_followers']});
-  | addSerie('Inversion Total', #{@twitter['total_investment']});
+  | addSerie('Inversion total', #{@twitter['total_investment']});
   | refreshChart();
 
   | createChart('container_costes', 'Costes', #{raw @twitter['dates']});
   | addSerie('Costes', #{@twitter['cost_follower']});
   | addSerie('Cost per engagement twitter ads', #{@twitter['cost_twitter_ads']});
   | addSerie('Coste por mil impresiones', #{@twitter['cost_prints']});
-  | addSerie('Coste por interaccion', #{@twitter['cost_interactions']});
+  | addSerie('Coste por interacción', #{@twitter['cost_interactions']});
   | refreshChart();
 section.sectionInformation
   .estilo_tabs

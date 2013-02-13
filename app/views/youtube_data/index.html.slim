@@ -39,13 +39,13 @@ script
   | createChart('container_interactions', 'Interactividad', #{raw @youtube['dates']});
   | addSerie('Reproducciones videos durante el periodo',#{@youtube['total_video_views']});
   | addSerie('Reproductor insertado',#{@youtube['inserted_player']});
-  | addSerie('Dispositivos moviles',#{@youtube['mobile_devise']});
-  | addSerie('Busqueda de Youtube',#{@youtube['youtube_search']});
+  | addSerie('Dispositivos móviles',#{@youtube['mobile_devise']});
+  | addSerie('Búsqueda de Youtube',#{@youtube['youtube_search']});
   | addSerie('Sugerencia de Youtube',#{@youtube['youtube_suggestion']});
-  | addSerie('Pagina de canal de Youtube',#{@youtube['youtube_page']});
+  | addSerie('Página de canal de Youtube',#{@youtube['youtube_page']});
   | addSerie('Sitio externo a Youtube',#{@youtube['external_web_site']});
-  | addSerie('Busqueda de Google',#{@youtube['google_search']});
-  | addSerie('Otras paginas de Youtube',#{@youtube['youtube_others']});
+  | addSerie('Búsqueda de Google',#{@youtube['google_search']});
+  | addSerie('Otras páginas de Youtube',#{@youtube['youtube_others']});
   | addSerie('Suscripciones de Youtube',#{@youtube['youtube_subscriptions']});
   | addSerie('Publicidad de Youtube',#{@youtube['youtube_ads']});
   | refreshChart();

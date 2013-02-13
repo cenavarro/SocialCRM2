@@ -42,9 +42,9 @@ script
   | addSerie('# reblogged',#{@tumblr['reblogged']});
   | refreshChart();
 
-  | createChart('container_investment', 'Inversion', #{raw @tumblr['dates']});
+  | createChart('container_investment', 'Inversión', #{raw @tumblr['dates']});
   | addSerie('# nuevos followers',#{@tumblr['new_followers']});
-  | addSerie('Inversion Total',#{@tumblr['total_investment']});
+  | addSerie('Inversión total',#{@tumblr['total_investment']});
   | refreshChart();
 section.sectionInformation
   .estilo_tabs

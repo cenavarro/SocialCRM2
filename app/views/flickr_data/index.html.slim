@@ -39,14 +39,14 @@ script
   | refreshChart();
 
   | createChart('container_interactions', 'Interactividad', #{raw @flickr['dates']});
-  | addSerie('# Visitas',#{@flickr['visits']});
-  | addSerie('# Comentarios',#{@flickr['comments']});
-  | addSerie('# Favoritos',#{@flickr['favorites']});
+  | addSerie('# visitas',#{@flickr['visits']});
+  | addSerie('# comentarios',#{@flickr['comments']});
+  | addSerie('# favoritos',#{@flickr['favorites']});
   | refreshChart();
 
-  | createChart('container_investment', 'Inversion', #{raw @flickr['dates']});
+  | createChart('container_investment', 'Inversión', #{raw @flickr['dates']});
   | addSerie('# nuevos contactos',#{@flickr['new_contacts']});
-  | addSerie('Inversion Total',#{@flickr['total_investment']});
+  | addSerie('Inversión total',#{@flickr['total_investment']});
   | refreshChart();
 
 section.sectionInformation

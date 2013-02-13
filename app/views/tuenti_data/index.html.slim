@@ -48,10 +48,10 @@ script
   | refreshChart();
 
   | createChart('container_investment', 'Inversiones', #{raw @tuenti['dates']});
-  | addSerie('Inversion agencia', #{@tuenti['investment_agency']});
-  | addSerie('Inversion nuevas acciones', #{@tuenti['investment_actions']});
-  | addSerie('Inversion anuncios', #{@tuenti['investment_ads']});
-  | addSerie('Inversion total', #{@tuenti['total_investment']});
+  | addSerie('Inversión agencia', #{@tuenti['investment_agency']});
+  | addSerie('Inversión nuevas acciones', #{@tuenti['investment_actions']});
+  | addSerie('Inversión anuncios', #{@tuenti['investment_ads']});
+  | addSerie('Inversión total', #{@tuenti['total_investment']});
   | refreshChart();
 
   | createChart('container_costs', 'Costes', #{raw @tuenti['dates']});

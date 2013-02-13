@@ -39,13 +39,13 @@ script
 
   | createChart('container_interactions', 'Interactividad', #{raw @google['dates']});
   | addSerie('(+1s)',#{@google['plus']});
-  | addSerie('Compartir Contenido',#{@google['content_shared']});
-  | addSerie('Total Interacciones',#{@google['total_interactions']});
+  | addSerie('Compartir contenido',#{@google['content_shared']});
+  | addSerie('Total interacciones',#{@google['total_interactions']});
   | refreshChart();
 
   | createChart('container_investment', 'Inversion', #{raw @google['dates']});
   | addSerie('# nuevos contactos',#{@google['new_followers']});
-  | addSerie('Inversion Total',#{@google['total_investment']});
+  | addSerie('Inversión total',#{@google['total_investment']});
   | refreshChart();
 
 section.sectionInformation

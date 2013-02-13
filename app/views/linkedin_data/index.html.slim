@@ -40,12 +40,12 @@ script
   | createChart('container_interactions', 'Interactividad', #{raw @linkedin['dates']});
   | addSerie('Impresiones',#{@linkedin['prints']});
   | addSerie('Clicks',#{@linkedin['clics']});
-  | addSerie('% interes',#{@linkedin['interest']});
-  | addSerie('Recomendacion',#{@linkedin['recommendation']});
+  | addSerie('% interés',#{@linkedin['interest']});
+  | addSerie('Recomendación',#{@linkedin['recommendation']});
   | refreshChart();
 
-  | createChart('container_views_page', 'Visualizaciones de la pagina', #{raw @linkedin['dates']});
-  | addSerie('# Visualizaciones de paginas',#{@linkedin['total_views']});
+  | createChart('container_views_page', 'Visualizaciones de la página', #{raw @linkedin['dates']});
+  | addSerie('# Visualizaciones de páginas',#{@linkedin['total_views']});
 
 section.sectionInformation
   .estilo_tabs

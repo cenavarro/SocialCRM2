@@ -172,6 +172,12 @@ module ReportGenerators
       append_row_with (!history_comment_for(type).nil? ? [history_comment_for(type).content] : ["Sin comentarios"])
     end
 
+    def change_comma_by_period_for array
+      for i in (0...array.size)
+        array[i] = array[i].gsub(/,/, ".")
+      end
+    end
+
     def margins
       {:left => 0.3, :top => 0, :right => 0, :bottom => 0}
     end

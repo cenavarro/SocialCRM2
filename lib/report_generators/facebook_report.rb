@@ -90,14 +90,24 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
 
   def append_costs_chart
     create_chart(179, "Costes")
+    change_comma_symbol
     add_serie(@report_data['ctr_anno'], 'CTR anuncios')
     add_serie(@report_data['cpc_anno'], 'CPC anuncios')
-    add_serie(@report_data['coste_interactions'], 'Coste por interación')
+    add_serie(@report_data['coste_interactions'], 'Coste por interacción')
     add_serie(@report_data['cpm_anno'], 'CPM anuncios')
-    add_serie(@report_data['cmp_general'], 'CPM general')
+    add_serie(@report_data['cpm_general'], 'CPM general')
     add_serie(@report_data['fan_cost'], 'Coste por fan')
     append_rows 26
     append_comment_chart_for 6
+  end
+
+  def change_comma_symbol
+    change_comma_by_period_for @report_data['ctr_anno']
+    change_comma_by_period_for @report_data['cpc_anno']
+    change_comma_by_period_for @report_data['coste_interactions']
+    change_comma_by_period_for @report_data['cpm_anno']
+    change_comma_by_period_for @report_data['cpm_general']
+    change_comma_by_period_for @report_data['fan_cost']
   end
 
   def facebook_keys

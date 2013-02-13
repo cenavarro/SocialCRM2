@@ -39,9 +39,9 @@ script
   | refreshChart();
 
   | createChart('container_interactivity', 'Interactividad', #{raw @foursquare['dates']});
-  | addSerie('#clientes',#{@foursquare['clients']});
-  | addSerie('#me gusta',#{@foursquare['likes']});
-  | addSerie('#check-ins',#{@foursquare['checkins']});
+  | addSerie('# clientes',#{@foursquare['clients']});
+  | addSerie('# me gusta',#{@foursquare['likes']});
+  | addSerie('# check-ins',#{@foursquare['checkins']});
   | refreshChart();
 
   | createChart('container_deals', 'Interactividad (Ofertas)', #{raw @foursquare['dates']});
