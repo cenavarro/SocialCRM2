@@ -82,11 +82,12 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
 
   def append_cost_chart
     create_chart(150, "Costes")
+    p @report_data
     change_comma_symbol
     add_serie(@report_data['cost_follower'], 'Costes')
     add_serie(@report_data['cost_twitter_ads'], 'Cost per engagement Twitter Ads')
     add_serie(@report_data['cost_per_prints'], 'Coste por mil impresiones')
-    add_serie(@report_data['cost_interaction'], 'Coste por interacción')
+    add_serie(@report_data['cost_per_interaction'], 'Coste por interacción')
     append_rows 26
     append_comment_chart_for 5
   end
@@ -95,7 +96,7 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
     change_comma_by_period_for @report_data['cost_follower']
     change_comma_by_period_for @report_data['cost_twitter_ads']
     change_comma_by_period_for @report_data['cost_per_prints']
-    change_comma_by_period_for @report_data['cost_interaction']
+    change_comma_by_period_for @report_data['cost_per_interaction']
   end
 
   def set_headers_and_footers
