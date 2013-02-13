@@ -60,6 +60,8 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
 
   def append_percentage_chart
     create_chart(63, "Porcentajes")
+    change_comma_by_period_for @report_data['rebound_percent']
+    change_comma_by_period_for @report_data['new_visits_percent']
     add_serie(@report_data['rebound_percent'], 'Porcentaje rebote')
     add_serie(@report_data['new_visits_percent'], 'Porcentaje visitas nuevas')
     append_rows 24
@@ -86,7 +88,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
       'view_pages' => ['Páginas vistas'],
       'get_percentage_difference_from_previous_view_pages' => ['% Cambio'],
       'percentage_header' => ['Porcentajes'],
-      'rebound_percent' => ['Porcentaje rebote'],
+      'rebound_percent' => ['Porcentaje de rebote'],
       'new_visits_percent' => ['Porcentaje de visitas nuevas'],
       'total_posts' => ['Número de posts']
     }
