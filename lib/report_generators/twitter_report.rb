@@ -21,23 +21,11 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
     initialize_variables document
     append_rows 6
     append_row_with ["PÁGINA DE TWITTER"], @styles['title']
-    append_table 2
+    append_table
     append_charts
     append_images 192
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
-  end
-
-  def select_report_data
-    table = table_rows
-    twitter_datum.each do |datum|
-      twitter_keys.each do |key|
-        is_header_or_dates_row?(key)  ? table[key] << nil : ( value = (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
-        table[key] << number_with_precision(value, decimal_format) if !is_header_or_dates_row?(key)
-      end
-      table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
-    end
-    table
   end
 
   def append_charts
@@ -99,6 +87,18 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
     change_comma_by_period_for @report_data['cost_twitter_ads']
     change_comma_by_period_for @report_data['cost_per_prints']
     change_comma_by_period_for @report_data['cost_per_interaction']
+  end
+
+  def select_report_data
+    table = table_rows
+    twitter_datum.each do |datum|
+      twitter_keys.each do |key|
+        is_header_or_dates_row?(key)  ? table[key] << nil : ( value = (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
+        table[key] << number_with_precision(value, decimal_format) if !is_header_or_dates_row?(key)
+      end
+      table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
+    end
+    table
   end
 
   def set_headers_and_footers

@@ -20,7 +20,14 @@ module ReportGenerators
     end
 
     def add_serie(data, title, labels=default_labels, style = nil)
+      remove_dots_in_data_for data
       @chart.add_series :data => data, :labels => labels, :title => title, :style => style
+    end
+
+    def remove_dots_in_data_for array
+      for i in (0...array.size)
+        array[i] = array[i].gsub(/\./, "")
+      end
     end
 
     def default_labels
@@ -34,7 +41,7 @@ module ReportGenerators
       end_date_last_period = last_period_image.end_date if !last_period_image.nil?
       images = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network.id, start_date_last_period, end_date_last_period)
       images.each do |image|
-        header current_row, 934
+        header current_row, 821
         append_rows 4
         append_row_with [image.title], @styles['title']
         append_rows 1
@@ -50,7 +57,7 @@ module ReportGenerators
         append_row_with [image.comment]
         position = position + 32
         append_rows (position - current_row)
-        footer (position - 1), 934
+        footer (position - 1), 821
       end
     end
 

@@ -23,10 +23,37 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
     append_row_with ["PÁGINA DE BLOG"], @styles['title']
     append_table
     append_charts
-    append_rows 10
-    append_images 87
+    append_images 96
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
+  end
+
+  def append_charts
+    remove_table_legends
+    append_rows (37 - current_row)
+    append_row_with ["GRÁFICOS BLOG"], @styles['title']
+    append_visits_chart
+    append_percentage_chart
+  end
+
+  def append_visits_chart
+    append_rows (39 - current_row)
+    create_chart(current_row, "Visitas")
+    add_serie(@report_data['unique_visits'], 'Número de visitas únicas')
+    add_serie(@report_data['view_pages'], 'Páginas vistas')
+    append_rows (54 - current_row)
+    append_comment_chart_for 2
+  end
+
+  def append_percentage_chart
+    append_rows (69 - current_row)
+    create_chart(current_row, "Porcentajes")
+    change_comma_by_period_for @report_data['rebound_percent']
+    change_comma_by_period_for @report_data['new_visits_percent']
+    add_serie(@report_data['rebound_percent'], 'Porcentaje rebote')
+    add_serie(@report_data['new_visits_percent'], 'Porcentaje visitas nuevas')
+    append_rows (84 - current_row)
+    append_comment_chart_for 3
   end
 
   def select_report_data
@@ -41,36 +68,9 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
     table
   end
 
-  def append_charts
-    remove_table_legends
-    append_rows 13
-    append_row_with ["GRÁFICOS BLOG"], @styles['title']
-    append_rows 2
-    append_visits_chart
-    append_percentage_chart
-  end
-
-  def append_visits_chart
-    create_chart(36, "Visitas")
-    add_serie(@report_data['unique_visits'], 'Número de visitas únicas')
-    add_serie(@report_data['view_pages'], 'Páginas vistas')
-    append_rows 14
-    append_comment_chart_for 2
-  end
-
-  def append_percentage_chart
-    create_chart(63, "Porcentajes")
-    change_comma_by_period_for @report_data['rebound_percent']
-    change_comma_by_period_for @report_data['new_visits_percent']
-    add_serie(@report_data['rebound_percent'], 'Porcentaje rebote')
-    add_serie(@report_data['new_visits_percent'], 'Porcentaje visitas nuevas')
-    append_rows 24
-    append_comment_chart_for 3
-  end
-
   def set_headers_and_footers
-    @headers ||= [0, 29, 58]
-    @footers ||= [28, 57, 86]
+    @headers ||= [0, 32, 64]
+    @footers ||= [31, 63, 95]
   end
 
   def blog_keys
