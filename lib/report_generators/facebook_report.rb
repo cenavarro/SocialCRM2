@@ -23,8 +23,7 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     append_row_with ["PÁGINA DE FACEBOOK"], @styles['title']
     append_table
     append_charts
-    append_rows 10
-    append_images 203
+    append_images 224
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
   end
@@ -43,9 +42,9 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
 
   def append_charts
     remove_table_legends
-    append_rows 18
+    append_rows (65 - current_row)
+    append_rows 4
     append_row_with ["GRÁFICOS FACEBOOK"], @styles['title']
-    append_rows 2
     append_community_chart
     append_interactivity_chart
     append_reach_chart
@@ -54,42 +53,47 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
   end
 
   def append_community_chart
-    create_chart(65, "Comunidad")
+    append_rows (71 - current_row)
+    create_chart(current_row, "Comunidad")
     add_serie(@report_data['new_fans'], 'Nuevos fans')
     add_serie(@report_data['total_fans'], 'Fans fotales')
     add_serie(@report_data['goal_fans'], 'Objetivo fans')
-    append_rows 15
+    append_rows (86 - current_row)
     append_comment_chart_for 2
   end
 
   def append_interactivity_chart
-    create_chart(92, "Interactividad")
+    append_rows (101 - current_row)
+    create_chart(current_row, "Interactividad")
     add_serie(@report_data['total_interactions'], 'Interacciones')
     add_serie(@report_data['total_clicks_anno'], 'Clics anuncios')
     add_serie(@report_data['total_interactions_platform'], 'Interacciones total marca plataforma')
-    append_rows 24
+    append_rows (116 - current_row)
     append_comment_chart_for 3
   end
 
   def append_reach_chart
-    create_chart(121, "Alcance")
+    append_rows (133 - current_row)
+    create_chart(current_row, "Alcance")
     add_serie(@report_data['prints'], 'Impresiones')
     add_serie(@report_data['total_reach'], 'Alcance total')
     add_serie(@report_data['potential_reach'], 'Alcance potencial')
-    append_rows 26
+    append_rows (148 - current_row)
     append_comment_chart_for 4
   end
 
   def append_investment_chart
-    create_chart(150, "Inversiones")
+    append_rows (165 - current_row)
+    create_chart(current_row, "Inversiones")
     add_serie(@report_data['new_fans'], 'Nuevos fans')
     add_serie(@report_data['total_investment'], 'Inversión total')
-    append_rows 26
+    append_rows (180 - current_row)
     append_comment_chart_for 5
   end
 
   def append_costs_chart
-    create_chart(179, "Costes")
+    append_rows (197 - current_row)
+    create_chart(current_row, "Costes")
     change_comma_symbol
     add_serie(@report_data['ctr_anno'], 'CTR anuncios')
     add_serie(@report_data['cpc_anno'], 'CPC anuncios')
@@ -97,7 +101,7 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     add_serie(@report_data['cpm_anno'], 'CPM anuncios')
     add_serie(@report_data['cpm_general'], 'CPM general')
     add_serie(@report_data['fan_cost'], 'Coste por fan')
-    append_rows 26
+    append_rows (212 - current_row)
     append_comment_chart_for 6
   end
 
@@ -117,8 +121,8 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
   end
 
   def set_headers_and_footers
-    @headers ||= [0, 58, 87, 116, 145, 174]
-    @footers ||= [57, 86, 115, 144, 173, 202]
+    @headers ||= [0, 64, 96, 128, 160, 192]
+    @footers ||= [63, 95, 127, 159, 191, 223]
   end
 
   def table_rows

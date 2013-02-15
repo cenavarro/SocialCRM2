@@ -19,25 +19,13 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
 
   def add_information_to document
     initialize_variables document
-    append_rows 4
+    append_rows 6
     append_row_with ["PÁGINA DE TWITTER"], @styles['title']
-    append_table 1
+    append_table 2
     append_charts
-    append_rows 10
-    append_images 174
+    append_images 192
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
-  end
-
-  def append_charts
-    remove_table_legends
-    append_rows 20
-    append_row_with ["GRÁFICOS TWITTER"], @styles['title']
-    append_rows 2
-    append_followers_chart
-    append_interactivity_chart
-    append_investment_chart
-    append_cost_chart
   end
 
   def select_report_data
@@ -52,43 +40,57 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
     table
   end
 
+  def append_charts
+    remove_table_legends
+    append_rows (65 - current_row)
+    append_rows 4
+    append_row_with ["GRÁFICOS TWITTER"], @styles['title']
+    append_followers_chart
+    append_interactivity_chart
+    append_investment_chart
+    append_cost_chart
+  end
+
   def append_followers_chart
-    create_chart(64, "Comunidad")
+    append_rows (71 - current_row)
+    create_chart(current_row, "Comunidad")
     add_serie(@report_data['new_followers'], 'Nuevos followers')
     add_serie(@report_data['total_followers'], 'Followers')
     add_serie(@report_data['goal_followers'], 'Objetivo followers')
-    append_rows 14
+    append_rows (86 - current_row)
     append_comment_chart_for 2
   end
 
   def append_interactivity_chart
-    create_chart(92, "Interactividad")
+    append_rows (101 - current_row)
+    create_chart(current_row, "Interactividad")
     add_serie(@report_data['total_mentions'], 'Menciones')
     add_serie(@report_data['ret_tweets'], 'Retweets')
     add_serie(@report_data['total_clicks'], 'Clics enlaces')
     add_serie(@report_data['interactions_ads'], '# Interacciones en Twitter Ads')
     add_serie(@report_data['total_interactions'], 'Interacciones en total')
-    append_rows 25
+    append_rows (116 - current_row)
     append_comment_chart_for 3
   end
 
   def append_investment_chart
-    create_chart(121, "Inversión")
+    append_rows (133 - current_row)
+    create_chart(current_row, "Inversión")
     add_serie(@report_data['new_followers'], 'Nuevos followers')
     add_serie(@report_data['total_investment'], 'Inversión total')
-    append_rows 26
+    append_rows (148 - current_row)
     append_comment_chart_for 4
   end
 
   def append_cost_chart
-    create_chart(150, "Costes")
-    p @report_data
+    append_rows (165 - current_row)
+    create_chart(current_row, "Costes")
     change_comma_symbol
     add_serie(@report_data['cost_follower'], 'Costes')
     add_serie(@report_data['cost_twitter_ads'], 'Cost per engagement Twitter Ads')
     add_serie(@report_data['cost_per_prints'], 'Coste por mil impresiones')
     add_serie(@report_data['cost_per_interaction'], 'Coste por interacción')
-    append_rows 26
+    append_rows (180 - current_row)
     append_comment_chart_for 5
   end
 
@@ -100,8 +102,8 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
   end
 
   def set_headers_and_footers
-    @headers ||= [0, 58, 87, 116, 145]
-    @footers ||= [57, 86, 115, 144, 173]
+    @headers ||= [0, 64, 96, 128, 160]
+    @footers ||= [63, 95, 127, 159, 191]
   end
 
   def twitter_keys

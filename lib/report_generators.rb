@@ -28,27 +28,29 @@ module ReportGenerators
     end
 
     def append_images position
+      append_rows (position - current_row)
       last_period_image = ImagesSocialNetwork.where(:social_network_id => social_network.id).order('start_date DESC').order('end_date DESC').first
       start_date_last_period = last_period_image.start_date if !last_period_image.nil?
       end_date_last_period = last_period_image.end_date if !last_period_image.nil?
       images = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network.id, start_date_last_period, end_date_last_period)
       images.each do |image|
-        header position, 934
+        header current_row, 934
+        append_rows 4
         append_row_with [image.title], @styles['title']
-        position = position + 6
+        append_rows 1
         img = File.expand_path(image.attachment.path, __FILE__)
         @worksheet.add_image(:image_src => img) do |sheet_image|
           sheet_image.width = 755 
           sheet_image.height = 333
-          sheet_image.start_at 0, position
+          sheet_image.start_at 0, current_row
         end
-        append_rows 15
+        append_rows 14
         append_row_with ["Comentario"], @styles['title']
         append_rows 1
         append_row_with [image.comment]
-        append_rows 10
-        position = position + 23
-        footer position-1, 934
+        position = position + 32
+        append_rows (position - current_row)
+        footer (position - 1), 934
       end
     end
 
@@ -155,7 +157,7 @@ module ReportGenerators
       @report_data = select_report_data
     end
 
-    def append_headers_and_footers width=934
+    def append_headers_and_footers width=821
       for i in (0..@headers.size-1)
         header(@headers[i], width)
         footer(@footers[i], width)
