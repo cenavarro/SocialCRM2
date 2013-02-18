@@ -1,6 +1,8 @@
 #encoding: utf-8
 class ReportGenerators::BenchmarkReport < ReportGenerators::Base
 
+  attr :auxiliar_row
+
   def self.can_process? type
     type == BenchmarkDatum
   end
@@ -15,31 +17,34 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
   private
 
   def add_information_to document
-    @current_row = 0
-    @workbook = document.workbook
-    @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
-    @worksheet = @workbook.add_worksheet(name: name, page_margins: margins, page_setup: {orientation: :landscape, paper_size: 9, fit_to_width: 1,
-                 fit_to_height: 10})
-    create_report_data
-    set_headers_and_footers
-    create_report_styles
+    initialize_varialbes_benchmark
+    @headers << 0
     append_rows 4
     append_row_with ["PÁGINA DE BENCHMARK"], @styles['title']
     append_benchmark_table
-    append_rows (69 - current_row)
+    (current_row >= 32) ? append_rows(64 - current_row) : append_rows(32 - current_row)
+    @auxiliar_row = current_row
+    @footers << (auxiliar_row - 1)
     append_charts
-    append_rows (128 - current_row)
-    append_images_benchmark_to_report
+    current_row = auxiliar_row
+    append_images current_row 
     append_headers_and_footers 914
     @worksheet.column_widths *columns_widths
   end
 
   def append_charts
-    append_row_with ["GRÁFICOS BENCHMAR"], @styles['title']
+    append_rows 4
+    append_row_with ["GRÁFICOS BENCHMARK"], @styles['title']
     append_rows 1
+    @headers << auxiliar_row
     insert_distribution_chart
-    append_rows (101 - @current_row)
+    append_rows ((auxiliar_row + 32) - current_row)
+    @auxiliar_row = auxiliar_row + 32
+    @footers << (auxiliar_row - 1)
+    @headers << auxiliar_row
     insert_totals_chart
+    @auxiliar_row = auxiliar_row + 32
+    @footers << (auxiliar_row - 1)
   end
 
   def create_report_data
@@ -89,34 +94,8 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
   end
 
-  def append_images_benchmark_to_report
-    last_period_image = ImagesSocialNetwork.where(:social_network_id => social_network.id).order('start_date DESC').order('end_date DESC').first
-    start_date_last_period = last_period_image.start_date if !last_period_image.nil?
-    end_date_last_period = last_period_image.end_date if !last_period_image.nil?
-    images = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network.id, start_date_last_period, end_date_last_period)
-    images.each do |image|
-      @headers << @current_row
-      append_rows 5
-      append_row_with [image.title], @styles['title']
-      append_rows 2
-      img = File.expand_path(image.attachment.path, __FILE__)
-      @worksheet.add_image(:image_src => img) do |sheet_image|
-        sheet_image.width = 821
-        sheet_image.height = 400
-        sheet_image.start_at 0, @current_row
-      end
-      append_rows 17
-      append_row_with ["Comentario"], @styles['title']
-      append_rows 1
-      append_row_with [image.comment]
-      append_rows 4
-      @footers << (@current_row - 1)
-    end
-  end
-
-
   def insert_distribution_chart
-    create_chart(@current_row, "Distribución")
+    create_chart(current_row, "Distribución")
     @report_data['dates'].shift
     chart_footer = []
     for i in (1..@report_data['size']) do
@@ -138,7 +117,8 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
   end
 
   def insert_totals_chart
-    create_chart(@current_row, "Totales")
+    append_rows 5
+    create_chart(current_row, "Totales")
     @report_data['competitors'].each do |competitor|
       add_serie(@report_data[competitor]['totals'], competitor)
       add_serie(["0"], "") if @report_data['competitors'].size == 1
@@ -171,15 +151,23 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     competitor.benchmark_data.where(where_conditions).limit(3).order("start_date ASC")
   end
 
-  def set_headers_and_footers
-    @headers ||= [0, 64, 96]
-    @footers ||= [63, 95, 127]
-  end
-
   def unshift_array(array, value, times = 1)
     for i in (1..times)
       array.unshift(value)
     end
+  end
+
+  def initialize_varialbes_benchmark
+    @headers ||= []
+    @footers ||= []
+    @current_row = 0
+    @auxiliar_row = 0
+    @workbook = document.workbook
+    @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
+    @worksheet = @workbook.add_worksheet(name: name, page_margins: margins, page_setup: {orientation: :landscape, paper_size: 9, fit_to_width: 1,
+                 fit_to_height: 10})
+    create_report_data
+    create_report_styles
   end
 
 end
