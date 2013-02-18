@@ -73,7 +73,6 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
   def append_cost_chart
     append_rows (165 - current_row)
     create_chart(current_row, "Costes")
-    change_comma_symbol
     add_serie(@report_data['cost_follower'], 'Costes')
     add_serie(@report_data['cost_twitter_ads'], 'Cost per engagement Twitter Ads')
     add_serie(@report_data['cost_per_prints'], 'Coste por mil impresiones')
@@ -82,19 +81,12 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
     append_comment_chart_for 5
   end
 
-  def change_comma_symbol
-    change_comma_by_period_for @report_data['cost_follower']
-    change_comma_by_period_for @report_data['cost_twitter_ads']
-    change_comma_by_period_for @report_data['cost_per_prints']
-    change_comma_by_period_for @report_data['cost_per_interaction']
-  end
-
   def select_report_data
     table = table_rows
     twitter_datum.each do |datum|
       twitter_keys.each do |key|
         is_header_or_dates_row?(key)  ? table[key] << nil : ( value = (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
-        table[key] << number_with_precision(value, decimal_format) if !is_header_or_dates_row?(key)
+        table[key] << value if !is_header_or_dates_row?(key)
       end
       table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
     end

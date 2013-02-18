@@ -20,14 +20,7 @@ module ReportGenerators
     end
 
     def add_serie(data, title, labels=default_labels, style = nil)
-      remove_dots_in_data_for data
       @chart.add_series :data => data, :labels => labels, :title => title, :style => style
-    end
-
-    def remove_dots_in_data_for array
-      for i in (0...array.size)
-        array[i] = array[i].gsub(/\./, "")
-      end
     end
 
     def default_labels
@@ -65,14 +58,14 @@ module ReportGenerators
       no_style = @workbook.styles.add_style()
       title_style = @workbook.styles.add_style(:b => true, :sz => 14, :font_name => "Calibri")
       header_style = @workbook.styles.add_style(:bg_color => "FF0000", :border => {:style => :thin, :color => "FFFF0000"}, :font_name => "Calibri")
-      dates_style = @workbook.styles.add_style(:b => true, :bg_color => "000000", :fg_color => "FFFFFF", 
+      dates_style = @workbook.styles.add_style(:b => true, :bg_color => "000000", :fg_color => "FFFFFF",
                                      :border => {:style => :thin, :color => "#FF000000"}, :sz => 9, :font_name => "Calibri")
-      basic = {:border => {:style => :thin, :color => "#00000000"}, :sz => 11, :font_name => "Calibri", 
+      basic = {:border => {:style => :thin, :color => "#00000000"}, :sz => 11, :font_name => "Calibri",
               :alignment => {:horizontal => :right, :vertical => :center}}
-      basic_style = @workbook.styles.add_style(basic)
-      euro_style = @workbook.styles.add_style(basic)
-      percentage_style = @workbook.styles.add_style(basic)
-      @styles = {"none" => no_style, "title"=> title_style, "header"=> header_style, "dates"=> dates_style, 
+      basic_style = @workbook.styles.add_style(basic.merge({:num_fmt => 3}))
+      euro_style = @workbook.styles.add_style(basic.merge({:format_code => "###,###,##0.00 €;###,###,##0.00 €"}))
+      percentage_style = @workbook.styles.add_style(basic.merge({:format_code => "[GREEN]###,###,##0.00%;[RED]###,###,##0.00%"}))
+      @styles = {"none" => no_style, "title"=> title_style, "header"=> header_style, "dates"=> dates_style,
                  "basic"=> basic_style, "euro" => euro_style, "percent" => percentage_style}
     end
 
@@ -84,13 +77,10 @@ module ReportGenerators
         elsif key.include?("dates")
           append_row_with data, @styles['dates']
         elsif percentage_rows.include?(key)
-          append_percetage_symbol(data)
+          correct_format_for_percent data
           append_row_with data, @styles['percent']
-          clear_symbols(data)
         elsif euro_rows.include?(key)
-          append_euro_symbol(data)
           append_row_with data, @styles['euro']
-          clear_symbols(data)
         else
           append_row_with data, @styles['basic']
         end
@@ -101,21 +91,9 @@ module ReportGenerators
       append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
     end
 
-    def append_percetage_symbol data
-      for i in (1..data.size-1) do
-        data[i] = "#{data[i]} %"
-      end
-    end
-
-    def append_euro_symbol data
-      for i in (1..data.size-1) do
-        data[i] = "#{data[i]} €"
-      end
-    end
-
-    def clear_symbols data
-      for i in (1..data.size-1) do
-        data[i] = data[i].split(' ')[0]
+    def correct_format_for_percent array
+      for i in (1...array.size)
+        array[i] = "=(#{array[i]} / 100)"
       end
     end
 
@@ -179,12 +157,6 @@ module ReportGenerators
       append_row_with ["Comentario"], @styles['title']
       append_rows 1
       append_row_with (!history_comment_for(type).nil? ? [history_comment_for(type).content] : ["Sin comentarios"])
-    end
-
-    def change_comma_by_period_for array
-      for i in (0...array.size)
-        array[i] = array[i].gsub(/,/, ".")
-      end
     end
 
     def margins

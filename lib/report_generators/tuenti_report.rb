@@ -93,7 +93,7 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
     tuenti_datum.each do |datum|
       tuenti_keys.each do |key|
         is_header_or_dates_row?(key)  ? table[key] << nil : ( value = (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
-        table[key] << number_with_precision(value, decimal_format) if !is_header_or_dates_row?(key)
+        table[key] << value if !is_header_or_dates_row?(key)
       end
       table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
     end

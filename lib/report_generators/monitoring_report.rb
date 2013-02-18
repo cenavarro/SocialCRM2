@@ -108,14 +108,12 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     append_row_with @report_data['theme_header'], @styles['header']
     @report_data['theme_datum'].each do |datum|
       values = datum[:data].unshift(datum[:name])
-      format_number(values)
       append_row_with values,  @styles['basic']
     end
     append_row_with @report_data['theme_total_comment'], @styles['basic']
     append_row_with @report_data['distribution_header'], @styles['header']
     @report_data['channel_datum'].each do |datum|
       values = datum[:data].unshift(datum[:name])
-      format_number(values)
       append_row_with values, @styles['basic']
     end
     append_row_with @report_data['channel_total_comment'], @styles['basic']
@@ -123,11 +121,11 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       previous_data = @report_data['channel_total_comment'][i-1].to_i
       actual_data = @report_data['channel_total_comment'][i].to_i
       result = ((actual_data - previous_data).to_f/previous_data)*100
-      @report_data['change_volume_comments'][i] = number_with_precision(result, decimal_format)
+      @report_data['change_volume_comments'][i] = result
     end
     for i in (1..@report_data['channel_total_comment'].size-1)
       result = (@report_data['channel_total_comment'][i] / @report_data['total_days'][1]).round(2)
-      @report_data['daily_average'][i] = number_with_precision(result, decimal_format)
+      @report_data['daily_average'][i] = result
     end
     append_row_with @report_data['change_volume_comments'], @styles['basic']
     append_row_with @report_data['daily_average'], @styles['basic']
@@ -135,12 +133,6 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     append_row_with ["Comentario del consultor"], @styles['title']
     append_rows 1
     append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
-  end
-
-  def format_number numbers_array
-      for i in (1..numbers_array.size-1) do
-        numbers_array[i] = number_with_precision(numbers_array[i], decimal_format)
-      end
   end
 
   def append_charts

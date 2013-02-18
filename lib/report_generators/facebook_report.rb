@@ -21,23 +21,14 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     initialize_variables document
     append_rows 5
     append_row_with ["PÁGINA DE FACEBOOK"], @styles['title']
+    #p "***********************"
+    #p @report_data
+    #p "***********************"
     append_table
     append_charts
     append_images 224
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
-  end
-
-  def select_report_data
-    table = table_rows
-    facebook_datum.each do |datum|
-      facebook_keys.each do |key, value|
-        is_header_or_dates_row?(key)  ? table[key] << nil : ( value = (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
-        table[key] << number_with_precision(value, decimal_format) if !is_header_or_dates_row?(key)
-      end
-      table['dates'] << datum.start_date.strftime('%d %b') + "-" + datum.end_date.strftime("%d %b")
-    end
-    table
   end
 
   def append_charts
@@ -94,7 +85,6 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
   def append_costs_chart
     append_rows (197 - current_row)
     create_chart(current_row, "Costes")
-    change_comma_symbol
     add_serie(@report_data['ctr_anno'], 'CTR anuncios')
     add_serie(@report_data['cpc_anno'], 'CPC anuncios')
     add_serie(@report_data['coste_interactions'], 'Coste por interacción')
@@ -105,13 +95,16 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     append_comment_chart_for 6
   end
 
-  def change_comma_symbol
-    change_comma_by_period_for @report_data['ctr_anno']
-    change_comma_by_period_for @report_data['cpc_anno']
-    change_comma_by_period_for @report_data['coste_interactions']
-    change_comma_by_period_for @report_data['cpm_anno']
-    change_comma_by_period_for @report_data['cpm_general']
-    change_comma_by_period_for @report_data['fan_cost']
+  def select_report_data
+    table = table_rows
+    facebook_datum.each do |datum|
+      facebook_keys.each do |key, value|
+        is_header_or_dates_row?(key)  ? table[key] << nil : ( value = (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
+        table[key] << value if !is_header_or_dates_row?(key)
+      end
+      table['dates'] << datum.start_date.strftime('%d %b') + "-" + datum.end_date.strftime("%d %b")
+    end
+    table
   end
 
   def facebook_keys

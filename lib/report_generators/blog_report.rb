@@ -48,8 +48,6 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
   def append_percentage_chart
     append_rows (69 - current_row)
     create_chart(current_row, "Porcentajes")
-    change_comma_by_period_for @report_data['rebound_percent']
-    change_comma_by_period_for @report_data['new_visits_percent']
     add_serie(@report_data['rebound_percent'], 'Porcentaje rebote')
     add_serie(@report_data['new_visits_percent'], 'Porcentaje visitas nuevas')
     append_rows (84 - current_row)
@@ -61,7 +59,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
     blog_datum.each do |datum|
       blog_keys.each do |key|
         is_header_or_dates_row?(key)  ? table[key] << nil : ( value = (datum[key].nil? ? datum.send(key.to_sym) : datum[key]))
-        table[key] << number_with_precision(value, decimal_format) if !is_header_or_dates_row?(key)
+        table[key] << value if !is_header_or_dates_row?(key)
       end
       table['dates'] << "#{datum.start_date.strftime('%d %b')} - #{datum.end_date.strftime('%d %b')}"
     end

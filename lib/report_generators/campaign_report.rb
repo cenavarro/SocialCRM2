@@ -45,37 +45,12 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
     append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
   end
 
-  def append_images_campaign_in_row position
-    last_period_image = ImagesSocialNetwork.where(:social_network_id => social_network.id).order('start_date DESC').order('end_date DESC').first
-    start_date_last_period = last_period_image.start_date if !last_period_image.nil?
-    end_date_last_period = last_period_image.end_date if !last_period_image.nil?
-    images = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network.id, start_date_last_period, end_date_last_period)
-    images.each do |image|
-      @headers << position
-      append_rows 9
-      position = position + 8
-      append_row_with [image.title], @styles['title']
-      img = File.expand_path(image.attachment.path, __FILE__)
-      @worksheet.add_image(:image_src => img) do |sheet_image|
-        sheet_image.width = 600
-        sheet_image.height = 333
-        sheet_image.start_at 0, position
-      end
-      append_rows 16
-      append_row_with ["Comentario"], @styles['title']
-      append_rows 1
-      append_row_with [image.comment]
-      position = position + 21
-      @footers << (position - 1)
-    end
-  end
-
   def select_report_data
     campaign_data = { "dates" => [''], "data" => [], "header" => [''] }
     row_data = []
     rows_campaign.each do |row|
       row_data = select_row_data(row.id)
-      values = row_data.collect{ |data| number_with_precision(data.value, decimal_format) }
+      values = row_data.collect{ |data| data.value }
       campaign_data['data'] << {"#{row.name}" => values}
     end
     row_data.collect{ |datum| campaign_data['dates'] << "#{datum.start_date.strftime("%d %b")}-#{datum.end_date.strftime("%d %b")}"; campaign_data['header'] << ''}.join(', ')
