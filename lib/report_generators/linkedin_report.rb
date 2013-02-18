@@ -63,7 +63,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     append_rows (133 - current_row)
     create_chart(current_row, "Visualizaciones de paginas")
     add_serie(@report_data['views_page'], 'Número de visualizaciones de páginas')
-    add_serie([], '')
+    add_serie([0], '')
     append_rows (148 - current_row)
     append_comment_chart_for 4
   end

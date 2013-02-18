@@ -110,7 +110,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     @report_data['competitors'].each do |competitor|
       @report_data[competitor]['data'].shift
       add_serie(@report_data[competitor]['data'].flatten, competitor, chart_footer)
-      add_serie(["0"],  "") if @report_data['competitors'].size == 1
+      add_serie([0],  "") if @report_data['competitors'].size == 1
     end
     append_rows 15
     append_comment_chart_for 2
@@ -121,7 +121,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     create_chart(current_row, "Totales")
     @report_data['competitors'].each do |competitor|
       add_serie(@report_data[competitor]['totals'], competitor)
-      add_serie(["0"], "") if @report_data['competitors'].size == 1
+      add_serie([0], "") if @report_data['competitors'].size == 1
     end
     append_rows 15
     append_comment_chart_for 3

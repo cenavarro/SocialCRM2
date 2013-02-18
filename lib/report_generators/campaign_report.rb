@@ -75,7 +75,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
       data.values.first
       add_serie(data.values.first, data.keys.first)
     end
-    add_serie([], '') if rows_campaign.size == 1 
+    add_serie([0], '') if rows_campaign.size == 1 
     append_rows (54 - current_row)
     append_comment_chart_for 2
   end

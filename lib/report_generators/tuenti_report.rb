@@ -63,7 +63,7 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
     append_rows (133 - current_row)
     create_chart(current_row, "Alcance")
     add_serie(@report_data['page_prints'], 'Impresiones de la página')
-    add_serie([], '')
+    add_serie([0], '')
     append_rows (148 - current_row)
     append_comment_chart_for 4
   end
@@ -83,7 +83,7 @@ class ReportGenerators::TuentiReport < ReportGenerators::Base
     append_rows (197 - current_row)
     create_chart(current_row, "Costes")
     add_serie(@report_data['cost_fan'], 'Coste fan')
-    add_serie([], '')
+    add_serie([0], '')
     append_rows (212 - current_row)
     append_comment_chart_for 6
   end

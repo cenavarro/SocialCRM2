@@ -150,7 +150,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       datum[:data].shift
       add_serie(datum[:data],  datum[:name])
     end
-    add_serie([], '') if @report_data['theme_datum'].size == 1
+    add_serie([0], '') if @report_data['theme_datum'].size == 1
     append_rows (86 - current_row)
     append_comment_chart_for 2
   end
@@ -162,7 +162,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       datum[:data].shift
       add_serie(datum[:data], datum[:name])
     end
-    add_serie([], '') if @report_data['channel_datum'].size == 1
+    add_serie([0], '') if @report_data['channel_datum'].size == 1
     append_rows (116 - current_row)
     append_comment_chart_for 3
   end

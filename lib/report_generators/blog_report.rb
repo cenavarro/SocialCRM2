@@ -48,7 +48,7 @@ class ReportGenerators::BlogReport < ReportGenerators::Base
   def append_percentage_chart
     append_rows (69 - current_row)
     create_chart(current_row, "Porcentajes")
-    add_serie(@report_data['rebound_percent'], 'Porcentaje rebote')
+    add_serie(@report_data['rebound_percent'], 'Porcentaje de rebote')
     add_serie(@report_data['new_visits_percent'], 'Porcentaje visitas nuevas')
     append_rows (84 - current_row)
     append_comment_chart_for 3
