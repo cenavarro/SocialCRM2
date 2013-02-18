@@ -17,7 +17,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
   private
 
   def add_information_to document
-    initialize_varialbes_benchmark
+    initialize_varialbes_benchmark document
     @headers << 0
     append_rows 4
     append_row_with ["PÁGINA DE BENCHMARK"], @styles['title']
@@ -157,7 +157,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     end
   end
 
-  def initialize_varialbes_benchmark
+  def initialize_varialbes_benchmark document
     @headers ||= []
     @footers ||= []
     @current_row = 0
