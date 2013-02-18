@@ -26,11 +26,11 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     append_rows 4
     append_row_with ["PÁGINA DE BENCHMARK"], @styles['title']
     append_benchmark_table
-    append_rows (69 - @current_row)
+    append_rows (69 - current_row)
     append_charts
-    append_rows (128 - @current_row)
+    append_rows (128 - current_row)
     append_images_benchmark_to_report
-    append_headers_and_footers 1047
+    append_headers_and_footers 914
     @worksheet.column_widths *columns_widths
   end
 
@@ -79,10 +79,11 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
         append_row_with @report_data[competitor]['data'][i], @styles['basic']
       end
       if (i == 2)
-        append_rows (31-@current_row)
+        append_rows (31 - current_row) if current_row >= 31
       end
       append_rows 2
     end
+    append_rows (34 - current_row) if current_row >= 29
     append_row_with ["Comentario del consultor"], @styles['title']
     append_rows 1
     append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?

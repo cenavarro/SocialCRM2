@@ -23,20 +23,45 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
     append_row_with ["PÁGINA DE TUMBLR"], @styles['title']
     append_table
     append_charts
-    append_rows 10
-    append_images 116
+    append_images 128
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
   end
 
   def append_charts
     remove_table_legends
-    append_rows 9
+    append_rows (37 - current_row)
     append_row_with ["GRÁFICOS TUMBLR"], @styles['title']
-    append_rows 2
     append_followers_chart
     append_interactivity_chart
     append_investment_chart
+  end
+
+  def append_followers_chart
+    append_rows (39 - current_row)
+    create_chart(current_row, "Followers")
+    add_serie(@report_data['new_followers'], 'Nuevos followers')
+    add_serie(@report_data['total_followers'], 'Followers')
+    append_rows (54 - current_row)
+    append_comment_chart_for 2
+  end
+
+  def append_interactivity_chart
+    append_rows (69 - current_row)
+    create_chart(current_row, "Interactividad")
+    add_serie(@report_data['likes'], 'Like')
+    add_serie(@report_data['reblogged'], 'Reblogged')
+    append_rows (84 - current_row)
+    append_comment_chart_for 3
+  end
+
+  def append_investment_chart
+    append_rows (101 - current_row)
+    create_chart(current_row, "Inversión")
+    add_serie(@report_data['new_followers'], 'Nuevos followers')
+    add_serie(@report_data['total_investment'], 'Inversión total')
+    append_rows (116 - current_row)
+    append_comment_chart_for 4
   end
 
   def select_report_data
@@ -51,30 +76,6 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
     table
   end
 
-  def append_followers_chart
-    create_chart(35, "Followers")
-    add_serie(@report_data['new_followers'], 'Nuevos followers')
-    add_serie(@report_data['total_followers'], 'Followers')
-    append_rows 14
-    append_comment_chart_for 2
-  end
-
-  def append_interactivity_chart
-    create_chart(63, "Interactividad")
-    add_serie(@report_data['likes'], 'Like')
-    add_serie(@report_data['reblogged'], 'Reblogged')
-    append_rows 25
-    append_comment_chart_for 3
-  end
-
-  def append_investment_chart
-    create_chart(92, "Inversión")
-    add_serie(@report_data['new_followers'], 'Nuevos followers')
-    add_serie(@report_data['total_investment'], 'Inversión total')
-    append_rows 26
-    append_comment_chart_for 4
-  end
-
   def tumblr_keys
     keys = table_rows
     keys.shift
@@ -82,8 +83,8 @@ class ReportGenerators::TumblrReport < ReportGenerators::Base
   end
 
   def set_headers_and_footers
-    @headers ||= [0, 29, 58, 87]
-    @footers ||= [28, 57, 86, 115]
+    @headers ||= [0, 32, 64, 96]
+    @footers ||= [31, 63, 95, 127]
   end
 
   def table_rows

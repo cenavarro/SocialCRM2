@@ -41,10 +41,8 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     append_rows 4
     append_row_with ["PÁGINA DE MONITORING"], @styles['title']
     add_table_monitoring
-    append_rows (29 - @current_row)
     append_charts
-    append_rows 10
-    add_images_monitoring_report 87
+    append_images 128
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
   end
@@ -133,7 +131,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     end
     append_row_with @report_data['change_volume_comments'], @styles['basic']
     append_row_with @report_data['daily_average'], @styles['basic']
-    append_rows 1
+    append_rows (34 - current_row)
     append_row_with ["Comentario del consultor"], @styles['title']
     append_rows 1
     append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
@@ -145,59 +143,35 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       end
   end
 
-  def add_images_monitoring_report(position)
-    last_period_image = ImagesSocialNetwork.where(:social_network_id => social_network.id).order('start_date DESC').order('end_date DESC').first
-    start_date_last_period = last_period_image.start_date if !last_period_image.nil?
-    end_date_last_period = last_period_image.end_date if !last_period_image.nil?
-    images = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network.id, start_date_last_period, end_date_last_period)
-    images.each do |image|
-      @headers << position
-      position = position + 6
-      append_row_with [image.title], @styles['title']
-      img = File.expand_path(image.attachment.path, __FILE__)
-      @worksheet.add_image(:image_src => img) do |sheet_image|
-        sheet_image.width = 755
-        sheet_image.height = 333
-        sheet_image.start_at 0, position
-      end
-      append_rows 15
-      append_row_with ["Comentario"], @styles['title']
-      append_rows 1
-      append_row_with [image.comment]
-      position = position + 23
-      @footers << (position - 1)
-      append_rows 10
-    end
-  end
-
   def append_charts
-    append_rows 4
+    append_rows (69 - current_row)
     append_row_with ["GRÁFICOS MONITORING"], @styles['title']
-    append_rows 2
     append_themes_chart
     append_channels_chart
   end
 
   def append_themes_chart
-    create_chart(35, "Distribución de los comentarios en canales")
+    append_rows (71 - current_row)
+    create_chart(current_row, "Distribución de los comentarios en canales")
     @report_data['dates'].shift
     @report_data['theme_datum'].each do |datum|
       datum[:data].shift
       add_serie(datum[:data],  datum[:name])
     end
     add_serie([], '') if @report_data['theme_datum'].size == 1
-    append_rows 14
+    append_rows (86 - current_row)
     append_comment_chart_for 2
   end
 
   def append_channels_chart
-    create_chart(63, "Tipología de comentarios")
+    append_rows (101 - current_row)
+    create_chart(current_row, "Tipología de comentarios")
     @report_data['channel_datum'].each do |datum|
       datum[:data].shift
       add_serie(datum[:data], datum[:name])
     end
     add_serie([], '') if @report_data['channel_datum'].size == 1
-    append_rows 25
+    append_rows (116 - current_row)
     append_comment_chart_for 3
   end
 
@@ -217,7 +191,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
   end
 
   def set_headers_and_footers
-    @headers ||= [0, 29, 58]
-    @footers ||= [28, 57, 86]
+    @headers ||= [0, 64, 96]
+    @footers ||= [63, 95, 127]
   end
 end
