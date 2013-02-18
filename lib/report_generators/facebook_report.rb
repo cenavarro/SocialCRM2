@@ -67,7 +67,7 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     create_chart(current_row, "Interactividad")
     add_serie(@report_data['total_interactions'], 'Interacciones')
     add_serie(@report_data['total_clicks_anno'], 'Clics anuncios')
-    add_serie(@report_data['total_interactions_platform'], 'Interacciones total marca plataforma')
+    add_serie(@report_data['brand_total_interactions'], 'Interacciones total marca plataforma')
     append_rows (116 - current_row)
     append_comment_chart_for 3
   end
