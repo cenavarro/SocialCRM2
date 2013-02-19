@@ -28,19 +28,20 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     append_charts
     current_row = auxiliar_row
     append_images current_row 
-    append_headers_and_footers 914
+    append_headers_and_footers
     @worksheet.column_widths *columns_widths
   end
 
   def append_charts
-    append_rows 4
-    append_row_with ["GRÁFICOS BENCHMARK"], @styles['title']
-    append_rows 1
-    @headers << auxiliar_row
-    insert_distribution_chart
-    append_rows ((auxiliar_row + 32) - current_row)
-    @auxiliar_row = auxiliar_row + 32
-    @footers << (auxiliar_row - 1)
+    @report_data['dates'].shift
+    @report_data['columns'][1].shift
+    for i in (0...@report_data['size']) do
+      @headers << auxiliar_row
+      insert_distribution_chart i
+      append_rows ((auxiliar_row + 32) - current_row)
+      @auxiliar_row = auxiliar_row + 32
+      @footers << (auxiliar_row - 1)
+    end
     @headers << auxiliar_row
     insert_totals_chart
     @auxiliar_row = auxiliar_row + 32
@@ -94,22 +95,14 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     append_comment(history_comment_for(1).content) if !history_comment_for(1).nil?
   end
 
-  def insert_distribution_chart
-    create_chart(current_row, "Distribución")
-    @report_data['dates'].shift
-    chart_footer = []
-    for i in (1..@report_data['size']) do
-      @report_data['columns'][i].shift
-      chart_footer.concat(@report_data['columns'][i])
-    end
+  def insert_distribution_chart position
+    append_rows 4
+    append_row_with ["Periodo: #{@report_data['dates'][position]}"], @styles['title']
+    append_rows 1
+    create_chart(current_row, "Distribución #{position + 1}")
     @report_data['competitors'].each do |competitor|
-      for i in (1..@report_data['size']) do
-        @report_data[competitor]['data'][i].shift
-      end
-    end
-    @report_data['competitors'].each do |competitor|
-      @report_data[competitor]['data'].shift
-      add_serie(@report_data[competitor]['data'].flatten, competitor, chart_footer)
+      @report_data[competitor]['data'][position+1].shift
+      add_serie(@report_data[competitor]['data'][position+1], competitor, @report_data['columns'][1])
       add_serie([0],  "") if @report_data['competitors'].size == 1
     end
     append_rows 15
@@ -164,8 +157,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     @auxiliar_row = 0
     @workbook = document.workbook
     @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
-    @worksheet = @workbook.add_worksheet(name: name, page_margins: margins, page_setup: {orientation: :landscape, paper_size: 9, fit_to_width: 1,
-                 fit_to_height: 10})
+    @worksheet = @workbook.add_worksheet(name: name, page_margins: margins, page_setup: {orientation: :landscape, paper_size: 9})
     create_report_data
     create_report_styles
   end

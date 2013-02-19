@@ -84,7 +84,7 @@ class ReportGenerators::FacebookReport < ReportGenerators::Base
     create_chart(current_row, "Costes")
     add_serie(@report_data['ctr_anno'], 'CTR anuncios')
     add_serie(@report_data['cpc_anno'], 'CPC anuncios')
-    add_serie(@report_data['coste_interactions'], 'Coste por interaccion')
+    add_serie(@report_data['coste_interactions'], 'Coste por interacción')
     add_serie(@report_data['cpm_anno'], 'CPM anuncios')
     add_serie(@report_data['cpm_general'], 'CPM general')
     add_serie(@report_data['fan_cost'], 'Coste por fan')
