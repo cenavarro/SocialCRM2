@@ -42,7 +42,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
     append_rows 1
     append_row_with ["Comentario del consultor"], @styles['title']
     append_rows 1
-    append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
+    append_comment(history_comment_for(1).content) if !history_comment_for(1).nil?
   end
 
   def select_report_data

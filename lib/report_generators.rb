@@ -47,7 +47,7 @@ module ReportGenerators
         append_rows 14
         append_row_with ["Comentario"], @styles['title']
         append_rows 1
-        append_row_with [image.comment]
+        append_comment(image.comment)
         position = position + 32
         append_rows (position - current_row)
         footer (position - 1), 821
@@ -86,9 +86,10 @@ module ReportGenerators
         end
       end
       append_rows 1
+
       append_row_with ["Comentario del consultor"], @styles['title']
       append_rows 1
-      append_row_with [history_comment_for(1).content] if !history_comment_for(1).nil?
+      append_comment(history_comment_for(1).content) if !history_comment_for(1).nil?
     end
 
     def correct_format_for_percent array
@@ -156,7 +157,24 @@ module ReportGenerators
     def append_comment_chart_for type
       append_row_with ["Comentario"], @styles['title']
       append_rows 1
-      append_row_with (!history_comment_for(type).nil? ? [history_comment_for(type).content] : ["Sin comentarios"])
+      append_comment(history_comment_for(type).content) if !history_comment_for(type).nil?
+    end
+
+    def append_comment text
+      max_chars = 130
+      start_at = 0
+      end_at = max_chars
+      limit_exceeded = false
+      begin
+        if end_at > 300
+          end_at = 300
+          limit_exceeded = true
+        end
+        subtext = text[start_at...end_at]
+        append_row_with [subtext]
+        start_at = end_at
+        end_at += max_chars
+      end while !subtext.nil? and !limit_exceeded
     end
 
     def margins
