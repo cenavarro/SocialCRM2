@@ -84,8 +84,8 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
         unshift_array(@report_data[competitor]['data'][i], competitor, 1)
         append_row_with @report_data[competitor]['data'][i], @styles['basic']
       end
-      if (i == 2)
-        append_rows (31 - current_row) if current_row >= 31
+      if (i >= 2)
+        append_rows (31 - current_row) if current_row >= 20
       end
       append_rows 2
     end
