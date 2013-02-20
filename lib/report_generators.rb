@@ -34,7 +34,7 @@ module ReportGenerators
       end_date_last_period = last_period_image.end_date if !last_period_image.nil?
       images = ImagesSocialNetwork.where('social_network_id = ? and start_date = ? and end_date = ?', social_network.id, start_date_last_period, end_date_last_period)
       images.each do |image|
-        header current_row, 821
+        header current_row
         append_rows 4
         append_row_with [image.title], @styles['title']
         append_rows 1
@@ -50,7 +50,7 @@ module ReportGenerators
         append_comment(image.comment)
         position = position + 32
         append_rows (position - current_row)
-        footer (position - 1), 821
+        footer (position - 1)
       end
     end
 
@@ -64,7 +64,7 @@ module ReportGenerators
               :alignment => {:horizontal => :right, :vertical => :center}}
       basic_style = @workbook.styles.add_style(basic.merge({:num_fmt => 3}))
       euro_style = @workbook.styles.add_style(basic.merge({:format_code => "###,###,##0.00 €;###,###,##0.00 €"}))
-      percentage_style = @workbook.styles.add_style(basic.merge({:format_code => "[GREEN]###,###,##0.00%;[RED]###,###,##0.00%"}))
+      percentage_style = @workbook.styles.add_style(basic.merge({:format_code => "[GREEN]###,###,##0.00%;-[RED]###,###,##0.00%"}))
       @styles = {"none" => no_style, "title"=> title_style, "header"=> header_style, "dates"=> dates_style,
                  "basic"=> basic_style, "euro" => euro_style, "percent" => percentage_style}
     end
@@ -98,7 +98,7 @@ module ReportGenerators
       end
     end
 
-    def header(y_axis, width = 820)
+    def header(y_axis, width = 892)
       image_header = File.expand_path(Rails.root.join("public/assets/images/header.jpg"), __FILE__)
       @worksheet.add_image(:image_src => image_header) do |image|
         image.height = 87
@@ -107,7 +107,7 @@ module ReportGenerators
       end
     end
 
-    def footer(y_axis, width = 820)
+    def footer(y_axis, width = 892)
       image_header = File.expand_path(Rails.root.join("public/assets/images/footer.gif"), __FILE__)
       @worksheet.add_image(:image_src => image_header) do |image|
         image.height = 22
@@ -143,7 +143,7 @@ module ReportGenerators
       @report_data = select_report_data
     end
 
-    def append_headers_and_footers width=821
+    def append_headers_and_footers width=892
       for i in (0..@headers.size-1)
         header(@headers[i], width)
         footer(@footers[i], width)
@@ -190,7 +190,7 @@ module ReportGenerators
     end
 
     def columns_widths
-      [31, 11, 11, 12, 11, 12, 11, 12]
+      [33, 11, 11, 12, 11, 12, 11, 12]
     end
 
     def is_header_or_dates_row? key

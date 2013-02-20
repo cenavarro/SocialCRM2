@@ -36,7 +36,7 @@ class TwitterDatum < ActiveRecord::Base
   end
 
   def cost_follower
-    (total_investment.to_f/total_followers.to_f)
+    (total_investment.to_f/new_followers.to_f)
   end
 
 end
