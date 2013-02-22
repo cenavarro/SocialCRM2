@@ -166,8 +166,8 @@ module ReportGenerators
       end_at = max_chars
       limit_exceeded = false
       begin
-        if end_at > 300
-          end_at = 300
+        if end_at > 600
+          end_at = 600
           limit_exceeded = true
         end
         subtext = text[start_at...end_at]

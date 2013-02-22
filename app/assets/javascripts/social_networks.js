@@ -177,17 +177,18 @@ function addPlotLines(lines){
 }
 
 function limit_characters_textarea_for_form(form){
-  $(form).find('.counter').text($(form).find('textarea').val().length + " de 300 Caracteres");
+  var chars_limit = 600;
+  $(form).find('.counter').text($(form).find('textarea').val().length + " de " + chars_limit +" Caracteres");
   $(form).find('textarea').keyup(function() { 
-    if($(this).val().length > 300){
-      $(this).val($(this).val().substr(0, 300));
+    if($(this).val().length > chars_limit){
+      $(this).val($(this).val().substr(0, chars_limit));
     }
-    $(form).find('.counter').text($(this).val().length + " de 300 Caracteres");
+    $(form).find('.counter').text($(this).val().length + " de " + chars_limit + " Caracteres");
   });
   $(form).find('textarea').keydown(function() { 
-    if($(this).val().length > 300){
-      $(this).val($(this).val().substr(0, 300));
+    if($(this).val().length > chars_limit){
+      $(this).val($(this).val().substr(0, chars_limit));
     }
-    $(form).find('.counter').text($(this).val().length + " de 300 Caracteres");
+    $(form).find('.counter').text($(this).val().length + " de " + chars_limit + "Caracteres");
   });
 }

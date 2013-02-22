@@ -31,6 +31,7 @@
           | Comentario
         br
         = f.text_area :content, {:rows => 8, :style => "width: 500px;"}
+        .counter
     .modal-footer
       button.btn.btn-primary id="btnNext"
         |Agregar
@@ -48,3 +49,4 @@ javascript:
         $("#end_date_picker_new_comment").datepicker('hide');
       });
   });
+  limit_characters_textarea_for_form("#form_new_comment");
