@@ -35,15 +35,15 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
     @worksheet = @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => page_setup)
     create_report_styles
-    set_headers_and_footers
     params = {themes: themes, channels: channels, start_date: start_date, end_date: end_date, datum: monitoring_datum}
     @report_data = create_report_data(params)
     append_rows 4
     append_row_with ["PÁGINA DE MONITORING"], @styles['title']
     add_table_monitoring
     append_charts
-    append_images 128
+    append_images (page_size * 4)
     @worksheet.column_widths *columns_widths
+    set_headers_and_footers 2, 4
     append_headers_and_footers
   end
 
@@ -129,21 +129,21 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     end
     append_row_with @report_data['change_volume_comments'], @styles['basic']
     append_row_with @report_data['daily_average'], @styles['basic']
-    append_rows (34 - current_row)
+    append_rows ((page_size + 2) - current_row)
     append_row_with ["Comentario del consultor"], @styles['title']
     append_rows 1
     append_comment(history_comment_for(1).content) if !history_comment_for(1).nil?
   end
 
   def append_charts
-    append_rows (69 - current_row)
+    append_rows (((page_size * 2) + 5) - current_row)
     append_row_with ["GRÁFICOS MONITORING"], @styles['title']
     append_themes_chart
     append_channels_chart
   end
 
   def append_themes_chart
-    append_rows (71 - current_row)
+    append_rows (((page_size * 2) + 7) - current_row)
     create_chart(current_row, "Distribución de los comentarios en canales")
     @report_data['dates'].shift
     @report_data['theme_datum'].each do |datum|
@@ -151,19 +151,19 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       add_serie(datum[:data],  datum[:name])
     end
     add_serie([0], '') if @report_data['theme_datum'].size == 1
-    append_rows (86 - current_row)
+    append_rows 15
     append_comment_chart_for 2
   end
 
   def append_channels_chart
-    append_rows (101 - current_row)
+    append_rows (((page_size * 3) + 5) - current_row)
     create_chart(current_row, "Tipología de comentarios")
     @report_data['channel_datum'].each do |datum|
       datum[:data].shift
       add_serie(datum[:data], datum[:name])
     end
     add_serie([0], '') if @report_data['channel_datum'].size == 1
-    append_rows (116 - current_row)
+    append_rows 15
     append_comment_chart_for 3
   end
 
@@ -182,8 +182,4 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     }
   end
 
-  def set_headers_and_footers
-    @headers ||= [0, 64, 96]
-    @footers ||= [63, 95, 127]
-  end
 end

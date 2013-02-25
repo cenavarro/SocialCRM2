@@ -19,18 +19,19 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
 
   def add_information_to document
     initialize_variables document
+    set_headers_and_footers 2, 6
     append_rows 6
     append_row_with ["PÁGINA DE YOUTUBE"], @styles['title']
     append_table 3
     append_charts
-    append_images 192
+    append_images (page_size * 6)
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
   end
 
   def append_charts
     remove_table_legends
-    append_rows (69 - current_row)
+    append_rows (((page_size * 2) + 5) - current_row)
     append_row_with ["GRÁFICOS YOUTUBE"], @styles['title']
     append_community_chart
     append_interactivity_chart
@@ -39,16 +40,16 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
   end
 
   def append_community_chart
-    append_rows (71 - current_row)
+    append_rows (((page_size * 2) + 7) - current_row)
     create_chart(current_row, "Comunidad")
     add_serie(@report_data['new_subscribers'], 'Suscriptores nuevos')
     add_serie(@report_data['total_subscriber'], 'Suscriptores totales')
-    append_rows (86 - current_row)
+    append_rows 15
     append_comment_chart_for 2
   end
 
   def append_interactivity_chart
-    append_rows (101 - current_row)
+    append_rows (((page_size * 3) + 5) - current_row)
     create_chart(current_row, "Interactividad")
     add_serie(@report_data['total_video_views'], 'Reproducciones videos en el periodo')
     add_serie(@report_data['inserted_player'], 'Reproductor insertado')
@@ -61,28 +62,28 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
     add_serie(@report_data['youtube_others'], 'Otras páginas de Youtube')
     add_serie(@report_data['youtube_subscriptions'], 'Suscripciones de Youtube')
     add_serie(@report_data['youtube_ads'], 'Publicidad de Youtube')
-    append_rows (116 - current_row)
+    append_rows 15
     append_comment_chart_for 3
   end
 
   def append_interactivity_chart_2
-    append_rows (133 - current_row)
+    append_rows (((page_size * 4) + 5) - current_row)
     create_chart(current_row, "Interactividad")
     add_serie(@report_data['likes'], 'Me gusta')
     add_serie(@report_data['no_likes'], 'No me gusta')
     add_serie(@report_data['favorite'], 'Favoritos')
     add_serie(@report_data['comments'], 'Comentarios')
     add_serie(@report_data['shared'], 'Compartidos')
-    append_rows (148 - current_row)
+    append_rows 15
     append_comment_chart_for 4
   end
 
   def append_investment_chart
-    append_rows (165 - current_row)
+    append_rows (((page_size * 5) + 5) - current_row)
     create_chart(current_row, "Inversión")
     add_serie(@report_data['new_subscribers'], 'Suscriptores nuevos')
     add_serie(@report_data['total_investment'], 'Inversión total')
-    append_rows (180 - current_row)
+    append_rows 15
     append_comment_chart_for 5
   end
 
@@ -102,11 +103,6 @@ class ReportGenerators::YoutubeReport < ReportGenerators::Base
     keys = table_rows
     keys.shift
     keys.collect { |key, value| key  }
-  end
-
-  def set_headers_and_footers
-    @headers ||= [1, 64, 96, 128, 160]
-    @footers ||= [63, 95, 127, 159, 191]
   end
 
   def table_rows
