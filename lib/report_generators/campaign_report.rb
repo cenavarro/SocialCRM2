@@ -22,11 +22,12 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
 
   def add_information_to document
     initialize_variables document
+    set_headers_and_footers 1, 2
     append_rows 5
     append_row_with [social_network.name], @styles['title']
     append_table_campaign
     append_charts_campaign
-    append_images 64
+    append_images (page_size * 2)
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
   end
@@ -63,20 +64,20 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
 
   def append_charts_campaign
     remove_cells_report_table_for_campaign
-    append_rows (37 - current_row)
+    append_rows ((page_size + 5) - current_row)
     append_row_with ["GRÁFICOS CAMPAÑA"], @styles['title']
     append_campaign_chart
   end
 
   def append_campaign_chart
-    append_rows (39 - current_row)
+    append_rows ((page_size + 7) - current_row)
     create_chart(current_row, social_network.name)
     @report_data['data'].each do |data|
       data.values.first
       add_serie(data.values.first, data.keys.first)
     end
     add_serie([0], '') if rows_campaign.size == 1 
-    append_rows (54 - current_row)
+    append_rows 15
     append_comment_chart_for 2
   end
 
@@ -87,11 +88,6 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
         data.shift
       end
     end
-  end
-
-  def set_headers_and_footers
-    @headers ||= [0, 32]
-    @footers ||= [31, 63]
   end
 
 end

@@ -19,18 +19,19 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
 
   def add_information_to document
     initialize_variables document
+    set_headers_and_footers 1, 4
     append_rows 4
     append_row_with ["PÁGINA DE GOOGLE+"], @styles['title']
     append_table
     append_charts
-    append_images 128
+    append_images (page_size * 4)
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
   end
 
   def append_charts
     remove_table_legends
-    append_rows (37 - current_row)
+    append_rows ((page_size + 5) - current_row)
     append_row_with ["GRÁFICOS GOOGLE+"], @styles['title']
     append_community_chart
     append_interactivity_chart
@@ -38,30 +39,30 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
   end
 
   def append_community_chart
-    append_rows (39 - current_row)
+    append_rows ((page_size + 7) - current_row)
     create_chart(current_row, "Comunidad")
     add_serie(@report_data['new_followers'], 'Nuevos followers')
     add_serie(@report_data['total_followers'], 'Followers')
-    append_rows (54 - current_row)
+    append_rows 15
     append_comment_chart_for 2
   end
 
   def append_interactivity_chart
-    append_rows (69 - current_row)
+    append_rows (((page_size * 2) + 5) - current_row)
     create_chart(current_row, "Interactividad")
     add_serie(@report_data['plus'], '(+1s)')
     add_serie(@report_data['content_shared'], 'Compartir contenido')
     add_serie(@report_data['total_interactions'], 'Total interacciones')
-    append_rows (84 - current_row)
+    append_rows 15
     append_comment_chart_for 3
   end
 
   def append_investment_chart
-    append_rows (101 - current_row)
+    append_rows (((page_size * 3) + 5) - current_row)
     create_chart(current_row, "Inversión")
     add_serie(@report_data['new_followers'], 'Nuevos followers')
     add_serie(@report_data['total_investment'], 'Inversión total')
-    append_rows (116 - current_row)
+    append_rows 15
     append_comment_chart_for 4
   end
 
@@ -81,11 +82,6 @@ class ReportGenerators::GooglePlusReport < ReportGenerators::Base
     keys = table_rows
     keys.shift
     keys.collect { |key, vale| key  }
-  end
-
-  def set_headers_and_footers
-    @headers ||= [0, 32, 64, 96]
-    @footers ||= [31, 63, 95, 127]
   end
 
   def table_rows

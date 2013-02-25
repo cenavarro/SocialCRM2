@@ -48,7 +48,7 @@ module ReportGenerators
         append_row_with ["Comentario"], @styles['title']
         append_rows 1
         append_comment(image.comment)
-        position = position + 32
+        position = position + page_size
         append_rows (position - current_row)
         footer (position - 1)
       end
@@ -139,7 +139,6 @@ module ReportGenerators
       @workbook.sheet_by_name(social_network.name[0..30]).nil? ? name = social_network.name[0..30] : name = "#{social_network.name[0..25]}-#{Random.rand(1000)}"
       @worksheet = @workbook.add_worksheet(:name => name, :page_margins => margins, :page_setup => page_setup)
       create_report_styles
-      set_headers_and_footers
       @report_data = select_report_data
     end
 
@@ -177,12 +176,25 @@ module ReportGenerators
       end while !subtext.nil? and !limit_exceeded
     end
 
+    def set_headers_and_footers first, last
+      @headers = [0]
+      @footers = []
+      for i in (first...(last+1))
+        @headers << page_size * i if i != last
+        @footers << (page_size * i) - 1
+      end
+    end
+
     def margins
       {:left => 0.3, :top => 0, :right => 0, :bottom => 0}
     end
 
     def page_setup
       {:orientation => :landscape, :paper_size => 9}
+    end
+
+    def page_size
+      31
     end
 
     def height_cell

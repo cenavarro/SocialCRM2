@@ -19,18 +19,19 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
 
   def add_information_to(document)
     initialize_variables document
+    set_headers_and_footers 1, 4
     append_rows 4
     append_row_with ["PÁGINA DE FOURSQUARE"], @styles['title']
     append_table
     append_charts
-    append_images 128
+    append_images (page_size * 4)
     @worksheet.column_widths *columns_widths
     append_headers_and_footers
   end
 
   def append_charts
     remove_table_legends
-    append_rows (37 - current_row)
+    append_rows ((page_size + 5) - current_row)
     append_row_with ["GRÁFICOS FOURSQUARE"], @styles['title']
     append_followers_chart
     append_interactivity_chart
@@ -38,30 +39,30 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
   end
 
   def append_followers_chart
-    append_rows (39 - current_row)
+    append_rows ((page_size + 7) - current_row)
     create_chart(current_row, "Comunidad")
     add_serie(@report_data['new_followers'], 'Nuevos followers')
     add_serie(@report_data['total_followers'], 'Followers')
-    append_rows (54 - current_row)
+    append_rows 15
     append_comment_chart_for 2
   end
 
   def append_interactivity_chart
-    append_rows (69 - current_row)
+    append_rows (((page_size * 2) + 5) - current_row)
     create_chart(current_row, "Interactividad")
     add_serie(@report_data['clients'], 'Clientes')
     add_serie(@report_data['likes'], 'Me gusta')
     add_serie(@report_data['checkins'], 'Check-ins')
-    append_rows (84 - current_row)
+    append_rows 15
     append_comment_chart_for 3
   end
 
   def append_offers_chart
-    append_rows (101 - current_row)
+    append_rows (((page_size * 3) + 5) - current_row)
     create_chart(current_row, "Interactividad (Ofertas)")
     add_serie(@report_data['total_unlocks'], 'Unlocks  total de ofertas')
     add_serie(@report_data['total_visits'], 'Visitas totales de las ofertas')
-    append_rows (116 - current_row)
+    append_rows 15
     append_comment_chart_for 4
   end
 
@@ -81,11 +82,6 @@ class ReportGenerators::FoursquareReport < ReportGenerators::Base
     keys = table_rows
     keys.shift
     keys.collect { |key, vale| key  }
-  end
-
-  def set_headers_and_footers
-    @headers ||= [0, 32, 64, 96]
-    @footers ||= [31, 63, 95, 127]
   end
 
   def table_rows

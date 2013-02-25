@@ -22,7 +22,7 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     append_rows 4
     append_row_with ["PÁGINA DE BENCHMARK"], @styles['title']
     append_benchmark_table
-    (current_row >= 32) ? append_rows(64 - current_row) : append_rows(32 - current_row)
+    (current_row >= page_size) ? append_rows((page_size * 2) - current_row) : append_rows(page_size - current_row)
     @auxiliar_row = current_row
     @footers << (auxiliar_row - 1)
     append_charts
@@ -38,13 +38,13 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
     for i in (0...@report_data['size']) do
       @headers << auxiliar_row
       insert_distribution_chart i
-      append_rows ((auxiliar_row + 32) - current_row)
-      @auxiliar_row = auxiliar_row + 32
+      append_rows ((auxiliar_row + page_size) - current_row)
+      @auxiliar_row = auxiliar_row + page_size
       @footers << (auxiliar_row - 1)
     end
     @headers << auxiliar_row
     insert_totals_chart
-    @auxiliar_row = auxiliar_row + 32
+    @auxiliar_row = auxiliar_row + page_size
     @footers << (auxiliar_row - 1)
   end
 
@@ -85,11 +85,11 @@ class ReportGenerators::BenchmarkReport < ReportGenerators::Base
         append_row_with @report_data[competitor]['data'][i], @styles['basic']
       end
       if (i >= 2)
-        append_rows (31 - current_row) if current_row >= 20
+        append_rows ((page_size - 1) - current_row) if current_row >= 20
       end
-      append_rows 2
+      append_rows 1
     end
-    append_rows (34 - current_row) if current_row >= 29
+    append_rows (33 - current_row) if current_row >= 28
     append_row_with ["Comentario del consultor"], @styles['title']
     append_rows 1
     append_comment(history_comment_for(1).content) if !history_comment_for(1).nil?
