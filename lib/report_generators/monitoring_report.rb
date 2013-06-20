@@ -26,7 +26,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
 
   def monitoring_datum
     social_network.monitoring.first.monitoring_data.where('start_date >= ? and end_date <= ?',
-                     start_date.to_date, end_date.to_date).order('start_date ASC')
+                     start_date.to_date, end_date.to_date).order('start_date ASC').limit(6)
   end
 
   def add_information_to document
