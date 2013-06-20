@@ -67,7 +67,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
 
   def create_theme_datum(params, monitoring_data)
     themes.each do |theme|
-      themes_datum = social_network.monitoring.where("isTheme = ? and id = ?", true, theme.id).first.monitoring_data.where("start_date >= ? and end_date <= ?", start_date.to_date, end_date.to_date).order('start_date ASC')
+      themes_datum = social_network.monitoring.where("isTheme = ? and id = ?", true, theme.id).first.monitoring_data.where("start_date >= ? and end_date <= ?", start_date.to_date, end_date.to_date).order('start_date ASC').limit(6)
       data = []
       index = 1
       themes_datum.each do |datum|
@@ -84,7 +84,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
 
   def create_channel_datum(params, monitoring_data)
     channels.each do |channel|
-      channels_datum = social_network.monitoring.where("isTheme = ? and id = ?", false,channel.id).first.monitoring_data.where("start_date >= ? and end_date <= ?", start_date.to_date, end_date.to_date).order('start_date ASC')
+      channels_datum = social_network.monitoring.where("isTheme = ? and id = ?", false,channel.id).first.monitoring_data.where("start_date >= ? and end_date <= ?", start_date.to_date, end_date.to_date).order('start_date ASC').limit(6)
       data = []
       index = 1
       channels_datum.each do |datum|
