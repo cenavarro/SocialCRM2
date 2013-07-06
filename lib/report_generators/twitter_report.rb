@@ -134,7 +134,7 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
       'cost_twitter_ads' => ['Cost per engagement Twitter Ads'],
       'cost_per_prints' => ['Coste por mil impresiones'],
       'cost_per_interaction' => ['Coste por interacción'],
-      'cost_follower' => ['Costes por follower']
+      'cost_follower' => ['Coste por follower']
     }
   end
 

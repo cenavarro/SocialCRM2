@@ -127,7 +127,7 @@ es:
     total_tweets: "Número tweets en total"
     tweets_in_period: "Tweets por período"
     mentions: "Menciones"
-    change_mentions_percentage: "% Cambio en menciones"
+    change_mentions_percentage: "% Cambio en mensiones"
     retweets: "Retweets"
     change_retweets_percentage: "% Cambio en retweets"
     link_clics: "Clics enlaces"

@@ -45,7 +45,12 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
     positive_comments.each do |positive_comment|
       @worksheet.add_row ["", positive_comment.social_network_name, ""], :style => [nil, @positive_subtitle_style, @positive_subtitle_style], :height => height_cell
       positive_comment.list_comments.each do |comment|
-        @worksheet.add_row ["", comment.content, comment.link], :style => [nil, @basic_style, @basic_style], :height => height_cell
+        lines = get_lines(comment.content)
+        count = 1
+        lines.each do |line|
+          @worksheet.add_row ["", line, (count == 1) ? comment.link : nil], :style => [nil, @basic_style, @basic_style], :height => height_cell
+          count += 1
+        end
       end
     end
   end
@@ -56,7 +61,12 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
     negative_comments.each do |negative_comment|
       @worksheet.add_row ["", negative_comment.social_network_name, ""], :style => [nil, @negative_subtitle_style, @negative_subtitle_style], :height => height_cell
       negative_comment.list_comments.each do |comment|
-        @worksheet.add_row ["", comment.content, comment.link], :style => [nil, @basic_style, @basic_style], :height => height_cell
+        lines = get_lines(comment.content)
+        count = 1
+        lines.each do |line|
+          @worksheet.add_row ["", line, (count == 1) ? comment.link : nil], :style => [nil, @basic_style, @basic_style], :height => height_cell
+          count += 1
+        end
       end
     end
   end
@@ -82,5 +92,20 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
       image.width = width
       image.start_at 1, y_axis
     end
+  end
+
+  def get_lines(comment)
+    lines = []
+    maxlines = 123
+    lines_words = comment.squeeze(" ").strip.split(" ")
+    while lines_words.any?
+      next_line = ""
+      while ("#{next_line} #{lines_words.first}".length <= maxlines)
+        break if lines_words.empty?
+        next_line = "#{next_line} #{lines_words.shift}".strip
+      end
+      lines.push(next_line)
+    end
+    lines
   end
 end
