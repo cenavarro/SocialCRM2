@@ -30,4 +30,16 @@ class SocialNetwork < ActiveRecord::Base
       BenchmarkDatum, RowsCampaign, Comment, Summary
     ]
   end
+
+  def previous
+    sorter_social_networks = self.client.sorter_social_networks(self.client.social_networks.map(&:id))
+    index = sorter_social_networks.index{|social_network| social_network.id == self.id}
+    (index == 0) ? sorter_social_networks.last : sorter_social_networks[index-1]
+  end
+
+  def next
+    sorter_social_networks = self.client.sorter_social_networks(self.client.social_networks.map(&:id))
+    index = sorter_social_networks.index{|social_network| social_network.id == self.id}
+    (index == (sorter_social_networks.length-1)) ? sorter_social_networks.first : sorter_social_networks[index+1]
+  end
 end

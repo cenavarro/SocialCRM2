@@ -52,6 +52,8 @@ es:
     get_data: "Obtener Datos"
     connect: "Conectar"
     new_entry: "Nueva Entrada"
+    previous_social_network: "Anterior"
+    next_social_network: "Siguiente"
   messages:
     requireds: "Campos Requeridos"
     required: "Campo Requerido"

@@ -18,6 +18,16 @@
       i.icon-circle-arrow-down.icon-white
     br
     br
+    - previous = @social_network.previous
+    - previous_path = %{/#{params[:locale]}/#{InfoSocialNetwork.get_name_social_network(previous.info_social_network_id)}/#{@social_network.client.id.to_s()}/1/#{previous.id}}
+    a.btn.btn-primary href=previous_path style="float: left;"
+      = t 'buttons.previous_social_network'
+    - next_network = @social_network.next
+    - next_path = %{/#{params[:locale]}/#{InfoSocialNetwork.get_name_social_network(next_network.info_social_network_id)}/#{@social_network.client.id.to_s()}/1/#{next_network.id}}
+    a.btn.btn-primary href=next_path style="float:right;margin-right: 30px;"
+      = t 'buttons.next_social_network'
+    br
+    br
     img.content src="#{@social_network.image.url}" height="#{CONFIG['images']['index']['h']}" width="#{CONFIG['images']['index']['w']}"
 javascript:
   jQuery(document).ready(function(){

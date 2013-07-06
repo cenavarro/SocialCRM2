@@ -52,6 +52,8 @@ en:
     get_data: "Get Data"
     connect: "Connect"
     new_entry: "New Entry"
+    previous_social_network: "Previous"
+    next_social_network: "Next"
   messages:
     requireds: "Required Fields"
     required: "Required Field"
