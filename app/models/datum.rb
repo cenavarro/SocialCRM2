@@ -6,7 +6,7 @@ module Datum
   end
 
   def previous_datum
-    social_network.send(type).where("end_date <= ? and id != ?", end_date.to_date, id).last
+    social_network.send(type).where("end_date <= ? and id != ?", end_date.to_date, id).order('end_date ASC').last
   end
 
   def type
