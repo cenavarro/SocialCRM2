@@ -144,7 +144,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
 
   def append_themes_chart
     append_rows (((page_size * 2) + 7) - current_row)
-    create_chart(current_row, "Distribución de los comentarios en canales")
+    create_chart(current_row, "Tipología de comentarios")
     @report_data['dates'].shift
     @report_data['theme_datum'].each do |datum|
       datum[:data].shift
@@ -152,19 +152,19 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
     end
     add_serie([0], '') if @report_data['theme_datum'].size == 1
     append_rows 15
-    append_comment_chart_for 2
+    append_comment_chart_for 3
   end
 
   def append_channels_chart
     append_rows (((page_size * 3) + 5) - current_row)
-    create_chart(current_row, "Tipología de comentarios")
+    create_chart(current_row, "Distribución de los comentarios en canales")
     @report_data['channel_datum'].each do |datum|
       datum[:data].shift
       add_serie(datum[:data], datum[:name])
     end
     add_serie([0], '') if @report_data['channel_datum'].size == 1
     append_rows 15
-    append_comment_chart_for 3
+    append_comment_chart_for 2
   end
 
   def monitoring_hash

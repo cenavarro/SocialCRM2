@@ -33,11 +33,11 @@
 
 
 script 
-  | createChart('container_distribution', 'Distribucion de los comentarios en canales', #{raw @monitoring_data['dates']});
+  | createChart('container_distribution', 'Tipologia de los comentarios', #{raw @monitoring_data['dates']});
   - @monitoring_data['theme_datum'].each do |datum|
     |addSerie('#{datum[:name]}',#{datum[:data]});
   | refreshChart();
-  | createChart('container_typology', 'Tipologia de los comentarios', #{ raw @monitoring_data['dates']});
+  | createChart('container_typology', 'Distribucion de los comentarios en canales', #{ raw @monitoring_data['dates']});
   - @monitoring_data['channel_datum'].each do |datum|
     |addSerie('#{datum[:name]}',#{datum[:data]});
   | refreshChart();
@@ -165,17 +165,17 @@ section.sectionInformation
         .comment
           .title
             h4
-              | Comentario gráfico distribución de los comentarios en canales
-          .content_comment id="distribution_chart"
-            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2, :id_div => "#distribution_chart"}
+              | Comentario gráfico tipología de los comentarios
+          .content_comment id="typology_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3, :id_div => "#typology_chart"}
         .estilo_graficos
           #container_typology
         .comment
           .title
             h4
-              | Comentario gráfico tipología de los comentarios
-          .content_comment id="typology_chart"
-            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 3, :id_div => "#typology_chart"}
+              | Comentario gráfico distribución de los comentarios en canales
+          .content_comment id="distribution_chart"
+            == render :partial => 'layouts/comment_social_network', :locals => {:comment_id => 2, :id_div => "#distribution_chart"}
     .tab-pane.fade id="tabothers"
       == render :partial => 'layouts/uploadImage', :locals => {:social_network_id => @social_network.id}
 == render :partial => 'layouts/new_comment', :locals => {:social_network_id => @social_network.id}
