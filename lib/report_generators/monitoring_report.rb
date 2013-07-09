@@ -89,7 +89,20 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       index = 1
       channels_datum.each do |datum|
         data << datum.value
-        if monitoring_data['channel_total_comment'][index].nil? 
+        if index == 1
+          aux =  social_network.monitoring.where("isTheme = ? and id = ?", false, channel.id).first.monitoring_data.where("end_date < ?", start_date.to_date)
+          unless aux.empty?
+            if monitoring_data['channel_total_comment'][index].nil?
+              monitoring_data['channel_total_comment'][index] = aux.first.value
+            else
+              monitoring_data['channel_total_comment'][index] = monitoring_data['channel_total_comment'][index] + aux.first.value
+            end
+          else
+            monitoring_data['channel_total_comment'][index] = 0
+          end
+          index = index + 1
+        end
+        if monitoring_data['channel_total_comment'][index].nil?
           monitoring_data['channel_total_comment'][index] = datum.value
         else
           monitoring_data['channel_total_comment'][index] = monitoring_data['channel_total_comment'][index] + datum.value
@@ -116,7 +129,6 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       values = datum[:data].unshift(datum[:name])
       append_row_with values, @styles['basic']
     end
-    append_row_with @report_data['channel_total_comment'], @styles['basic']
     for i in (2..@report_data['channel_total_comment'].size-1) do
       previous_data = @report_data['channel_total_comment'][i-1].to_i
       actual_data = @report_data['channel_total_comment'][i].to_i
@@ -127,7 +139,14 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       result = (@report_data['channel_total_comment'][i] / @report_data['total_days'][1]).round(2)
       @report_data['daily_average'][i] = result
     end
-    append_row_with @report_data['change_volume_comments'], @styles['basic']
+    @report_data['channel_total_comment'].delete_at(1)
+    append_row_with @report_data['channel_total_comment'], @styles['basic']
+    @report_data['change_volume_comments'].delete_at(1)
+    text = @report_data['change_volume_comments'].shift
+    correct_format_for_percent @report_data['change_volume_comments']
+    @report_data['change_volume_comments'].unshift(text)
+    append_row_with @report_data['change_volume_comments'], @styles['normal_percent']
+    @report_data['daily_average'].delete_at(1)
     append_row_with @report_data['daily_average'], @styles['basic']
     append_rows ((page_size + 2) - current_row)
     append_row_with ["Comentario del consultor"], @styles['title']
@@ -172,7 +191,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       "total_days" => [''],
       "theme_datum" => [],
       "channel_datum" => [],
-      "change_volume_comments" => [' % Cambio volumen total comentarios', '0.00'],
+      "change_volume_comments" => [' % Cambio volumen total comentarios'],
       "daily_average" => ['Promedio diario'],
       "theme_total_comment" => ['Total comentarios'],
       "channel_total_comment" => ['Total comentarios'],
