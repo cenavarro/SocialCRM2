@@ -172,7 +172,7 @@ class ReportGenerators::MonitoringReport < ReportGenerators::Base
       "total_days" => [''],
       "theme_datum" => [],
       "channel_datum" => [],
-      "change_volume_comments" => [' % Cambio volumen total comentarios', '0'],
+      "change_volume_comments" => [' % Cambio volumen total comentarios', '0.00'],
       "daily_average" => ['Promedio diario'],
       "theme_total_comment" => ['Total comentarios'],
       "channel_total_comment" => ['Total comentarios'],

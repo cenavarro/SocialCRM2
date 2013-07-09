@@ -65,9 +65,9 @@ module ReportGenerators
       basic_style = @workbook.styles.add_style(basic.merge({:num_fmt => 3}))
       euro_style = @workbook.styles.add_style(basic.merge({:format_code => "###,###,##0.00 €;###,###,##0.00 €"}))
       percentage_style = @workbook.styles.add_style(basic.merge({:format_code => "[GREEN]###,###,##0.00%;-[RED]###,###,##0.00%"}))
-      float_style = @workbook.styles.add_style(basic.merge({:format_code => "###,###,##0.00;###,###,##0.00"}))
+      normal_percent_style = @workbook.styles.add_style(basic.merge({:format_code => "###,###,##0.00%;###,###,##0.00%"}))
       @styles = {"none" => no_style, "title"=> title_style, "header"=> header_style, "dates"=> dates_style,
-                 "basic"=> basic_style, "euro" => euro_style, "percent" => percentage_style, "float" => float_style}
+                 "basic"=> basic_style, "euro" => euro_style, "percent" => percentage_style, "normal_percent" => normal_percent_style}
     end
 
     def append_table spaces=2
@@ -82,8 +82,9 @@ module ReportGenerators
           append_row_with data, @styles['percent']
         elsif euro_rows.include?(key)
           append_row_with data, @styles['euro']
-        elsif float_rows.include?(key)
-          append_row_with data, @styles['float']
+        elsif percentage_rows_without_color.include?(key)
+          correct_format_for_percent data
+          append_row_with data, @styles['normal_percent']
         else
           append_row_with data, @styles['basic']
         end
@@ -225,7 +226,7 @@ module ReportGenerators
        'get_percentage_difference_from_previous_comments', 'get_percentage_difference_from_previous_community_boards',
        'get_percentage_difference_from_previous_real_fans', 'get_percentage_difference_from_previous_total_mentions',
        'get_percentage_difference_from_previous_ret_tweets', 'get_percentage_difference_from_previous_total_clicks',
-       'get_percentage_difference_from_previous_interactions_ads', 'interest'#, 
+       'get_percentage_difference_from_previous_interactions_ads',#, 
        #'inserted_player', 'mobile_devise', 'youtube_search', 'youtube_suggestion', 'youtube_page', 'external_web_site',
        #'google_search', 'youtube_others', 'youtube_subscriptions',
       ]
@@ -238,8 +239,8 @@ module ReportGenerators
        'cost_twitter_ads', 'cost_per_prints', 'cost_per_interaction', 'cost_follower']
     end
 
-    def float_rows
-      ['ctr_anno']
+    def percentage_rows_without_color
+      ['ctr_anno', 'interest', 'rebound_percent', 'new_visits_percent']
     end
 
   end
