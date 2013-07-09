@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130125161033) do
+ActiveRecord::Schema.define(:version => 20130709012458) do
 
   create_table "benchmark_columns", :force => true do |t|
     t.string   "name"
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(:version => 20130125161033) do
     t.float    "interest"
     t.integer  "social_network_id"
     t.text     "actions"
+    t.integer  "shared"
   end
 
   create_table "list_comments", :force => true do |t|

@@ -69,6 +69,10 @@
       br
       = f.label t 'linkedin.recommendations'
       = f.text_field :recommendation, {:class => "number validate[required]", :value => number_with_delimiter(f.object.recommendation, integer_format)}
+      br
+      br
+      = f.label t 'linkedin.shared'
+      = f.text_field :shared, {:class => "number validate[required]", :value => number_with_delimiter(f.object.shared, integer_format)}
     .box.investmentLinkedin
       = t 'global.investment_title'
       br

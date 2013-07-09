@@ -72,7 +72,8 @@ class LinkedinDataController < ApplicationController
       'prints',
       'clics',
       'interest',
-      'recommendation'
+      'recommendation',
+      'shared'
     ]
   end
 

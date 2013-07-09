@@ -42,6 +42,7 @@ script
   | addSerie('Clicks',#{@linkedin['clics']});
   | addSerie('% interés',#{@linkedin['interest']});
   | addSerie('Recomendación',#{@linkedin['recommendation']});
+  | addSerie('Compartidos',#{@linkedin['shared']});
   | refreshChart();
 
   | createChart('container_views_page', 'Visualizaciones de la página', #{raw @linkedin['dates']});
@@ -157,6 +158,12 @@ section.sectionInformation
               - @linkedin_data.each do |linkedin_datum|
                 td
                   = number_with_delimiter(linkedin_datum.recommendation, integer_format)
+            tr
+              td
+                = t 'linkedin.shared'
+              - @linkedin_data.each do |linkedin_datum|
+                td
+                  = number_with_delimiter(linkedin_datum.shared, integer_format)
             tr.titlesRows
               td
                 = t 'global.investment_title'
