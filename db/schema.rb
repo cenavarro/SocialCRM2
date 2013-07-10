@@ -217,7 +217,7 @@ ActiveRecord::Schema.define(:version => 20130709012458) do
     t.float    "interest"
     t.integer  "social_network_id"
     t.text     "actions"
-    t.integer  "shared"
+    t.integer  "shared",             :default => 0
   end
 
   create_table "list_comments", :force => true do |t|
