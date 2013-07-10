@@ -20,7 +20,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
   def add_information_to document
     initialize_variables document
     set_headers_and_footers 2, 5
-    append_rows 7
+    append_rows 6
     append_row_with ["PÁGINA DE LINKEDIN"], @styles['title']
     append_table 3
     append_charts
@@ -56,6 +56,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
     add_serie(@report_data['clics'], 'Clicks')
     add_serie(@report_data['interest'], '% Interés')
     add_serie(@report_data['recommendation'], 'Recomendación')
+    add_serie(@report_data['shared'], 'Compartidos')
     append_rows 15
     append_comment_chart_for 3
   end
@@ -104,6 +105,7 @@ class ReportGenerators::LinkedinReport < ReportGenerators::Base
       'clics' => ['Clicks'],
       'interest' => ['% Interés'],
       'recommendation' => ['Recomendación'],
+      'shared' => ['Compartidos'],
       'investment_header' => ['Inversión'],
       'investment_agency' => ['Inversión agencia'], 
       'investment_actions' => ['Inversión nuevas acciones'],
