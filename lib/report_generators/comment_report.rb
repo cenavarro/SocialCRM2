@@ -96,16 +96,28 @@ class ReportGenerators::CommentReport < ReportGenerators::Base
 
   def get_lines(comment)
     lines = []
-    maxlines = 123
-    lines_words = comment.squeeze(" ").strip.split(" ")
+    max_characters = 110
+    words = comment.squeeze(" ").strip.split(" ")
+    lines_words = divide_long_phrases(words, max_characters)
     while lines_words.any?
-      next_line = ""
-      while ("#{next_line} #{lines_words.first}".length <= maxlines)
-        break if lines_words.empty?
-        next_line = "#{next_line} #{lines_words.shift}".strip
+      new_line = ""
+      if("#{new_line} #{lines_words.first}".length > max_characters)
+        lines.push(lines_words.shift.strip)
+      else
+        while (("#{new_line} #{lines_words.first}".length <= max_characters) && (!lines_words.empty?))
+          new_line = "#{new_line} #{lines_words.shift}".strip
+        end
+        lines.push(new_line)
       end
-      lines.push(next_line)
     end
     lines
+  end
+
+  def divide_long_phrases(words, max_size)
+    result = []
+    words.inject(result) do |res, word|
+      res << word.scan(/.{1,110}/)
+    end
+    result.flatten
   end
 end
