@@ -5,7 +5,7 @@
       ul
         - @twitter_datum.errors.full_messages.each do |message|
           li = message
-  .form-horizontal.sectionInformation style="height: 850px;"
+  .form-horizontal.sectionInformation style="height: 950px;"
     .box.informationTwitter
       = t 'global.information'
       br
@@ -50,6 +50,14 @@
       br
       = f.label t 'twitter.retweets'
       = f.text_field :ret_tweets, {:class => "number validate[required]", :value => number_with_delimiter(f.object.ret_tweets, integer_format)}
+      br
+      br
+      = f.label t 'twitter.favorites'
+      = f.text_field :favorites, {:class => "number validate[required]", :value => number_with_delimiter(f.object.favorites, integer_format)}
+      br
+      br
+      = f.label t 'twitter.lists'
+      = f.text_field :lists, {:class => "number validate[required]", :value => number_with_delimiter(f.object.lists, integer_format)}
       br
       br
       = f.label t 'twitter.link_clics'

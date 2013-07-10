@@ -55,6 +55,8 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
     create_chart(current_row, "Interactividad")
     add_serie(@report_data['total_mentions'], 'Menciones')
     add_serie(@report_data['ret_tweets'], 'Retweets')
+    add_serie(@report_data['favorites'], 'Favoritos')
+    add_serie(@report_data['lists'], 'Listas')
     add_serie(@report_data['total_clicks'], 'Clics enlaces')
     add_serie(@report_data['interactions_ads'], '# Interacciones en Twitter Ads')
     add_serie(@report_data['total_interactions'], 'Interacciones en total')
@@ -115,6 +117,10 @@ class ReportGenerators::TwitterReport < ReportGenerators::Base
       'get_percentage_difference_from_previous_total_mentions' => ['% Cambio en mensiones'],
       'ret_tweets' => ['Retweets'],
       'get_percentage_difference_from_previous_ret_tweets' => ['% Cambio en retweets'],
+      'favorites' => ['Favoritos'],
+      'get_percentage_difference_from_previous_favorites' => ['% Cambio en favoritos'],
+      'lists' => ['Listas'],
+      'get_percentage_difference_from_previous_lists' => ['% Cambio en listas'],
       'total_clicks' => ['Clics enlaces'],
       'get_percentage_difference_from_previous_total_clicks' => ['% Cambio en clics'],
       'interactions_ads' => ['Interacciones en Twitter Ads'] ,

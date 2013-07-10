@@ -166,6 +166,40 @@ section.sectionInformation
                     = %{#{percentage_retweets}%}
             tr
               td
+                = t 'twitter.favorites'
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = number_with_delimiter(twitter_datum.favorites, integer_format)
+            tr
+              td
+                = t 'twitter.change_favorites_percentage'
+              - @twitter_data.each do |twitter_datum|
+                - percentage_favorites = number_with_precision(twitter_datum.get_percentage_difference_from_previous_favorites, decimal_format)
+                - if percentage_favorites.to_f >= 0.0 
+                  td.positiveValue
+                    = %{#{percentage_favorites}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentage_favorites}%}
+            tr
+              td
+                = t 'twitter.lists'
+              - @twitter_data.each do |twitter_datum|
+                td
+                  = number_with_delimiter(twitter_datum.lists, integer_format)
+            tr
+              td
+                = t 'twitter.change_lists_percentage'
+              - @twitter_data.each do |twitter_datum|
+                - percentage_lists = number_with_precision(twitter_datum.get_percentage_difference_from_previous_lists, decimal_format)
+                - if percentage_lists.to_f >= 0.0 
+                  td.positiveValue
+                    = %{#{percentage_lists}%}
+                - else
+                  td.negativeValue
+                    = %{#{percentage_lists}%}
+            tr
+              td
                 = t 'twitter.link_clics'
               - @twitter_data.each do |twitter_datum|
                 td

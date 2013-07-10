@@ -226,7 +226,8 @@ module ReportGenerators
        'get_percentage_difference_from_previous_comments', 'get_percentage_difference_from_previous_community_boards',
        'get_percentage_difference_from_previous_real_fans', 'get_percentage_difference_from_previous_total_mentions',
        'get_percentage_difference_from_previous_ret_tweets', 'get_percentage_difference_from_previous_total_clicks',
-       'get_percentage_difference_from_previous_interactions_ads',#, 
+       'get_percentage_difference_from_previous_interactions_ads', 'get_percentage_difference_from_previous_lists', 
+       'get_percentage_difference_from_previous_favorites'
        #'inserted_player', 'mobile_devise', 'youtube_search', 'youtube_suggestion', 'youtube_page', 'external_web_site',
        #'google_search', 'youtube_others', 'youtube_subscriptions',
       ]

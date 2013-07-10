@@ -145,6 +145,10 @@ es:
     cost_per_interaction: "Coste por interacción"
     cost_per_followers: "Coste por follower"
     twitter_ads_investment: "Inversión en Twitter Ads"
+    favorites: "Favoritos"
+    change_favorites_percentage: "% Cambio en favoritos"
+    lists: "Listas"
+    change_lists_percentage: "% Cambio en listas"
   youtube:
     community_title: "Comunidad"
     new_subscribers: "Suscriptores nuevos"

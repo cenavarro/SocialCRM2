@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130709012458) do
+ActiveRecord::Schema.define(:version => 20130710023655) do
 
   create_table "benchmark_columns", :force => true do |t|
     t.string   "name"
@@ -377,6 +377,8 @@ ActiveRecord::Schema.define(:version => 20130709012458) do
     t.float    "cost_twitter_ads"
     t.float    "investment_ads"
     t.integer  "social_network_id"
+    t.integer  "favorites",          :default => 0
+    t.integer  "lists",              :default => 0
   end
 
   create_table "users", :force => true do |t|

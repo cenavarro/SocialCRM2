@@ -5,7 +5,7 @@ class TwitterDatum < ActiveRecord::Base
 
   set_type :twitter_data
 
-  comparable_metrics :total_followers, :total_mentions, :ret_tweets, :total_clicks, :interactions_ads, :total_interactions, :total_prints
+  comparable_metrics :total_followers, :total_mentions, :ret_tweets, :total_clicks, :interactions_ads, :total_interactions, :total_prints, :favorites, :lists
 
   def new_followers
     previous_datum.present? ? total_followers - previous_datum.total_followers : 0
