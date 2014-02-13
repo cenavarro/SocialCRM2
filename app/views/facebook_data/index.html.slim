@@ -208,7 +208,7 @@ section.sectionInformation
               td
                 = t 'facebook.change_interactions_percentage'
               - @facebook_data.each do | datum |
-                - valueChangeInteractions = number_with_precision(datum.get_percentage_difference_from_previous_total_interactions, decimal_format)
+                - valueChangeInteractions = number_with_precision(datum.get_percentage_difference_from_previous_brand_total_interactions, decimal_format)
                 - if valueChangeInteractions.to_f >= 0.0
                   td.positiveValue
                     = %{#{valueChangeInteractions}%}

@@ -13,7 +13,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
   private
 
   def has_data_for_the_report?
-    !rows_campaign.empty? and !rows_campaign.first.row_data.empty?
+    !rows_campaign.empty? and !rows_campaign.first.row_data.where('start_date >= ? and end_date <= ?', start_date.to_s, end_date.to_s).empty?
   end
 
   def rows_campaign
@@ -59,7 +59,7 @@ class ReportGenerators::CampaignReport < ReportGenerators::Base
   end
 
   def select_row_data(id)
-  		RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', id, start_date.to_date, end_date.to_date).order("start_date ASC").limit(6)
+    RowDatum.where('rows_campaign_id = ? and start_date >= ? and end_date <= ?', id, start_date.to_date, end_date.to_date).order("start_date ASC").limit(6)
   end
 
   def append_charts_campaign

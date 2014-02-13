@@ -3,7 +3,7 @@ class FacebookDatum < ActiveRecord::Base
   belongs_to :social_network
 
   set_type :facebook_data
-  comparable_metrics :total_fans, :total_prints, :total_interactions, :total_reach
+  comparable_metrics :total_fans, :total_prints, :total_interactions, :total_reach, :brand_total_interactions
 
   def total_prints
     total_prints_per_anno + prints
